@@ -9,9 +9,12 @@
   "devDependencies": {
     "axios": "^0.15.2",
     "bootstrap-sass": "^3.3.7",
+    "browser-sync": "^2.18.7",
+    "browser-sync-webpack-plugin": "^1.1.4",
     "jquery": "^3.1.0",
     "laravel-mix": "^0.6.0",
     "lodash": "^4.16.2",
-    "vue": "^2.0.1"
+    "vue": "^2.0.1",
+    "webpack-dev-server": "^2.3.0"
   }
 }
