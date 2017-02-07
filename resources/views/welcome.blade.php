@@ -70,7 +70,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Meet BillOrg
+                    Meet Bil
                 </div>
             </div>
         </div>
