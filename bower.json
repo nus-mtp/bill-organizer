@@ -1,0 +1,6 @@
+{
+  "name": "bill-org",
+  "devDependencies": {
+    "semantic": "semantic-ui#^2.2.7"
+  }
+}
