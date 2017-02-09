@@ -159,3 +159,9 @@ Homestead.json
 Homestead.yaml
 .env
 
+# bower
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
+/resources/assets/bower
