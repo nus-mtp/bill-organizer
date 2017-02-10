@@ -159,3 +159,12 @@ Homestead.json
 Homestead.yaml
 .env
 
+resources/.vagrant/machines/default/virtualbox/action_provision
+resources/.vagrant/machines/default/virtualbox/action_set_name
+resources/.vagrant/machines/default/virtualbox/creator_uid
+resources/.vagrant/machines/default/virtualbox/id
+resources/.vagrant/machines/default/virtualbox/index_uuid
+resources/.vagrant/machines/default/virtualbox/private_key
+resources/.vagrant/machines/default/virtualbox/private_key_putty.ppk
+resources/.vagrant/machines/default/virtualbox/synced_folders
+resources/Vagrantfile
