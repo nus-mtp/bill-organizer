@@ -21,10 +21,10 @@
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
                 <div class="item">
-                    <div class="ui green button">Register</div>
+                    <div class="ui green button">Register1234</div>
                 </div>
                 <div class="item">
-                    <div class="ui inverted green button">Login</div>
+                    <div class="ui inverted green button">Login1234</div>
                 </div>
             </div>
         </div>
