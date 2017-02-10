@@ -1,6 +1,16 @@
 machine:
   node:
-      version: 6.9.5
+    version: 6.9.5
+  php:
+    version: 7.1.1
+  timezone:
+    Asia/Singapore
+dependencies:
+  pre:
+    - npm install npm@latest
+compile:
+  override:
+    - npm run production
 deployment:
   staging:
     branch: master
