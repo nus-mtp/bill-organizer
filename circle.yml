@@ -1,6 +1,8 @@
 machine:
   node:
-      version: 6.9.0
+      version: 6.9.5
+  npm:
+      version: 4.2.0
 deployment:
   staging:
     branch: master
