@@ -4,58 +4,31 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
+        
+        <title>BillOrganiser</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-                color:#2ecc71;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" type="text/css">
+        
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css">
+        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
+        
     </head>
     <body>
+        
+        <div class="ui top fixed menu" style="background:none; border:none;">
+            <div class="right menu">
+                <div class="item">
+                    <div class="ui green button">Register</div>
+                </div>
+                <div class="item">
+                    <div class="ui inverted green button">Login</div>
+                </div>
+            </div>
+        </div>
+        
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -70,14 +43,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Meet Bil
+                    <div class="title"><img src="{{asset('icon.png')}}" style="height: 100px;vertical-align:middle"> Bill<font color="white">Organiser</font></div>
                 </div>
             </div>
         </div>
-        @if (getenv('APP_ENV') === 'local')
-        <script id="__bs_script__">//<![CDATA[
-            document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.18.6'><\/script>".replace("HOST", location.hostname));
-        //]]></script>
-        @endif
     </body>
 </html>

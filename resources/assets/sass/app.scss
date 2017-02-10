@@ -1,9 +1,84 @@
 
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+//@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import url(https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css);
+
+html, body {
+    background-color: #3c3744;
+    color: #636b6f;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 100;
+    font-size: 16px;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 4rem;
+    color: $bill-green;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: $bill-green;
+}
+
+h1 {
+    font-size: 3.157rem;
+}
+
+h2 {
+    font-size: 2.369rem;
+}
+
+h3 {
+    font-size: 1.777rem;
+}
+
+h4 {
+    font-size: 1.333rem;
+}
+
+
+
+
+
+
+
+
+
