@@ -21,10 +21,10 @@
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
                 <div class="item">
-                    <div class="ui green button">Register1234</div>
+                    <div class="ui green button">Register</div>
                 </div>
                 <div class="item">
-                    <div class="ui inverted green button">Login1234</div>
+                    <div class="ui inverted green button">Login</div>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ url('/login') }}">Login1</a>
+                        <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
                     @endif
                 </div>
