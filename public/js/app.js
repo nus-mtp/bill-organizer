@@ -11207,7 +11207,7 @@ var app = new Vue({
 /* 11 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \r\n$body-bg: #f5f8fa;\r\n^\r\n      Invalid CSS after \"$body-bg\": expected 1 selector or at-rule, was \": #f5f8fa;\"\r\n      in C:\\Users\\Manager\\Documents\\bill-organizer\\resources\\assets\\sass\\_variables.scss (line 5, column 1)\n    at C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\webpack\\lib\\NormalModule.js:141:35\n    at C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.onRender (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\sass-loader\\index.js:273:13)\n    at Object.<anonymous> (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\sass-loader\\node_modules\\async\\dist\\async.js:2234:31)\n    at apply (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\sass-loader\\node_modules\\async\\dist\\async.js:20:25)\n    at Object.<anonymous> (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\sass-loader\\node_modules\\async\\dist\\async.js:56:12)\n    at Object.callback (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\sass-loader\\node_modules\\async\\dist\\async.js:840:16)\n    at options.error (C:\\Users\\Manager\\Documents\\bill-organizer\\node_modules\\node-sass\\lib\\index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 12 */
