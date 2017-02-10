@@ -24,3 +24,6 @@ mix.webpackConfig({
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
+   .copy('resources/assets/bower/semantic/dist/semantic.min.css', 'public/css/semantic.min.css')
+    .copy('resources/assets/bower/semantic/dist/semantic.min.js', 'public/js/semantic.min.js')
+
