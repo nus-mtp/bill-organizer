@@ -159,13 +159,7 @@ Homestead.json
 Homestead.yaml
 .env
 
-# bower
-bower_components
-.bower-cache
-.bower-registry
-.bower-tmp
-/resources/assets/bower
-
+<<<<<<< HEAD
 resources/.vagrant/machines/default/virtualbox/action_provision
 resources/.vagrant/machines/default/virtualbox/action_set_name
 resources/.vagrant/machines/default/virtualbox/creator_uid
@@ -175,3 +169,11 @@ resources/.vagrant/machines/default/virtualbox/private_key
 resources/.vagrant/machines/default/virtualbox/private_key_putty.ppk
 resources/.vagrant/machines/default/virtualbox/synced_folders
 resources/Vagrantfile
+=======
+# bower
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
+/resources/assets/bower
+>>>>>>> 553f06a2848678be53e568ca673199d8b9b519a1
