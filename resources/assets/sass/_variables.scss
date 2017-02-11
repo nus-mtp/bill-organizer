@@ -3,15 +3,13 @@ $font-url: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700|
 $font-name: 'Varela+Round' !default;
 $font-family: $font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
-
-
 //Colors
 $bill-green: #2ecc71;
 
 // Body
 $body-bg: #f5f8fa;
 
-// Borders
+
 $laravel-border-color: darken($body-bg, 10%);
 $list-group-border: $laravel-border-color;
 $navbar-default-border: $laravel-border-color;
