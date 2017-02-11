@@ -2,9 +2,8 @@
     <IfModule mod_negotiation.c>
         Options -MultiViews
     </IfModule>
-
+    Options +FollowSymLinks
     RewriteEngine On
-    DirectoryIndex index.php # This line does the trick
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

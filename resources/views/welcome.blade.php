@@ -12,8 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" type="text/css">
 
         <!-- Stylesheets -->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css">
-        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{secure_asset('css/app.css')}}" rel="stylesheet" type="text/css">
 
     </head>
     <body>
@@ -43,7 +42,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <div class="title"><img src="{{asset('icon.png')}}" style="height: 100px;vertical-align:middle"> Bill<font color="white">Organiser</font></div>
+                    <div class="title"><img src="{{secure_asset('icon.png')}}" style="height: 100px;vertical-align:middle"> Bill<font color="white">Organiser</font></div>
                 </div>
             </div>
         </div>
