@@ -1,5 +1,7 @@
 const { mix } = require('laravel-mix')
+const path = require('path')
 mix.browserSync('localhost:8000')
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,8 +13,7 @@ mix.browserSync('localhost:8000')
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.copy('node_modules/semantic-ui-sass/app/assets/images/', 'public/images/')
+  .copy('node_modules/semantic-ui-sass/app/assets/fonts/', 'public/fonts/')
+  .js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
-/*   .copy('resources/assets/bower/semantic/dist/semantic.min.css', 'public/css/semantic.min.css')
-    .copy('resources/assets/bower/semantic/dist/semantic.min.js', 'public/js/semantic.min.js')
-*/

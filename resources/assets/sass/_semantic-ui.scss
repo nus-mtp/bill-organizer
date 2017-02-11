@@ -1,0 +1,66 @@
+
+// globals
+@import "~semantic-ui-sass/app/assets/stylesheets/semantic-ui/globals/site";
+@import "~semantic-ui-sass/app/assets/stylesheets/semantic-ui/globals/reset";
+
+// elements
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/container';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/button';
+@import '~semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/divider';
+@import '~semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/flag';
+// flag override
+i.flag:not(.icon):before {
+  background: image-url("/public/images/flags.png") no-repeat -108px -1976px;
+}
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/header';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/icon';
+//icon override
+@font-face {
+  src: font-url("/public/fonts/icons.eot");
+  src: font-url("/public/fonts/icons.eot?#iefix") format('embedded-opentype'), font-url("/public/fonts/icons.woff2") format('woff2'), font-url("/public/fonts/icons.woff") format('woff'), font-url("/public/fonts/icons.ttf") format('truetype'), font-url("/public/fonts/icons.svg#icons") format('svg');
+}
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/image';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/input';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/label';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/list';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/loader';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/rail';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/reveal';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/segment';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/step';
+
+// collections
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/collections/breadcrumb';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/collections/form';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/collections/grid';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/collections/menu';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/collections/message';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/collections/table';
+
+// views
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/views/ad';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/views/card.scss';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/views/comment.scss';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/views/feed.scss';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/views/item.scss';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/views/statistic.scss';
+
+// modules
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/accordion';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/checkbox';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/dimmer';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/dropdown';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/embed';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/modal';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/nag';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/popup';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/progress';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/rating';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/search';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/shape';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/sidebar';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/sticky';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/tab';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/transition';
+@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/modules/video';
+
