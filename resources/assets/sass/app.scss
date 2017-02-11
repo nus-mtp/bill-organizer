@@ -1,10 +1,9 @@
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import "semantic-ui";
 
-// Variables
 @import "variables";
-@import 'node_modules/semantic-ui-sass/app/assets/stylesheets/semantic-ui/elements/icon';
 
 html, body {
     background-color: #3c3744;
