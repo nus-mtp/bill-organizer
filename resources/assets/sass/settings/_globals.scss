@@ -1,0 +1,69 @@
+body,
+html {
+    background-color: $onyx-black;
+    color: #636b6f;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+}
+
+h1, h2, h3, h4 {
+    color: $bill-green;
+    font-family: heading-font-family;
+    font-weight: inherit;
+    line-height: 1.2;
+    margin: 1.414em 0 0 .5em;
+}
+
+h1 {
+    font-size: 3.157rem;
+    font-weight: 400;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 2.369rem;
+}
+
+h3 {
+    font-size: 1.777rem;
+}
+
+h4 {
+    font-size: 1.333rem;
+}
+
+p {margin-bottom: 1.3em;}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    color: $bill-green;
+    font-family: $heading-font-name, sans-serif;
+    font-size: 4rem;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}

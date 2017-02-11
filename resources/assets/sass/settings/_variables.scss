@@ -1,0 +1,73 @@
+// Typography
+
+$font-url: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700|Varela+Round';
+$base-font-name: 'Varela+Round' !default;
+$base-font-size: 16px;
+$heading-font-name: 'Source+Sans+Pro';
+$base-font-family: $base-font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+$heading-font-family: $heading-font-name, sans-serif;
+
+//Color
+
+$emerald-green: #2ecc71;
+$sea-green: #229553;
+
+$coquelicot: #e53d00;
+
+$middle-yellow: #ffe900;
+
+$smashed-pumpkin: #ff6b35;
+
+$azurish-white: #dbf9f4;
+
+$peach: #f7c597;
+
+$baby-powder: #fffffa;
+
+$black: #000;
+$errie-black: #1a1a1a;
+$onyx-black: #3c3744;
+$dark-liver: #4d4d4d;
+$trolley-grey: #808080;
+$ash-grey: #b3b3b3;
+$pastel-grey: #ccc;
+$plantinum: #e4e4e4;
+$anti-flash-white: #f2f2f2;
+$white:#fff;
+
+$primary-color: $emerald-green;
+$error-color: $coquelicot;
+$info-color: $azurish-white;
+$warning-color: $middle-yellow;
+$bill-green: $emerald-green;
+
+
+// Below are bootstrap sass variables, can be removed
+$body-bg: #f5f8fa;
+$laravel-border-color: darken($body-bg, 10%);
+$list-group-border: $laravel-border-color;
+$navbar-default-border: $laravel-border-color;
+$panel-default-border: $laravel-border-color;
+$panel-inner-border: $laravel-border-color;
+
+$brand-primary: #3097D1;
+$brand-info: #8eb4cb;
+$brand-success: #2ab27b;
+$brand-warning: #cbb956;
+$brand-danger: #bf5329;
+
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+$font-family-sans-serif: "Raleway", sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.6;
+$text-color: #636b6f;
+
+$navbar-default-bg: #fff;
+
+$btn-default-color: $text-color;
+
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($brand-primary, 25%);
+$input-color-placeholder: lighten($text-color, 30%);
+
+$panel-default-heading-bg: #fff;
