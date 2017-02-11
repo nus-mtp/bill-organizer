@@ -12,7 +12,8 @@
     "jquery": "^3.1.0",
     "laravel-mix": "^0.7.4",
     "lodash": "^4.16.2",
-    "semantic-ui-sass": "^2.1.7",
+    "node-sass": "^4.5.0",
+    "semantic-ui-sass": "git+ssh://git@github.com:dev-seahouse/semantic-ui-sass.git",
     "vue": "^2.0.1"
   }
 }
