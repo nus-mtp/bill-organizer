@@ -11,6 +11,12 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/.well-known/acme-challenge/ZTqFS_a5ruqk8hnVCb5TthYe-LSkbDPy3H9PGGJ7X2E', function () {
+    $secret = "ZTqFS_a5ruqk8hnVCb5TthYe-LSkbDPy3H9PGGJ7X2E.Ewzm5RMr5gOrbAk0Z-UdHy9LSNh4zxU0bnqgnH_oYiU";
+    return response($secret, 200)->header('Content-Type', 'text/plain');
 });
