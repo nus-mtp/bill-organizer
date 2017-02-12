@@ -1,9 +1,9 @@
 // Typography
 
 $font-url: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700|Varela+Round';
-$base-font-name: 'Varela+Round' !default;
+$base-font-name: 'Varela Round' !default;
 $base-font-size: 16px;
-$heading-font-name: 'Source+Sans+Pro';
+$heading-font-name: 'Source Sans Pro';
 $base-font-family: $base-font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 $heading-font-family: $heading-font-name, sans-serif;
 
@@ -15,9 +15,11 @@ $sea-green: #229553;
 $coquelicot: #e53d00;
 
 $middle-yellow: #ffe900;
+$naples-yellow: #fada5e;
 
-$smashed-pumpkin: #ff6b35;
+$smashed-pumpkin: #f26c4f;
 
+$manganese-blue: #2e7ecf;
 $azurish-white: #dbf9f4;
 
 $peach: #f7c597;
@@ -36,10 +38,11 @@ $anti-flash-white: #f2f2f2;
 $white:#fff;
 
 $primary-color: $emerald-green;
-$error-color: $coquelicot;
+$error-color: $smashed-pumpkin;
 $info-color: $azurish-white;
-$warning-color: $middle-yellow;
+$warning-color: $naples-yellow;
 $bill-green: $emerald-green;
+$text-color: $onyx-black;
 
 
 // Below are bootstrap sass variables, can be removed

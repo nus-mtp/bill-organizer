@@ -17,8 +17,8 @@
                     <div class="ui green button">Register</div>
                 </div>
                 <div class="item">
-                    <div class="ui inverted green button">Login</div>
-                </div>
+                    <a href="{{ url('/dashboard') }}"><div class="ui inverted green button">Login</div>
+                </div></a>
             </div>
         </div>
 
