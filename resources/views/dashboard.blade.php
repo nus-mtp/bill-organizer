@@ -8,21 +8,12 @@
 
     </head>
     <body>
-        <!--@section('topmenu')
-        <div class="ui top fixed menu" style="background:transparent; border:none;">
-            <div class="right menu">
-                <div class="item">
-                    <div class="ui green button">Register</div>
-                </div>
-                <div class="item">
-                    <a href="{{ url('/dashboard') }}"><div class="ui inverted green button">Login</div>
-                </div></a>
-            </div>
-        </div>-->
+        
+        <!--TOP MENU-->
         
           <div class="ui fixed pointing menu" style="background:#2ecc71;">
               <div class="ui container">
-                  <a href="{{ url('/') }}" class="header item"><img class="logo" src="{{secure_asset('icon.png')}}">
+                  <a href="{{ url('/') }}" class="header item"><img class="logo" src="{{secure_asset('alt-icon.png')}}">
                       &nbsp&nbsp&nbsp&nbsp BillOrganiser
                   </a>
                   
@@ -34,18 +25,42 @@
                           <a class="item" href="#">My Account</a>
                           <div class="divider"></div>
                           <a class="item" href="#">Settings</a>
+                          <a class="item" href="#">Logout</a>
                       </div>
                   </div>
               </div>
         </div>
         
-        <!--@show-->
+        <!--CONTENT-->
 
-        <div class="ui main container" style="background:white; padding:100px 65px 65px 65px;">
+        <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
+            
             <div class="ui fluid container">
-                Hello World
-                <div style="height:1500px;"></div>
-                <h1>DASHBOARD</h1>
+                <div class="ui grid">
+                    <div class="sixteen wide column">
+                        <div class="ui breadcrumb">
+                            <a class="section">BillOrganiser</a>
+                            <i class="right angle icon divider"></i>
+                            <div class="active section">Dashboard</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sixteen wide column">
+                        <h1>Billing Organisations</h1>
+                        <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                    </div>
+                    <div class="four wide column">
+                        <div class="dotted-container">
+                            <button class="circular blue ui icon button">
+                                <i class="icon plus"></i>
+                            </button>
+                            <p>Add New Billing Organisation</p>
+                        </div>
+                    </div>
+                    <div class="four wide column"></div>
+                    <div class="four wide column"></div>
+                    <div class="four wide column"></div>
+</div>
             </div>
         </div>
     </body>
