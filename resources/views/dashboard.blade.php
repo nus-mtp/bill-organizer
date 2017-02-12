@@ -51,7 +51,10 @@
                     
                     <div class="sixteen wide column">
                         <h1>Billing Organisations</h1>
-                        <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                        <!--if no billing organisations in db-->
+                        <div class="ui tiny message">
+                            <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                        </div>
                     </div>
                     <div class="four wide column">
                         <div class="dotted-container">
