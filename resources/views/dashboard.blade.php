@@ -6,6 +6,10 @@
         <title>BillOrganiser - Dashboard</title>
         <link href="css/app.css" rel="stylesheet" type="text/css">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+
+        
     </head>
     <body>
         
@@ -51,7 +55,7 @@
                     </div>
                     <div class="four wide column">
                         <div class="dotted-container">
-                            <button class="circular blue ui icon button show">
+                            <button class="circular blue ui icon button" value="showModal" onClick="$('.ui.modal').modal('show');">
                                 <i class="icon plus"></i>
                             </button>
                             <p>Add New Billing Organisation</p>
@@ -60,6 +64,20 @@
                     <div class="four wide column"></div>
                     <div class="four wide column"></div>
                     <div class="four wide column"></div>
+                </div>
+                
+                <div class="ui small modal">
+                    <i class="close icon"></i>
+                    <div class="header">Add new billing organisation</div>
+                    <div class="content">
+                        <div class="ui fluid icon input">
+                            <input type="text" placeholder="Enter billing organisation name">
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="ui button approve green" data-value="yes">Add</div>
+                        <div class="ui button reject" data-value="no">Cancel</div>
+                    </div>
                 </div>
             </div>
         </div>
