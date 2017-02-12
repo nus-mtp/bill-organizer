@@ -39,7 +39,7 @@
                 <div class="ui grid">
                     <div class="sixteen wide column">
                         <div class="ui breadcrumb">
-                            <a class="section">BillOrganiser</a>
+                            <span class="section">Home</span>
                             <i class="right angle icon divider"></i>
                             <div class="active section">Dashboard</div>
                         </div>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="four wide column">
                         <div class="dotted-container">
-                            <button class="circular blue ui icon button">
+                            <button class="circular blue ui icon button show">
                                 <i class="icon plus"></i>
                             </button>
                             <p>Add New Billing Organisation</p>
@@ -60,7 +60,7 @@
                     <div class="four wide column"></div>
                     <div class="four wide column"></div>
                     <div class="four wide column"></div>
-</div>
+                </div>
             </div>
         </div>
     </body>
