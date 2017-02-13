@@ -1,5 +1,15 @@
 <?php
 
+$billorg_db_url = env('BILLORG_DB_URL', 'mysql://forge:@127.0.0.1:3306/forge');
+
+$db_config = [
+    'host' => $billorg_db_url['host'],
+    'port' => $billorg_db_url['port'],
+    'username' => $billorg_db_url['user'],
+    'password' => $billorg_db_url['pass'],
+    'database' => substr($billorg_db_url['path'], 1)
+];
+
 return [
 
     /*
@@ -41,30 +51,20 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => true,
             'engine' => null,
-        ],
+        ] + $db_config,
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
-        ],
+        ] + $db_config,
 
     ],
 
