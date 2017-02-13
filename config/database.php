@@ -1,6 +1,6 @@
 <?php
 
-$billorg_db_url = env('BILLORG_DB_URL', 'mysql://forge:@127.0.0.1:3306/forge');
+$billorg_db_url = parse_url(env('BILLORG_DB_URL', 'mysql://forge:@127.0.0.1:3306/forge'));
 
 $db_config = [
     'host' => $billorg_db_url['host'],
