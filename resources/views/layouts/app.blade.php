@@ -13,8 +13,8 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-        <!-- Local -->
-        <link rel="stylesheet" type="text/css" href="css/app.css">
+        <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="/css/app.css">
 
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
