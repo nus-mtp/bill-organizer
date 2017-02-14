@@ -39,9 +39,9 @@
         </div>
 
         @yield('pre-javascript')
-            <script src="{{ asset(js/manifest.js) }}"></script>
-            <script src="{{ asset(js/vendor.js) }}"></script>
-            <script src="{{ asset(js/app.js ) }}"></script>
+            <script src="{{ asset('js/manifest.js') }}"></script>
+            <script src="{{ asset('js/vendor.js') }}"></script>
+            <script src="{{ asset('js/app.js' ) }}"></script>
         @yield('javascript')
          <!-- Dump all dynamic scripts into template -->
         @stack('scripts')
