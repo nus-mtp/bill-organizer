@@ -152,8 +152,8 @@ GitHub.sublime-settings
 /node_modules
 /public/storage
 /public/hot
-/public/js
-/public/css
+/public/js/
+/public/css/
 /storage/*.key
 /vendor
 /.idea
