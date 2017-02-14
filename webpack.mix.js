@@ -1,4 +1,5 @@
 const { mix } = require('laravel-mix')
+const path = require('path')
 mix.browserSync('localhost:8000')
 
 /*
@@ -12,9 +13,29 @@ mix.browserSync('localhost:8000')
  |
  */
 
-mix.copy('semantic/dist/themes/default/assets/images', 'public/images/')
-  .copy('semantic/dist/themes/default/assets/fonts', 'public/fonts/')
-  .copy('semantic/dist/semantic.css', 'resources/assets/sass/semantic.css')
+/* mix.webpackConfig({
+  resolve: {
+    alias: {
+      semantic_path: path.resolve('resources/semantic/dist/')
+    }
+  }
+}) */
+
+mix.copy('semantic/dist/semantic.css', 'resources/assets/sass/semantic.css')
   .copy('semantic/dist/semantic.js', 'resources/assets/js/semantic.js')
-  .js('resources/assets/js/app.js', 'public/js')
+  .js('resources/assets/js/app.js', 'public/js').extract(['./resources/assets/js/semantic.js'])
    .sass('resources/assets/sass/app.scss', 'public/css')
+
+// Full API
+// mix.js(src, output);
+// mix.extract(vendorLibs);
+// mix.sass(src, output);
+// mix.less(src, output);
+// mix.combine(files, destination);
+// mix.copy(from, to);
+// mix.minify(file);
+// mix.sourceMaps(); // Enable sourcemaps
+// mix.version(); // Enable versioning.
+// mix.disableNotifications();
+// mix.setPublicPath('path/to/public'); <-- Useful for Node apps.
+// mix.webpackConfig({}); <-- Override webpack.config.js, without editing the file directly
