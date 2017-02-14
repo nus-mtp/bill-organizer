@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,25 +30,21 @@
         </script>
     </head>
     <body>
+        @include('layouts.nav')
 
         <div class="app-wrapper">
-            @yield("app-content")
-        </div>
-
-        <div class="fluid container">
+            @yield('content')
         </div>
 
         <div class="footer">
             <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p>
         </div>
 
-        <script type="text/javascript">
-            var _token = '{!! Session::token() !!}';
-            var _url = '{!! url("/") !!}';
-        </script>
-        @yield("pre-javascript")
+        @yield('pre-javascript')
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+        <!-- should we delete this bootstrap? -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        @yield("javascript")
+        @yield('javascript')
     </body>
 </html>

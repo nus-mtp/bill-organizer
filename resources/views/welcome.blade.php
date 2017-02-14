@@ -13,27 +13,24 @@
 
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
-                <div class="item">
-                    <div class="ui green button">Register</div>
-                </div>
-                <div class="item">
-                    <a href="{{ url('/dashboard') }}"><div class="ui inverted green button">Login</div>
-                </div></a>
+                @if (Route::has('login'))
+                    @if (Auth::check())
+                        <div class="item">
+                            <a class="ui green button" href="{{ url('/dashboard') }}">Dashboard</a>
+                        </div>
+                    @else
+                        <div class="item">
+                            <a class="ui green button" href="{{ url('/register') }}">Register</a>
+                        </div>
+                        <div class="item">
+                            <a class="ui inverted green button" href="{{ url('/login') }}">Login</a>
+                        </div>
+                    @endif
+                @endif
             </div>
         </div>
 
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
             <div class="content">
                 <div class="title m-b-md">
                     <div class="title"><img src="{{secure_asset('icon.png')}}" style="height: 100px;vertical-align:middle"> Bill<font color="white">Organiser</font></div>
