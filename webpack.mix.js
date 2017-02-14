@@ -23,7 +23,7 @@ mix.browserSync('localhost:8000')
 
 mix.copy('semantic/dist/semantic.css', 'resources/assets/sass/semantic.css')
   .copy('semantic/dist/semantic.js', 'resources/assets/js/semantic.js')
-  .js('resources/assets/js/app.js', 'public/js').extract(['./resources/assets/js/semantic.js'])
+  .js('resources/assets/js/app.js', 'public/js').extract(['jquery', 'lodash', 'axios'])
    .sass('resources/assets/sass/app.scss', 'public/css')
 
 // Full API
