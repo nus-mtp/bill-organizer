@@ -30,6 +30,7 @@
         </script>
     </head>
     <body>
+        @include('layouts.nav')
 
         <div class="app-wrapper">
             @yield('content')

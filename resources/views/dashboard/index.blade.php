@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    @include('layouts.nav')
-
     <!--CONTENT-->
     <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
 
