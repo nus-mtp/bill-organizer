@@ -32,10 +32,7 @@
     <body>
         @include('layouts.nav')
 
-        <div class="app-wrapper">
             @yield('content')
-        </div>
-
         <div class="footer">
             <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p>
         </div>
