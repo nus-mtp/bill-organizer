@@ -6,5 +6,4 @@ require('./bootstrap') // bootstrap load our application wide dependencies
  * app.js is the 'entry point' for our webpack configuration
  *
  */
-import upload from './modules/upload'
-upload()
+import uploader from './modules/upload'
