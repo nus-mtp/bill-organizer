@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 // remove later
 Route::get('/upload', function () {
-    return view('partials.upload');
+    return view('modules.upload');
 });
 
 

@@ -4,15 +4,14 @@
  * the contents of this file will be loaded before app.js
  */
 
-require('./semantic')
 window._ = require('lodash')
 window.$ = window.jQuery = require('jquery')
+require('./semantic')
 window.axios = require('axios')
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
   'X-Requested-With': 'XMLHttpRequest'
 }
-
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

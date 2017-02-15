@@ -7,21 +7,21 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>
+        @section('title')
+            {{ config('app.name', 'Laravel') }}
+        @show
+        </title>
+
         <link rel="icon" type="image/ico" href="">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
         <!-- Local -->
-        <link rel="stylesheet" type="text/css" href="css/app.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        @yield('stylesheets')
-
+        @stack('module_styles')<!-- module specific styles -->
         <!-- Scripts -->
         <script>
             window.Laravel = {!! json_encode([
@@ -30,12 +30,14 @@
         </script>
     </head>
     <body>
-        @include('layouts.nav')
-
-            @yield('content')
-
+        <div class="ui basic segment">
+            @include('layouts.nav')
+        </div>
+            <div class="ui padded segment">
+                @yield('content')
+            </div>
         <div class="footer">
-            <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p>
+            <!-- <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p> -->
         </div>
 
         @yield('pre-javascript')
@@ -44,6 +46,6 @@
             <script src="{{ asset('js/app.js' ) }}"></script>
         @yield('javascript')
          <!-- Dump all dynamic scripts into template -->
-        @stack('scripts')
+        @stack('module_scripts')
     </body>
 </html>
