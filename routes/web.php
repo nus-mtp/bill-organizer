@@ -20,5 +20,3 @@ Route::get('/dashboard', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index');
