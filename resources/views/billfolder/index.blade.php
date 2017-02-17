@@ -10,15 +10,17 @@
                     <div class="ui breadcrumb">
                         <span class="section">Home</span>
                         <i class="right angle icon divider"></i>
-                        <div class="active section">Dashboard</div>
+                        <span class="section">Dashboard</span>
+                        <i class="right angle icon divider"></i>
+                        <div class="active section">Sample Organization</div>
                     </div>
                 </div>
 
                 <div class="sixteen wide column">
-                    <h1>Billing Organisations</h1>
+                    <h1>Bills</h1>
                     <!--if no billing organisations in db-->
                     <div class="ui tiny message">
-                        <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                        <p>There are no records yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                     </div>
                 </div>
                 <div class="four wide column">
@@ -26,12 +28,10 @@
                         <button class="circular blue ui icon button" value="showModal" onClick="$('.ui.modal').modal('show');">
                             <i class="icon plus"></i>
                         </button>
-                        <p>Add New Billing Organisation</p>
+                        <p>Add New Record</p>
                     </div>
                 </div>
-                <div class="four wide column">
-                    <div class=""
-                </div>
+                <div class="four wide column"></div>
                 <div class="four wide column"></div>
                 <div class="four wide column"></div>
             </div>
