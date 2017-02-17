@@ -44,7 +44,7 @@
                 </div>
                 <div class="actions">
                     <div class="ui button approve green" data-value="yes">Add</div>
-                    <div class="ui button reject" data-value="no">Cancel</div>
+                    <div class="ui button black cancel" data-value="no">Cancel</div>
                 </div>
             </div>
         </div>
