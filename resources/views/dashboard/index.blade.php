@@ -8,7 +8,7 @@
             <div class="ui grid">
                 <div class="sixteen wide column">
                     <div class="ui breadcrumb">
-                        <span class="section">Home</span>
+                        <a class="section" href="/">Home</a>
                         <i class="right angle icon divider"></i>
                         <div class="active section">Dashboard</div>
                     </div>
@@ -29,7 +29,16 @@
                         <p>Add New Billing Organisation</p>
                     </div>
                 </div>
-                <div class="four wide column"></div>
+                <div class="four wide column">
+                    <div class="ui card">
+                        <div class="content">
+                            <a class="header" href="/samplefolder">Sample Org</a>
+                            <div class="description">
+                                Sample Bills
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="four wide column"></div>
                 <div class="four wide column"></div>
             </div>

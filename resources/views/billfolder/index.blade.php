@@ -8,32 +8,59 @@
             <div class="ui grid">
                 <div class="sixteen wide column">
                     <div class="ui breadcrumb">
-                        <span class="section">Home</span>
+                        <a class="section" href="/">Home</a>
                         <i class="right angle icon divider"></i>
-                        <span class="section">Dashboard</span>
+                        <a class="section" href="/dashboard">Dashboard</a>
                         <i class="right angle icon divider"></i>
                         <div class="active section">Sample Organization</div>
                     </div>
                 </div>
 
                 <div class="sixteen wide column">
-                    <h1>Bills</h1>
+                    <h1>Sample Organization - Bills</h1>
                     <!--if no billing organisations in db-->
-                    <div class="ui tiny message">
+                    <div class="ui tiny warning message">
                         <p>There are no records yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                     </div>
                 </div>
-                <div class="four wide column">
-                    <div class="dotted-container">
-                        <button class="circular blue ui icon button" value="showModal" onClick="$('.ui.modal').modal('show');">
-                            <i class="icon plus"></i>
-                        </button>
-                        <p>Add New Record</p>
-                    </div>
+                <div class="sixteen wide column">
+                    <!--sorting not working yet; needs javascript-->
+                    <table class="ui sortable celled table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="example"></th>
+                                <th class="sorted ascending">Name</th>
+                                <th class="sorted ascending">Billing Month</th>
+                                <th class="sorted ascending">Amount</th>
+                                <th class="sorted ascending">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                            <tr>
+                                <td><input type="checkbox" name="example"></td>
+                                <td>2017-03-01</td>
+                                <td>2017 February</td>
+                                <td>$2</td>
+                                <td class="warning">Not paid</td>
+                            </tr>
+                                    
+                            <tr>
+                                <td><input type="checkbox" name="example"></td>
+                                <td>2017-02-04</td>
+                                <td>2017 January</td>
+                                <td>$30</td>
+                                <td class="negative">Overdue</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="example"></td>
+                                <td>2017-01-03</td>
+                                <td>2016 December</td>
+                                <td>$0</td>
+                                <td class="positive">Paid</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="four wide column"></div>
-                <div class="four wide column"></div>
-                <div class="four wide column"></div>
             </div>
 
             <div class="ui small modal">
