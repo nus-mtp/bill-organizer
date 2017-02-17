@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class BillingOrganizationController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function store() {
         // TODO: determine if should add max len constraint?
         $this->validate(request(), ['name' => 'required']);
