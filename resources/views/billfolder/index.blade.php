@@ -1,10 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <!--CONTENT-->
-    <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
 
-        <div class="ui fluid container">
+    <!--CONTENT-->
+    <div class="ui main container" style="padding:90px 65px 65px 65px; min-height: 100vh;">
+
+    <!--statistics sidebar-->
+        <div class="ui visible sidebar inverted vertical right menu"
+             style="padding-top: 70px;">
+            <div class="ui segment">
+              <div class="statistic">
+                  <div class="value">
+                      <h2>$11</h2>
+                  </div>
+                  <div class="label">
+                      avg per month
+                  </div>
+                </div>
+            </div>
+        </div>
+  <div class="pusher">
+    <!-- Site content !-->        
+        
+        <div class="ui container">
             <div class="ui grid">
                 <div class="sixteen wide column">
                     <div class="ui breadcrumb">
@@ -15,7 +33,6 @@
                         <div class="active section">Sample Organization</div>
                     </div>
                 </div>
-
                 <div class="sixteen wide column">
                     <h1>Sample Organization - Bills</h1>
                     <!--if no billing organisations in db-->
@@ -60,6 +77,8 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="ui blue right floated button" onclick="$('.ui.sidebar').sidebar('toggle')
+;">Stats</div>
                 </div>
             </div>
 
@@ -76,6 +95,6 @@
                     <div class="ui button cancel" data-value="no">Cancel</div>
                 </div>
             </div>
-        </div>
+      </div></div><!--end of sidebar-->
     </div>
 @endsection
