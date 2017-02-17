@@ -21,6 +21,15 @@
                         <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                     </div>
                 </div>
+
+                @foreach($bill_orgs as $bill_org)
+                    <div class="four wide column">
+                        <div class="dotted-container">
+                            <p>{{ $bill_org->name }}</p>
+                        </div>
+                    </div>
+                @endforeach
+
                 <div class="four wide column">
                     <div class="dotted-container">
                         <button class="circular blue ui icon button" value="showModal" onClick="$('.ui.modal').modal('show');">
