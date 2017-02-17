@@ -10,7 +10,7 @@
     "output": {
       "packaged": "dist",
       "uncompressed": "dist/components/uncompressed/",
-      "compressed": "dist/components/",
+      "compressed": "dist/components/compressed/",
       "themes": "dist/themes/"
     },
     "clean": "dist/"
