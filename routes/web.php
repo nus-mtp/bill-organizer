@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+Route::post('/dashboard/billorgs', 'BillingOrganizationController@store');
+Route::delete('/dashboard/billorgs/{bill_org}', 'BillingOrganizationController@destroy');

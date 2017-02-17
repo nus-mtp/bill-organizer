@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\BillingOrganization;
 
 class DashboardController extends Controller
 {
@@ -11,6 +11,8 @@ class DashboardController extends Controller
     }
 
     public function index() {
-        return view('dashboard.index');
+        $bill_orgs = BillingOrganization::all();
+
+        return view('dashboard.index', compact('bill_orgs'));
     }
 }
