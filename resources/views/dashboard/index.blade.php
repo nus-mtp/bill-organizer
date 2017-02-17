@@ -25,7 +25,7 @@
                 @foreach($bill_orgs as $bill_org)
                     <div class="four wide column">
                         <div class="dotted-container">
-                            <form method="POST" action="{{ url('/dashboard/billorgs/' . $bill_org->id) }}" style="display: inline;">
+                            <form method="POST" action="{{ url('/dashboard/billorgs/' . $bill_org->name) }}" style="display: inline;">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                                 <button type="submit" class="circular red ui icon right button">

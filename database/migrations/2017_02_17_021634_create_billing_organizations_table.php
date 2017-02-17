@@ -14,9 +14,9 @@ class CreateBillingOrganizationsTable extends Migration
     public function up()
     {
         Schema::create('billing_organizations', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('name', 256);
             $table->timestamps();
+            $table->primary('name');
         });
     }
 
