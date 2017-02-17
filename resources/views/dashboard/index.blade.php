@@ -32,7 +32,10 @@
 
                 <div class="four wide column">
                     <div class="dotted-container">
-                        <button class="circular blue ui icon button" value="showModal" onClick="$('.ui.modal').modal('show');">
+                        <button class="circular blue ui icon button" value="showModal"
+                                onClick="$('.ui.modal.billorg').modal({onApprove: function() {
+                                    $('#add-billorg-form').submit();
+                                }}).modal('show');">
                             <i class="icon plus"></i>
                         </button>
                         <p>Add New Billing Organisation</p>
@@ -43,12 +46,14 @@
                 <div class="four wide column"></div>
             </div>
 
-            <div class="ui small modal">
+            <div class="ui small billorg modal">
                 <i class="close icon"></i>
                 <div class="header">Add new billing organisation</div>
                 <div class="content">
                     <div class="ui fluid icon input">
-                        <input type="text" placeholder="Enter billing organisation name">
+                        <form action="" id="add-billorg-form">
+                            <input type="text" placeholder="Enter billing organisation name">
+                        </form>
                     </div>
                 </div>
                 <div class="actions">
