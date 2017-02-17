@@ -51,8 +51,9 @@
                 <div class="header">Add new billing organisation</div>
                 <div class="content">
                     <div class="ui fluid icon input">
-                        <form action="" id="add-billorg-form">
-                            <input type="text" placeholder="Enter billing organisation name">
+                        <form method="POST" action="{{ url('/dashboard/billorgs') }}" id="add-billorg-form">
+                            {{ csrf_field() }}
+                            <input name="name" type="text" placeholder="Enter billing organisation name">
                         </form>
                     </div>
                 </div>

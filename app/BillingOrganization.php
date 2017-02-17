@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class BillingOrganization extends Model
 {
-    //
+    public $fillable = ['name'];
 }
