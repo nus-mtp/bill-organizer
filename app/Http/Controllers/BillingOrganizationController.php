@@ -15,4 +15,10 @@ class BillingOrganizationController extends Controller
 
         return back();
     }
+
+    public function destroy(BillingOrganization $bill_org) {
+        $bill_org->delete();
+
+        return back();
+    }
 }

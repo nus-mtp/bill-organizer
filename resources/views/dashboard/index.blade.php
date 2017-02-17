@@ -25,6 +25,13 @@
                 @foreach($bill_orgs as $bill_org)
                     <div class="four wide column">
                         <div class="dotted-container">
+                            <form method="POST" action="{{ url('/dashboard/billorgs/' . $bill_org->id) }}" style="display: inline;">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="circular red ui icon right button">
+                                    <i class="remove icon"></i>
+                                </button>
+                            </form>
                             <p>{{ $bill_org->name }}</p>
                         </div>
                     </div>
@@ -53,7 +60,10 @@
                     <div class="ui fluid icon input">
                         <form method="POST" action="{{ url('/dashboard/billorgs') }}" id="add-billorg-form">
                             {{ csrf_field() }}
-                            <input name="name" type="text" placeholder="Enter billing organisation name">
+                            <label for="billorg-name">
+                                Billing Organization:
+                            </label>
+                            <input id="billorg-name" type="text" name="name" placeholder="Enter billing organisation name">
                         </form>
                     </div>
                 </div>
