@@ -29,9 +29,7 @@
                         <p>Add New Billing Organisation</p>
                     </div>
                 </div>
-                <div class="four wide column">
-                    <div class=""
-                </div>
+                <div class="four wide column"></div>
                 <div class="four wide column"></div>
                 <div class="four wide column"></div>
             </div>
@@ -46,7 +44,7 @@
                 </div>
                 <div class="actions">
                     <div class="ui button approve green" data-value="yes">Add</div>
-                    <div class="ui button cancel" data-value="no">Cancel</div>
+                    <div class="ui button black cancel" data-value="no">Cancel</div>
                 </div>
             </div>
         </div>
