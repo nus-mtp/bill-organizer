@@ -26,4 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function record_issuers() {
+        return $this->hasMany(UserRecordIssuer::class);
+    }
+
+    public function create_record_issuer(UserRecordIssuer $record_issuer) {
+        return $this->record_issuers()->save($record_issuer);
+    }
 }
