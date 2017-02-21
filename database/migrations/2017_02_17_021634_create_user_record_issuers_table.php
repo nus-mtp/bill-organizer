@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBillingOrganizationsTable extends Migration
+class CreateUserRecordIssuersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateBillingOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('billing_organizations', function (Blueprint $table) {
+        Schema::create('user_record_issuers', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name', 256);
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
-            $table->primary('name');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unique(['name', 'user_id']);
         });
     }
 
@@ -27,6 +30,6 @@ class CreateBillingOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billing_organizations');
+        Schema::dropIfExists('user_record_issuers');
     }
 }

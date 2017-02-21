@@ -18,5 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
-Route::post('/dashboard/billorgs', 'BillingOrganizationController@store');
-Route::delete('/dashboard/billorgs/{bill_org}', 'BillingOrganizationController@destroy');
+Route::post('/dashboard/record_issuers', 'UserRecordIssuerController@store');
+Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');

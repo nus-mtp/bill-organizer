@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\BillingOrganization;
+use App\UserRecordIssuer;
 
 class DashboardController extends Controller
 {
@@ -11,8 +11,8 @@ class DashboardController extends Controller
     }
 
     public function index() {
-        $bill_orgs = BillingOrganization::all();
+        $user_record_issuers = auth()->user()->record_issuers;
 
-        return view('dashboard.index', compact('bill_orgs'));
+        return view('dashboard.index', compact('user_record_issuers'));
     }
 }

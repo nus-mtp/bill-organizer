@@ -22,17 +22,17 @@
                     </div>
                 </div>
 
-                @foreach($bill_orgs as $bill_org)
+                @foreach($user_record_issuers as $record_issuer)
                     <div class="four wide column">
                         <div class="dotted-container">
-                            <form method="POST" action="{{ url('/dashboard/billorgs/' . $bill_org->name) }}" style="display: inline;">
+                            <form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}" style="display: inline;">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                                 <button type="submit" class="circular red ui icon right button">
                                     <i class="remove icon"></i>
                                 </button>
                             </form>
-                            <p>{{ $bill_org->name }}</p>
+                            <p>{{ $record_issuer->name }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -40,8 +40,8 @@
                 <div class="four wide column">
                     <div class="dotted-container">
                         <button class="circular blue ui icon button" value="showModal"
-                                onClick="$('.ui.modal.billorg').modal({onApprove: function() {
-                                    $('#add-billorg-form').submit();
+                                onClick="$('.ui.modal.record-issuer').modal({onApprove: function() {
+                                    $('#add-record-issuer-form').submit();
                                 }}).modal('show');">
                             <i class="icon plus"></i>
                         </button>
@@ -53,17 +53,17 @@
                 <div class="four wide column"></div>
             </div>
 
-            <div class="ui small billorg modal">
+            <div class="ui small record-issuer modal">
                 <i class="close icon"></i>
                 <div class="header">Add new billing organisation</div>
                 <div class="content">
                     <div class="ui fluid icon input">
-                        <form method="POST" action="{{ url('/dashboard/billorgs') }}" id="add-billorg-form">
+                        <form method="POST" action="{{ url('/dashboard/record_issuers') }}" id="add-record-issuer-form">
                             {{ csrf_field() }}
-                            <label for="billorg-name">
+                            <label for="record-issuer-name">
                                 Billing Organization:
                             </label>
-                            <input id="billorg-name" type="text" name="name" placeholder="Enter billing organisation name">
+                            <input id="record-issuer-name" type="text" name="name" placeholder="Enter billing organisation name">
                         </form>
                     </div>
                 </div>
