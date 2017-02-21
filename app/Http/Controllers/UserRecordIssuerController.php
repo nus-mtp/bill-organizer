@@ -23,6 +23,8 @@ class UserRecordIssuerController extends Controller
     }
 
     public function destroy(UserRecordIssuer $record_issuer) {
+        $this->authorize('delete', $record_issuer);
+
         $record_issuer->delete();
 
         return back();
