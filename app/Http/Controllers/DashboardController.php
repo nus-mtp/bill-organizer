@@ -11,7 +11,7 @@ class DashboardController extends Controller
     }
 
     public function index() {
-        $user_record_issuers = UserRecordIssuer::all();
+        $user_record_issuers = auth()->user()->record_issuers;
 
         return view('dashboard.index', compact('user_record_issuers'));
     }
