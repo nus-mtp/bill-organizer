@@ -14,11 +14,12 @@ class CreateUserRecordIssuersTable extends Migration
     public function up()
     {
         Schema::create('user_record_issuers', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name', 256);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->primary(['name', 'user_id']);
+            $table->unique(['name', 'user_id']);
         });
     }
 
