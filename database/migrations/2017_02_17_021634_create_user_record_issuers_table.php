@@ -17,8 +17,8 @@ class CreateUserRecordIssuersTable extends Migration
             $table->string('name', 256);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
-            $table->primary('name');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->primary(['name', 'user_id']);
         });
     }
 
