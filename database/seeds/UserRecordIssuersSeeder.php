@@ -5,8 +5,7 @@ use Illuminate\Database\Seeder;
 class UserRecordIssuersSeeder extends Seeder
 {
 
-    public static $names = ['Charlene Lee', 'Lim Xin Ai', 'Tan Yan Ling', 'Teddy Hartanto', 'Xin Kenan'];
-    public static $email_names = ['charlene', 'xinai', 'yanling', 'teddy', 'kenan'];
+    public static $record_issuers = ['Singtel', 'SP Services', 'DBS'];
 
     /**
      * Run the database seeds.
@@ -15,12 +14,15 @@ class UserRecordIssuersSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < count(self::$names); $i++) {
-            DB::table('users')->insert([
-                'name' => self::$names[$i],
-                'email' => self::$email_names[$i] . '@example.com',
-                'password' => bcrypt('password')
-            ]);
+        $user_ids = DB::table('users')->get(['id']);
+
+        for ($i = 0; $i < count(self::$record_issuers); $i++) {
+            foreach ($user_ids as $user_id) {
+                DB::table('user_record_issuers')->insert([
+                    'name' => self::$record_issuers[$i],
+                    'user_id' => $user_id->id
+                ]);
+            }
         }
     }
 }
