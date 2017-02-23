@@ -21,6 +21,8 @@ class UserRecordIssuerController extends Controller
     }
 
     public function show(UserRecordIssuer $record_issuer) {
+        $this->authorize('show', $record_issuer);
+
         $records = $record_issuer->records;
         $type = self::$record_issuer_types[$record_issuer->type]; // $record_issuer type is an ID
         $amount_field_name = $type === 'bank' ? 'Balance' : 'Amount due';
