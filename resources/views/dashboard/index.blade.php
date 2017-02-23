@@ -8,9 +8,10 @@
             <div class="ui grid">
                 <div class="sixteen wide column">
                     <div class="ui breadcrumb">
+                        <!-- TODO: Extract breadcrumbs and add links-->
                         <span class="section">Home</span>
                         <i class="right angle icon divider"></i>
-                        <div class="active section">Dashboard</div>
+                        <span class="active section">Dashboard</span>
                     </div>
                 </div>
 
@@ -34,7 +35,7 @@
                                     <i class="remove icon"></i>
                                 </button>
                             </form>
-                            <p>{{ $record_issuer->name }}</p>
+                            <p><a href="{{ route('show_record_issuer', $record_issuer) }}">{{ $record_issuer->name }}</a></p>
                         </div>
                     </div>
                 @endforeach

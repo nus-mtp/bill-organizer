@@ -11,8 +11,10 @@ class UserRecordIssuerController extends Controller
         $this->middleware('auth');
     }
 
-    public function show() {
+    public function show(UserRecordIssuer $record_issuer) {
+        $records = $record_issuer->records;
 
+        return view('dashboard.record-issuer', compact('record_issuer', 'records'));
     }
 
     public function store() {
