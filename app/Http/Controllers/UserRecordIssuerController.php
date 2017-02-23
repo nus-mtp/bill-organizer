@@ -21,7 +21,7 @@ class UserRecordIssuerController extends Controller
     }
 
     public function show(UserRecordIssuer $record_issuer) {
-        $this->authorize('show', $record_issuer);
+        $this->authorize('belongs_to_user', $record_issuer);
 
         $records = $record_issuer->records;
         $type = self::$record_issuer_types[$record_issuer->type]; // $record_issuer type is an ID
@@ -48,7 +48,7 @@ class UserRecordIssuerController extends Controller
     }
 
     public function destroy(UserRecordIssuer $record_issuer) {
-        $this->authorize('destroy', $record_issuer);
+        $this->authorize('belongs_to_user', $record_issuer);
 
         $record_issuer->delete();
 
