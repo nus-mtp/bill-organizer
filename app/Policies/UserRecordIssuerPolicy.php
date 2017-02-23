@@ -10,7 +10,7 @@ class UserRecordIssuerPolicy
 {
     use HandlesAuthorization;
 
-    public function delete(User $user, UserRecordIssuer $record_issuer) {
+    public function destroy(User $user, UserRecordIssuer $record_issuer) {
         return $user->id === $record_issuer->user_id;
     }
 }
