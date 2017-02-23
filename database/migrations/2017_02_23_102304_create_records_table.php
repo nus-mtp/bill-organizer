@@ -16,7 +16,7 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
             $table->date('issue_date');
-            $table->date('due_date');
+            $table->date('due_date')->nullable();
             $table->date('period');
             $table->integer('amount');
             $table->string('path_to_file', 1024); // this should be unique, but unique constraint creates an index so i'm not adding it
