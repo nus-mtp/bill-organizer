@@ -44,16 +44,19 @@
                     <tr>
                         <th>Issue date</th>
                         <th>Period</th>
-                        <th>Due date</th>
-                        <!-- TODO: customize based on the record type -->
-                        <th>Amount?</th>
+                        @if($type === 'billing organization')
+                            <th>Due date</th>
+                        @endif
+                        <th>{{ $amount_field_name }}</th>
                     </thead>
                     <tbody>
                     @foreach($records as $record)
                         <tr>
                             <td>{{ $record->issue_date }}</td>
                             <td>{{ $record->period }}</td>
-                            <td>{{ $record->due_date }}</td>
+                            @if($type === 'billing organization')
+                                <td>{{ $record->due_date }}</td>
+                            @endif
                             <td>${{ $record->amount }}</td>
                         </tr>
                     @endforeach
@@ -97,15 +100,17 @@
                                 <input type="month" name="period" id="period" placeholder="Record period">
                             </div>
 
-                            <div class="field">
-                                <label for="due_date">Due date:</label>
-                                <input type="date" name="due_date" id="due_date" placeholder="Due date">
-                            </div>
+                            @if($type === 'billing organization')
+                                <div class="field">
+                                    <label for="due_date">Due date:</label>
+                                    <input type="date" name="due_date" id="due_date" placeholder="Due date">
+                                </div>
+                            @endif
 
                             <div class="field">
                                 <!-- TODO: customize based on type -->
-                                <label for="amount">Enter the amount?:</label>
-                                <input type="number" name="amount" id="amount" placeholder="Amount">
+                                <label for="amount">{{ $amount_field_name }}:</label>
+                                <input type="number" name="amount" id="amount" placeholder="{{ $amount_field_name }}">
                             </div>
 
                         </form>
