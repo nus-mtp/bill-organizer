@@ -58,15 +58,28 @@
 
             <div class="ui small record-issuer modal">
                 <i class="close icon"></i>
-                <div class="header">Add new billing organisation</div>
+                <div class="header">Add new record issuer</div>
                 <div class="content">
-                    <div class="ui fluid icon input">
-                        <form method="POST" action="{{ url('/dashboard/record_issuers') }}" id="add-record-issuer">
+                    <div class="ui fluid input">
+                        <form method="POST" action="{{ url('/dashboard/record_issuers') }}"
+                              class="ui form" id="add-record-issuer">
                             {{ csrf_field() }}
-                            <label for="record-issuer-name">
-                                Billing Organization:
-                            </label>
-                            <input id="record-issuer-name" type="text" name="name" placeholder="Enter billing organisation name">
+                            <div class="field">
+                                <label for="name">
+                                    Name:
+                                </label>
+                                <input id="name" type="text" name="name" placeholder="Enter record issuer name">
+                            </div>
+                            <div class="field">
+                                <label for="type">
+                                    Type
+                                </label>
+                                <select name="type" id="type">
+                                    @foreach($record_issuer_types as $record_issuer_type)
+                                        <option value="{{ $record_issuer_type->id }}">{{ $record_issuer_type->type }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </form>
                     </div>
                 </div>

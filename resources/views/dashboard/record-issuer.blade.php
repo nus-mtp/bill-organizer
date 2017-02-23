@@ -1,23 +1,5 @@
 @extends('layouts.app')
 
-<style>
-    form > .field {
-        text-align: left;
-    }
-
-    .field {
-        margin-bottom: 1.2em;
-    }
-
-    .field > label {
-        font-weight: bold;
-    }
-
-    .field > input {
-        display: block;
-    }
-</style>
-
 @section('content')
     <!--CONTENT-->
     <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
@@ -94,9 +76,9 @@
                 <i class="close icon"></i>
                 <div class="header">Add new record</div>
                 <div class="content">
-                    <div class="ui fluid icon input">
+                    <div class="ui fluid input">
                         <form method="POST" action="{{ route('records', $record_issuer) }}"
-                              enctype="multipart/form-data" id="add-record">
+                              class="ui form" enctype="multipart/form-data" id="add-record">
                             <!-- TODO: customize form based on type -->
                             <!-- TODO: research on semantic UI calendar -->
                             {{ csrf_field() }}

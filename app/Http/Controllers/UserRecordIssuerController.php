@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\RecordIssuerType;
 use App\UserRecordIssuer;
 use Illuminate\Http\Request;
 
@@ -19,10 +20,16 @@ class UserRecordIssuerController extends Controller
 
     public function store() {
         // TODO: determine if should add max len constraint?
-        $this->validate(request(), ['name' => 'required']);
+        // Validate the type -- research on Validator
+        // $record_issuer_types = RecordIssuerType::pluck('id');
+
+        $this->validate(request(), [
+            'name' => 'required',
+            'type' => 'required'
+        ]);
 
         auth()->user()->create_record_issuer(
-            new UserRecordIssuer(request(['name']))
+            new UserRecordIssuer(request(['name', 'type']))
         );
 
         return back();
