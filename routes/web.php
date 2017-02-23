@@ -23,3 +23,4 @@ Route::post('/dashboard/record_issuers', 'UserRecordIssuerController@store');
 Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');
 
 Route::post('/dashboard/record_issuers/{record_issuer}/records', 'RecordController@store')->name('records');
+Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}', 'RecordController@show')->name('show_record');

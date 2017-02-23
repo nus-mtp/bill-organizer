@@ -6,6 +6,7 @@ use App\RecordIssuerType;
 use App\Record;
 use App\UserRecordIssuer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class RecordController extends Controller
@@ -45,6 +46,7 @@ class RecordController extends Controller
         $file_name = $record_issuer->name . request('issue_date') . '.' . $file_extension;
         $path = request()->file('record')
             ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
+        // research on visibility public vs private -> currently there's not a lot of documentation on this
         $period = request('period') . '-01';    // YYYY-MM -> YYYY-MM-01
 
         $db_connection_name = DB::connection()->getName();
@@ -67,5 +69,13 @@ class RecordController extends Controller
         );
 
         return back();
+    }
+
+    public function show(UserRecordIssuer $record_issuer, Record $record) {
+        // TODO: ensure that user is authorized to view
+        // need to prepend 'app/' because Storage::url is stupid. It returns storage/ instead of storage/app/
+        $url = storage_path('app/' . $record->path_to_file);
+
+        return response()->file($url);
     }
 }

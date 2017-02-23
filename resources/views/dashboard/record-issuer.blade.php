@@ -52,7 +52,12 @@
                     <tbody>
                     @foreach($records as $record)
                         <tr>
-                            <td>{{ $record->issue_date }}</td>
+                            <td>
+                                <a href="{{ route('show_record', ['record_issuer' => $record_issuer,
+                                    'record' => $record]) }}">
+                                    {{ $record->issue_date }}
+                                </a>
+                            </td>
                             <td>{{ $record->period }}</td>
                             @if($type === 'billing organization')
                                 <td>{{ $record->due_date }}</td>
