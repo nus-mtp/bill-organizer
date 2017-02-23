@@ -41,7 +41,17 @@
                         <div class="ui tiny message">
                             <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                         </div>
+                        <div class="dotted-container">
+                            <button class="circular blue ui icon button" value="showModal"
+                                    onClick="$('.ui.modal.add-record').modal({onApprove: function() {
+                                            $('form#add-record').submit();
+                                        }}).modal('show');">
+                                <i class="icon plus"></i>
+                            </button>
+                            <span>Add new record</span>
+                        </div>
                     </div>
+
                 @endif
             </div>
 
@@ -69,6 +79,7 @@
                         <td colspan="4" style="text-align: center">
                             <button class="circular blue ui icon button" value="showModal"
                                     onClick="$('.ui.modal.add-record').modal({onApprove: function() {
+                                            $('form#add-record').submit();
                                         }}).modal('show');">
                                 <i class="icon plus"></i>
                             </button>
@@ -84,8 +95,11 @@
                 <div class="header">Add new record</div>
                 <div class="content">
                     <div class="ui fluid icon input">
-                        <form>
+                        <form method="POST" action="{{ route('records', $record_issuer) }}"
+                              enctype="multipart/form-data" id="add-record">
                             <!-- TODO: customize form based on type -->
+                            <!-- TODO: research on semantic UI calendar -->
+                            {{ csrf_field() }}
                             <div class="field">
                                 <label for="record">Upload the record:</label>
                                 <input type="file" name="record" id="record">
@@ -93,23 +107,23 @@
 
                             <div class="field">
                                 <label for="issue_date">Issue date:</label>
-                                <input type="text" name="issue_date" id="issue_date" placeholder="Enter the bill date">
+                                <input type="date" name="issue_date" id="issue_date" placeholder="Issue date">
                             </div>
 
                             <div class="field">
                                 <label for="period">Record period:</label>
-                                <input type="text" name="period" id="period" placeholder="Enter the billing period">
+                                <input type="month" name="period" id="period" placeholder="Record period">
                             </div>
 
                             <div class="field">
                                 <label for="due_date">Due date:</label>
-                                <input type="text" name="due_date" id="due_date" placeholder="Enter the due date">
+                                <input type="date" name="due_date" id="due_date" placeholder="Due date">
                             </div>
 
                             <div class="field">
                                 <!-- TODO: customize based on type -->
                                 <label for="amount">Enter the amount?:</label>
-                                <input type="text" name="amount" id="amount" placeholder="Enter the amount">
+                                <input type="number" name="amount" id="amount" placeholder="Amount">
                             </div>
 
                         </form>

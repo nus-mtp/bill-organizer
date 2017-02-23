@@ -18,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@show')->name('show_record_issuer');
 Route::post('/dashboard/record_issuers', 'UserRecordIssuerController@store');
 Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');
-Route::get('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@show')->name('show_record_issuer');
+
+Route::post('/dashboard/record_issuers/{record_issuer}/records', 'RecordController@store')->name('records');

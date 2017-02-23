@@ -44,7 +44,7 @@
                     <div class="dotted-container">
                         <button class="circular blue ui icon button" value="showModal"
                                 onClick="$('.ui.modal.record-issuer').modal({onApprove: function() {
-                                    $('#add-record-issuer-form').submit();
+                                    $('form#add-record-issuer').submit();
                                 }}).modal('show');">
                             <i class="icon plus"></i>
                         </button>
@@ -61,7 +61,7 @@
                 <div class="header">Add new billing organisation</div>
                 <div class="content">
                     <div class="ui fluid icon input">
-                        <form method="POST" action="{{ url('/dashboard/record_issuers') }}" id="add-record-issuer-form">
+                        <form method="POST" action="{{ url('/dashboard/record_issuers') }}" id="add-record-issuer">
                             {{ csrf_field() }}
                             <label for="record-issuer-name">
                                 Billing Organization:
