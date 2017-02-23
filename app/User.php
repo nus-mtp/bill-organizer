@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function create_record_issuer(UserRecordIssuer $record_issuer) {
         return $this->record_issuers()->save($record_issuer);
     }
+
+    public function create_record(Record $record) {
+        return $this->records()->save($record);
+    }
 }
