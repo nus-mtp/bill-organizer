@@ -39,7 +39,6 @@
 
             @if(count($records) > 0)
                 <table class="ui celled striped table">
-                    <!-- TODO: customize table based on type! Bank statements don't have due date-->
                     <thead>
                     <tr>
                         <th>Issue date</th>
@@ -48,35 +47,52 @@
                             <th>Due date</th>
                         @endif
                         <th>{{ $amount_field_name }}</th>
+                        <th></th>
                     </thead>
                     <tbody>
                     @foreach($records as $record)
                         <tr>
-                            <td>
-                                <a href="{{ route('show_record_file', ['record_issuer' => $record_issuer,
-                                    'record' => $record]) }}">
-                                    {{ $record->issue_date }}
-                                </a>
-                            </td>
+                            <td>{{ $record->issue_date }}</td>
                             <td>{{ $record->period }}</td>
                             @if($type === 'billing organization')
                                 <td>{{ $record->due_date }}</td>
                             @endif
                             <td>${{ $record->amount }}</td>
+                            <td style="text-align: right; width: 1%">
+                                <div class="ui small basic icon buttons">
+                                    <button class="ui button">
+                                        <a href="{{ route('show_record_file', ['record_issuer' => $record_issuer,
+                                    'record' => $record]) }}">
+                                            <i class="file icon"></i>
+                                        </a>
+                                    </button>
+                                    <button class="ui button">
+                                        <i class="download icon"></i>
+                                    </button>
+                                    <button class="ui button">
+                                        <i class="write icon"></i>
+                                    </button>
+                                    <button class="ui button">
+                                        <i class="remove icon"></i>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="4" style="text-align: center">
-                            <button class="circular blue ui icon button" value="showModal"
-                                    onClick="$('.ui.modal.add-record').modal({onApprove: function() {
-                                            $('form#add-record').submit();
-                                        }}).modal('show');">
-                                <i class="icon plus"></i>
-                            </button>
-                            <span>Add new record</span>
-                        </td>
-                    </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align: center">
+                                <button class="circular blue ui icon button" value="showModal"
+                                        onClick="$('.ui.modal.add-record').modal({onApprove: function() {
+                                                    $('form#add-record').submit();
+                                                }}).modal('show');">
+                                    <i class="icon plus"></i>
+                                </button>
+                                <span>Add new record</span>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             @endif
 
