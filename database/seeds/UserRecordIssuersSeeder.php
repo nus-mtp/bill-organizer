@@ -1,11 +1,16 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use RecordIssuerTypesSeeder as Type;
 
 class UserRecordIssuersSeeder extends Seeder
 {
 
-    public static $record_issuers = ['Singtel', 'SP Services', 'DBS'];
+    public static $record_issuers = [
+        'Singtel' => Type::BILLORG_ID,
+        'SP Services' => Type::BILLORG_ID,
+        'DBS' => Type::BANK_ID
+    ];
 
     /**
      * Run the database seeds.
@@ -16,10 +21,11 @@ class UserRecordIssuersSeeder extends Seeder
     {
         $user_ids = DB::table('users')->get(['id']);
 
-        for ($i = 0; $i < count(self::$record_issuers); $i++) {
+        foreach (self::$record_issuers as $name => $type) {
             foreach ($user_ids as $user_id) {
                 DB::table('user_record_issuers')->insert([
-                    'name' => self::$record_issuers[$i],
+                    'name' => $name,
+                    'type' => $type,
                     'user_id' => $user_id->id
                 ]);
             }
