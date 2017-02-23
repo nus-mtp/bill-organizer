@@ -59,7 +59,7 @@
                     <tbody>
                     @foreach($records as $record)
                         <tr>
-                            <td>{{ $record->bill_date }}</td>
+                            <td>{{ $record->issue_date }}</td>
                             <td>{{ $record->period }}</td>
                             <td>{{ $record->due_date }}</td>
                             <td>${{ $record->amount }}</td>

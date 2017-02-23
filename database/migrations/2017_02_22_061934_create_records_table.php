@@ -15,7 +15,7 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('bill_date');
+            $table->date('issue_date');
             $table->date('due_date');
             $table->date('period');
             $table->integer('amount');
@@ -27,7 +27,7 @@ class CreateRecordsTable extends Migration
             $table->foreign('type')->references('id')->on('record_types');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('user_record_issuer_id')->references('id')->on('user_record_issuers');
-            $table->unique(['user_record_issuer_id', 'bill_date']);
+            $table->unique(['user_record_issuer_id', 'issue_date']);
         });
     }
 

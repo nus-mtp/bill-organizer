@@ -21,7 +21,7 @@ class RecordsSeeder extends Seeder
                 ->where('type', 'bill')
                 ->get()[0];
             DB::table('records')->insert([
-                'bill_date' => Carbon\Carbon::now(),
+                'issue_date' => Carbon\Carbon::now(),
                 'due_date' => Carbon\Carbon::now(),
                 'period' => Carbon\Carbon::now(),
                 'amount' => random_int(10, 1000),
