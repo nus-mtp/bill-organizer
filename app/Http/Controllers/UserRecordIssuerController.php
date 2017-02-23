@@ -11,6 +11,10 @@ class UserRecordIssuerController extends Controller
         $this->middleware('auth');
     }
 
+    public function show() {
+
+    }
+
     public function store() {
         // TODO: determine if should add max len constraint?
         $this->validate(request(), ['name' => 'required']);

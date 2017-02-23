@@ -14,13 +14,15 @@
                     </div>
                 </div>
 
-                <div class="sixteen wide column">
-                    <h1>Billing Organisations</h1>
-                    <!--if no billing organisations in db-->
-                    <div class="ui tiny message">
-                        <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                @if(count($user_record_issuers) === 0)
+                    <div class="sixteen wide column">
+                        <h1>Billing Organisations</h1>
+                        <!--if no billing organisations in db-->
+                        <div class="ui tiny message">
+                            <p>There are no billing organisations yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 @foreach($user_record_issuers as $record_issuer)
                     <div class="four wide column">
