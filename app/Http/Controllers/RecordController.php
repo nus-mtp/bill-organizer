@@ -44,7 +44,7 @@ class RecordController extends Controller
         $file_extension = request()->file('record')->extension();
         $file_name = $record_issuer->name . request('issue_date') . '.' . $file_extension;
         $path = request()->file('record')
-            ->storeAs('records/' . $user_id, $file_name);
+            ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
         $period = request('period') . '-01';    // YYYY-MM -> YYYY-MM-01
 
         $db_connection_name = DB::connection()->getName();
