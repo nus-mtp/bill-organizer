@@ -24,3 +24,5 @@ Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerCont
 
 Route::post('/dashboard/record_issuers/{record_issuer}/records', 'RecordController@store')->name('records');
 Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}', 'RecordController@show')->name('show_record_file');
+Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}/download', 'RecordController@download')
+    ->name('download_record_file');
