@@ -27,6 +27,8 @@ class RecordController extends Controller
 
     // TODO: clean up this mess if possible?
     public function store(UserRecordIssuer $record_issuer) {
+        $this->authorize('store', $record_issuer);
+
         // Date format received: YYYY-MM-DD
         $this->validate(request(), [
             'record' => 'required',
@@ -72,7 +74,8 @@ class RecordController extends Controller
     }
 
     public function show(UserRecordIssuer $record_issuer, Record $record) {
-        // TODO: ensure that user is authorized to view
+        $this->authorize('show_file', $record);
+
         // need to prepend 'app/' because Storage::url is stupid. It returns storage/ instead of storage/app/
         $url = storage_path('app/' . $record->path_to_file);
 

@@ -53,7 +53,7 @@
                     @foreach($records as $record)
                         <tr>
                             <td>
-                                <a href="{{ route('show_record', ['record_issuer' => $record_issuer,
+                                <a href="{{ route('show_record_file', ['record_issuer' => $record_issuer,
                                     'record' => $record]) }}">
                                     {{ $record->issue_date }}
                                 </a>
