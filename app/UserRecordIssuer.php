@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserRecordIssuer extends Model
 {
-    public $fillable = ['name'];
+    public $fillable = ['name', 'type'];
 
     public function user() {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function records() {
+        return $this->hasMany(Record::class);
     }
 }
