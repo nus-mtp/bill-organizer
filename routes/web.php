@@ -24,6 +24,6 @@ Route::post('/dashboard/record_issuers', 'UserRecordIssuerController@store');
 Route::post('/dashboard/record_issuers/{record_issuer}/records', 'UserRecordIssuerController@store_record')->name('records');
 Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');
 
-Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}', 'RecordController@show')->name('show_record_file');
-Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}/download', 'RecordController@download')
-    ->name('download_record_file');
+Route::get('/dashboard/records/{record}', 'RecordController@show')->name('show_record_file');
+Route::get('/dashboard/records/{record}/download', 'RecordController@download')->name('download_record_file');
+

@@ -61,14 +61,12 @@
                             <td style="text-align: right; width: 1%">
                                 <div class="ui small basic icon buttons">
                                     <button class="ui button">
-                                        <a href="{{ route('show_record_file', ['record_issuer' => $record_issuer,
-                                            'record' => $record]) }}">
+                                        <a href="{{ route('show_record_file', $record) }}">
                                             <i class="file icon"></i>
                                         </a>
                                     </button>
                                     <button class="ui button">
-                                        <a href="{{ route('download_record_file', ['record_issuer' => $record_issuer,
-                                            'record' => $record]) }}">
+                                        <a href="{{ route('download_record_file', $record) }}">
                                             <i class="download icon"></i>
                                         </a>
                                     </button>

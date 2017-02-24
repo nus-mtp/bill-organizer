@@ -23,7 +23,7 @@ class RecordController extends Controller
 
     }
 
-    public function show(UserRecordIssuer $record_issuer, Record $record) {
+    public function show(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
         // need to prepend 'app/' because Storage::url is stupid. It returns storage/ instead of storage/app/
@@ -33,7 +33,7 @@ class RecordController extends Controller
     }
 
 
-    public function download(UserRecordIssuer $record_issuer, Record $record) {
+    public function download(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
         // need to prepend 'app/' because Storage::url is stupid. It returns storage/ instead of storage/app/
