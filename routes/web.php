@@ -18,11 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
 Route::get('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@show')->name('show_record_issuer');
 Route::post('/dashboard/record_issuers', 'UserRecordIssuerController@store');
+Route::post('/dashboard/record_issuers/{record_issuer}/records', 'UserRecordIssuerController@store_record')->name('records');
 Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');
 
-Route::post('/dashboard/record_issuers/{record_issuer}/records', 'RecordController@store')->name('records');
 Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}', 'RecordController@show')->name('show_record_file');
 Route::get('/dashboard/record_issuers/{record_issuer}/records/{record}/download', 'RecordController@download')
     ->name('download_record_file');

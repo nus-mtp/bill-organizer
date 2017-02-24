@@ -62,13 +62,13 @@
                                 <div class="ui small basic icon buttons">
                                     <button class="ui button">
                                         <a href="{{ route('show_record_file', ['record_issuer' => $record_issuer,
-                                    'record' => $record]) }}">
+                                            'record' => $record]) }}">
                                             <i class="file icon"></i>
                                         </a>
                                     </button>
                                     <button class="ui button">
                                         <a href="{{ route('download_record_file', ['record_issuer' => $record_issuer,
-                                    'record' => $record]) }}">
+                                            'record' => $record]) }}">
                                             <i class="download icon"></i>
                                         </a>
                                     </button>
