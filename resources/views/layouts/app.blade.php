@@ -47,6 +47,19 @@
                 display: block;
             }
 
+
+            a .file.icon {
+                color :#4183C4; /* normal link color */
+            }
+
+            a .download.icon {
+                color: #6435c9;
+            }
+
+            a .remove.icon {
+                color: #db2828;
+            }
+
             /**
              * Styles for input["month"] (non-standard) copied from semantic.css
              * TODO: move this somewhere else
