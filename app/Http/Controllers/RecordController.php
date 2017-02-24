@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\RecordIssuerType;
 use App\Record;
-use App\UserRecordIssuer;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class RecordController extends Controller
@@ -42,5 +42,15 @@ class RecordController extends Controller
         $file_name = $url_parts['filename'] . '.' . $url_parts['extension'];
 
         return response()->download($url, $file_name);
+    }
+
+    public function destroy(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
+        // TODO: handle deletion failure
+        $deletion_success = Storage::delete($record->path_to_file);
+        $record->delete();
+
+        return back();
     }
 }

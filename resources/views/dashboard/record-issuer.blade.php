@@ -74,7 +74,15 @@
                                         <i class="write icon"></i>
                                     </button>
                                     <button class="ui button">
-                                        <i class="remove icon"></i>
+                                        <form method="POST" action="{{ route('delete_record_file', $record) }}"
+                                              style="display: none;" id="delete-record">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                        </form>
+                                        <a href="{{ route('delete_record_file', $record) }}" onclick="event.preventDefault();
+                                            document.getElementById('delete-record').submit()">
+                                            <i class="remove icon"></i>
+                                        </a>
                                     </button>
                                 </div>
                             </td>

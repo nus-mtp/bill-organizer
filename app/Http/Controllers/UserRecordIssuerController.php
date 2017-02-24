@@ -60,7 +60,7 @@ class UserRecordIssuerController extends Controller
 
     // TODO: clean up this mess if possible?
     public function store_record(UserRecordIssuer $record_issuer) {
-        // TODO: authorization fails -> move to UserRecordPolicy
+        // only if this record_issuer belongs to me can I add a new record. I shouldn't be able to add to other user's record issuer
         $this->authorize('belongs_to_user', $record_issuer);
 
         // Date format received: YYYY-MM-DD
