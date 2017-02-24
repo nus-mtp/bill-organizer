@@ -47,6 +47,14 @@
                 display: block;
             }
 
+            tfoot tr td {
+                border-top: 1px solid rgba(34, 36, 38, 0.1) !important;
+            }
+
+            a .icon {
+                margin-right: auto !important;
+                margin-left: auto !important;
+            }
 
             a .file.icon {
                 color :#4183C4; /* normal link color */
