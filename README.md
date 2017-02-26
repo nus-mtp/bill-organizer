@@ -1,4 +1,4 @@
-![circle ci build status badge](https://circleci.com/gh/nus-mtp/bill-organizer.png?circle-token=:circle-token)
+[![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
 ## Setup guide
 
 ### Access development database server
