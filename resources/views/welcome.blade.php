@@ -20,10 +20,10 @@
                         </div>
                     @else
                         <div class="item">
-                            <a class="ui green button" href="{{ url('/register') }}">Register</a>
+                            <a class="ui green button" href="{{ route('register') }}">Register</a>
                         </div>
                         <div class="item">
-                            <a class="ui inverted green button" href="{{ url('/login') }}">Login</a>
+                            <a class="ui inverted green button" href="{{ route('login') }}">Login</a>
                         </div>
                     @endif
                 @endif

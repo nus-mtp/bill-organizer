@@ -9,12 +9,19 @@
             <a class="active item" href="{{ url('/dashboard') }}" class="item">Dashboard</a>
             <a href="{{ url('/dashboard') }}" class="item">Statistics</a>
 
-            <div class="ui right simple dropdown item">[icon] [username]<i class="dropdown icon"></i>
+            <div class="ui right simple dropdown item">[icon] {{ auth()->user()->name }}<i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="#">My Account</a>
                     <div class="divider"></div>
                     <a class="item" href="#">Settings</a>
-                    <a class="item" href="#">Logout</a>
+                    <a class="item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
             </div>
         @endif
