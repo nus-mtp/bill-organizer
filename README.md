@@ -42,7 +42,12 @@ npm run watch
 2. username: **developer** | password:**password**
 #### Via SQLClient (e.g mysql workbench)
 1. Configure connection from local machine using the following settings
-2. host: **128.199.82.128** | port: **3306** | user:**developer** | password:**password**
+```
+host:128.199.82.128
+port:3306
+user:developer 
+password:password
+```
 
 ------------------------------------------
 
