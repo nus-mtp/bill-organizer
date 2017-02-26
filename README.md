@@ -1,9 +1,9 @@
 [![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
 ## Setup guide
 ### 1. Prepare development server
-Option 1: Using vagrant  
+#### Option 1: Using vagrant  
 Follow instructions at https://laravel.com/docs/5.4/homestead  
-Option 2: using xamp  
+#### Option 2: using xamp  
 Follow instructions at https://www.apachefriends.org/download.html  
 #### Additional setup
 Enable required extensions by removing the semi-colons [php.ini](http://lmgtfy.com/?q=where+is+php.ini)
