@@ -8,6 +8,7 @@
 ## Common problems and solutions:
 
 > The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths.
+### Solution
 Inside commandline, at root of app folder, type:
 ```sh
 php artisan config:clear
