@@ -2,8 +2,15 @@
 ## Setup guide
 
 ### Access development database server
+
+#### Via Web portal
 1. Visit http://128.199.82.128/phpmyadmin
 2. username:developer | password:password
+#### Via SQLClient
+1. Configure connection from local machine using the following settings
+2. host: 128.199.82.128 | port: 3306 | user:developer | password:password
+
+------------------------------------------
 
 ### Common problems and solutions:
 
