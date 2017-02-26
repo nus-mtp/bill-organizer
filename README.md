@@ -6,12 +6,28 @@ Follow instructions at https://laravel.com/docs/5.4/homestead
 Option 2: using xamp  
 Follow instructions at https://www.apachefriends.org/download.html  
 #### Additional setup
-Remove the semi-colon for the following values in [php.ini](http://lmgtfy.com/?q=where+is+php.ini)
+Enable required extensions by removing the semi-colons [php.ini](http://lmgtfy.com/?q=where+is+php.ini)
 
 ```php
 extension=php_openssl.dll
 extension=php_curl.dll
 extension=php_sockets.dll
+```
+
+### 2. Setup the project
+1. clone project from github
+```bash
+git clone git@github.com:nus-mtp/bill-organizer.git
+```
+2. install dependencies
+```bash
+composer install
+npm install
+```
+3. start development server
+```bash
+php artisan serve
+npm run watch
 ```
 
 ### Access development database server
