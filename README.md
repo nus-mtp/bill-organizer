@@ -5,6 +5,12 @@ Option 1: Using vagrant
 Follow instructions at https://laravel.com/docs/5.4/homestead  
 Option 2: using xamp  
 Follow instructions at https://www.apachefriends.org/download.html  
+#### Additional setup
+Remove the semi-colon for the following values in [php.ini](http://lmgtfy.com/?q=where+is+php.ini)
+
+extension=php_openssl.dll
+extension=php_curl.dll
+extension=php_sockets.dll
 
 ### Access development database server
 
