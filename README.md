@@ -40,6 +40,7 @@ npm run watch
 #### Via Web portal
 1. Visit http://128.199.82.128/phpmyadmin
 2. username: **developer** | password:**password**
+
 #### Via SQLClient (e.g mysql workbench)
 1. Configure connection from local machine using the following settings
 ```
