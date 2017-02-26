@@ -8,9 +8,11 @@ Follow instructions at https://www.apachefriends.org/download.html
 #### Additional setup
 Remove the semi-colon for the following values in [php.ini](http://lmgtfy.com/?q=where+is+php.ini)
 
+```php
 extension=php_openssl.dll
 extension=php_curl.dll
 extension=php_sockets.dll
+```
 
 ### Access development database server
 
