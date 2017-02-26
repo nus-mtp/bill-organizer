@@ -15,8 +15,8 @@ extension=php_sockets.dll
 ```
 
 ### 2. Install dependency managers
-Download and install Composer at https://getcomposer.org/download/
-Download and install nodejs at https://nodejs.org/en/download/
+Download and install Composer at https://getcomposer.org/download/  
+Download and install nodejs at https://nodejs.org/en/download/  
 
 ### 3. Setup the project
 1 clone project from github
