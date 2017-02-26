@@ -1,4 +1,5 @@
-@extends('layouts.app')
+
+@extends('layouts.layout')
 
 @section('content')
     <!--CONTENT-->
@@ -146,3 +147,8 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
+@endpush
