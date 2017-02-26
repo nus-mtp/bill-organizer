@@ -34,7 +34,7 @@ php artisan serve
 npm run watch
 ```
 
-### Access development database server
+### Accessing Development Database Server
 
 #### Via Web portal
 1. Visit http://128.199.82.128/phpmyadmin
