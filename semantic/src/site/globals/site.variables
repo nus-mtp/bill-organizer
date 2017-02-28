@@ -12,40 +12,32 @@ http://learnsemantic.com/developing/customizing.html
 
 @headerFontName    : 'Source Sans Pro';
 @pageFontName      : 'Varela Round';
+
 @headerFont        : @headerFontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 @pageFont          : @pageFontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 @headerGoogleFont  : 'Source+Sans+Pro';
 @pageGoogleFont    : 'Varela+Round';
 
-@googleFontSizes   : '400,700,400italic,700italic';
-@googleSubset      : 'latin';
-
-@googleProtocol    : 'https://';
-@googleFontRequest : '@{headerGoogleFont}:@{googleFontSizes}&subset=@{googleSubset}|@{pageGoogleFont}';
+@googleFontRequest : '@{headerGoogleFont}:@{googleFontSizes}|@{pageGoogleFont}&subset=@{googleSubset}';
 
 /*-------------------
       Base Sizes
 --------------------*/
 
 /* This is the single variable that controls them all */
-@emSize   : 14px;
+@emSize   : 16px;
 
 /* The size of page text  */
-@fontSize : 14px;
+@fontSize : 16px;
 
 
 /*-------------------
     Border Radius
 --------------------*/
 
-/* See Power-user section below
-   for explanation of @px variables
-*/
 @relativeBorderRadius: @relative4px;
 @absoluteBorderRadius: @4px;
-
-@defaultBorderRadius: @absoluteBorderRadius;
 
 /*-------------------
     Brand Colors
