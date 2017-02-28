@@ -52,10 +52,10 @@
                     <tbody>
                     @foreach($records as $record)
                         <tr>
-                            <td>{{ $record->issue_date }}</td>
-                            <td>{{ $record->period }}</td>
+                            <td>{{ $record->issue_date->toFormattedDateString() }}</td>
+                            <td>{{ $record->period->format('F Y') }}</td>
                             @if($type === 'billing organization')
-                                <td>{{ $record->due_date }}</td>
+                                <td>{{ $record->due_date->toFormattedDateString() }}</td>
                             @endif
                             <td>${{ $record->amount }}</td>
                             <td style="text-align: right; width: 1%">
