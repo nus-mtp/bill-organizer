@@ -8,10 +8,6 @@
 
 @import 'pages/homepage';
 
-.field > input, select {
-  display: block;
-}
-
 tfoot tr td {
   border-top: 1px solid rgba(34, 36, 38, 0.1) !important;
 }
@@ -32,7 +28,9 @@ a .download.icon {
 a .remove.icon {
   color: #db2828;
 }
+/* end of file icons */
 
+/* form */
 .ui.form input[type="month"] {
   /* Standard Input */
   width: 100%;
@@ -84,3 +82,4 @@ a .remove.icon {
   color: rgba(0, 0, 0, 0.87);
   box-shadow: none;
 }
+/* end form */
