@@ -5,10 +5,15 @@ $billorg_db_url = parse_url(env('BILLORG_DB_URL', 'mysql://forge:@127.0.0.1:3306
 $db_config = [
     'host' => $billorg_db_url['host'],
     'port' => $billorg_db_url['port'],
-    'username' => $billorg_db_url['user'],
-    'password' => $billorg_db_url['pass'],
     'database' => substr($billorg_db_url['path'], 1)
 ];
+
+if (array_key_exists('user', $billorg_db_url)) {
+    $db_config = $db_config + [
+            'username' => $billorg_db_url['user'],
+            'password' => $billorg_db_url['pass']
+    ];
+}
 
 return [
 
