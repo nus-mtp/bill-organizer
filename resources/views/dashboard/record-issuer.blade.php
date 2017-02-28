@@ -44,10 +44,10 @@
 
                 <thead>
                     <tr>
-                        <th>issue date</th>
-                        <th>period</th>
+                        <th>Issue date</th>
+                        <th>Period</th>
                         @if($type === 'billing organization')
-                            <th>due date</th>
+                            <th>Due date</th>
                         @endif
                         <th>{{ $amount_field_name }}</th>
                         <th><!-- dummy th for action buttons--></th>

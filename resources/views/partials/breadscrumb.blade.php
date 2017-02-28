@@ -4,5 +4,5 @@
     <i class="right angle icon divider"></i>
     <span class="active">Dashboard</span>
     <i class="right angle icon divider"></i>
-    <span class="active section">{{$section_name}}</span>
+    {{$slot('active-section')}}
 </div>
