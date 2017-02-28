@@ -15,14 +15,9 @@
                     <div class="divider"></div>
                     <a class="item" href="#">Settings</a>
 
-                    <a class="item logout" href="{{ route('logout') }}">
+                    <a class="item logout button">
                         Logout
                     </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-
                 </div>
             </div>
         @endif

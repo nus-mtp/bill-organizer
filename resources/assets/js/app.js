@@ -21,9 +21,11 @@ $(function () {
         $('form#delete-record').submit()
     })
 
-    $('.logout').click((e)=>{
+    $('.logout.button').click((e)=>{
         e.preventDefault()
-        $('form#logout-form').submit()
+        axios.post("/logout").then( _ => {
+            location.reload()
+        })
     })
 })
 
