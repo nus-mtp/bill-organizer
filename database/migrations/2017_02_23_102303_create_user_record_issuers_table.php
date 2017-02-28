@@ -15,7 +15,7 @@ class CreateUserRecordIssuersTable extends Migration
     {
         Schema::create('user_record_issuers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 256);
+            $table->string('name', 191);
             $table->integer('type')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
