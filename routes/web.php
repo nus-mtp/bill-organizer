@@ -15,6 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// remove later
+Route::get('/upload', function () {
+    return view('modules.upload');
+});
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+});
+
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

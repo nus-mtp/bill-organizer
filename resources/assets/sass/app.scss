@@ -1,10 +1,21 @@
 
+// global libraries
 @import 'semantic';
 
+// global configurations
 @import 'settings/variables';
 @import 'settings/mixins';
 @import 'settings/globals';
 @import 'settings/header';
 @import 'settings/footer';
 
+// modules
+@import 'modules/upload';
+
+// page specific styles
+// if the styles for a page get significantly large,
+// we extract styles belonging to the page from global styles
 @import 'pages/homepage';
+
+
+
