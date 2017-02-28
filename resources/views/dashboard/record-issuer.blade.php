@@ -38,7 +38,7 @@
             </div>
 
             @if(count($records) > 0)
-                <table class="ui celled striped table">
+                <table class="ui green celled striped table">
                     <thead>
                     <tr>
                         <th>Issue date</th>
