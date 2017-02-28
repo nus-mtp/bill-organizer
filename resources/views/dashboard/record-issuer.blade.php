@@ -1,24 +1,28 @@
 @extends('layouts.app')
-
+<!-- page specific styles -->
 @push('module_styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css">
 @endpush
+<!-- page specific styles -->
 
 @section('content')
     <!--CONTENT-->
-    <div class="ui main container secondary-container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
+    <div class="ui container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
 
         <div class="ui fluid container">
+            <!-- ui grid -->
             <div class="ui grid">
+
                 <div class="sixteen wide column">
                     @component('partials.breadscrumb')
-                        @slot('active-section')
-                            <span class="active section">{{ $record_issuer->name }}</span>
+                        @slot('section_name')
+                            {{ $record_issuer->name }}
                         @endslot
                     @endcomponent
                 </div>
 
-                @if(count($records) === 0)
+                @if(empty(($records)))
+                    {{-- if there is no records --}}
                     <div class="sixteen wide column">
                         <h1>{{ $record_issuer->name }}</h1>
                         <div class="ui tiny message">
@@ -37,9 +41,12 @@
 
                 @endif
             </div>
+            <!-- end ui grid -->
 
-            @if(count($records) > 0)
-                <table class="ui green celled striped table datatable">
+            @if(!empty($records))
+               {{-- if there are records --}}
+                <table class="ui green celled striped datatable table">
+
                     <thead>
                     <tr>
                         <th>Issue date</th>
@@ -48,8 +55,9 @@
                             <th>Due date</th>
                         @endif
                         <th>{{ $amount_field_name }}</th>
-                        <th></th>
+                        <th><!-- dummy th for action buttons--></th>
                     </thead>
+
                     <tbody>
                     @foreach($records as $record)
                         <tr>
@@ -146,7 +154,7 @@
         </div>
     </div>
 @endsection
-
+<!-- page specific scripts -->
 @push('module_scripts')
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
@@ -155,4 +163,5 @@
                 $('.datatable').DataTable();
             })
     </script>
+<!-- end page specific scripts -->
 @endpush
