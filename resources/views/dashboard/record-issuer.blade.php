@@ -47,7 +47,7 @@
                {{-- if there are records --}}
                 <table class="ui green celled striped datatable table">
 
-                    <thead>
+                <thead>
                     <tr>
                         <th>Issue date</th>
                         <th>Period</th>
@@ -56,7 +56,8 @@
                         @endif
                         <th>{{ $amount_field_name }}</th>
                         <th><!-- dummy th for action buttons--></th>
-                    </thead>
+                    </tr>
+                </thead>
 
                     <tbody>
                     @foreach($records as $record)
