@@ -2,13 +2,19 @@
 // we use semantic to manage stuff that are unlikely to change
 // and customize it inside semantic to change things globally
 
+// global configurations
 @import 'settings/variables';
 @import 'settings/mixins';
 @import 'settings/globals';
 
 @import 'forms';
 
-/* Components */
+// modules
+@import 'modules/upload';
+
+// page specific styles
+// if the styles for a page get significantly large,
+// we extract styles belonging to the page from global styles
 @import 'pages/homepage';
 
 

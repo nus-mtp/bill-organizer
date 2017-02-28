@@ -64,3 +64,12 @@ cp .env.example .env
 php artisan key:generate
 ```
 -----------------------------------------------------
+
+> NPM compilation error
+
+#### Solution
+```
+1. delete node_modules folder
+2. type npm install in terminal/command prompt
+```
+```

@@ -1,32 +1,22 @@
+/**
+ *
+ * this is where we configure our global dependencies (libraries),
+ * the contents of this file will be loaded before app.js
+ */
 
 window._ = require('lodash')
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
 window.$ = window.jQuery = require('jquery')
 require('./semantic')
-/**
- * Vue is a modern JavaScript library for building interactive web interfaces
- * using reactive data binding and reusable components. Vue's API is clean
- * and simple, leaving you to focus on building your next great project.
- */
-
-// window.Vue = require('vue')
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending thes
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 window.axios = require('axios')
-
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
   'X-Requested-With': 'XMLHttpRequest'
 }
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+})
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

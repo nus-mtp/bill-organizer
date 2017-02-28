@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('module_styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css">
+@endpush
+
 @section('content')
     <!--CONTENT-->
     <div class="ui main container secondary-container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
@@ -38,7 +42,7 @@
             </div>
 
             @if(count($records) > 0)
-                <table class="ui green celled striped table">
+                <table class="ui green celled striped table datatable">
                     <thead>
                     <tr>
                         <th>Issue date</th>
@@ -145,3 +149,13 @@
         </div>
     </div>
 @endsection
+
+@push('module_scripts')
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
+    <script>
+            $(function(){
+                $('.datatable').DataTable();
+            })
+    </script>
+@endpush
