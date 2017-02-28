@@ -16,14 +16,22 @@ $(function () {
         }).modal('show')
     })
 
+    $(".add-bill-org.button").click( _ => {
+        $('.ui.modal.record-issuer').modal({
+            onApprove: function () {
+                $('form#add-record-issuer').submit();
+            }
+        }).modal('show')
+    })
+
     $('.delete-record.button').click((e) => {
         e.preventDefault()
         $('form#delete-record').submit()
     })
 
-    $('.logout.button').click((e)=>{
+    $('.logout.button').click((e) => {
         e.preventDefault()
-        axios.post("/logout").then( _ => {
+        axios.post("/logout").then(_ => {
             location.reload()
         })
     })

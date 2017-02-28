@@ -13,7 +13,7 @@
 
             <div class="sixteen wide column">
                 @component('partials.breadscrumb')
-                    @slot('section_name')
+                    @slot('active_section')
                         {{ $record_issuer->name }}
                     @endslot
                 @endcomponent

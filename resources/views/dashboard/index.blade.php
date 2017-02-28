@@ -8,15 +8,14 @@
         <div class="ui fluid container">
             <div class="ui grid">
                 <div class="sixteen wide column">
-                    <div class="ui breadcrumb">
-                        <!-- TODO: Extract breadcrumbs and add links-->
-                        <span class="section">Home</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active section">Dashboard</span>
-                    </div>
+                    {{-- todo: first and second level breadscrump slots--}}
+                    @component('partials.breadscrumb')
+                    @slot('active_section')
+                    @endslot
+                    @endcomponent
                 </div>
 
-                @if(count($user_record_issuers) === 0)
+                @if(empty($user_record_issuers))
                     <div class="sixteen wide column">
                         <h1>Billing Organisations</h1>
                         <!--if no billing organisations in db-->
@@ -29,6 +28,7 @@
                 @foreach($user_record_issuers as $record_issuer)
                     <div class="four wide column">
                         <div class="dotted-container">
+
                             <form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}" style="display: inline;">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
@@ -36,25 +36,27 @@
                                     <i class="remove icon"></i>
                                 </button>
                             </form>
+
                             <p><a href="{{ route('show_record_issuer', $record_issuer) }}">{{ $record_issuer->name }}</a></p>
+
                         </div>
                     </div>
                 @endforeach
 
                 <div class="four wide column">
+
                     <div class="dotted-container">
-                        <button class="circular blue ui icon button" value="showModal"
-                                onClick="$('.ui.modal.record-issuer').modal({onApprove: function() {
-                                    $('form#add-record-issuer').submit();
-                                }}).modal('show');">
+                        <button class="circular blue ui icon add-bill-org button" value="showModal">
                             <i class="icon plus"></i>
                         </button>
                         <p>Add New Billing Organisation</p>
                     </div>
                 </div>
+
                 <div class="four wide column"></div>
                 <div class="four wide column"></div>
                 <div class="four wide column"></div>
+
             </div>
 
             <div class="ui small record-issuer modal">
