@@ -83,7 +83,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="5" style="text-align: center">
+                            <td colspan="5" class="bordered center aligned">
                                 <button class="circular blue ui icon button" value="showModal"
                                         onClick="$('.ui.modal.add-record').modal({onApprove: function() {
                                                     $('form#add-record').submit();
