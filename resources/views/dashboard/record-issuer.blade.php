@@ -11,14 +11,11 @@
         <div class="ui fluid container">
             <div class="ui grid">
                 <div class="sixteen wide column">
-                    <div class="ui breadcrumb">
-                        <!-- TODO: Extract breadcrumbs and add links-->
-                        <span class="section">Home</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active">Dashboard</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active section">{{ $record_issuer->name }}</span>
-                    </div>
+                    @component('partials.breadscrumb')
+                        @slot('active-section')
+                            <span class="active section">{{ $record_issuer->name }}</span>
+                        @endslot
+                    @endcomponent
                 </div>
 
                 @if(count($records) === 0)
