@@ -1,6 +1,6 @@
 <!-- /resources/views/partials/upload.blade.php -->
 
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
 

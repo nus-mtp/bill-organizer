@@ -1,5 +1,5 @@
 
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @push('module_styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css">

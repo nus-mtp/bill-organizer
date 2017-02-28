@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 <!-- we want to have individual page display its title on top of browser -->
 @section('title', 'Dashboard')
 @section('content')
