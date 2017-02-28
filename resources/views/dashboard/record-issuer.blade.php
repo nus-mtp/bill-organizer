@@ -2,7 +2,7 @@
 
 @section('content')
     <!--CONTENT-->
-    <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
+    <div class="ui main container " style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
 
         <div class="ui fluid container">
             <div class="ui grid">
@@ -139,8 +139,8 @@
                     </div>
                 </div>
                 <div class="actions">
-                    <div class="ui button approve green" data-value="yes">Add</div>
-                    <div class="ui button black cancel" data-value="no">Cancel</div>
+                    <div class="ui green approve button" data-value="yes">Add</div>
+                    <div class="ui black cancel button" data-value="no">Cancel</div>
                 </div>
             </div>
         </div>
