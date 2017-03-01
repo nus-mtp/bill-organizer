@@ -7,7 +7,7 @@
 
 @section('content')
     <!--CONTENT-->
-    <div class="ui container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
+    <div class="ui container" style="background:white; min-height: 100vh;">
         <!-- ui grid -->
         <div class="ui grid">
 
