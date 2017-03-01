@@ -7,8 +7,6 @@ $heading-font-name: 'Source Sans Pro';
 $base-font-family: $base-font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 $heading-font-family: $heading-font-name, sans-serif;
 
-//Color
-
 $emerald-green: #2ecc71;
 $sea-green: #229553;
 
@@ -26,6 +24,20 @@ $peach: #f7c597;
 
 $baby-powder: #fffffa;
 
+$colors: (
+  $emerald-green,
+  $sea-green,
+  $coquelicot,
+  $middle-yellow,
+  $naples-yellow,
+  $smashed-pumpkin,
+  $manganese-blue,
+  $azurish-white,
+  $peach,
+  $baby-powder
+);
+
+/* Greyscale */
 $black: #000;
 $errie-black: #1a1a1a;
 $onyx-black: #3c3744;
