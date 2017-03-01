@@ -9,7 +9,7 @@
         <link href="css/app.css" rel="stylesheet" type="text/css">
 
     </head>
-    <body>
+    <body class="dark-background">
 
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
