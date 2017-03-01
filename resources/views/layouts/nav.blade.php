@@ -1,6 +1,6 @@
 <!--TOP MENU-->
-<div class="row">
-    <div class="ui top borderless stackable menu" style="background:#2ecc71;">
+<header id='header'>
+    <div class="ui top fixed stackable menu" style="background:#2ecc71;">
         <div class="ui container">
             <a href="{{ url('/') }}" class="header item"><img class="logo" src="{{url('alt-icon.png')}}">
                 &nbsp&nbsp&nbsp&nbsp BillOrganiser
@@ -24,5 +24,5 @@
             @endif
         </div>
     </div>
-</div>
+</header>
 

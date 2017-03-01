@@ -31,7 +31,9 @@
 
     </head>
     <body>
+        <div class="ui basic segment">
         @include('layouts.nav')
+        </div>
         <div class="ui basic padded segment">
             @yield('content')
         </div>
@@ -39,6 +41,7 @@
             <!-- <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p> -->
         </div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.3/headroom.min.js"></script>
         @yield('pre-javascript')
             <script src="{{ asset('js/manifest.js') }}"></script>
             <script src="{{ asset('js/vendor.js') }}"></script>

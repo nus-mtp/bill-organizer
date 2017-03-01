@@ -17,5 +17,13 @@
 // if the styles for a page get significantly large,
 // we extract styles belonging to the page from global styles
 @import 'pages/homepage';
-
+.headroom--pinned {
+  visibility: visible;
+  visibility: 1;
+}
+.headroom--unpinned {
+  visibility:hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 0.07s ease-in;
+}
 
