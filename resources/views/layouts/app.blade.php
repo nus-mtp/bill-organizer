@@ -30,8 +30,7 @@
         </script>
 
     </head>
-    <body class='ui container'>
-
+    <body>
         @include('layouts.nav')
         <div class="ui basic padded segment">
             @yield('content')
