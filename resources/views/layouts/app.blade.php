@@ -30,9 +30,12 @@
         </script>
 
     </head>
-    <body>
+    <body class='ui container'>
+
         @include('layouts.nav')
-        @yield('content')
+        <div class="ui basic padded segment">
+            @yield('content')
+        </div>
         <div class="footer">
             <!-- <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p> -->
         </div>
