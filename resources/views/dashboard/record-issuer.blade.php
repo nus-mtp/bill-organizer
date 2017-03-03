@@ -7,11 +7,11 @@
 
 @section('content')
     <!--CONTENT-->
-    <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
+    <div class="ui main container" style="background:white; min-height: 100vh;">
 
         <div class="ui fluid container">
-            <div class="ui grid">
-                <div class="sixteen wide column">
+            <div class="ui equal width grid">
+                <div class="column">
                     <div class="ui breadcrumb">
                         <!-- TODO: Extract breadcrumbs and add links-->
                         <span class="section">Home</span>
@@ -20,29 +20,27 @@
                         <i class="right angle icon divider"></i>
                         <span class="active section">{{ $record_issuer->name }}</span>
                     </div>
-                </div>
-
+                
+                <div class="ui basic segment">
+            
                 @if(count($records) === 0)
-                    <div class="sixteen wide column">
-                        <h1>{{ $record_issuer->name }}</h1>
-                        <div class="ui tiny message">
-                            <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
-                        </div>
-                        <div class="dotted-container">
-                            <button class="circular blue ui icon button" value="showModal"
-                                    onClick="$('.ui.modal.add-record').modal({onApprove: function() {
-                                            $('form#add-record').submit();
-                                        }}).modal('show');">
-                                <i class="icon plus"></i>
-                            </button>
-                            <span>Add new record</span>
-                        </div>
+                    <h1>{{ $record_issuer->name }}</h1>
+                    <div class="ui tiny message">
+                        <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                     </div>
-
+                    <div class="dotted-container">
+                        <button class="circular blue ui icon button" value="showModal"
+                        onClick="$('.ui.modal.add-record').modal({onApprove: function() {
+                        $('form#add-record').submit();
+                        }}).modal('show');">
+                        <i class="icon plus"></i>
+                        </button>
+                        <span>Add new record</span>
+                    </div>
                 @endif
-            </div>
 
             @if(count($records) > 0)
+                <h1>{{ $record_issuer->name }}</h1>
                 <table class="ui celled striped table datatable">
                     <thead>
                     <tr>
@@ -150,6 +148,13 @@
             </div>
         </div>
     </div>
+                <!--SIDEBAR-->
+                <div class="four wide column" style="height: 100vh; background:#ccc;">
+                    [insert stats here]
+                </div>
+</div>
+        </div>
+        </div>
 @endsection
 
 @push('module_scripts')
