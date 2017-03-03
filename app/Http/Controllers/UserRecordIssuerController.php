@@ -83,21 +83,10 @@ class UserRecordIssuerController extends Controller
         $path = request()->file('record')
             ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this
-        $period = request('period') . '-01';    // YYYY-MM -> YYYY-MM-01
-
-        $db_connection_name = DB::connection()->getName();
-        // In MySQL, the function is called STR_TO_DATE, in postgres (and others -- check it out), TO_DATE
-        $to_date_fname = $db_connection_name === 'mysql' ? 'STR_TO_DATE' : 'TO_DATE';
-        $date_format = $db_connection_name === 'mysql' ? '%Y-%m-%d' : 'YYYY-MM-DD';
-        $pdo = DB::connection()->getPdo();
-
-        $quoted_period = $pdo->quote($period);   // to protect against SQL injection
-        $quoted_date_format = $pdo->quote($date_format);
 
         auth()->user()->create_record(
             new Record(
-                request(['issue_date', 'due_date', 'amount']) + [
-                    'period' => DB::raw($to_date_fname . '(' . $quoted_period . ', ' . $quoted_date_format . ')'),
+                request(['issue_date', 'due_date', 'amount', 'period']) + [
                     'path_to_file' => $path,
                     'user_record_issuer_id' => $record_issuer->id
                 ]
