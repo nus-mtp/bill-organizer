@@ -13,16 +13,11 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('guest');
 
 // remove later
 Route::get('/upload', function () {
     return view('modules.upload');
-});
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
 });
 
 Auth::routes();
