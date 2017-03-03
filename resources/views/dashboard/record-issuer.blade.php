@@ -1,49 +1,45 @@
-
 @extends('layouts.app')
-
+<!-- page specific styles -->
 @push('module_styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css">
 @endpush
+<!-- page specific styles -->
 
 @section('content')
     <!--CONTENT-->
-    <div class="ui main container" style="background:white; min-height: 100vh;">
-
+    <div class="ui container" style="background:white; min-height: 100vh;">
         <div class="ui fluid container">
+
             <div class="ui equal width grid">
                 <div class="column">
-                    <div class="ui breadcrumb">
-                        <!-- TODO: Extract breadcrumbs and add links-->
-                        <span class="section">Home</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active">Dashboard</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active section">{{ $record_issuer->name }}</span>
-                    </div>
-                    
-                    <button class="ui circular mini blue right floated button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i></button>
-                
+
+                    @component('partials.breadscrumb')
+                    @slot('active_section')
+                    {{ $record_issuer->name }}
+                    @endslot
+                    @endcomponent
+
+                    <button class="ui circular mini blue right floated button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i>
+                    </button>
+
                 <div class="ui basic segment">
-            
-                @if(count($records) === 0)
+                @if(empty($records))
                     <h1>{{ $record_issuer->name }}</h1>
                     <div class="ui tiny message">
                         <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                     </div>
                     <div class="dotted-container">
-                        <button class="circular blue ui icon button" value="showModal"
-                        onClick="$('.ui.modal.add-record').modal({onApprove: function() {
-                        $('form#add-record').submit();
-                        }}).modal('show');">
+                        <button class="ui circular blue add-record icon button" value="showModal">
                         <i class="icon plus"></i>
                         </button>
                         <span>Add new record</span>
                     </div>
                 @endif
 
-            @if(count($records) > 0)
+            @if(!empty($records))
                 <h1>{{ $record_issuer->name }}</h1>
-                <table class="ui celled striped table datatable">
+                <table class="ui green celled striped datatable table">
+
                     <thead>
                     <tr>
                         <th>Issue date</th>
@@ -52,9 +48,12 @@
                             <th>Due date</th>
                         @endif
                         <th>{{ $amount_field_name }}</th>
-                        <th></th>
+                        <th><!-- dummy th for action buttons--></th>
+                    </tr>
                     </thead>
+
                     <tbody>
+
                     @foreach($records as $record)
                         <tr>
                             <td>{{ $record->issue_date->toFormattedDateString() }}</td>
@@ -85,26 +84,28 @@
                             </td>
                         </tr>
                     @endforeach
+
                     </tbody>
+
                     <tfoot>
                         <tr>
-                            <td colspan="5" style="text-align: center">
-                                <button class="circular blue ui icon button" value="showModal"
-                                        onClick="$('.ui.modal.add-record').modal({onApprove: function() {
-                                                    $('form#add-record').submit();
-                                                }}).modal('show');">
+                            <td colspan="5" class="bordered centere aligned">
+                                <button class="ui circular blue add-record icon button" value="showModal">
                                     <i class="icon plus"></i>
                                 </button>
                                 <span>Add new record</span>
                             </td>
                         </tr>
                     </tfoot>
+
                 </table>
             @endif
 
             <div class="ui small add-record modal">
                 <i class="close icon"></i>
                 <div class="header">Add new record</div>
+
+                <!-- modal content -->
                 <div class="content">
                     <div class="ui fluid input">
                         <form method="POST" action="{{ route('records', $record_issuer) }}"
@@ -141,15 +142,17 @@
                             </div>
 
                         </form>
-                    </div>
-                </div>
+                    </div><!-- end ui fluid input -->
+                </div><!-- end modal content -->
+
                 <div class="actions">
                     <div class="ui button approve green" data-value="yes">Add</div>
                     <div class="ui button black cancel" data-value="no">Cancel</div>
                 </div>
-            </div>
-        </div>
-    </div>
+
+            </div><!-- modal end -->
+        </div><!-- basic segment end -->
+    </div><!-- column end -->
                 <!--SIDEBAR-->
                 <div class="four wide column" id="stats" style="height: 100vh; border-left:1px #ccc solid; display:block; text-align:center;">
                     <h4>Statistics for this year</h4>
@@ -164,7 +167,7 @@
                             <div class="item" data-value="3">Pre Big Bang</div>
                         </div>
                     </div>
-                    
+
                     <div class="ui statistics">
                         <div class="red statistic">
                             <div class="value">0</div>
@@ -184,7 +187,7 @@
         </div>
         </div>
 @endsection
-
+<!-- page specific scripts -->
 @push('module_scripts')
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
@@ -192,11 +195,11 @@
             $(function(){
                 $('.datatable').DataTable();
             })
-            
+
             $('.ui.dropdown')
                 .dropdown()
             ;
-            
+
             function togglestats(){
                 var stats = document.getElementById('stats');
                 if(stats.style.display == 'none'){
@@ -209,4 +212,5 @@
                 }
             }
     </script>
+<!-- end page specific scripts -->
 @endpush

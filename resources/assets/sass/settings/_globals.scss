@@ -1,8 +1,10 @@
+/*===============================
+=            Globals            =
+===============================*/
+
 body,
 html {
-    background-color: $onyx-black;
     color: #636b6f;
-    font-family: $base-font-family;
     font-size: $base-font-size;
 }
 
@@ -54,10 +56,6 @@ p {
     position: absolute;
     right: 10px;
     top: 18px;
-}
-
-.content {
-    text-align: center;
 }
 
 .title {

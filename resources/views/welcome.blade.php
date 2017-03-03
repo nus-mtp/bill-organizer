@@ -9,7 +9,7 @@
         <link href="css/app.css" rel="stylesheet" type="text/css">
 
     </head>
-    <body>
+    <body class="dark-background">
 
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="flex-center position-ref full-height">
-            <div class="content">
+            <div class="ui center aligned container">
                 <div class="title m-b-md">
                     <div class="title"><img src="{{url('icon.png')}}" style="height: 100px;vertical-align:middle"> Bill<font color="white">Organiser</font></div>
                 </div>
