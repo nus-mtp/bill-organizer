@@ -1,1 +1,1 @@
-web: source scripts/start
+web: npm run production; vendor/bin/heroku-php-apache2 public/

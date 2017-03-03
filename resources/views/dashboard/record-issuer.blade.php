@@ -7,11 +7,11 @@
 
 @section('content')
     <!--CONTENT-->
-    <div class="ui main container" style="background:white; padding:90px 65px 65px 65px; min-height: 100vh;">
+    <div class="ui main container" style="background:white; min-height: 100vh;">
 
         <div class="ui fluid container">
-            <div class="ui grid">
-                <div class="sixteen wide column">
+            <div class="ui equal width grid">
+                <div class="column">
                     <div class="ui breadcrumb">
                         <!-- TODO: Extract breadcrumbs and add links-->
                         <span class="section">Home</span>
@@ -20,29 +20,29 @@
                         <i class="right angle icon divider"></i>
                         <span class="active section">{{ $record_issuer->name }}</span>
                     </div>
-                </div>
-
+                    
+                    <button class="ui circular mini blue right floated button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i></button>
+                
+                <div class="ui basic segment">
+            
                 @if(count($records) === 0)
-                    <div class="sixteen wide column">
-                        <h1>{{ $record_issuer->name }}</h1>
-                        <div class="ui tiny message">
-                            <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
-                        </div>
-                        <div class="dotted-container">
-                            <button class="circular blue ui icon button" value="showModal"
-                                    onClick="$('.ui.modal.add-record').modal({onApprove: function() {
-                                            $('form#add-record').submit();
-                                        }}).modal('show');">
-                                <i class="icon plus"></i>
-                            </button>
-                            <span>Add new record</span>
-                        </div>
+                    <h1>{{ $record_issuer->name }}</h1>
+                    <div class="ui tiny message">
+                        <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                     </div>
-
+                    <div class="dotted-container">
+                        <button class="circular blue ui icon button" value="showModal"
+                        onClick="$('.ui.modal.add-record').modal({onApprove: function() {
+                        $('form#add-record').submit();
+                        }}).modal('show');">
+                        <i class="icon plus"></i>
+                        </button>
+                        <span>Add new record</span>
+                    </div>
                 @endif
-            </div>
 
             @if(count($records) > 0)
+                <h1>{{ $record_issuer->name }}</h1>
                 <table class="ui celled striped table datatable">
                     <thead>
                     <tr>
@@ -57,10 +57,10 @@
                     <tbody>
                     @foreach($records as $record)
                         <tr>
-                            <td>{{ $record->issue_date }}</td>
-                            <td>{{ $record->period }}</td>
+                            <td>{{ $record->issue_date->toFormattedDateString() }}</td>
+                            <td>{{ $record->period->format('F Y') }}</td>
                             @if($type === 'billing organization')
-                                <td>{{ $record->due_date }}</td>
+                                <td>{{ $record->due_date->toFormattedDateString() }}</td>
                             @endif
                             <td>${{ $record->amount }}</td>
                             <td style="text-align: right; width: 1%">
@@ -79,7 +79,7 @@
                                             {{ method_field('DELETE') }}
                                         </form>
 
-                                        <i class="remove icon"></i>
+                                        <i class="red trash icon"></i>
                                     </a>
                                 </div>
                             </td>
@@ -150,6 +150,39 @@
             </div>
         </div>
     </div>
+                <!--SIDEBAR-->
+                <div class="four wide column" id="stats" style="height: 100vh; border-left:1px #ccc solid; display:block; text-align:center;">
+                    <h4>Statistics for this year</h4>
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="filter">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select time period</div>
+                        <div class="menu">
+                            <div class="item" data-value="0">This year</div>
+                            <div class="item" data-value="1">Past 2 years</div>
+                            <div class="item" data-value="2">All of time</div>
+                            <div class="item" data-value="3">Pre Big Bang</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ui statistics">
+                        <div class="red statistic">
+                            <div class="value">0</div>
+                            <div class="label">Bills Paid</div>
+                        </div>
+                        <div class="red statistic">
+                            <div class="value">$901</div>
+                            <div class="label">Owed</div>
+                        </div>
+                        <div class="red statistic">
+                            <div class="value"><i class="frown icon"></i></div>
+                            <div class="label">Sadded</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
 @endsection
 
 @push('module_scripts')
@@ -159,5 +192,21 @@
             $(function(){
                 $('.datatable').DataTable();
             })
+            
+            $('.ui.dropdown')
+                .dropdown()
+            ;
+            
+            function togglestats(){
+                var stats = document.getElementById('stats');
+                if(stats.style.display == 'none'){
+                    document.getElementById('stats').style.display = 'block';
+                    document.getElementById('statsbutton').className = 'ui circular mini blue right floated button';
+                }
+                else{
+                    document.getElementById('stats').style.display = 'none';
+                    document.getElementById('statsbutton').className = 'ui circular mini right floated button';
+                }
+            }
     </script>
 @endpush

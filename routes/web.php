@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('guest');
 
 // remove later
 Route::get('/upload', function () {
