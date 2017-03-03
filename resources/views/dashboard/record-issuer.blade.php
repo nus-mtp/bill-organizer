@@ -20,6 +20,8 @@
                         <i class="right angle icon divider"></i>
                         <span class="active section">{{ $record_issuer->name }}</span>
                     </div>
+                    
+                    <button class="ui circular mini blue right floated button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i></button>
                 
                 <div class="ui basic segment">
             
@@ -77,7 +79,7 @@
                                             {{ method_field('DELETE') }}
                                         </form>
 
-                                        <i class="remove icon"></i>
+                                        <i class="red trash icon"></i>
                                     </a>
                                 </div>
                             </td>
@@ -149,10 +151,36 @@
         </div>
     </div>
                 <!--SIDEBAR-->
-                <div class="four wide column" style="height: 100vh; background:#ccc;">
-                    [insert stats here]
+                <div class="four wide column" id="stats" style="height: 100vh; border-left:1px #ccc solid; display:block; text-align:center;">
+                    <h4>Statistics for this year</h4>
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="filter">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select time period</div>
+                        <div class="menu">
+                            <div class="item" data-value="0">This year</div>
+                            <div class="item" data-value="1">Past 2 years</div>
+                            <div class="item" data-value="2">All of time</div>
+                            <div class="item" data-value="3">Pre Big Bang</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ui statistics">
+                        <div class="red statistic">
+                            <div class="value">0</div>
+                            <div class="label">Bills Paid</div>
+                        </div>
+                        <div class="red statistic">
+                            <div class="value">$901</div>
+                            <div class="label">Owed</div>
+                        </div>
+                        <div class="red statistic">
+                            <div class="value"><i class="frown icon"></i></div>
+                            <div class="label">Sadded</div>
+                        </div>
+                    </div>
                 </div>
-</div>
+            </div>
         </div>
         </div>
 @endsection
@@ -164,5 +192,21 @@
             $(function(){
                 $('.datatable').DataTable();
             })
+            
+            $('.ui.dropdown')
+                .dropdown()
+            ;
+            
+            function togglestats(){
+                var stats = document.getElementById('stats');
+                if(stats.style.display == 'none'){
+                    document.getElementById('stats').style.display = 'block';
+                    document.getElementById('statsbutton').className = 'ui circular mini blue right floated button';
+                }
+                else{
+                    document.getElementById('stats').style.display = 'none';
+                    document.getElementById('statsbutton').className = 'ui circular mini right floated button';
+                }
+            }
     </script>
 @endpush

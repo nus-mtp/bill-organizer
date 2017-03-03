@@ -9,7 +9,7 @@
             <a class="active item" href="{{ url('/dashboard') }}" class="item">Dashboard</a>
             <a href="{{ url('/dashboard') }}" class="item">Statistics</a>
 
-            <div class="ui right simple dropdown item">[icon] {{ auth()->user()->name }}<i class="dropdown icon"></i>
+            <div class="ui right simple dropdown item"><i class="user icon"></i>{{ auth()->user()->name }}<i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="#">My Account</a>
                     <div class="divider"></div>
