@@ -20,6 +20,10 @@ Route::get('/upload', function () {
     return view('modules.upload');
 });
 
+// remove later and replace with record-specific urls later
+Route::get('/edit', function () {
+    return view('dashboard.editrecord');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard.index');

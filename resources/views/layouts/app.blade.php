@@ -130,9 +130,11 @@
         <div class="ui basic segment">
             @include('layouts.nav')
         </div>
-            <div class="ui padded segment">
+        <div class="ui main container">
+            <div class="ui basic padded segment">
                 @yield('content')
             </div>
+        </div>
         <div class="footer">
             <!-- <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p> -->
         </div>
