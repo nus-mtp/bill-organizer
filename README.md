@@ -63,7 +63,7 @@ php artisan config:clear
 cp .env.example .env
 php artisan key:generate
 ```
------------------------------------------------------
+--------------------------------------------------------------
 
 > NPM compilation error
 
@@ -72,7 +72,7 @@ php artisan key:generate
 1. delete node_modules folder
 2. type npm install in terminal/command prompt
 ```
-
+-----------------------------------------------------------------
 > Error: Cannot find module 'D:\vhosts\bill-organizer\node_modules\cross-env\bin\cross-env.js'  
 
 ### Solution
