@@ -11,24 +11,38 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->middleware('guest');
+
+
+Route::get('/','HomeController@show' );
 
 // remove later
 Route::get('/upload', function () {
     return view('modules.upload');
 });
 
+// all authentication related routes
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+// only authenticated user can access this route group
+Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
 
-Route::get('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@show')->name('show_record_issuer');
-Route::post('/dashboard/record_issuers', 'UserRecordIssuerController@store');
-Route::post('/dashboard/record_issuers/{record_issuer}/records', 'UserRecordIssuerController@store_record')->name('records');
-Route::delete('/dashboard/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');
+  Route::get('/', 'DashboardController@index')->name('dashboard');
 
-Route::get('/dashboard/records/{record}', 'RecordController@show')->name('show_record_file');
-Route::get('/dashboard/records/{record}/download', 'RecordController@download')->name('download_record_file');
-Route::delete('/dashboard/records/{record}', 'RecordController@destroy')->name('delete_record_file');
+  Route::get('/record_issuers/{record_issuer}', 'UserRecordIssuerController@show')->name('show_record_issuer');
+  Route::post('/record_issuers', 'UserRecordIssuerController@store');
+  Route::post('/record_issuers/{record_issuer}/records', 'UserRecordIssuerController@store_record')->name('records');
+  Route::delete('/record_issuers/{record_issuer}', 'UserRecordIssuerController@destroy');
+
+  Route::get('/records/{record}', 'RecordController@show')->name('show_record_file');
+  Route::get('/records/{record}/download', 'RecordController@download')->name('download_record_file');
+  Route::delete('/records/{record}', 'RecordController@destroy')->name('delete_record_file');
+
+});
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+});
