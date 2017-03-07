@@ -3,14 +3,14 @@
   "engines": {
     "node": "6.9.5",
     "npm": "4.3.0"
-  }, 
-  "scripts": {
-    "dev": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules",
-    "watch": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules",
-    "hot": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot",
-    "production": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules"
   },
-  "dependencies": { 
+  "scripts": {
+    "dev": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules",
+    "watch": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules",
+    "hot": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot",
+    "production": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules"
+  },
+  "dependencies": {
     "axios": "^0.15.2",
     "dropzone": "^4.3.0",
     "jquery": "^3.1.0",
@@ -28,7 +28,7 @@
     "laravel-mix": "^0.8.2",
     "lodash": "^4.16.2",
     "node-sass": "^4.5.0",
-    "semantic-ui": "^2.2.7",
-    "vue": "^2.0.1"
+    "vue": "^2.0.1",
+    "semantic-ui": "^2.2.9"
   }
 }
