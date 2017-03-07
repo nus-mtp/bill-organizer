@@ -29,7 +29,7 @@
                     <div class="ui form">
                         <div class="field">
                             <label>Issue Date</label>
-                            <input type="text" name="issuedate" placeholder="Issue Date">
+                            <input type="text" name="issuedate" placeholder="Issue Date" id="issue" value="what">
                         </div>
                         <div class="field">
                             <label>Record Period</label>
@@ -52,14 +52,6 @@
 
 <script type="text/javascript">
     
-    //var billimg = document.getElementById('bill');
-    //billimg.onmousedown = test;
-    
-    function test(e){
-        var content = e.pageX;
-        document.getElementById('temp').innerHTML = content;
-    }
-    
     function FindPosition(oElement)
     {
         if(typeof( oElement.offsetParent ) != "undefined") {
@@ -78,8 +70,8 @@
         var PosX = 0;
         var PosY = 0;
         var ImgPos;
-        var myImg = document.getElementById('bill');
-        ImgPos = FindPosition(myImg);
+        var billImg = document.getElementById('bill');
+        ImgPos = FindPosition(billImg);
         if (!e) var e = window.event;
         if (e.pageX || e.pageY) {
             PosX = e.pageX;
@@ -93,7 +85,8 @@
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
-        document.getElementById("temp").innerHTML = PosX + ";" + PosY;
+        document.getElementById("temp").innerHTML = PosX + ", " + PosY;
+        document.activeElement.value = PosX + ", " + PosY;
     }
 
 </script>
