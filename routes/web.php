@@ -41,8 +41,3 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
   Route::delete('/records/{record}', 'RecordController@destroy')->name('delete_record_file');
 
 });
-
-
-Route::group(['middleware' => 'auth'], function () {
-
-});
