@@ -1,4 +1,6 @@
 [![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
+## Database Schema
+![img](http://i.imgur.com/W6u4fgx.png)
 ## Setup guide
 ### 1. Prepare development server
 #### Option 1: Using vagrant  
