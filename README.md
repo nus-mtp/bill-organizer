@@ -75,7 +75,7 @@ php artisan key:generate
 -----------------------------------------------------------------
 > Error: Cannot find module 'D:\vhosts\bill-organizer\node_modules\cross-env\bin\cross-env.js'  
 
-### Solution
+#### Solution
 This happens because cross-env.js package updated its build path recently,  
 refer to https://github.com/JeffreyWay/laravel-mix/issues/478
 ```
