@@ -8,14 +8,14 @@
 
         @if (Auth::check())
             <a class="active item" href="{{ url('/dashboard') }}" class="item">Dashboard</a>
-            <a href="{{ url('/dashboard') }}" class="item">Statistics</a>
+            {{--<a href="{{ url('/dashboard') }}" class="item">Statistics</a>--}}
 
             <div class="ui right simple dropdown item"><i class="user icon"></i>{{ auth()->user()->name }}<i class="dropdown icon"></i>
 
                 <div class="menu">
-                    <a class="item" href="#">My Account</a>
-                    <div class="divider"></div>
-                    <a class="item" href="#">Settings</a>
+                    {{--<a class="item" href="#">My Account</a>--}}
+                    {{--<div class="divider"></div>--}}
+                    {{--<a class="item" href="#">Settings</a>--}}
 
                     <a class="item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
