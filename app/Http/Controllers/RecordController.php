@@ -73,16 +73,19 @@ class RecordController extends Controller
     {
         // add Gate:: here, allow(some policy) if auth()-id() === post(id) : allow else deny
         $this->upload_file($request, $record);
-        if ($request) {
+        if ($request)
+        {
             $record->update($request->all());
             session()->flash('success', 'Records updated.');
         } //call update only if there's changes
         return back();
     }
 
-    private function upload_file($request, $record){
+    private function upload_file($request, $record)
+    {
         // upload only if user optionally uploaded a file
-        if ($request ->file('record_file')){
+        if ($request ->file('record_file'))
+        {
             $file          = $request->file('record_file');
             $extension     = $file->extension();
             $file_name     = $record->issuer_name() . $request->issue_date . '.'. $extension;
@@ -92,5 +95,4 @@ class RecordController extends Controller
         }
         return null;
     }
-
 }

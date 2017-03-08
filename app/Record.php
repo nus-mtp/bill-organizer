@@ -43,7 +43,8 @@ class Record extends Model
         return $this->issuer_type->type;
     }
 
-    public function is_issuer_type_bill(){
+    public function is_issuer_type_bill()
+    {
         return $this->issuer_type_name() === RecordIssuerType::BILL_TYPE_NAME;
     }
 
