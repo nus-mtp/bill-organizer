@@ -29,28 +29,30 @@
                         <div class="ui small register modal">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
-                              <form class="ui equal width form">
-                                <div class="fields">
+                              <form method="POST" action="{{ route('register') }}"class="ui equal width form" id="registration">
+                                {{ csrf_field() }}
+
+                              <!--  <div class="fields"> -->
                                   <div class="field">
-                                    <label>First Name</label>
-                                    <input type="text" placeholder="First Name">
+                                    <label for="name">Name</label>
+                                    <input id="name" type="text" name="name" placeholder="Name" required autofocus>
                                   </div>
-                                  <div class="field">
+                  <!--                <div class="field">
                                     <label>Last Name</label>
-                                    <input type="text" placeholder="Last Name">
+                                    <input id="last-name" type="text" name="last-name" placeholder="Last Name">
                                   </div>
+                                </div> -->
+                                <div class="field">
+                                  <label for="email">Email</label>
+                                  <input id="email" type="text" name="email" placeholder="Email" required>
                                 </div>
                                 <div class="field">
-                                  <label>Email</label>
-                                  <input type="text" placeholder="Email">
+                                  <label for="password">Password</label>
+                                  <input id="password" type="password" name="password" placeholder="Password" required>
                                 </div>
                                 <div class="field">
-                                  <label>Password</label>
-                                  <input type="password" placeholder="Password">
-                                </div>
-                                <div class="field">
-                                  <label>Password Confirm</label>
-                                  <input type="password" placeholder="Retype Password">
+                                  <label for="password-confirm">Password Confirm</label>
+                                  <input id="password-confirm" type="password" name="password-confirm" placeholder="Retype Password" required>
                                 </div>
                                 <div class="action" style="text-align:right;">
                                   <div class="ui primary button">Register</div>
