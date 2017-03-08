@@ -83,7 +83,7 @@ class RecordController extends Controller
             'amount'       => $request->amount,
         );
 
-        $record->update($this->filter_empty_update_fields($field_list));
+        $record->update($this->$field_list);
         return back();
     }
 
@@ -99,11 +99,4 @@ class RecordController extends Controller
         }
         return null;
     }
-
-
-    private function filter_empty_update_fields($field_list) {
-        $field_list = array_filter($field_list);
-        return $field_list;
-    }
-
 }

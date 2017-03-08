@@ -68,6 +68,8 @@
 
     </form>
 
-</div>
+     @include('partials.errors')
+
+    </div><!-- end of ui container -->
 
 @endsection
