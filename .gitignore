@@ -179,6 +179,5 @@ resources/.vagrant/machines/default/virtualbox/synced_folders
 resources/Vagrantfile
 
 # generated semantic files
-semantic.json
 semantic
 semantic\\
