@@ -178,6 +178,3 @@ resources/.vagrant/machines/default/virtualbox/private_key_putty.ppk
 resources/.vagrant/machines/default/virtualbox/synced_folders
 resources/Vagrantfile
 
-# generated semantic files
-semantic
-semantic\\
