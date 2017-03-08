@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\RecordIssuerType;
 use App\Record;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateRecordForm;
+use League\Flysystem\Exception;
 
 class RecordController extends Controller
 {
@@ -65,31 +68,42 @@ class RecordController extends Controller
         return view('records.edit', compact('record', 'is_issuer_type_bill'));
     }
 
-    public function update(Record $record)
+    public function update(UpdateRecordForm $request, Record $record)
+
     {
-        $request_all = request()->all();
-        $user_id = auth()->id();
-        $issue_date = request('issue_date');
-        $issuer_name = $record->issuer_name();
+        // add Gate:: here, allow(some policy) if auth()-id() === post(id) : allow else deny
         $path_of_uploaded_file = $record->path_to_file;
+        $this->upload_file($request, $record);
 
-        if (request()->file('record_file')) // if user optionally uploaded a file
-        {
-            $file = request()->file('record_file');
-            $extension = $file->extension();
-            $file_name = $issuer_name . $issue_date . '.'. $extension;
-            $path_of_uploaded_file = $file->storeAs('records'.$user_id, $file_name, ['visibility'=>'private']);
-        }
-
-        // build variable list to update
-
-        $field_list = array_merge(request(['issue_date', 'due_date']), [
-            'period' => request('record_period'),
+        $field_list = array(
+            'due_date'     => $request->issue_date,
+            'issue_date'   => $request->due_date,
+            'period'       => $request->period,
             'path_to_file' => $path_of_uploaded_file,
-            'amount' => request('amount_due'),
-        ]);
-        $field_list =array_filter($field_list); // filter the fields user do not want update
-        $record->update($field_list);
+            'amount'       => $request->amount,
+        );
+
+        $record->update($this->filter_empty_update_fields($field_list));
         return back();
     }
+
+    private function upload_file($request, $record){
+        // upload only if user optionally uploaded a file
+        if ($request ->file('record_file')){
+            $file          = $request->file('record_file');
+            $extension     = $file->extension();
+            $file_name     = $record->issuer_name() . $request->issue_date . '.'. $extension;
+            $path_to_store = 'records'.$record->user_id;
+
+            return $path_of_uploaded_file = $file->storeAs($path_to_store, $file_name, ['visibility'=>'private']);
+        }
+        return null;
+    }
+
+
+    private function filter_empty_update_fields($field_list) {
+        $field_list = array_filter($field_list);
+        return $field_list;
+    }
+
 }
