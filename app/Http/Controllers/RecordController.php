@@ -53,4 +53,43 @@ class RecordController extends Controller
 
         return back();
     }
+
+    public function edit(Record $record)
+    {
+        /*
+         $is_issuer_type_bill is
+         used to determine whether to hide bill related form controls in views.
+         e.g only bills have due date but not bank statements.
+         */
+        $is_issuer_type_bill = $record->is_issuer_type_bill();
+        return view('records.edit', compact('record', 'is_issuer_type_bill'));
+    }
+
+    public function update(Record $record)
+    {
+        $request_all = request()->all();
+        $user_id = auth()->id();
+        $issue_date = request('issue_date');
+        $issuer_name = $record->issuer_name();
+        $path_of_uploaded_file = $record->path_to_file;
+
+        if (request()->file('record_file')) // if user optionally uploaded a file
+        {
+            $file = request()->file('record_file');
+            $extension = $file->extension();
+            $file_name = $issuer_name . $issue_date . '.'. $extension;
+            $path_of_uploaded_file = $file->storeAs('records'.$user_id, $file_name, ['visibility'=>'private']);
+        }
+
+        // build variable list to update
+
+        $field_list = array_merge(request(['issue_date', 'due_date']), [
+            'period' => request('record_period'),
+            'path_to_file' => $path_of_uploaded_file,
+            'amount' => request('amount_due'),
+        ]);
+        $field_list =array_filter($field_list); // filter the fields user do not want update
+        $record->update($field_list);
+        return back();
+    }
 }

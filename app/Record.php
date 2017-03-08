@@ -32,6 +32,11 @@ class Record extends Model
         return $this->issuer->issuer_type();
     }
 
+    public function issuer_name()
+    {
+        return $this->issuer->name;
+    }
+
     // return RecordIssuerType name in String
     public function issuer_type_name()
     {

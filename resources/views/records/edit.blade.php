@@ -3,7 +3,7 @@
 @section('content')
 <div class="ui container">
 
-    <form class="ui form" action=" {{ route('update_record', $record)}}" enctype="multipart/form-data">
+    <form class="ui form" action=" {{ route('update_record', $record)}}" enctype="multipart/form-data" method="post">
 
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
@@ -11,17 +11,17 @@
         <h3>Update</h3>
 
         <div class="field">
-            <label for='amount'>Amount Due:</label>
-            <input name="amount" type="text" placeholder="{{ $record->amount }}"></input>
+            <label for='amount_due'>Amount Due:</label>
+            <input name="amount_due" type="text" placeholder="{{ $record->amount }}"></input>
         </div>
 
         <div class="two fields">
             <div class="field">
-                <label for='date'>Issue Date:</label>
+                <label for='issue_date'>Issue Date:</label>
                 <div class="ui calendar">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input name="date" type="text" placeholder="{{ $record->issue_date->format('d/m/Y') }}">
+                        <input name="issue_date" type="text" placeholder="{{ $record->issue_date->format('d/m/Y') }}">
                      </div>
                 </div>
             </div>
@@ -41,21 +41,21 @@
         </div> <!-- end of two fields -->
 
         <div class="field">
-            <label for='month'>Record Period:</label>
+            <label for='record_period'>Record Period:</label>
             <div class="ui calendar-month field">
                 <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input name="month" type="text" placeholder="{{ $record->period->format('M/Y')}}"></input>
+                    <input name="record_period" type="text" placeholder="{{ $record->period->format('M/Y')}}"></input>
                  </div>
             </div>
         </div>
 
 
         <div class="field">
-            <label for="record">Choose a new record</label>
+            <label for="record_file">Choose a new record</label>
             <div class="ui action input left icon">
                 <i class="file icon"></i>
-                <input type="file" class='input-file' name="record" id="record"></input>
+                <input type="file" class='input-file' name="record_file" id="record_file"></input>
                 <a href="{{ route('show_record_file', $record) }}" class="ui green button" role = 'button'>View Existing File </a>
             </div>
         </div>
