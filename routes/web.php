@@ -23,8 +23,8 @@ Route::get('/upload', function () {
     return view('modules.upload');
 });
 
-// all authentication related routes
-Auth::routes();
+
+Auth::routes(); // includes routes for login, register, forget password
 
 // only authenticated user can access this route group
 Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
@@ -39,5 +39,7 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
   Route::get('/records/{record}', 'RecordController@show')->name('show_record_file');
   Route::get('/records/{record}/download', 'RecordController@download')->name('download_record_file');
   Route::delete('/records/{record}', 'RecordController@destroy')->name('delete_record_file');
+  Route::get('/records/{record}/edit', 'RecordController@edit')->name('edit_record'); // show form for edit record
+  Route::patch('/records/{record}', 'RecordController@update')->name('update_record'); // update record in database
 
 });
