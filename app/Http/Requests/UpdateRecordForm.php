@@ -15,6 +15,10 @@ class UpdateRecordForm extends FormRequest
      */
     public function authorize(Record $record)
     {
+        // moving request authorization here is good practice.
+        // remember there is Gate::
+        // ps: there is a difference between ability and policy
+        // policy is defined on models, ability on user.
         return true;
     }
 
@@ -28,7 +32,7 @@ class UpdateRecordForm extends FormRequest
         $this->prepare_requests();
 
         return [
-
+            // form validation rules here
         ];
     }
 
@@ -54,7 +58,9 @@ class UpdateRecordForm extends FormRequest
     }
 
     private function change_request_names_to_database_column_name() {
-
+        // mismatch between input name and database field name is good and intentional
+        // having input names same as database name make it easier for hacker to launch
+        // database related attack
         $this['period'] = $this->record_period;
         unset($this['record_period']);
 
