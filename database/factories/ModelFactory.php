@@ -22,3 +22,34 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\RecordIssuerType::class, function(Faker\Generator $faker){
+   return [
+
+   ];
+});
+
+$factory->define(App\UserRecordIssuer::class, function (Faker\Generator $faker){
+   return [
+   ];
+});
+
+$factory->define(App\Record::class, function(Faker\Generator $faker){
+    return [
+        'issue_date' => $issue_date = $faker->dateTimeBetween($start_date = '- 5 years', $end_date = 'now'),
+        'due_date' => $due_date = $faker->randomElements([null, $faker->dateTimeBetween($start_date, $start_date->format('y-m-d H:i:s').' + 14 days')]),
+        'period' => $issue_date->month,
+        'amount' => $faker->randomFloat(2, 0, 5000),
+        'user_id'=> function(){
+            return factory(App\User::class)->make()->id;
+        },
+        'path_to_file'=> function(array $record) use ($faker){
+            return $faker->imageUrl();
+        },
+        'user_record_issuer_id'=> function(){
+            return factory(App\UserRecordIssuer::class)->id;
+        }
+    ];
+});
+
+
