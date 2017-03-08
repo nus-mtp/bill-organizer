@@ -37,14 +37,15 @@ class UpdateRecordForm extends FormRequest
         $this->format_dates_to_database_compatible();
         $this->change_request_names_to_database_column_name();
         $this->filter_empty_fields($this->all());
+        $this->unset_unused();
         $this->sanitize_inputs();
     }
 
     private function format_dates_to_database_compatible()
     {
-        $this->issue_date    = $this->format_date($this->issue_date, 'd/m/Y');
-        $this->due_date      = $this->format_date($this->due_date, 'd/m/Y');
-        $this->record_period = $this->format_date($this->period, 'M/Y');
+        $this['issue_date']    = $this->format_date($this->issue_date, 'd/m/Y');
+        $this['due_date']      = $this->format_date($this->due_date, 'd/m/Y');
+        $this['record_period'] = $this->format_date($this->record_period, 'M/Y');
     }
 
     private function format_date($date, $format_string)
@@ -54,19 +55,24 @@ class UpdateRecordForm extends FormRequest
 
     private function change_request_names_to_database_column_name() {
 
-        $this->record_period = $this->period;
-        unset($this->record_period);
+        $this['period'] = $this->record_period;
+        unset($this['record_period']);
 
-        $this->amount = $this->amount_due;
-        unset($this->amount_due);
+        $this['amount'] = $this->amount_due;
+        unset($this['amount_due']);
     }
 
     private function sanitize_inputs()
     {
-       $this->amount = filter_var($this->amount, FILTER_SANITIZE_NUMBER_FLOAT);
     }
     private function filter_empty_fields($fields){
-        $fileds = array_filter($fields);
-        $this->replace($fileds);
+        $fields = array_filter($fields);
+        $this->replace($fields);
+    }
+
+    private function unset_unused()
+    {
+        unset($this['_token']);
+        unset($this['_method']);
     }
 }

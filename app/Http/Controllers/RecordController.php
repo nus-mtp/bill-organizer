@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\RecordIssuerType;
 use App\Record;
 use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateRecordForm;
@@ -69,21 +70,13 @@ class RecordController extends Controller
     }
 
     public function update(UpdateRecordForm $request, Record $record)
-
     {
         // add Gate:: here, allow(some policy) if auth()-id() === post(id) : allow else deny
-        $path_of_uploaded_file = $record->path_to_file;
         $this->upload_file($request, $record);
-
-        $field_list = array(
-            'due_date'     => $request->issue_date,
-            'issue_date'   => $request->due_date,
-            'period'       => $request->period,
-            'path_to_file' => $path_of_uploaded_file,
-            'amount'       => $request->amount,
-        );
-
-        $record->update($this->$field_list);
+        if ($request) {
+            $record->update($request->all());
+            session()->flash('success', 'Records updated.');
+        } //call update only if there's changes
         return back();
     }
 
@@ -99,4 +92,5 @@ class RecordController extends Controller
         }
         return null;
     }
+
 }

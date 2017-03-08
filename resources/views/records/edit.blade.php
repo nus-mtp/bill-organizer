@@ -69,7 +69,8 @@
     </form>
 
      @include('partials.errors')
-
+     @include('partials.success')
+    
     </div><!-- end of ui container -->
 
 @endsection
