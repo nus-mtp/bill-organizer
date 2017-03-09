@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <title>BillOrganiser</title>
-        <link href="css/app.css" rel="stylesheet" type="text/css">
+
+        <link rel="icon" type="image/ico" href="">
+        <!-- Local -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        @stack('module_styles')<!-- module specific styles -->
+        <!-- Scripts -->
+        <script>
+            window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+        </script>
 
     </head>
     <body class="dark-background">
 
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
+                <!--should not need this part anymore coz got auto-redirect-->
                 @if (Route::has('login'))
                     @if (Auth::check())
                         <div class="item">
@@ -98,5 +116,15 @@
                 </div>
             </div>
         </div>
+        
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.3/headroom.min.js"></script>
+        @yield('pre-javascript')
+            <script src="{{ asset('js/manifest.js') }}"></script>
+            <script src="{{ asset('js/vendor.js') }}"></script>
+            <script src="{{ asset('js/app.js' ) }}"></script>
+        @yield('javascript')
+         <!-- Dump all dynamic scripts into template -->
+        @stack('module_scripts')
+
     </body>
 </html>
