@@ -6,8 +6,9 @@ machine:
   timezone:
     Asia/Singapore
 dependencies:
-  pre:
-    - npm install npm@latest
+  override:
+    - npm install
+    - composer install
 compile:
   override:
     - npm run production
