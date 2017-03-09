@@ -40,22 +40,43 @@
                         <div class="item">
                             <button class="ui green register button" value="showModal">Register</button>
                         </div>
+                        <!-- temp until modal form works -->
                         <div class="item">
-                            <a class="ui inverted green button" href="{{ route('login') }}">Login</a>
+                            <a class="ui green register button" href="{{ url('/register') }}">Register old</a>
+                        </div>
+                        <div class="item">
+                            <button class="ui inverted green login button" value="showModal">Login</button>
+                        </div>
+                        <!-- temp until modal form works -->
+                        <div class="item">
+                            <a class="ui inverted green login button" href="{{ url('/login') }}">Login old</a>
                         </div>
 
-                        <div class="ui small register modal">
+                        <div class="ui small first coupled register modal">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
                               <form method="POST" action="{{ route('register') }}"class="ui equal width form" id="registration">
                                 {{ csrf_field() }}
 
-                              <!--  <div class="fields"> -->
+
+                                  <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                      <label for="name">Name</label>
+                                      <div class="field">
+                                          <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+                                          @if ($errors->has('name'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('name') }}</strong>
+                                              </span>
+                                          @endif
+                                      </div>
+                                  </div>
+                  <!--            <div class="fields">
                                   <div class="field">
                                     <label for="name">Name</label>
                                     <input id="name" type="text" name="name" placeholder="Name" required autofocus>
                                   </div>
-                  <!--                <div class="field">
+                                  <div class="field">
                                     <label>Last Name</label>
                                     <input id="last-name" type="text" name="last-name" placeholder="Last Name">
                                   </div>
@@ -75,7 +96,8 @@
                                 <div class="action" style="text-align:right;">
                                   <div class="ui primary button">Register</div>
                                 </div>
-                              </form>
+
+                            </form>
                           </div>
                         </div>
 
@@ -89,7 +111,7 @@
                           </div>
                         </div>
 
-                        <div class="ui small basic login modal">
+                        <div class="ui small login modal">
                           <div class="header">Login</div>
                           <div class="content" style="text-align:left;">
                             <form class="ui form">
@@ -100,6 +122,9 @@
                               <div class="field">
                                 <label>Password</label>
                                 <input type="password">
+                              </div>
+                              <div class="action" style="text-align:right;">
+                                <div class="ui primary button">Login</div>
                               </div>
                             </form>
                           </div>
@@ -116,7 +141,7 @@
                 </div>
             </div>
         </div>
-        
+
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.3/headroom.min.js"></script>
         @yield('pre-javascript')
             <script src="{{ asset('js/manifest.js') }}"></script>

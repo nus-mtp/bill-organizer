@@ -10,23 +10,14 @@ require('./bootstrap') // bootstrap load our application wide dependencies
 
 $(document).ready(function(){
  $('.register.button').click(_ => {
-   $('.ui.modal.register').modal('show')
+   $('.coupled.modal').modal({ allowMultiple: false })
+   $('.second.modal').modal('attach events', '.first.modal .button')
+   $('.first.modal').modal('show')
+ })
+ $('.login.button').click(_ => {
+   $('.login.modal').modal('show')
  })
 })
-
-/*
-  $(document).ready(function(){
-   $('.register').click(function(){
-     this.preventDefault();
-     $('.coupled.modal').modal({ allowMultiple: false });
-     $('.second.modal').modal('attach events', ".first.modal .button");
-     $('.first.modal').modal('show');
-   });
-   $('.login').click(function(){
-     //e.preventDefault();
-     $('.ui.basic.modal').modal('show');
-   });
- }); */
 
 
 let headerElement = $('#header')[0]
