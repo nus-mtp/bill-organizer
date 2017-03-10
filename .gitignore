@@ -122,6 +122,7 @@ fabric.properties
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
+.phpintel
 
 # workspace files are user-specific
 *.sublime-workspace
@@ -177,3 +178,4 @@ resources/.vagrant/machines/default/virtualbox/private_key
 resources/.vagrant/machines/default/virtualbox/private_key_putty.ppk
 resources/.vagrant/machines/default/virtualbox/synced_folders
 resources/Vagrantfile
+

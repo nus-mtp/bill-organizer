@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\RecordIssuerType;
 use App\Record;
+use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateRecordForm;
+use League\Flysystem\Exception;
 
 class RecordController extends Controller
 {
@@ -52,5 +56,43 @@ class RecordController extends Controller
         $record->delete();
 
         return back();
+    }
+
+    public function edit(Record $record)
+    {
+        /*
+         $is_issuer_type_bill is
+         used to determine whether to hide bill related form controls in views.
+         e.g only bills have due date but not bank statements.
+         */
+        $is_issuer_type_bill = $record->is_issuer_type_bill();
+        return view('records.edit', compact('record', 'is_issuer_type_bill'));
+    }
+
+    public function update(UpdateRecordForm $request, Record $record)
+    {
+        // add Gate:: here, allow(some policy) if auth()-id() === post(id) : allow else deny
+        $this->upload_file($request, $record);
+        if ($request)
+        {
+            $record->update($request->all());
+            session()->flash('success', 'Records updated.');
+        } //call update only if there's changes
+        return back();
+    }
+
+    private function upload_file($request, $record)
+    {
+        // upload only if user optionally uploaded a file
+        if ($request ->file('record_file'))
+        {
+            $file          = $request->file('record_file');
+            $extension     = $file->extension();
+            $file_name     = $record->issuer_name() . $request->issue_date . '.'. $extension;
+            $path_to_store = 'records/'.$record->user_id;
+
+            return $path_of_uploaded_file = $file->storeAs($path_to_store, $file_name, ['visibility'=>'private']);
+        }
+        return null;
     }
 }

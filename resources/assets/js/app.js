@@ -7,13 +7,10 @@ require('./bootstrap') // bootstrap load our application wide dependencies
  *
  *
  */
-let headerElement = $('#header')[0]
-if (window.location.hash) {
-  header.classList.add('headroom--unpinned')
-}
-let headroom = new Headroom(headerElement)
-headroom.init()
+ // library
+// init headroom module
 
+// /dashboard modal controls
 $(function () {
   $('.add-record.button').click(_ => {
     $('.add-record.modal').modal({
@@ -44,3 +41,28 @@ $(function () {
   })
 })
 
+// calendar settings
+$('.ui.calendar').calendar({
+  type: 'date',
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return ''
+      var day = date.getDate()
+      var month = date.getMonth() + 1
+      var year = date.getFullYear()
+      return day + '/' + month + '/' + year
+    }
+  }
+})
+
+$('.ui.calendar-month').calendar({
+  type: 'month',
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return ''
+      var month = settings.text.monthsShort[date.getMonth()]
+      var year = date.getFullYear()
+      return month + '/' + year
+    }
+  }
+})
