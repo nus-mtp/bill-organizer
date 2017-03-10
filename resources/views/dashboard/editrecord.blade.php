@@ -24,7 +24,7 @@
                         <div class="selRect" id="selrperiod"></div>
                         <div class="selRect" id="selddate"></div>
                         <div class="selRect" id="selamtdue"></div>
-                        <img src="{{url('placeholderbill.jpg')}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)">
+                        <img src="{{url('placeholderbill.jpg')}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
                         
                     </div>
                 </div>
@@ -200,6 +200,49 @@
             document.getElementById("temp").innerHTML = "Please click on a field before selecting";
         }
         selecting = false;
+    }
+    
+    function getChangingCoords(e){
+        var PosX = 0;
+        var PosY = 0;
+        if (!e) var e = window.event;
+        if (e.pageX || e.pageY) {
+            PosX = e.pageX;
+            PosY = e.pageY;
+        }
+        else if (e.clientX || e.clientY) {
+            PosX = e.clientX + document.body.scrollLeft
+                + document.documentElement.scrollLeft;
+            PosY = e.clientY + document.body.scrollTop
+                + document.documentElement.scrollTop;
+        }
+        PosX = PosX - ImgPos[0];
+        PosY = PosY - ImgPos[1];
+        var tempCoords;
+        
+        if(tempActField.id == 'issue'){
+            tempCoords = issueDateC.concat([PosX, PosY]);
+            tempCoords = formatCoords(tempCoords);
+            drawRect('selidate',tempCoords);
+        }
+        else if(tempActField.id == 'period'){
+            tempCoords = recPeriodC.concat([PosX, PosY]);
+            tempCoords = formatCoords(tempCoords);
+            drawRect('selrperiod',tempCoords);
+        }
+        else if(tempActField.id == 'duedate'){
+            tempCoords = dueDateC.concat([PosX, PosY]);
+            tempCoords = formatCoords(tempCoords);
+            drawRect('selddate',tempCoords);
+        }
+        else if(tempActField.id == 'amtdue'){
+            tempCoords = amtDueC.concat([PosX, PosY]);
+            tempCoords = formatCoords(tempCoords);
+            drawRect('selamtdue',tempCoords);
+        }
+        else{
+            document.getElementById("temp").innerHTML = "Please click on a field before selecting";
+        }
     }
     
     function coordsFailSafe(e){        
