@@ -23,6 +23,11 @@ Route::get('/upload', function () {
     return view('modules.upload');
 });
 
+// remove later and replace with record-specific urls later
+Route::get('/edit', function () {
+    return view('dashboard.editrecord');
+});
+
 
 Auth::routes(); // includes routes for login, register, forget password
 
