@@ -80,5 +80,16 @@ p {
 .bill-image {
     width: 100%;
     height: auto;
+    margin-top: 0px;
     border: $bill-green 1px solid;
+    position: relative;
+}
+
+.selRect {
+    width: auto;
+    height: auto;
+    position: absolute;
+    background-color: $manganese-blue;
+    border: black 1px dashed;
+    opacity: 0.3;
 }

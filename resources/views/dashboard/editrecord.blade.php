@@ -20,7 +20,9 @@
                 
                 <div class="eight wide column">
                     <div class="bill-image">
+                        <div class="selRect" id="selidate"></div>
                         <img src="{{url('placeholderbill.jpg')}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)">
+                        
                     </div>
                 </div>
                 
@@ -138,6 +140,10 @@
         
         if(tempActField.id == 'issue'){
             issueDateC = issueDateC.concat([PosX, PosY]);
+            document.getElementById('selidate').style.left = issueDateC[0] +'px';
+            document.getElementById('selidate').style.top = issueDateC[1] +'px';
+            document.getElementById('selidate').style.width = (issueDateC[2]-issueDateC[0]) +'px';
+            document.getElementById('selidate').style.height = (issueDateC[3]-issueDateC[1]) +'px';
             document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC;
         }
         else if(tempActField.id == 'period'){
