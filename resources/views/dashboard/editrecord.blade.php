@@ -68,12 +68,36 @@
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
-    
+        
     function drawRect(box, coords){
         document.getElementById(box).style.left = coords[0] +'px';
         document.getElementById(box).style.top = coords[1] +'px';
         document.getElementById(box).style.width = (coords[2]-coords[0]) +'px';
         document.getElementById(box).style.height = (coords[3]-coords[1]) +'px';
+    }
+    
+    function formatCoords(coords){
+        //normal selection is top-bottom or left-right
+        //this function standardizes bottom-top or right-left selection
+        if(coords[0] > coords[2] && coords[1] > coords[3]){ //btmright to topleft
+            temp = [coords[2], coords[3], coords[0], coords[1]];
+            return temp;
+        }
+        else if(coords[0] > coords[2]){ //topright to btmleft
+            temp = [coords[2], coords[1], coords[0], coords[3]];
+            return temp;
+        }
+        else if(coords[1] > coords[3]){ //btmleft to topright
+            temp = [coords[0], coords[3], coords[2], coords[1]];
+            return temp;
+        }
+        else{
+            return coords;
+        }
+    }
+    
+    function normalizeCoordinates(coords){
+        //return coords ratios
     }
     
     function FindPosition(oElement)
@@ -150,26 +174,30 @@
         
         if(tempActField.id == 'issue'){
             issueDateC = issueDateC.concat([PosX, PosY]);
+            issueDateC = formatCoords(issueDateC);
             drawRect('selidate',issueDateC);
             document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC;
         }
         else if(tempActField.id == 'period'){
             recPeriodC = recPeriodC.concat([PosX, PosY]);
+            recPeriodC = formatCoords(recPeriodC);
             drawRect('selrperiod',recPeriodC);
             document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
         }
         else if(tempActField.id == 'duedate'){
             dueDateC = dueDateC.concat([PosX, PosY]);
+            dueDateC = formatCoords(dueDateC);
             drawRect('selddate',dueDateC);
             document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
         }
         else if(tempActField.id == 'amtdue'){
             amtDueC = amtDueC.concat([PosX, PosY]);
+            amtDueC = formatCoords(amtDueC);
             drawRect('selamtdue',amtDueC);
             document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
         }
         else{
-            document.getElementById("temp").innerHTML = "nothing selected";
+            document.getElementById("temp").innerHTML = "Please click on a field before selecting";
         }
         selecting = false;
     }
