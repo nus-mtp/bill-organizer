@@ -21,6 +21,9 @@
                 <div class="eight wide column">
                     <div class="bill-image">
                         <div class="selRect" id="selidate"></div>
+                        <div class="selRect" id="selrperiod"></div>
+                        <div class="selRect" id="selddate"></div>
+                        <div class="selRect" id="selamtdue"></div>
                         <img src="{{url('placeholderbill.jpg')}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)">
                         
                     </div>
@@ -65,6 +68,13 @@
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
+    
+    function drawRect(box, coords){
+        document.getElementById(box).style.left = coords[0] +'px';
+        document.getElementById(box).style.top = coords[1] +'px';
+        document.getElementById(box).style.width = (coords[2]-coords[0]) +'px';
+        document.getElementById(box).style.height = (coords[3]-coords[1]) +'px';
+    }
     
     function FindPosition(oElement)
     {
@@ -140,22 +150,22 @@
         
         if(tempActField.id == 'issue'){
             issueDateC = issueDateC.concat([PosX, PosY]);
-            document.getElementById('selidate').style.left = issueDateC[0] +'px';
-            document.getElementById('selidate').style.top = issueDateC[1] +'px';
-            document.getElementById('selidate').style.width = (issueDateC[2]-issueDateC[0]) +'px';
-            document.getElementById('selidate').style.height = (issueDateC[3]-issueDateC[1]) +'px';
+            drawRect('selidate',issueDateC);
             document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC;
         }
         else if(tempActField.id == 'period'){
             recPeriodC = recPeriodC.concat([PosX, PosY]);
+            drawRect('selrperiod',recPeriodC);
             document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
         }
         else if(tempActField.id == 'duedate'){
             dueDateC = dueDateC.concat([PosX, PosY]);
+            drawRect('selddate',dueDateC);
             document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
         }
         else if(tempActField.id == 'amtdue'){
             amtDueC = amtDueC.concat([PosX, PosY]);
+            drawRect('selamtdue',amtDueC);
             document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
         }
         else{
