@@ -19,7 +19,8 @@
     "laravel-mix": "^0.8.2",
     "lodash": "^4.16.2",
     "node-sass": "^4.5.0",
-    "vue": "^2.0.1",
-    "semantic-ui": "^2.2.9"
+    "semantic-ui": "^2.2.9",
+    "semantic-ui-calendar": "0.0.7",
+    "vue": "^2.0.1"
   }
 }
