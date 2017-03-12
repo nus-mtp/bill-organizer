@@ -21,7 +21,7 @@ class RecordsSeeder extends Seeder
                 'issue_date' => Carbon\Carbon::now(),
                 'due_date' => Carbon\Carbon::now(),
                 'period' => Carbon\Carbon::now(),
-                'amount' => random_int(10, 1000),
+                'amount' => round(rand() / getrandmax() * 1000, 2),
                 'path_to_file' => '~/anywhere',
                 'user_id' => $user_id->id,
                 'user_record_issuer_id' => $user_singtel->id

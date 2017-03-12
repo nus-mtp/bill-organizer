@@ -18,7 +18,7 @@ class CreateRecordsTable extends Migration
             $table->date('issue_date');
             $table->date('due_date')->nullable();
             $table->date('period');
-            $table->integer('amount');
+            $table->double('amount', 15, 2);
             $table->string('path_to_file', 1024); // this should be unique, but unique constraint creates an index so i'm not adding it
             $table->timestamps();
             $table->integer('user_id')->unsigned();
