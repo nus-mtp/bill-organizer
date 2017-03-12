@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\DB;
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -23,16 +25,23 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\RecordIssuerType::class, function(Faker\Generator $faker){
-   return [
 
-   ];
-});
 
 $factory->define(App\UserRecordIssuer::class, function (Faker\Generator $faker){
    return [
+       'name' => $faker->company,
+       'type' => function() {
+           $record_issuer_types = DB::table('record_issuer_types')->pluck('id')->toArray();
+           $rand_index = array_rand($record_issuer_types);
+           return $record_issuer_types[$rand_index];
+       },
+       'user_id' => function() {
+           return factory(App\User::class)->create()->id;
+       }
    ];
 });
+
+
 
 $factory->define(App\Record::class, function(Faker\Generator $faker){
     return [
