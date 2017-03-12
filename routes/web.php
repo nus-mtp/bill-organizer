@@ -16,7 +16,7 @@
 // })->middleware('guest');
 
 
-Route::get('/','HomeController@show' );
+Route::get('/','HomeController@show' )->middleware('guest');
 
 // remove later
 Route::get('/upload', function () {
