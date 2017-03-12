@@ -52,6 +52,8 @@ class UserRecordIssuerController extends Controller
     public function destroy(UserRecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
+        // TODO: extract these constants. It's not a good practice to refer to the same string literal everywhere
+        DB::table('records')->where('user_record_issuer_id', $record_issuer->id)->delete();
         $record_issuer->delete();
 
         return back();
