@@ -15,6 +15,12 @@ class DashboardControllerTest extends TestCase
     use DatabaseMigrations;
     use DatabaseTransactions;
 
+    protected function setUp() {
+        parent::setUp();
+
+        $this->runDatabaseMigrations();
+    }
+
 
     public function testAsGuest()
     {

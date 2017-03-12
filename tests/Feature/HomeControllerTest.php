@@ -11,6 +11,7 @@ use App\User;
 
 class HomeControllerTest extends TestCase
 {
+    use DatabaseMigrations;
     use DatabaseTransactions;
 
     public function testAsGuest()
