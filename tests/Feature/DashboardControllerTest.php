@@ -16,6 +16,7 @@ class DashboardControllerTest extends TestCase
     use DatabaseTransactions;
 
     protected function setUp() {
+        // gotta call parent::setUp for a correct setUp since we're overriding it.
         parent::setUp();
 
         $this->runDatabaseMigrations();

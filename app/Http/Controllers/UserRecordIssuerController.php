@@ -81,7 +81,7 @@ class UserRecordIssuerController extends Controller
 
         $user_id = auth()->id();
         $file_extension = request()->file('record')->extension();
-        $file_name = $record_issuer->name . request('issue_date') . '.' . $file_extension;
+        $file_name = $record_issuer->name . '_' . request('issue_date') . '.' . $file_extension;
         $path = request()->file('record')
             ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this
