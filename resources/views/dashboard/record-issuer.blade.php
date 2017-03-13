@@ -171,17 +171,21 @@
                     <div class="ui statistics">
                         <div class="red statistic">
                             <div class="value">0</div>
-                            <div class="label">Bills Paid</div>
+                            <div class="label">Total bills filed</div>
+                            <!-- total number of filed records -->
                         </div>
+
                         <div class="red statistic">
                             <div class="value">$901</div>
                             <div class="label">Owed</div>
                         </div>
+
                         <div class="red statistic">
                             <div class="value"><i class="frown icon"></i></div>
                             <div class="label">Sadded</div>
                         </div>
-                    </div>
+                    </div><!-- end of ui statistics -->
+
                 </div>
             </div>
         </div>
