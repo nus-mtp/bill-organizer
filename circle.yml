@@ -10,7 +10,7 @@ database:
     - >
       mysql -u ubuntu circle_test -e
       "CREATE DATABASE billorg_testing;
-      CREATE USER 'homestead'@'%' IDENTIFIED BY 'password';
+      CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';
       GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
   override:
