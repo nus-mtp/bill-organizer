@@ -5,6 +5,8 @@ machine:
     version: 7.1.0
   timezone:
     Asia/Singapore
+  environment:
+    BILLORG_TEST_DB_URL: mysql://homestead:secret@127.0.0.1:3306/billorg_testing
 database:
   override:
     - >
