@@ -36,4 +36,6 @@ class RecordTest extends TestCase
             new Record()
         );
     }
+
+
 }

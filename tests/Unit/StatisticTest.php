@@ -12,7 +12,7 @@ namespace Tests\Unit;
 use App\Statistic;
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Support\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Record;
 
@@ -20,6 +20,8 @@ use App\Record;
 class StatisticTest extends TestCase
 {
     private $stats;
+
+    use DatabaseMigrations; // migrate schema can create record issuer types, destroy after test
 
     public function setUp()
     {
@@ -33,4 +35,14 @@ class StatisticTest extends TestCase
         // Eloquent::unguard(); disables mass assignment protection
     }
 
+    public function testCanGetNumBillsFiledForCurrMonth(){
+        // create a bunch of users
+        // create some records for each user
+            //
+
+        // create 10 bills and 15 bank statements for this month
+        // create 20 bills 30 bank statements for past months
+        $numBillsFiled = $this->stats->getCurrMonthBillsFiled();
+
+    }
 }
