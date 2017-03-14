@@ -23,10 +23,32 @@ $(function () {
   $('.add-bill-org.button').click(_ => {
     $('.ui.modal.record-issuer').modal({
       onApprove: function () {
-        $('form#add-record-issuer').submit()
+          $('.ui.form').submit();
+          // need to return false to not close modal
+          // in case input failed the validation test
+          return false;
+      },
+      onSuccess: function () {
+          $('form#add-record-issuer').submit();
+          $('.modal').modal('hide');
       }
     }).modal('show')
   })
+  
+  $('.ui.form')
+        .form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter record issuer name'
+                    }
+                ]
+            },
+        }
+    });
 
   $('.delete-record.button').click((e) => {
     e.preventDefault()
