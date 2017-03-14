@@ -47,7 +47,7 @@ class DashboardControllerTest extends TestCase
         // cannot use $response->assertViewHas. Somehow the expected and actual results
         // differ in the `wasRecentlyCreated` attribute
         foreach ($record_issuer_names as $name) {
-            $response->assertSee($name);
+            $response->assertSee(htmlentities($name, ENT_QUOTES));
         }
     }
 }

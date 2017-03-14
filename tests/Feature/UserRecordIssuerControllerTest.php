@@ -69,7 +69,7 @@ class UserRecordIssuerControllerTest extends TestCase
         $response->assertStatus(200);
         // Commenting this because this assertion causes problem when it contains a unicode character
         // It's escaped when rendered in HTML but in the string representation it's not
-        // $response->assertSee($this->user_record_issuer->name);
+         $response->assertSee(htmlentities($this->user_record_issuer->name, ENT_QUOTES));
     }
 
 
