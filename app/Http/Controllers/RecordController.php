@@ -60,6 +60,7 @@ class RecordController extends Controller
 
     public function edit(Record $record)
     {
+        $this->authorize('belongs_to_user', $record);
         /*
          $is_issuer_type_bill is
          used to determine whether to hide bill related form controls in views.
@@ -69,8 +70,11 @@ class RecordController extends Controller
         return view('records.edit', compact('record', 'is_issuer_type_bill'));
     }
 
+    // TODO: should redirect to record issuer page, not back to the edit page!
     public function update(UpdateRecordForm $request, Record $record)
     {
+        // TODO: move this authorization policy to UpdateRecordForm instead
+        $this->authorize('belongs_to_user', $record);
         // add Gate:: here, allow(some policy) if auth()-id() === post(id) : allow else deny
         $this->upload_file($request, $record);
         if ($request)
@@ -81,6 +85,8 @@ class RecordController extends Controller
         return back();
     }
 
+    // TODO: should delete old file if issue_date updated???
+    // TODO: this is buggy -> it assumes that issue_date is present in the request
     private function upload_file($request, $record)
     {
         // upload only if user optionally uploaded a file
@@ -88,7 +94,7 @@ class RecordController extends Controller
         {
             $file          = $request->file('record_file');
             $extension     = $file->extension();
-            $file_name     = $record->issuer_name() . $request->issue_date . '.'. $extension;
+            $file_name     = $record->issuer_name() . '_' . $request->issue_date->toDateString() . '.'. $extension;
             $path_to_store = 'records/'.$record->user_id;
 
             return $path_of_uploaded_file = $file->storeAs($path_to_store, $file_name, ['visibility'=>'private']);
