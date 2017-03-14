@@ -47,10 +47,6 @@
                         <div class="item">
                             <button class="ui inverted green login button" value="showModal">Login</button>
                         </div>
-                        <!-- temp until modal form works -->
-                        <div class="item">
-                            <a class="ui inverted green button" href="{{ url('/login') }}">Login old</a>
-                        </div>
 
                         <div class="ui small first coupled register modal">
                           <div class="header">Register</div>
@@ -96,15 +92,22 @@
                           <div class="header">Login</div>
                           <div class="content" style="text-align:left;">
                             <form class="ui login form" role="form" method="POST" action="{{ route('login') }}">
+                              {{ csrf_field() }}
+                              <div class="field">
+                                <label for="email">Email Address</label>
+                                <input id="email" type="text" name="email">
+                              </div>
+                              <div class="field">
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password">
+                              </div>
+                              <div class="checkbox">
+                                <label>
+                                  <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                </label>
+                              </div>
+                              <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}">Forgot Your Password?</a>
 
-                              <div class="field">
-                                <label>Username</label>
-                                <input type="text" id='username'>
-                              </div>
-                              <div class="field">
-                                <label>Password</label>
-                                <input type="password" id='password'>
-                              </div>
                               <div class="action" style="text-align:right;">
                                 <div class="ui primary submit button">Login</div>
                               </div>

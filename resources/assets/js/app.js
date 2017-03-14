@@ -54,8 +54,8 @@ $('.register.form').form({
 
 $('.login.form').form({
   fields: {
-    username: {
-      identifier: 'username',
+    email: {
+      identifier: 'email',
       rules: [{
           type  : 'empty',
           prompt: 'Please enter your email'
