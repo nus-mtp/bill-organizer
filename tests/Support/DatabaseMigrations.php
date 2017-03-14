@@ -2,27 +2,23 @@
 
 namespace Tests\Support;
 
+namespace Tests\Support;
+
+use Illuminate\Contracts\Console\Kernel;
+
 trait DatabaseMigrations
 {
     /**
-     * @before
+     * Define hooks to migrate the database before and after each test.
+     *
+     * @return void
      */
     public function runDatabaseMigrations()
     {
-        // run migration in database defined in phpunit.xml (default billorg_test)
-        $this->artisan('migrate');
-        // seed default billorg types
-        /*
-        Artisan::call('migrate');
-        $this->artisan('migrate');
-        Artisan::call('db:seed');
+        $this->artisan('migrate:refresh');
         $this->artisan('db:seed');
-        $this->seed('DatabaseSeeder');
-        $this->session(['test' => 'session']);
-        $this->seed('DatabaseSeeder');
-        */
-        
-        $this->seed('RecordIssuerTypesSeeder');
+
+        $this->app[Kernel::class]->setArtisan(null);
 
         $this->beforeApplicationDestroyed(function () {
             $this->artisan('migrate:rollback');

@@ -5,6 +5,15 @@ machine:
     version: 7.1.0
   timezone:
     Asia/Singapore
+  environment:
+    BILLORG_TEST_DB_URL: mysql://homestead:secret@127.0.0.1:3306/billorg_testing
+database:
+  override:
+    - >
+      mysql -u ubuntu circle_test -e
+      "CREATE DATABASE billorg_testing;
+      CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';
+      GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
   override:
     - npm install

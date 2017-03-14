@@ -52,6 +52,7 @@ class UpdateRecordForm extends FormRequest
         $this['record_period'] = $this->format_date($this->record_period, 'M/Y');
     }
 
+    // TODO: Bug: shouldn't be Carbon instance. Fix RecordController after fixing this
     private function format_date($date, $format_string)
     {
         return empty($date)? $date : Carbon::createFromFormat($format_string, $date);
