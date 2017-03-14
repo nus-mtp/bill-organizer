@@ -42,45 +42,25 @@
                         </div>
                         <!-- temp until modal form works -->
                         <div class="item">
-                            <a class="ui green register button" href="{{ url('/register') }}">Register old</a>
+                            <a class="ui green button" href="{{ url('/register') }}">Register old</a>
                         </div>
                         <div class="item">
                             <button class="ui inverted green login button" value="showModal">Login</button>
                         </div>
                         <!-- temp until modal form works -->
                         <div class="item">
-                            <a class="ui inverted green login button" href="{{ url('/login') }}">Login old</a>
+                            <a class="ui inverted green button" href="{{ url('/login') }}">Login old</a>
                         </div>
 
                         <div class="ui small first coupled register modal">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
-                              <form method="POST" action="{{ route('register') }}"class="ui equal width form" id="registration">
-                                {{ csrf_field() }}
+                              <form method="POST" action="{{ route('register') }}" class="ui equal width register form">
 
-
-                                  <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                      <label for="name">Name</label>
-                                      <div class="field">
-                                          <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                          @if ($errors->has('name'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('name') }}</strong>
-                                              </span>
-                                          @endif
-                                      </div>
-                                  </div>
-                  <!--            <div class="fields">
-                                  <div class="field">
-                                    <label for="name">Name</label>
-                                    <input id="name" type="text" name="name" placeholder="Name" required autofocus>
-                                  </div>
-                                  <div class="field">
-                                    <label>Last Name</label>
-                                    <input id="last-name" type="text" name="last-name" placeholder="Last Name">
-                                  </div>
-                                </div> -->
+                                <div class="field">
+                                  <label for="name">Name</label>
+                                  <input id="name" type="text" name="name" placeholder="Name" required autofocus>
+                                </div>
                                 <div class="field">
                                   <label for="email">Email</label>
                                   <input id="email" type="text" name="email" placeholder="Email" required>
@@ -94,8 +74,9 @@
                                   <input id="password-confirm" type="password" name="password-confirm" placeholder="Retype Password" required>
                                 </div>
                                 <div class="action" style="text-align:right;">
-                                  <div class="ui primary button">Register</div>
+                                  <div class="ui primary submit button">Register</div>
                                 </div>
+                                <div class="ui error message"></div>
 
                             </form>
                           </div>
@@ -114,18 +95,21 @@
                         <div class="ui small login modal">
                           <div class="header">Login</div>
                           <div class="content" style="text-align:left;">
-                            <form class="ui form">
+                            <form class="ui login form" role="form" method="POST" action="{{ route('login') }}">
+
                               <div class="field">
                                 <label>Username</label>
-                                <input type="text">
+                                <input type="text" id='username'>
                               </div>
                               <div class="field">
                                 <label>Password</label>
-                                <input type="password">
+                                <input type="password" id='password'>
                               </div>
                               <div class="action" style="text-align:right;">
-                                <div class="ui primary button">Login</div>
+                                <div class="ui primary submit button">Login</div>
                               </div>
+                              <div class="ui error message"></div>
+
                             </form>
                           </div>
                         </div>

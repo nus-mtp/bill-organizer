@@ -19,6 +19,57 @@ $(document).ready(function(){
  })
 })
 
+$('.register.form').form({
+  fields: {
+    name: {
+      identifier: 'name',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your name'
+      }]
+    },
+    email: {
+      identifier: 'email',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your email address'
+      }]
+    },
+    password: {
+      identifier: 'password',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your password'
+      }]
+    },
+    passwordconfirm: {
+      identifier: 'password-confirm',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please confirm your password'
+      }]
+    }
+  }
+})
+
+$('.login.form').form({
+  fields: {
+    username: {
+      identifier: 'username',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your email'
+      }]
+    },
+    password: {
+      identifier: 'password',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your password'
+      }]
+    }
+  }
+})
 
 let headerElement = $('#header')[0]
 if (window.location.hash) {
