@@ -52,6 +52,8 @@ class UserRecordIssuerController extends Controller
     public function destroy(UserRecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
+        // TODO: extract these constants. It's not a good practice to refer to the same string literal everywhere
+        DB::table('records')->where('user_record_issuer_id', $record_issuer->id)->delete();
         $record_issuer->delete();
 
         return back();
@@ -79,7 +81,7 @@ class UserRecordIssuerController extends Controller
 
         $user_id = auth()->id();
         $file_extension = request()->file('record')->extension();
-        $file_name = $record_issuer->name . request('issue_date') . '.' . $file_extension;
+        $file_name = $record_issuer->name . '_' . request('issue_date') . '.' . $file_extension;
         $path = request()->file('record')
             ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this

@@ -6,7 +6,7 @@
     <form class="ui form" action=" {{ route('update_record', $record)}}" enctype="multipart/form-data" method="post">
 
         {{ csrf_field() }}
-        {{ method_field('PATCH') }}
+        {{ method_field('PUT') }}
 
         <h3>Update</h3>
 
