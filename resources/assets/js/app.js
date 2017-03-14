@@ -35,7 +35,7 @@ $(function () {
     }).modal('show')
   })
   
-  $('.ui.form')
+  $('.ui.form.record-issuer')
         .form({
         fields: {
             name: {

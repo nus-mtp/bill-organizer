@@ -44,7 +44,7 @@
                 <i class="close icon"></i>
                 <div class="header">Add new record issuer</div>
                 <div class="content">
-                    <div class="ui fluid form">
+                    <div class="ui fluid record-issuer form">
                         <form method="POST" action="{{ url('/dashboard/record_issuers') }}"
                               class="ui form" id="add-record-issuer">
                             {{ csrf_field() }}
@@ -70,7 +70,7 @@
                 </div>
                 <div class="actions">
                     <div class="ui button approve green" data-value="yes">Add</div>
-                    <div class="ui button black cancel" data-value="no">Cancel</div>
+                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
                 </div>
             </div>
         </div>
