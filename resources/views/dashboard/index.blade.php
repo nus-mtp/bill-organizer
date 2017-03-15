@@ -15,7 +15,7 @@
                     @endcomponent
                 </div>
 
-                @if(empty($user_record_issuers))
+                @if(empty($record_issuers))
                     <div class="sixteen wide column">
                         <h1>Billing Organisations</h1>
                         <!--if no billing organisations in db-->
@@ -25,7 +25,7 @@
                     </div>
                 @endif
 
-                @foreach($user_record_issuers as $record_issuer)
+                @foreach($record_issuers as $record_issuer)
                     @include('partials.billorgEntry')
                 @endforeach
 

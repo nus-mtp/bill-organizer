@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Record;
-use App\UserRecordIssuer;
+use App\RecordIssuer;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RecordPolicy
