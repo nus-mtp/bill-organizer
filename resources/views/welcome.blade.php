@@ -40,10 +40,10 @@
                         <div class="item">
                             <button class="ui green register button" value="showModal">Register</button>
                         </div>
-                        <!-- temp until modal form works -->
+                        <!-- temp until modal form works
                         <div class="item">
                             <a class="ui green button" href="{{ url('/register') }}">Register old</a>
-                        </div>
+                        </div> -->
                         <div class="item">
                             <button class="ui inverted green login button" value="showModal">Login</button>
                         </div>
@@ -51,8 +51,8 @@
                         <div class="ui small first coupled register modal">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
-                              <form method="POST" action="{{ route('register') }}" class="ui equal width register form">
-
+                              <form class="ui equal width register form" role="form" method="POST" action="{{ route('register') }}" >
+                                {{ csrf_field() }}
                                 <div class="field">
                                   <label for="name">Name</label>
                                   <input id="name" type="text" name="name" placeholder="Name" required autofocus>

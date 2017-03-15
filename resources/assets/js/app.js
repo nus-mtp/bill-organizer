@@ -10,8 +10,8 @@ require('./bootstrap') // bootstrap load our application wide dependencies
 
 $(document).ready(function(){
  $('.register.button').click(_ => {
-   $('.coupled.modal').modal({ allowMultiple: false })
-   $('.second.modal').modal('attach events', '.first.modal .button')
+//   $('.coupled.modal').modal({ allowMultiple: false })
+//   $('.second.modal').modal('attach events', '.first.modal .button')
    $('.first.modal').modal('show')
  })
  $('.login.button').click(_ => {
@@ -33,6 +33,10 @@ $('.register.form').form({
       rules: [{
           type  : 'empty',
           prompt: 'Please enter your email address'
+      },
+      {
+          type  : 'email',
+          prompt: 'Please enter a valid email address'
       }]
     },
     password: {
@@ -40,6 +44,10 @@ $('.register.form').form({
       rules: [{
           type  : 'empty',
           prompt: 'Please enter your password'
+      },
+      {
+          type  : 'minLength[6]',
+          prompt: 'Your password must be at least 6 characters'
       }]
     },
     passwordconfirm: {
@@ -47,6 +55,10 @@ $('.register.form').form({
       rules: [{
           type  : 'empty',
           prompt: 'Please confirm your password'
+      },
+      {
+          type  : 'match[password]',
+          prompt: 'Your password does not match'
       }]
     }
   }
@@ -58,7 +70,11 @@ $('.login.form').form({
       identifier: 'email',
       rules: [{
           type  : 'empty',
-          prompt: 'Please enter your email'
+          prompt: 'Please enter your email address'
+      },
+      {
+          type  : 'email',
+          prompt: 'Please enter a valid email address'
       }]
     },
     password: {
@@ -66,6 +82,10 @@ $('.login.form').form({
       rules: [{
           type  : 'empty',
           prompt: 'Please enter your password'
+      },
+      {
+          type  : 'minLength[6]',
+          prompt: 'Your password must be at least 6 characters'
       }]
     }
   }
