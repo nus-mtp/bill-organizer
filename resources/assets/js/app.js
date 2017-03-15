@@ -14,8 +14,13 @@ require('./bootstrap') // bootstrap load our application wide dependencies
 $(function () {
   $('.add-record.button').click(_ => {
     $('.add-record.modal').modal({
-      onApprove: _ => {
-        $('form#add-record').submit()
+      onApprove: function () {
+          $('.ui.form').submit();
+          return false;
+      },
+      onSuccess: function () {
+          $('form#add-record').submit();
+          $('.modal').modal('hide');
       }
     }).modal('show')
   })
@@ -44,6 +49,57 @@ $(function () {
                     {
                         type   : 'empty',
                         prompt : 'Please enter record issuer name'
+                    }
+                ]
+            },
+        }
+    });
+    
+$('.ui.form.add-record')
+    .form({
+        fields: {
+            record: {
+                identifier: 'record',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please choose a file to upload'
+                    }
+                ]
+            },
+            issue_date: {
+                identifier: 'issue_date',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the date of issue'
+                    }
+                ]
+            },
+            period: {
+                identifier: 'period',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the record period'
+                    }
+                ]
+            },
+            due_date: {
+                identifier: 'due_date',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the due date'
+                    }
+                ]
+            },
+            amount: {
+                identifier: 'amount',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the amount'
                     }
                 ]
             },
