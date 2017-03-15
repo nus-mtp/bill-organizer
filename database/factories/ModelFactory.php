@@ -11,13 +11,19 @@
 |
 */
 
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Faker\Generator;
+use Illuminate\Support\Facades\DB;
 
+use App\FieldAreas;
+use App\Record;
+use App\RecordIssuer;
 use App\RecordIssuerType;
+use App\User;
+use App\Template;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Generator $faker) {
     static $password;
 
     return [
@@ -30,7 +36,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 
 
-$factory->define(App\RecordIssuer::class, function (Faker\Generator $faker){
+$factory->define(RecordIssuer::class, function (Generator $faker){
    return [
        'name' => $faker->company,
        'type' => function() {
@@ -51,7 +57,7 @@ $factory->define(App\RecordIssuer::class, function (Faker\Generator $faker){
  * The factory returns a Carbon instance instead of the DateString. The returned associative array
  * of this method is only used to create a new instance in the DB
  */
-$factory->define(App\Record::class, function(Faker\Generator $faker){
+$factory->define(Record::class, function(Generator $faker){
     $now = Carbon::now();
     $issue_date = (clone $now)->subDays(random_int(0, 30));
     $period = $issue_date->format('Y-m');
@@ -77,3 +83,31 @@ $factory->define(App\Record::class, function(Faker\Generator $faker){
 });
 
 
+
+$factory->define(FieldAreas::class, function(Generator $faker) {
+   return [
+       'page' => rand(),
+       'x' => rand(),
+       'y' => rand(),
+       'w' => rand(),
+       'h' => rand()
+   ];
+});
+
+
+
+$factory->define(Template::class, function(Generator $faker) {
+    $record_issuer_id = factory(RecordIssuer::class)->create()->id;
+    $issue_date_area_id = factory(FieldAreas::class)->create()->id;
+    $due_date_area_id = factory(FieldAreas::class)->create()->id;
+    $period_area_id = factory(FieldAreas::class)->create()->id;
+    $amount_area_id = factory(FieldAreas::class)->create()->id;
+
+    return [
+        'record_issuer_id' => $record_issuer_id,
+        'issue_date_area_id' => $issue_date_area_id,
+        'due_date_area_id' => $due_date_area_id,
+        'period_area_id' => $period_area_id,
+        'amount_area_id' => $amount_area_id
+    ];
+});
