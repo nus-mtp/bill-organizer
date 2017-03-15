@@ -12,6 +12,6 @@ class RecordIssuerType extends Model
 
   public function record_issuer()
   {
-    return $this->hasMany(UserRecordIssuer::class,'type');
+    return $this->hasMany(RecordIssuer::class,'type');
   }
 }

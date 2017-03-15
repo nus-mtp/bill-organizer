@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use App\User;
-use App\UserRecordIssuer;
+use App\RecordIssuer;
 
 class DashboardControllerTest extends TestCase
 {
@@ -33,10 +33,10 @@ class DashboardControllerTest extends TestCase
 
     public function testAsUser() {
         $user = factory(User::class)->create();
-        $user_record_issuers = factory(UserRecordIssuer::class, 2)->create([
+        $record_issuers = factory(RecordIssuer::class, 2)->create([
             'user_id' => $user->id
         ]);
-        $record_issuer_names = $user_record_issuers->pluck('name')->toArray();
+        $record_issuer_names = $record_issuers->pluck('name')->toArray();
 
 
         $response = $this->actingAs($user)->get('/dashboard');

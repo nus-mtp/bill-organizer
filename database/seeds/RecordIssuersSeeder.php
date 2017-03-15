@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use RecordIssuerTypesSeeder as Type;
 
-class UserRecordIssuersSeeder extends Seeder
+class RecordIssuersSeeder extends Seeder
 {
 
     public static $record_issuers = [
@@ -23,7 +23,7 @@ class UserRecordIssuersSeeder extends Seeder
 
         foreach (self::$record_issuers as $name => $type) {
             foreach ($user_ids as $user_id) {
-                DB::table('user_record_issuers')->insert([
+                DB::table('record_issuers')->insert([
                     'name' => $name,
                     'type' => $type,
                     'user_id' => $user_id->id

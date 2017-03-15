@@ -13,7 +13,7 @@ class RecordsSeeder extends Seeder
     {
         $user_ids = DB::table('users')->get(['id']);
         foreach ($user_ids as $user_id) {
-            $user_singtel = DB::table('user_record_issuers')
+            $user_singtel = DB::table('record_issuers')
                 ->where('user_id', $user_id->id)
                 ->where('name', 'Singtel')
                 ->get()->first();
@@ -24,7 +24,7 @@ class RecordsSeeder extends Seeder
                 'amount' => round(rand() / getrandmax() * 1000, 2),
                 'path_to_file' => '~/anywhere',
                 'user_id' => $user_id->id,
-                'user_record_issuer_id' => $user_singtel->id
+                'record_issuer_id' => $user_singtel->id
             ]);
         }
     }

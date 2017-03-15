@@ -22,10 +22,10 @@ class CreateRecordsTable extends Migration
             $table->string('path_to_file', 1024); // this should be unique, but unique constraint creates an index so i'm not adding it
             $table->timestamps();
             $table->integer('user_id')->unsigned();
-            $table->integer('user_record_issuer_id')->unsigned();
+            $table->integer('record_issuer_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('user_record_issuer_id')->references('id')->on('user_record_issuers');
-            $table->unique(['user_record_issuer_id', 'issue_date']);
+            $table->foreign('record_issuer_id')->references('id')->on('record_issuers');
+            $table->unique(['record_issuer_id', 'issue_date']);
         });
     }
 

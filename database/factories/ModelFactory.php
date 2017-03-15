@@ -30,7 +30,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 
 
-$factory->define(App\UserRecordIssuer::class, function (Faker\Generator $faker){
+$factory->define(App\RecordIssuer::class, function (Faker\Generator $faker){
    return [
        'name' => $faker->company,
        'type' => function() {
@@ -57,11 +57,11 @@ $factory->define(App\Record::class, function(Faker\Generator $faker){
     $period = $issue_date->format('Y-m');
     $amount = round(rand() / getrandmax() * 1000, 2);
     $user_id = factory(App\User::class)->create()->id;
-    $user_record_issuer = factory(App\UserRecordIssuer::class)->create([
+    $record_issuer = factory(App\RecordIssuer::class)->create([
         'user_id' => $user_id
     ]);
 
-    $record_issuer_type = DB::table('record_issuer_types')->find($user_record_issuer->type);
+    $record_issuer_type = DB::table('record_issuer_types')->find($record_issuer->type);
     $is_bill = $record_issuer_type->type === RecordIssuerType::BILL_TYPE_NAME;
     $due_date = $is_bill ? (clone $now)->addDays(random_int(0, 90)) : null;
 
@@ -72,7 +72,7 @@ $factory->define(App\Record::class, function(Faker\Generator $faker){
         'amount' => $amount,
         'user_id' => $user_id,
         'path_to_file' => 'whatever/tmp/file.pdf',
-        'user_record_issuer_id' => $user_record_issuer->id
+        'record_issuer_id' => $record_issuer->id
     ];
 });
 
