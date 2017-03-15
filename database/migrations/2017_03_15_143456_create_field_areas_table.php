@@ -11,7 +11,7 @@ use Illuminate\Database\Migrations\Migration;
  *      x, y -> top left (x,y) coordinate
  *      w, h -> width x height of the rectangular area that encapsulate a field's value in record
  */
-class CreateFieldAreaCoordinatesTable extends Migration
+class CreateFieldAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,7 +20,7 @@ class CreateFieldAreaCoordinatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('field_area_coordinates', function (Blueprint $table) {
+        Schema::create('field_areas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('page')->unsigned();
             $table->integer('x')->unsigned();
@@ -38,6 +38,6 @@ class CreateFieldAreaCoordinatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('field_area_coordinates');
+        Schema::dropIfExists('field_areas');
     }
 }
