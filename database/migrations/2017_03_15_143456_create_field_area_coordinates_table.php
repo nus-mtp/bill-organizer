@@ -22,8 +22,9 @@ class CreateFieldAreaCoordinatesTable extends Migration
     {
         Schema::create('field_area_coordinates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('x');
-            $table->integer('y');
+            $table->integer('page')->unsigned();
+            $table->integer('x')->unsigned();
+            $table->integer('y')->unsigned();
             $table->integer('w')->unsigned();
             $table->integer('h')->unsigned();
             $table->timestamps();
