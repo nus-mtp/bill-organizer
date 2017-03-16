@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateFieldAreaCoordinatesTable
+ * Class CreateFieldAreasTable
  *
  * Attributes:
  *      x, y -> top left (x,y) coordinate

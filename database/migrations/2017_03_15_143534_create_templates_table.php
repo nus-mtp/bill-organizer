@@ -21,10 +21,10 @@ class CreateTemplatesTable extends Migration
             $table->integer('period_area_id')->unsigned();
             $table->integer('amount_area_id')->unsigned();
             $table->foreign('record_issuer_id')->references('id')->on('record_issuers');
-            $table->foreign('issue_date_area_id')->references('id')->on('field_area_coordinates');
-            $table->foreign('due_date_area_id')->references('id')->on('field_area_coordinates');
-            $table->foreign('period_area_id')->references('id')->on('field_area_coordinates');
-            $table->foreign('amount_area_id')->references('id')->on('field_area_coordinates');
+            $table->foreign('issue_date_area_id')->references('id')->on('field_areas');
+            $table->foreign('due_date_area_id')->references('id')->on('field_areas');
+            $table->foreign('period_area_id')->references('id')->on('field_areas');
+            $table->foreign('amount_area_id')->references('id')->on('field_areas');
             $table->unique(['record_issuer_id', 'created_at']);
             $table->timestamps();
         });
