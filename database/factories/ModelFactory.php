@@ -28,8 +28,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-
-
 $factory->define(App\RecordIssuer::class, function (Faker\Generator $faker){
    return [
        'name' => $faker->company,
@@ -44,6 +42,48 @@ $factory->define(App\RecordIssuer::class, function (Faker\Generator $faker){
    ];
 });
 
+// precondition: RecordIssuerType must exist
+$factory->defineAs(App\RecordIssuer::class, RecordIssuerType::BILL_TYPE_NAME , function(Faker\Generator $faker){
+    $organization_name = $faker->unique()->randomElement(array(
+        "AIA Singapore Pte Ltd", "Boston Business School Pte Ltd",
+        "Singtel", "Starhub", "M1 Limited",
+        "Tampines Town Council","IRA",
+        "UOB Card Centre", "Citibank Credit Cards", "DBS Credit Cards","OCBC Credit Cards","Maybank Credit Cards","HSBC Credit Cards",
+        "OCBC Plus", "Maybank Kim Eng Securities Pte Ltd",
+        "UOB Car Financing Payment"
+    ));
+      return [
+          'name' => $organization_name,
+          'type' => RecordIssuerType::type( RecordIssuerType::BILL_TYPE_NAME)->first()->id
+      ];
+});
+
+// precondition: RecordIssuerType must exist
+$factory->defineAs(App\RecordIssuer::class,RecordIssuerType::BANK_STATEMENT_TYPE_NAME , function(Faker\Generator $faker){
+    $organization_name = $faker->unique()->randomElement(array(
+        "POSB Savings",
+        "Citibank Interestplus" ,
+        "Maybank Savings" ,
+        "UOB Passbook Sasvings",
+        "DBS Coporate"
+    ));
+    return [
+        'name' => $organization_name,
+        'type' => RecordIssuerType::type(RecordIssuerType::BILL_TYPE_NAME)->first()->id
+    ];
+});
+
+$factory->defineAs(App\Record::class,RecordIssuerType::BILL_TYPE_NAME, function(Faker\Generator $faker){
+    $issue_date = Carbon::createFromTimeStamp($faker->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
+    $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
+    return [
+        'issue_date' => $issue_date,
+        'due_date' => $due_date ,
+        'period' => $issue_date->format('Y-m'),
+        'amount' => $faker->randomFloat(2, 0, 5000),
+        'path_to_file' => 'whatever/tmp/file.pdf',
+    ];
+});
 
 /**
  * Be careful, there's a pitfall here.
