@@ -35,7 +35,7 @@ class RecordControllerTest extends TestCase
         // TODO: Fix this. This was repeated in UserRecordControllerTest. Due date must be updated according
         // TODO: to the nature of the record_issuer
         $record_issuer_type = DB::table('record_issuer_types')->find($this->record_issuer->type);
-        $is_bill = $record_issuer_type->type === RecordIssuerType::BILL_TYPE_NAME;
+        $is_bill = $record_issuer_type->type === RecordIssuerType::BILLORG_TYPE_NAME;
         $due_date = $is_bill ? Carbon::now()->addDays(random_int(0, 90))->toDateString() : null;
         $this->record = factory(Record::class)->create([
             'user_id' => $this->user->id,
@@ -195,7 +195,7 @@ class RecordControllerTest extends TestCase
 
         // Assert that new file should be saved
         $saved_file_name = $this->record_issuer->name . '_' . $this->record->issue_date->toDateString() . '.pdf';
-        $path_to_store = 'records/' . $this->record->id;
+        $path_to_store = 'records/' . $this->user->id;
         Storage::disk('local')->assertExists($path_to_store . '/' . $saved_file_name);
 
         // Assert successful and redirected back
