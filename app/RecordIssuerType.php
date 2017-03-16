@@ -10,8 +10,13 @@ class RecordIssuerType extends Model
   const BILL_TYPE_NAME =  'billing organization';
   const BANK_STATEMENT_TYPE_NAME = 'bank';
 
-  public function record_issuer()
+    public function scopeType($query, $type){
+        return $query->where('type', $type);
+    }
+
+   public function record_issuer()
   {
     return $this->hasMany(RecordIssuer::class,'type');
   }
+
 }
