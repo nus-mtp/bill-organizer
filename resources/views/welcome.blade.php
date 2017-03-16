@@ -40,18 +40,18 @@
                         <div class="item">
                             <button class="ui green register button" value="showModal">Register</button>
                         </div>
-                        <!-- temp until modal form works
+                        <!-- temp until modal form works -->
                         <div class="item">
                             <a class="ui green button" href="{{ url('/register') }}">Register old</a>
-                        </div> -->
+                        </div>
                         <div class="item">
                             <button class="ui inverted green login button" value="showModal">Login</button>
                         </div>
 
-                        <div class="ui small first coupled register modal">
+                        <div class="ui small register modal">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
-                              <form class="ui equal width register form" role="form" method="POST" action="{{ route('register') }}" >
+                              <form class="ui register form" role="form" method="POST" action="{{ route('register') }}" >
                                 {{ csrf_field() }}
                                 <div class="field">
                                   <label for="name">Name</label>
@@ -67,24 +67,14 @@
                                 </div>
                                 <div class="field">
                                   <label for="password-confirm">Password Confirm</label>
-                                  <input id="password-confirm" type="password" name="password-confirm" placeholder="Retype Password" required>
+                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password" required>
                                 </div>
                                 <div class="action" style="text-align:right;">
-                                  <div class="ui primary submit button">Register</div>
+                                  <button class="ui primary submit button" type="submit">Register</button>
                                 </div>
                                 <div class="ui error message"></div>
 
                             </form>
-                          </div>
-                        </div>
-
-                        <div class="ui small second coupled modal">
-                          <div class="header">Registered Successfully</div>
-                          <div class="content" style="text-align:left;">
-                            <p>You may now proceed to login.</p>
-                          </div>
-                          <div class="actions">
-                            <div class="ui approve button">Close</div>
                           </div>
                         </div>
 
@@ -109,7 +99,7 @@
                               <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}">Forgot Your Password?</a>
 
                               <div class="action" style="text-align:right;">
-                                <div class="ui primary submit button">Login</div>
+                                <button class="ui primary submit button" type="submit">Login</button>
                               </div>
                               <div class="ui error message"></div>
 

@@ -10,9 +10,7 @@ require('./bootstrap') // bootstrap load our application wide dependencies
 
 $(document).ready(function(){
  $('.register.button').click(_ => {
-//   $('.coupled.modal').modal({ allowMultiple: false })
-//   $('.second.modal').modal('attach events', '.first.modal .button')
-   $('.first.modal').modal('show')
+   $('.register.modal').modal('show')
  })
  $('.login.button').click(_ => {
    $('.login.modal').modal('show')
@@ -21,20 +19,9 @@ $(document).ready(function(){
 
 $('.register.form').form({
   fields: {
-    name: {
-      identifier: 'name',
-      rules: [{
-          type  : 'empty',
-          prompt: 'Please enter your name'
-      }]
-    },
     email: {
       identifier: 'email',
       rules: [{
-          type  : 'empty',
-          prompt: 'Please enter your email address'
-      },
-      {
           type  : 'email',
           prompt: 'Please enter a valid email address'
       }]
@@ -42,10 +29,6 @@ $('.register.form').form({
     password: {
       identifier: 'password',
       rules: [{
-          type  : 'empty',
-          prompt: 'Please enter your password'
-      },
-      {
           type  : 'minLength[6]',
           prompt: 'Your password must be at least 6 characters'
       }]
