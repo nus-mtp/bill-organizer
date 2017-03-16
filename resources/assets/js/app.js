@@ -56,11 +56,11 @@ $(function () {
     });
     
 // semantic ui custom form validation rule for file type
-/*$.fn.form.settings.rules.fileType = function(fileType) {
+$.fn.form.settings.rules.fileType = function(fileType) {
     fileName = document.getElementById('record').value;
     // return true means validated
     return fileName.replace(/^.*\./, '') == fileType;
-};*/
+};
     
 $('.ui.form.add-record')
     .form({
