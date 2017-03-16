@@ -26,7 +26,7 @@ class RecordIssuerTest extends TestCase
         $this->record_issuer = factory(RecordIssuer::class)->create([
             'user_id' => $user->id
         ]);
-        factory(Record::class, 3)->create([
+        factory(Record::class)->create([
             'record_issuer_id' => $this->record_issuer->id,
             'user_id' => $user->id
         ]);
@@ -38,6 +38,10 @@ class RecordIssuerTest extends TestCase
     public function testGetUser()
     {
         $this->assertNotNull($this->record_issuer->user);
+    }
+
+    public function testGetName() {
+        $this->assertNotNull($this->record_issuer->name);
     }
 
     public function testGetRecords()
