@@ -107,17 +107,22 @@ $factory->define(FieldAreas::class, function(Generator $faker) {
 
 
 $factory->define(Template::class, function(Generator $faker) {
-    $record_issuer_id = factory(RecordIssuer::class)->create()->id;
-    $issue_date_area_id = factory(FieldAreas::class)->create()->id;
-    $due_date_area_id = factory(FieldAreas::class)->create()->id;
-    $period_area_id = factory(FieldAreas::class)->create()->id;
-    $amount_area_id = factory(FieldAreas::class)->create()->id;
 
     return [
-        'record_issuer_id' => $record_issuer_id,
-        'issue_date_area_id' => $issue_date_area_id,
-        'due_date_area_id' => $due_date_area_id,
-        'period_area_id' => $period_area_id,
-        'amount_area_id' => $amount_area_id
+        'record_issuer_id' => function() {
+            return factory(RecordIssuer::class)->create()->id;
+        },
+        'issue_date_area_id' => function() {
+            return factory(FieldAreas::class)->create()->id;
+        },
+        'due_date_area_id' => function() {
+            return factory(FieldAreas::class)->create()->id;
+        },
+        'period_area_id' => function() {
+            return factory(FieldAreas::class)->create()->id;
+        },
+        'amount_area_id' => function() {
+            return factory(FieldAreas::class)->create()->id;
+        }
     ];
 });
