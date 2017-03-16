@@ -53,7 +53,7 @@ $factory->define(App\RecordIssuer::class, function (Faker\Generator $faker){
  */
 $factory->define(App\Record::class, function(Faker\Generator $faker){
     $now = Carbon::now();
-    $issue_date = (clone $now)->subDays(random_int(0, 30));
+    $issue_date = Carbon::now()->subDay(random_int(0, 30));
     $period = $issue_date->format('Y-m');
     $amount = round(rand() / getrandmax() * 1000, 2);
     $user_id = factory(App\User::class)->create()->id;
@@ -63,7 +63,7 @@ $factory->define(App\Record::class, function(Faker\Generator $faker){
 
     $record_issuer_type = DB::table('record_issuer_types')->find($record_issuer->type);
     $is_bill = $record_issuer_type->type === RecordIssuerType::BILL_TYPE_NAME;
-    $due_date = $is_bill ? (clone $now)->addDays(random_int(0, 90)) : null;
+    $due_date = $is_bill ? Carbon::now()->addDays(random_int(0, 90)) : null;
 
     return [
         'issue_date' => $issue_date->toDateString(),
