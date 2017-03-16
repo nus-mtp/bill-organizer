@@ -55,6 +55,13 @@ $(function () {
         }
     });
     
+// semantuic ui custom form validation rule for file type
+$.fn.form.settings.rules.fileType = function(fileType) {
+    fileName = document.getElementById('record').value;
+    // return true means validated
+    return fileName.replace(/^.*\./, '') == fileType;
+};
+    
 $('.ui.form.add-record')
     .form({
         fields: {
@@ -63,7 +70,11 @@ $('.ui.form.add-record')
                 rules: [
                     {
                         type   : 'empty',
-                        prompt : 'Please choose a file to upload'
+                        prompt : 'Please choose a pdf file to upload'
+                    },
+                    {
+                        type   : 'fileType[pdf]',
+                        prompt : 'Only .pdf files are accepted'
                     }
                 ]
             },

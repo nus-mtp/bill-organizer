@@ -48,7 +48,7 @@
                         <form method="POST" action="{{ url('/dashboard/record_issuers') }}"
                               class="ui form" id="add-record-issuer">
                             {{ csrf_field() }}
-                            <div class="ui error message"></div>
+                            <div class="ui tiny error message"></div>
                             <div class="field">
                                 <label for="name">
                                     Name:
