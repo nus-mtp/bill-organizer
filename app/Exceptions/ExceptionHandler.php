@@ -42,7 +42,7 @@ class ExceptionHandler extends Handler
     /**
      * @param $whoopsExceptionHandler
      */
-    protected function returnJsonIfAjaxRequestReceived($whoopsExceptionHandler): void
+    protected function returnJsonIfAjaxRequestReceived($whoopsExceptionHandler)
     {
         if (Misc::isAjaxRequest()) {
             $jsonHandler = new JsonResponseHandler();
