@@ -195,7 +195,7 @@ class RecordControllerTest extends TestCase
 
         // Assert that new file should be saved
         $saved_file_name = $this->record_issuer->name . '_' . $this->record->issue_date->toDateString() . '.pdf';
-        $path_to_store = 'records/' . $this->record->id;
+        $path_to_store = 'records/' . $this->user->id;
         Storage::disk('local')->assertExists($path_to_store . '/' . $saved_file_name);
 
         // Assert successful and redirected back
