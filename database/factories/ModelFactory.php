@@ -39,11 +39,7 @@ $factory->define(User::class, function (Generator $faker) {
 $factory->define(RecordIssuer::class, function (Generator $faker){
    return [
        'name' => $faker->company,
-       'type' => function() {
-           $record_issuer_types = DB::table('record_issuer_types')->pluck('id')->toArray();
-           $rand_index = array_rand($record_issuer_types);
-           return $record_issuer_types[$rand_index];
-       },
+       'type' => RecordIssuerType::random_type(),
        'user_id' => function() {
            return factory(App\User::class)->create()->id;
        }
@@ -62,23 +58,30 @@ $factory->define(Record::class, function(Generator $faker){
     $issue_date = (clone $now)->subDays(random_int(0, 30));
     $period = $issue_date->format('Y-m');
     $amount = round(rand() / getrandmax() * 1000, 2);
-    $user_id = factory(App\User::class)->create()->id;
-    $record_issuer = factory(App\RecordIssuer::class)->create([
-        'user_id' => $user_id
-    ]);
 
-    $record_issuer_type = DB::table('record_issuer_types')->find($record_issuer->type);
-    $is_bill = $record_issuer_type->type === RecordIssuerType::BILL_TYPE_NAME;
-    $due_date = $is_bill ? (clone $now)->addDays(random_int(0, 90)) : null;
+    // need to determine issuer type first instead of letting the factory decide because due_date depends on it
+    $issuer_type = RecordIssuerType::random_type();
+    $is_bill = $issuer_type === RecordIssuerType::BILLORG_TYPE_ID;
+    $due_date = $is_bill ? (clone $now)->addDays(random_int(0, 90))->toDateString() : null;
 
     return [
         'issue_date' => $issue_date->toDateString(),
-        'due_date' => $due_date === null ? null : $due_date->toDateString(),
+        'due_date' => $due_date,
         'period' => $period,
         'amount' => $amount,
-        'user_id' => $user_id,
+        'user_id' => $user_id = function() {
+            /* Cannot move this outside of the returned array and do $user_id = factory(App\User::class)->create()->id;
+             * because that will cause the factory to create a new user, even if user_id is overrode
+             */
+            return factory(App\User::class)->create()->id;
+        },
         'path_to_file' => 'whatever/tmp/file.pdf',
-        'record_issuer_id' => $record_issuer->id
+        'record_issuer_id' => function() use ($issuer_type, $user_id) {
+            return factory(App\RecordIssuer::class)->create([
+                'type' => $issuer_type,
+                'user_id' => $user_id
+            ]);
+        }
     ];
 });
 

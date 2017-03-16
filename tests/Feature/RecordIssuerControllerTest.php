@@ -210,7 +210,7 @@ class RecordIssuerControllerTest extends TestCase
             'record_issuer_id' => $this->record_issuer->id
         ]);
         $record_issuer_type = DB::table('record_issuer_types')->find($this->record_issuer->type);
-        $is_bill = $record_issuer_type->type === RecordIssuerType::BILL_TYPE_NAME;
+        $is_bill = $record_issuer_type->type === RecordIssuerType::BILLORG_TYPE_NAME;
         $due_date = $is_bill ? (clone $user_record_data->issue_date)->addDays(random_int(0, 120))->toDateString() : null;
         $user_record_data = array_merge($user_record_data->toArray(), [
             'issue_date' => $user_record_data->issue_date->toDateString(),
