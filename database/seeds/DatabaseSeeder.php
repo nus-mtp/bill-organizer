@@ -13,9 +13,9 @@ use App\User;
 
 class DatabaseSeeder extends Seeder
 {
-    public static $names = ['Charlene Lee', 'Lim Xin Ai', 'Tan Yan Ling', 'Teddy Hartanto', 'Xin Kenan'];
-    public static $email_names = ['charlene', 'xinai', 'yanling', 'teddy', 'kenan'];
-    public static $record_issuers = [
+    private static $names = ['Charlene Lee', 'Lim Xin Ai', 'Tan Yan Ling', 'Teddy Hartanto', 'Xin Kenan'];
+    private static $email_names = ['charlene', 'xinai', 'yanling', 'teddy', 'kenan'];
+    private static $record_issuers = [
         'Singtel' => RecordIssuerType::BILLORG_TYPE_ID,
         'SP Services' => RecordIssuerType::BILLORG_TYPE_ID,
         'DBS' => RecordIssuerType::BANK_TYPE_ID
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 
-        $this->seedRecordIssuerType();
+        self::seedRecordIssuerType();
 
         // for each user
         for ($i = 0; $i < count(self::$names); $i++) {
@@ -49,12 +49,14 @@ class DatabaseSeeder extends Seeder
                 ]);
 
                 // and a record for each record issuer
-                $this->createNewRecord($user, $record_issuer);
+                self::createNewRecord($user, $record_issuer);
+                // and a template
+                self::createNewTemplate($record_issuer);
             }
         }
     }
 
-    public function seedRecordIssuerType() {
+    private static function seedRecordIssuerType() {
         DB::table('record_issuer_types')->insert([
             'id' => RecordIssuerType::BILLORG_TYPE_ID,
             'type' => RecordIssuerType::BILLORG_TYPE_NAME,
@@ -65,7 +67,7 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-    public function createNewRecord($user, $record_issuer) {
+    private static function createNewRecord($user, $record_issuer) {
         // need to specify due date because it's related to the type of the record issuer
         $is_bill = $record_issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
         $due_date = $is_bill ? Carbon::now()->addDays(random_int(0, 120))->toDateString() : null;
@@ -75,6 +77,13 @@ class DatabaseSeeder extends Seeder
             'due_date' => $due_date
         ]);
         return $record;
+    }
+
+    private static function createNewTemplate($record_issuer) {
+        $template = factory(Template::class)->create([
+            'record_issuer_id' => $record_issuer->id
+        ]);
+        return $template;
     }
 
 }
