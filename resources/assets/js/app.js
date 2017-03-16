@@ -71,11 +71,11 @@ $('.ui.form.add-record')
                     {
                         type   : 'empty',
                         prompt : 'Please choose a pdf file to upload'
-                    }/*,
+                    },
                     {
                         type   : 'fileType[pdf]',
                         prompt : 'Only .pdf files are accepted'
-                    }*/
+                    }
                 ]
             },
             issue_date: {
