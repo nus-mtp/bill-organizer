@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Faker\Generator;
 use Illuminate\Support\Facades\DB;
 
-use App\FieldAreas;
+use App\FieldArea;
 use App\Record;
 use App\RecordIssuer;
 use App\RecordIssuerType;
@@ -87,7 +87,7 @@ $factory->define(Record::class, function(Generator $faker){
 });
 
 
-$factory->define(FieldAreas::class, function(Generator $faker) {
+$factory->define(FieldArea::class, function(Generator $faker) {
     return [
         'page' => rand(1, 3),
         'x' => $x = rand(0, Config::get('constants.A4_W_PIXELS') - 1),
@@ -106,16 +106,16 @@ $factory->define(Template::class, function(Generator $faker) {
             return factory(RecordIssuer::class)->create()->id;
         },
         'issue_date_area_id' => function() {
-            return factory(FieldAreas::class)->create()->id;
+            return factory(FieldArea::class)->create()->id;
         },
         'due_date_area_id' => function() {
-            return factory(FieldAreas::class)->create()->id;
+            return factory(FieldArea::class)->create()->id;
         },
         'period_area_id' => function() {
-            return factory(FieldAreas::class)->create()->id;
+            return factory(FieldArea::class)->create()->id;
         },
         'amount_area_id' => function() {
-            return factory(FieldAreas::class)->create()->id;
+            return factory(FieldArea::class)->create()->id;
         }
     ];
 });

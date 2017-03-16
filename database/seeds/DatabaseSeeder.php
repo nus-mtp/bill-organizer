@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-use App\FieldAreas;
+use App\FieldArea;
 use App\Template;
 use App\Record;
 use App\RecordIssuer;
