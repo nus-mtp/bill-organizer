@@ -16,7 +16,7 @@ trait TestHelperTrait
     }
 
     private function getBillOrgTypeId() {
-        return RecordIssuerType::type(RecordIssuerType::BILL_TYPE_NAME)->first()->id;
+        return RecordIssuerType::type(RecordIssuerType::BILLORG_TYPE_NAME)->first()->id;
     }
 
     private function createRecordIssuerModel($organizationName) {
@@ -33,7 +33,7 @@ trait TestHelperTrait
     }
 
     private function generateBillOrgs($user, $count){
-        $orgTypeName = RecordIssuerType::BILL_TYPE_NAME;
+        $orgTypeName = RecordIssuerType::BILLORG_TYPE_NAME;
         return $this->generateOrganizationsWithFactoryForUser($orgTypeName, $user, $count);
     }
 
@@ -52,7 +52,7 @@ trait TestHelperTrait
     }
     private function generateBills(RecordIssuer $billOrg, $count) {
         $user = $billOrg->user;
-        $bills = factory(\App\Record::class, RecordIssuerType::BILL_TYPE_NAME,$count)->make()->each(function(Record $bill) use ($user){
+        $bills = factory(\App\Record::class, RecordIssuerType::BILLORG_TYPE_NAME,$count)->make()->each(function(Record $bill) use ($user){
             $bill->user_id = $user->id;
         });
         $billOrg->records()->saveMany($bills);

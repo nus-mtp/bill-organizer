@@ -1,8 +1,8 @@
 <?php
-
 use Illuminate\Database\Seeder;
-
 class RecordIssuerTypesSeeder extends Seeder
+// please practice separation of concern, follow laravel way
+// it is impossible to seed('className') individual table for testing if put everything is in one class
 {
     const BILLORG_ID = 1;
     const BANK_ID = 2;

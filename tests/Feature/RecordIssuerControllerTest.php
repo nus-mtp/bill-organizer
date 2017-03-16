@@ -210,7 +210,7 @@ class RecordIssuerControllerTest extends TestCase
             'record_issuer_id' => $this->record_issuer->id
         ]);
         $record_issuer_type = DB::table('record_issuer_types')->find($this->record_issuer->type);
-        $is_bill = $record_issuer_type->type === RecordIssuerType::BILL_TYPE_NAME;
+        $is_bill = $record_issuer_type->type === RecordIssuerType::BILLORG_TYPE_NAME;
         $due_date = $is_bill ? (clone $user_record_data->issue_date)->addDays(random_int(0, 120))->toDateString() : null;
         $user_record_data = array_merge($user_record_data->toArray(), [
             'issue_date' => $user_record_data->issue_date->toDateString(),
@@ -233,7 +233,7 @@ class RecordIssuerControllerTest extends TestCase
 
         //    2. File should be saved in the storage (This didn't work. Let's wait for explanation from the Laravel developers)
          $saved_file_name = $this->record_issuer->name . '_' . $user_record_data['issue_date'] . '.pdf';
-         $path_to_store = 'records/' . $saved_record->id;
+         $path_to_store = 'records/' . $this->user->id;
          Storage::disk('local')->assertExists($path_to_store . '/' . $saved_file_name);
 
         // success and redirected back
