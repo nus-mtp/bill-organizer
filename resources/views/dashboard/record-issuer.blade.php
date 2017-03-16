@@ -113,7 +113,7 @@
                             <!-- TODO: customize form based on type -->
                             <!-- TODO: research on semantic UI calendar -->
                             {{ csrf_field() }}
-                            <div class="ui tiny error message" id="errormsg"></div>
+                            <div class="ui tiny error message"></div>
                             <div class="field">
                                 <label for="record">Upload the record:</label>
                                 <input type="file" name="record" id="record" accept=".pdf, application/pdf">

@@ -55,12 +55,12 @@ $(function () {
         }
     });
     
-// semantuic ui custom form validation rule for file type
-$.fn.form.settings.rules.fileType = function(fileType) {
+// semantic ui custom form validation rule for file type
+/*$.fn.form.settings.rules.fileType = function(fileType) {
     fileName = document.getElementById('record').value;
     // return true means validated
     return fileName.replace(/^.*\./, '') == fileType;
-};
+};*/
     
 $('.ui.form.add-record')
     .form({
@@ -71,11 +71,11 @@ $('.ui.form.add-record')
                     {
                         type   : 'empty',
                         prompt : 'Please choose a pdf file to upload'
-                    },
+                    }/*,
                     {
                         type   : 'fileType[pdf]',
                         prompt : 'Only .pdf files are accepted'
-                    }
+                    }*/
                 ]
             },
             issue_date: {
