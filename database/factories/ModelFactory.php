@@ -89,11 +89,11 @@ $factory->define(Record::class, function(Generator $faker){
 
 $factory->define(FieldAreas::class, function(Generator $faker) {
     return [
-        'page' => rand(),
-        'x' => rand(0, Config::get('constants.A4_W_PIXELS')),
-        'y' => rand(0, Config::get('constants.A4_H_PIXELS')),
-        'w' => rand(0, Config::get('constants.A4_W_PIXELS')),
-        'h' => rand(0, Config::get('constants.A4_H_PIXELS'))
+        'page' => rand(1, 3),
+        'x' => $x = rand(0, Config::get('constants.A4_W_PIXELS') - 1),
+        'y' => $y = rand(0, Config::get('constants.A4_H_PIXELS') - 1),
+        'w' => rand(0, Config::get('constants.A4_W_PIXELS') - $x),
+        'h' => rand(0, Config::get('constants.A4_H_PIXELS') - $y)
     ];
 });
 
