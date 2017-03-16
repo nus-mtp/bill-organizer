@@ -83,14 +83,17 @@ $factory->define(Record::class, function(Generator $faker){
 });
 
 
-
+/**
+ * A4 pixels size is 2480x3508 in 300 DPI. Currently, the DPI we're using is supposedly not
+ * going to be more than 300 DPI
+ */
 $factory->define(FieldAreas::class, function(Generator $faker) {
    return [
        'page' => rand(),
-       'x' => rand(),
-       'y' => rand(),
-       'w' => rand(),
-       'h' => rand()
+       'x' => rand(0, 2480),
+       'y' => rand(0, 3508),
+       'w' => rand(0, 2480),
+       'h' => rand(0, 3508)
    ];
 });
 
