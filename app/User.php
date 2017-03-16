@@ -31,7 +31,7 @@ class User extends Authenticatable
      * Eloquent relationships
      */
     public function record_issuers() {
-        return $this->hasMany(UserRecordIssuer::class);
+        return $this->hasMany(RecordIssuer::class);
     }
 
     public function records() {
@@ -42,7 +42,7 @@ class User extends Authenticatable
      * CRUD on other models
      */
 
-    public function create_record_issuer(UserRecordIssuer $record_issuer) {
+    public function create_record_issuer(RecordIssuer $record_issuer) {
         return $this->record_issuers()->save($record_issuer);
     }
 

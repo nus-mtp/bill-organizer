@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserRecordIssuersTable extends Migration
+class CreateRecordIssuersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserRecordIssuersTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_record_issuers', function (Blueprint $table) {
+        Schema::create('record_issuers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 191);
             $table->integer('type')->unsigned();
@@ -32,6 +32,6 @@ class CreateUserRecordIssuersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_record_issuers');
+        Schema::dropIfExists('record_issuers');
     }
 }

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\RecordIssuerType;
 use App\Record;
-use App\UserRecordIssuer;
+use App\RecordIssuer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class UserRecordIssuerController extends Controller
+class RecordIssuerController extends Controller
 {
     public static $record_issuer_types;
 
@@ -22,7 +22,7 @@ class UserRecordIssuerController extends Controller
         $this->middleware('auth');
     }
 
-    public function show(UserRecordIssuer $record_issuer) {
+    public function show(RecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
         $records = $record_issuer->records;
@@ -43,15 +43,17 @@ class UserRecordIssuerController extends Controller
         ]);
 
         auth()->user()->create_record_issuer(
-            new UserRecordIssuer(request(['name', 'type']))
+            new RecordIssuer(request(['name', 'type']))
         );
 
         return back();
     }
 
-    public function destroy(UserRecordIssuer $record_issuer) {
+    public function destroy(RecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
+        // TODO: extract these constants. It's not a good practice to refer to the same string literal everywhere
+        DB::table('records')->where('record_issuer_id', $record_issuer->id)->delete();
         $record_issuer->delete();
 
         return back();
@@ -59,7 +61,7 @@ class UserRecordIssuerController extends Controller
 
 
     // TODO: clean up this mess if possible?
-    public function store_record(UserRecordIssuer $record_issuer) {
+    public function store_record(RecordIssuer $record_issuer) {
         // only if this record_issuer belongs to me can I add a new record. I shouldn't be able to add to other user's record issuer
         $this->authorize('belongs_to_user', $record_issuer);
 
@@ -79,7 +81,7 @@ class UserRecordIssuerController extends Controller
 
         $user_id = auth()->id();
         $file_extension = request()->file('record')->extension();
-        $file_name = $record_issuer->name . request('issue_date') . '.' . $file_extension;
+        $file_name = $record_issuer->name . '_' . request('issue_date') . '.' . $file_extension;
         $path = request()->file('record')
             ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this
@@ -88,7 +90,7 @@ class UserRecordIssuerController extends Controller
             new Record(
                 request(['issue_date', 'due_date', 'amount', 'period']) + [
                     'path_to_file' => $path,
-                    'user_record_issuer_id' => $record_issuer->id
+                    'record_issuer_id' => $record_issuer->id
                 ]
             )
         );

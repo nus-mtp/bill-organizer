@@ -82,6 +82,8 @@ let headroom = new Headroom(headerElement)
 headroom.init()
 
 
+// /dashboard modal controls
+
 $(function () {
   $('.add-record.button').click(_ => {
     $('.add-record.modal').modal({
@@ -111,3 +113,30 @@ $(function () {
     })
   })
 })
+
+// calendar settings
+$('.ui.calendar').calendar({
+  type: 'date',
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return ''
+      var day = date.getDate()
+      var month = date.getMonth() + 1
+      var year = date.getFullYear()
+      return day + '/' + month + '/' + year
+    }
+  }
+})
+
+$('.ui.calendar-month').calendar({
+  type: 'month',
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return ''
+      var month = settings.text.monthsShort[date.getMonth()]
+      var year = date.getFullYear()
+      return month + '/' + year
+    }
+  }
+})
+
