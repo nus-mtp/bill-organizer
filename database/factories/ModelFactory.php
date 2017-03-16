@@ -13,7 +13,6 @@
 
 use Carbon\Carbon;
 use Faker\Generator;
-use Illuminate\Support\Facades\DB;
 
 use App\FieldAreas;
 use App\Record;
@@ -46,6 +45,48 @@ $factory->define(RecordIssuer::class, function (Generator $faker){
    ];
 });
 
+// precondition: RecordIssuerType must exist
+$factory->defineAs(App\RecordIssuer::class, RecordIssuerType::BILLORG_TYPE_NAME , function(Faker\Generator $faker){
+    $organization_name = $faker->unique()->randomElement(array(
+        "AIA Singapore Pte Ltd", "Boston Business School Pte Ltd",
+        "Singtel", "Starhub", "M1 Limited",
+        "Tampines Town Council","IRA",
+        "UOB Card Centre", "Citibank Credit Cards", "DBS Credit Cards","OCBC Credit Cards","Maybank Credit Cards","HSBC Credit Cards",
+        "OCBC Plus", "Maybank Kim Eng Securities Pte Ltd",
+        "UOB Car Financing Payment"
+    ));
+      return [
+          'name' => $organization_name,
+          'type' => RecordIssuerType::type( RecordIssuerType::BILLORG_TYPE_NAME)->first()->id
+      ];
+});
+
+// precondition: RecordIssuerType must exist
+$factory->defineAs(App\RecordIssuer::class,RecordIssuerType::BANK_STATEMENT_TYPE_NAME , function(Faker\Generator $faker){
+    $organization_name = $faker->unique()->randomElement(array(
+        "POSB Savings",
+        "Citibank Interestplus" ,
+        "Maybank Savings" ,
+        "UOB Passbook Sasvings",
+        "DBS Coporate"
+    ));
+    return [
+        'name' => $organization_name,
+        'type' => RecordIssuerType::type(RecordIssuerType::BILLORG_TYPE_NAME)->first()->id
+    ];
+});
+
+$factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, function(Faker\Generator $faker){
+    $issue_date = Carbon::createFromTimeStamp($faker->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
+    $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
+    return [
+        'issue_date' => $issue_date,
+        'due_date' => $due_date ,
+        'period' => $issue_date->format('Y-m'),
+        'amount' => $faker->randomFloat(2, 0, 5000),
+        'path_to_file' => 'whatever/tmp/file.pdf',
+    ];
+});
 
 /**
  * Be careful, there's a pitfall here.
@@ -55,14 +96,14 @@ $factory->define(RecordIssuer::class, function (Generator $faker){
  */
 $factory->define(Record::class, function(Generator $faker){
     $now = Carbon::now();
-    $issue_date = (clone $now)->subDays(random_int(0, 30));
+    $issue_date = Carbon::now()->subDay(random_int(0, 30));
     $period = $issue_date->format('Y-m');
     $amount = round(rand() / getrandmax() * 1000, 2);
 
     // need to determine issuer type first instead of letting the factory decide because due_date depends on it
     $issuer_type = RecordIssuerType::random_type();
     $is_bill = $issuer_type === RecordIssuerType::BILLORG_TYPE_ID;
-    $due_date = $is_bill ? (clone $now)->addDays(random_int(0, 90))->toDateString() : null;
+    $due_date = $is_bill ? Carbon::now()->addDays(random_int(0, 90))->toDateString() : null;
 
     return [
         'issue_date' => $issue_date->toDateString(),

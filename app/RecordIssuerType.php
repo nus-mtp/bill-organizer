@@ -12,9 +12,8 @@ class RecordIssuerType extends Model
     const BILLORG_TYPE_ID = 1;
     const BANK_TYPE_ID = 2;
 
-    public function record_issuer()
-    {
-        return $this->hasMany(RecordIssuer::class,'type');
+    public function scopeType($query, $type){
+        return $query->where('type', $type);
     }
 
     public static function random_type() {
@@ -22,4 +21,10 @@ class RecordIssuerType extends Model
         $rand_index = array_rand($record_issuer_types);
         return $record_issuer_types[$rand_index];
     }
+
+   public function record_issuer()
+  {
+    return $this->hasMany(RecordIssuer::class,'type');
+  }
+
 }

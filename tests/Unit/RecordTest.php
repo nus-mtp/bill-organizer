@@ -2,20 +2,29 @@
 
 
 namespace Tests\Unit;
-
-use Tests\TestCase;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use App\Record;
+use App\RecordIssuer;
+use App\RecordIssuerType;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Record;
+use Tests\Support\TestHelperTrait;
+use Tests\TestCase;
+use \App\Statistics;
 
 
 // unit test template
 class RecordTest extends TestCase
+
 {
+    use DatabaseMigrations;
+    use DatabaseTransactions;
+    use TestHelperTrait;
+
     public function setUp()
     {
         parent::setUp();
+        $this->prepareDbForTests();
+
         // setup stuff you need for testing here, create models, create database if needed (Support/DatabaseMigrations
         // trait do this for u, just import at top)
         // $this->artisan('migrate');
@@ -25,15 +34,16 @@ class RecordTest extends TestCase
 
     public function tearDown()
     {
-        //$this->artisan('migrate:reset');
     }
 
-    // a simple example, all test must be prefix test____ or it won't work
-    public function test_it_can_be_created()
+    public function testCanCreateARecordClass()
     {
-        $this->assertInstanceOf(
-            Record::class,
-            new Record()
-        );
+        $this->assertInstanceOf(Record::class, new Record());
     }
+
+    public function canCreateABillRecord(){
+
+    }
+
+
 }
