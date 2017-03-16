@@ -22,6 +22,14 @@ use App\RecordIssuerType;
 use App\User;
 use App\Template;
 
+
+/**
+ * A4 pixels size is 2480x3508 in 300 DPI. Currently, the DPI we're using is supposedly not
+ * going to be more than 300 DPI
+ */
+const MAX_X = 2480;
+const MAX_Y = 3508;
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Generator $faker) {
     static $password;
@@ -86,18 +94,14 @@ $factory->define(Record::class, function(Generator $faker){
 });
 
 
-/**
- * A4 pixels size is 2480x3508 in 300 DPI. Currently, the DPI we're using is supposedly not
- * going to be more than 300 DPI
- */
 $factory->define(FieldAreas::class, function(Generator $faker) {
-   return [
-       'page' => rand(),
-       'x' => rand(0, 2480),
-       'y' => rand(0, 3508),
-       'w' => rand(0, 2480),
-       'h' => rand(0, 3508)
-   ];
+    return [
+        'page' => rand(),
+        'x' => rand(0, MAX_X),
+        'y' => rand(0, MAX_Y),
+        'w' => rand(0, MAX_X),
+        'h' => rand(0, MAX_Y)
+    ];
 });
 
 
