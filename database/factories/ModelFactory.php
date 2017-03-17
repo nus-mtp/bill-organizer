@@ -14,12 +14,12 @@
 use Carbon\Carbon;
 use Faker\Generator;
 
-use App\FieldAreas;
+//use App\FieldAreas;
 use App\Record;
 use App\RecordIssuer;
 use App\RecordIssuerType;
 use App\User;
-use App\Template;
+//use App\Template;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Generator $faker) {
