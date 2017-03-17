@@ -13,20 +13,12 @@ window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
   'X-Requested-With': 'XMLHttpRequest'
 }
-
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 })
 
-// headroom init
-let headerElement = $('#header')[0]
-if (window.location.hash) {
-  header.classList.add('headroom--unpinned')
-}
-let headroom = new Headroom(headerElement)
-headroom.init()
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
