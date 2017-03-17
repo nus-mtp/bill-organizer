@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Faker\Provider\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use App\RecordIssuerType;
 use App\Record;
 use App\RecordIssuer;
 use App\TempRecord;
+use App\TempRecordPage;
 
 class RecordIssuerController extends Controller
 {
@@ -142,18 +144,28 @@ class RecordIssuerController extends Controller
         // convert pdf to images and store somewhere
         $temp_images_dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
             "{$saved_temp_record->id}/img/";
-        // for now, just convert page 1 (hard-coded)
-        $page_num = 0;
-        $file_name = "{$page_num}.jpg";
-
         if(!Storage::exists($temp_images_dir_path)) {
             Storage::makeDirectory($temp_images_dir_path, 0777, true, true);
         }
 
-        // need to append 'app/' Is this a bug in Laravel??? Cannot use Storage::url and storage_path just return dir up to storage
-        ImageEditor::jpegFromPdf(storage_path('app/' . $path), $page_num, storage_path('app/' . $temp_images_dir_path . $file_name));
+        // TODO: In dire need of a FileHandler that'll return path relative to storage and full path!!
+        $num_pages = ImageEditor::getPdfNumPages(storage_path('app/' . $path));
+        for ($i = 0; $i < $num_pages; $i++) {
+            $file_name = "{$i}.jpg";
 
-        // is there any template?
-        // direct and pass arguments: image url, coordinates?
+            // need to append 'app/' Is this a bug in Laravel??? Cannot use Storage::url and storage_path just return dir up to storage
+            ImageEditor::jpegFromPdf(storage_path('app/' . $path), $i, storage_path('app/' . $temp_images_dir_path . $file_name));
+
+            $saved_temp_record->pages()->save(
+                new TempRecordPage([
+                    'path' => $temp_images_dir_path . $file_name
+                ])
+            );
+        }
+
+        // from here pass to controller that does coords extraction.
+        // In that controller, check the record issuer having the temp record, see if there's any template
+        // Then get pages from DB and coords from template if exists
+
     }
 }

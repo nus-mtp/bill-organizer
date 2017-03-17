@@ -21,6 +21,8 @@ use App\RecordIssuer;
 use App\RecordIssuerType;
 use App\User;
 use App\Template;
+use App\TempRecord;
+use App\TempRecordPage;
 
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
@@ -117,5 +119,28 @@ $factory->define(Template::class, function(Generator $faker) {
         'amount_area_id' => function() {
             return factory(FieldArea::class)->create()->id;
         }
+    ];
+});
+
+$factory->define(TempRecord::class, function(Generator $faker) {
+    return [
+        'user_id' => $user_id = function() {
+            return factory(App\User::class)->create()->id;
+        },
+        'record_issuer_id' => function() use ($user_id) {
+            return factory(App\RecordIssuer::class)->create([
+                'user_id' => $user_id
+            ])->id;
+        },
+        'path_to_file' => 'whatever/tmp/file.pdf'
+    ];
+});
+
+$factory->define(TempRecordPage::class, function(Generator $faker) {
+    return [
+        'temp_record_id' => function() {
+            return factory(TempRecord::class)->create()->id;
+        },
+        'path' => 'whatever/tmp/1/1.jpg'
     ];
 });
