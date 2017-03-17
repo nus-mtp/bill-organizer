@@ -72,7 +72,7 @@
                                 <div class="action" style="text-align:right;">
                                   <button class="ui primary submit button" type="submit">Register</button>
                                 </div>
-                                <div class="ui error message"></div>
+
 
                             </form>
                           </div>
@@ -101,7 +101,7 @@
                               <div class="action" style="text-align:right;">
                                 <button class="ui primary submit button" type="submit">Login</button>
                               </div>
-                              <div class="ui error message"></div>
+                              
 
                             </form>
                           </div>

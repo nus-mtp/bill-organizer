@@ -18,6 +18,8 @@ $(document).ready(function(){
 })
 
 $('.register.form').form({
+  on: 'blur',
+  inline: true,
   fields: {
     email: {
       identifier: 'email',
@@ -38,10 +40,6 @@ $('.register.form').form({
       rules: [{
           type  : 'empty',
           prompt: 'Please confirm your password'
-      },
-      {
-          type  : 'match[password]',
-          prompt: 'Your password does not match'
       }]
     }
   }
@@ -49,6 +47,8 @@ $('.register.form').form({
 
 
 $('.login.form').form({
+  on: 'blur',
+  inline: true,
   fields: {
     email: {
       identifier: 'email',
@@ -144,4 +144,3 @@ $('.ui.calendar-month').calendar({
     }
   }
 })
-
