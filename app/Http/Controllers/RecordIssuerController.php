@@ -84,21 +84,26 @@ class RecordIssuerController extends Controller
         }
 
         $user_id = auth()->id();
+
+        $saved_record = auth()->user()->create_record(
+            new Record(
+                request(['issue_date', 'due_date', 'amount', 'period']) + [
+                    'record_issuer_id' => $record_issuer->id
+                ]
+            )
+        );
+
+        // TODO: extract these to FileHandler
         $file_extension = request()->file('record')->extension();
-        $file_name = $record_issuer->name . '_' . request('issue_date') . '.' . $file_extension;
+        $file_name = "{$saved_record->id}.{$file_extension}";
         $dir_path = "/users/{$user_id}/record_issuers/{$record_issuer->id}/records/";
         $path = request()->file('record')
             ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this
 
-        auth()->user()->create_record(
-            new Record(
-                request(['issue_date', 'due_date', 'amount', 'period']) + [
-                    'path_to_file' => $path,
-                    'record_issuer_id' => $record_issuer->id
-                ]
-            )
-        );
+        $saved_record->update([
+            'path_to_file' => $path
+        ]);
 
         return back();
     }

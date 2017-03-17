@@ -94,7 +94,7 @@ class RecordController extends Controller
         {
             $file          = $request->file('record_file');
             $extension     = $file->extension();
-            $file_name     = $record->issuer_name() . '_' . $request->issue_date->toDateString() . '.'. $extension;
+            $file_name     = "{$record->id}.{$extension}";
             $user_id = auth()->id();
             $record_issuer = $record->issuer;
             $path_to_store = "/users/{$user_id}/record_issuers/{$record_issuer->id}/records/";

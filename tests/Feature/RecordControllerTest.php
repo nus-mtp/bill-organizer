@@ -194,7 +194,7 @@ class RecordControllerTest extends TestCase
             ->put(route('update_record', $this->record->id), $update_record_data);
 
         // Assert that new file should be saved
-        $saved_file_name = $this->record_issuer->name . '_' . $this->record->issue_date->toDateString() . '.pdf';
+        $saved_file_name = "{$this->record->id}.pdf";
         $path_to_store =  "/users/{$this->user->id}/record_issuers/{$this->record_issuer->id}/records/";
         Storage::disk('local')->assertExists($path_to_store . '/' . $saved_file_name);
 

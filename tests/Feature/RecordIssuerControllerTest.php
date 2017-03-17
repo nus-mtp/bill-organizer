@@ -232,7 +232,7 @@ class RecordIssuerControllerTest extends TestCase
         $this->assertNotNull($saved_record);
 
         //    2. File should be saved in the storage (This didn't work. Let's wait for explanation from the Laravel developers)
-         $saved_file_name = $this->record_issuer->name . '_' . $user_record_data['issue_date'] . '.pdf';
+         $saved_file_name = "{$saved_record->id}.pdf";
          $path_to_store =  "/users/{$this->user->id}/record_issuers/{$this->record_issuer->id}/records/";
          Storage::disk('local')->assertExists($path_to_store . '/' . $saved_file_name);
 
