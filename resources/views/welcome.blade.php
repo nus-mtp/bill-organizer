@@ -11,7 +11,7 @@
 
         <link rel="icon" type="image/ico" href="">
         <!-- Local -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ '/css/app.css' }}">
 
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
