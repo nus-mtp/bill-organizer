@@ -12,8 +12,8 @@
 */
 
 use Carbon\Carbon;
-
-//use App\FieldAreas;
+// user Faker/Generator //use with full namespace to avoid platform error
+// use App\FieldAreas;
 use App\Record;
 use App\RecordIssuer;
 use App\RecordIssuerType;
@@ -21,7 +21,7 @@ use App\User;
 //use App\Template;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(User::class, function (\Faker\Generator $faker) {
+$factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -34,7 +34,7 @@ $factory->define(User::class, function (\Faker\Generator $faker) {
 
 
 
-$factory->define(RecordIssuer::class, function (\Faker\Generator $faker){
+$factory->define(RecordIssuer::class, function (Faker\Generator $faker){
    return [
        'name' => $faker->company,
        'type' => RecordIssuerType::random_type(),
