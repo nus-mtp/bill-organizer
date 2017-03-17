@@ -12,7 +12,7 @@
 */
 
 use Carbon\Carbon;
-// user Faker/Generator //use with full namespace to avoid platform error
+// use Faker/Generator //use with full namespace to avoid platform error
 // use App\FieldAreas;
 use App\Record;
 use App\RecordIssuer;
@@ -23,7 +23,6 @@ use App\User;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
-
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

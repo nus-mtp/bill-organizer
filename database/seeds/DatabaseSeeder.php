@@ -4,8 +4,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-use App\FieldAreas;
-use App\Template;
+/*use App\FieldAreas;
+use App\Template;*/
 use App\Record;
 use App\RecordIssuer;
 use App\RecordIssuerType;
@@ -32,8 +32,10 @@ class DatabaseSeeder extends Seeder
 
         $this->seedRecordIssuerType();
 
+        dd("Hello this is a debugger");
         // for each user
         for ($i = 0; $i < count(self::$names); $i++) {
+
             $user = factory(User::class)->create([
                 'name' => self::$names[$i],
                 'email' => self::$email_names[$i] . '@example.com',
