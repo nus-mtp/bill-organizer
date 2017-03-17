@@ -17,4 +17,14 @@ class TempRecord extends Model
     {
         return $this->belongsTo(RecordIssuer::class);
     }
+
+    public function issuer_type()
+    {
+        return $this->record_issuer->issuer_type();
+    }
+
+    public function pages()
+    {
+        return $this->hasMany(TempRecordPage::class);
+    }
 }
