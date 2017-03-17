@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
 use App\RecordIssuerType;
 use App\Record;
 use App\RecordIssuer;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class RecordIssuerController extends Controller
 {
@@ -61,6 +62,9 @@ class RecordIssuerController extends Controller
 
 
     // TODO: clean up this mess if possible?
+    /**
+     * Store_record is here because it needs to be validated that the RecordIssuer belongs to the current user
+     */
     public function store_record(RecordIssuer $record_issuer) {
         // only if this record_issuer belongs to me can I add a new record. I shouldn't be able to add to other user's record issuer
         $this->authorize('belongs_to_user', $record_issuer);
@@ -82,8 +86,9 @@ class RecordIssuerController extends Controller
         $user_id = auth()->id();
         $file_extension = request()->file('record')->extension();
         $file_name = $record_issuer->name . '_' . request('issue_date') . '.' . $file_extension;
+        $dir_path = "/users/{$user_id}/record_issuers/{$record_issuer->id}/records/";
         $path = request()->file('record')
-            ->storeAs('records/' . $user_id, $file_name, ['visibility' => 'private']);
+            ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this
 
         auth()->user()->create_record(
