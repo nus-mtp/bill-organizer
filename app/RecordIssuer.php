@@ -17,6 +17,11 @@ class RecordIssuer extends Model
         return $this->hasMany(Record::class);
     }
 
+    public function temp_records()
+    {
+        return $this->hasMany(TempRecord::class);
+    }
+
     public function issuer_type()
     {
       return $this->belongsTo(RecordIssuerType::class, 'type');

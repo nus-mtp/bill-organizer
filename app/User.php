@@ -38,6 +38,10 @@ class User extends Authenticatable
         return $this->hasMany(Record::class);
     }
 
+    public function temp_records() {
+        return $this->hasMany(TempRecord::class);
+    }
+
     /**
      * CRUD on other models
      */
