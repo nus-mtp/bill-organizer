@@ -40,10 +40,6 @@
                         <div class="item">
                             <button class="ui green register button" value="showModal">Register</button>
                         </div>
-                        <!-- temp until modal form works -->
-                        <div class="item">
-                            <a class="ui green button" href="{{ url('/register') }}">Register old</a>
-                        </div>
                         <div class="item">
                             <button class="ui inverted green login button" value="showModal">Login</button>
                         </div>
