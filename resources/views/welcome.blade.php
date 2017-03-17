@@ -38,58 +38,55 @@
                         </div>
                     @else
                         <div class="item">
-                            <button class="ui green register button" value="showModal">Register</button>
-                        </div>
-                        <!-- temp until modal form works -->
-                        <div class="item">
-                            <a class="ui green button" href="{{ url('/register') }}">Register old</a>
+                            <button class="ui green register button">Register</button>
                         </div>
                         <div class="item">
-                            <button class="ui inverted green login button" value="showModal">Login</button>
+                            <button class="ui inverted green login button">Login</button>
                         </div>
 
                         <div class="ui small register modal">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
-                              <form class="ui register form" role="form" method="POST" action="{{ route('register') }}" >
+                              <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
                                 {{ csrf_field() }}
+                                  <div class="ui tiny error message"></div>
                                 <div class="field">
                                   <label for="name">Name</label>
-                                  <input id="name" type="text" name="name" placeholder="Name" required autofocus>
+                                  <input id="name" type="text" name="name" placeholder="Name" autofocus>
                                 </div>
                                 <div class="field">
                                   <label for="email">Email</label>
-                                  <input id="email" type="text" name="email" placeholder="Email" required>
+                                  <input id="email" type="text" name="email" placeholder="Email">
                                 </div>
                                 <div class="field">
                                   <label for="password">Password</label>
-                                  <input id="password" type="password" name="password" placeholder="Password" required>
+                                  <input id="password" type="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="field">
                                   <label for="password-confirm">Password Confirm</label>
-                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password" required>
+                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
                                 </div>
-                                <div class="action" style="text-align:right;">
-                                  <button class="ui primary submit button" type="submit">Register</button>
+                                <div class="actions" style="text-align:right;">
+                                    <button class="ui approve green button" type="submit">Register</button>
+                                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
                                 </div>
-                                <div class="ui error message"></div>
-
                             </form>
                           </div>
                         </div>
 
                         <div class="ui small login modal">
                           <div class="header">Login</div>
-                          <div class="content" style="text-align:left;">
-                            <form class="ui login form" role="form" method="POST" action="{{ route('login') }}">
+                          <div class="content">
+                            <form class="ui login form" id="login" role="form" method="POST" action="{{ route('login') }}">
                               {{ csrf_field() }}
+                                <div class="ui tiny error message"></div>
                               <div class="field">
                                 <label for="email">Email Address</label>
                                 <input id="email" type="text" name="email">
                               </div>
                               <div class="field">
                                 <label for="password">Password</label>
-                                <input id="password" type="password" name="password">
+                                <input id="login_password" type="password" name="password">
                               </div>
                               <div class="checkbox">
                                 <label>
@@ -98,11 +95,10 @@
                               </div>
                               <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}">Forgot Your Password?</a>
 
-                              <div class="action" style="text-align:right;">
-                                <button class="ui primary submit button" type="submit">Login</button>
+                              <div class="actions" style="text-align:right;">
+                                    <button class="ui approve green button" type="submit">Login</button>
+                                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
                               </div>
-                              <div class="ui error message"></div>
-
                             </form>
                           </div>
                         </div>

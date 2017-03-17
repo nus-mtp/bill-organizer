@@ -8,17 +8,44 @@ require('./bootstrap') // bootstrap load our application wide dependencies
  *
  */
 
-$(document).ready(function(){
+// landing page register and login validations
  $('.register.button').click(_ => {
-   $('.register.modal').modal('show')
+   $('.register.modal').modal({
+      onApprove: function () {
+          $('.ui.form').submit();
+          $('.register.modal').modal('refresh');
+          return false;
+      },
+      onSuccess: function () {
+          $('form#register').submit();
+          $('.modal').modal('hide');
+      }
+    }).modal('show')
  })
+ 
  $('.login.button').click(_ => {
-   $('.login.modal').modal('show')
+   $('.login.modal').modal({
+      onApprove: function () {
+          $('.ui.form').submit();
+          $('.login.modal').modal('refresh');
+          return false;
+      },
+      onSuccess: function () {
+          $('form#login').submit();
+          $('.modal').modal('hide');
+      }
+    }).modal('show')
  })
-})
 
 $('.register.form').form({
   fields: {
+    name:{
+      identifier: 'name',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your name'
+      }]
+    },
     email: {
       identifier: 'email',
       rules: [{
@@ -62,14 +89,10 @@ $('.login.form').form({
       }]
     },
     password: {
-      identifier: 'password',
+      identifier: 'login_password',
       rules: [{
           type  : 'empty',
           prompt: 'Please enter your password'
-      },
-      {
-          type  : 'minLength[6]',
-          prompt: 'Your password must be at least 6 characters'
       }]
     }
   }
