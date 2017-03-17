@@ -20,10 +20,10 @@ class Record extends Model
     ];
 
     public $fillable = ['issue_date', 'due_date', 'period', 'amount', 'path_to_file',
-        'user_record_issuer_id'];
+        'record_issuer_id'];
 
     public function issuer() {
-        return $this->belongsTo(UserRecordIssuer::class, 'user_record_issuer_id');
+        return $this->belongsTo(RecordIssuer::class, 'record_issuer_id');
     }
 
     // return RecordIssuerType Object
@@ -46,7 +46,7 @@ class Record extends Model
     // TODO: this is buggy. Fix this later. Type is ID, not string
     public function is_issuer_type_bill()
     {
-        return $this->issuer_type_name() === RecordIssuerType::BILL_TYPE_NAME;
+        return $this->issuer_type_name() === RecordIssuerType::BILLORG_TYPE_NAME;
     }
 
     public function user() {

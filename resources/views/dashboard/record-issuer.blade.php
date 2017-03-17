@@ -161,26 +161,32 @@
                         <i class="dropdown icon"></i>
                         <div class="default text">Select time period</div>
                         <div class="menu">
-                            <div class="item" data-value="0">This year</div>
-                            <div class="item" data-value="1">Past 2 years</div>
-                            <div class="item" data-value="2">All of time</div>
-                            <div class="item" data-value="3">Pre Big Bang</div>
+                            <div class="item" data-value="0">This Month</div>
+                            <div class="item" data-value="1">past 6 months</div>
+                            <div class="item" data-value="2">This year</div>
+                            <div class="item" data-value="3">Past 2 years</div>
+                            <div class="item" data-value="4">All of time</div>
+                            <div class="item" data-value="5">Pre Big Bang</div>
                         </div>
                     </div>
 
                     <div class="ui statistics">
+
                         <div class="red statistic">
                             <div class="value">0</div>
-                            <div class="label">Bills Paid</div>
+                            <div class="label">Bills</div>
                         </div>
+
                         <div class="red statistic">
                             <div class="value">$901</div>
-                            <div class="label">Owed</div>
+                            <div class="label">Due</div>
                         </div>
-                        <div class="red statistic">
+
+{{--                        <div class="red statistic">
                             <div class="value"><i class="frown icon"></i></div>
                             <div class="label">Sadded</div>
-                        </div>
+                        </div>--}}
+
                     </div>
                 </div>
             </div>

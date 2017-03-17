@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRecordIssuer extends Model
+class RecordIssuer extends Model
 {
     public $fillable = ['name', 'type'];
 
