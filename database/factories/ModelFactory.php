@@ -131,7 +131,7 @@ $factory->define(Record::class, function(Generator $faker){
  * A4 pixels size is 2480x3508 in 300 DPI. Currently, the DPI we're using is supposedly not
  * going to be more than 300 DPI
  */
-$factory->define(FieldAreas::class, function(Generator $faker) {
+/*$factory->define(FieldAreas::class, function(Generator $faker) {
    return [
        'page' => rand(),
        'x' => rand(0, 2480),
@@ -139,11 +139,11 @@ $factory->define(FieldAreas::class, function(Generator $faker) {
        'w' => rand(0, 2480),
        'h' => rand(0, 3508)
    ];
-});
+});*/
 
 
 
-$factory->define(Template::class, function(Generator $faker) {
+/*$factory->define(Template::class, function(Generator $faker) {
     $record_issuer_id = factory(RecordIssuer::class)->create()->id;
     $issue_date_area_id = factory(FieldAreas::class)->create()->id;
     $due_date_area_id = factory(FieldAreas::class)->create()->id;
@@ -157,4 +157,4 @@ $factory->define(Template::class, function(Generator $faker) {
         'period_area_id' => $period_area_id,
         'amount_area_id' => $amount_area_id
     ];
-});
+});*/
