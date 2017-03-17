@@ -12,7 +12,6 @@
 */
 
 use Carbon\Carbon;
-use Faker\Generator;
 
 //use App\FieldAreas;
 use App\Record;
@@ -22,7 +21,7 @@ use App\User;
 //use App\Template;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(User::class, function (Generator $faker) {
+$factory->define(User::class, function (\Faker\Generator $faker) {
     static $password;
 
     return [
@@ -35,7 +34,7 @@ $factory->define(User::class, function (Generator $faker) {
 
 
 
-$factory->define(RecordIssuer::class, function (Generator $faker){
+$factory->define(RecordIssuer::class, function (\Faker\Generator $faker){
    return [
        'name' => $faker->company,
        'type' => RecordIssuerType::random_type(),
@@ -94,7 +93,7 @@ $factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, functi
  * The factory returns a Carbon instance instead of the DateString. The returned associative array
  * of this method is only used to create a new instance in the DB
  */
-$factory->define(Record::class, function(Generator $faker){
+$factory->define(Record::class, function(Faker\Generator $faker){
     $now = Carbon::now();
     $issue_date = Carbon::now()->subDay(random_int(0, 30));
     $period = $issue_date->format('Y-m');
