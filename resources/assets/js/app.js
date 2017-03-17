@@ -47,6 +47,7 @@ $('.register.form').form({
   }
 })
 
+
 $('.login.form').form({
   fields: {
     email: {
@@ -74,12 +75,16 @@ $('.login.form').form({
   }
 })
 
-let headerElement = $('#header')[0]
-if (window.location.hash) {
-  header.classList.add('headroom--unpinned')
+function initHeadRoom() {
+    let headerElement = $('#header')[0]
+    if (!headerElement) return ;
+    if (window.location.hash) {
+        header.classList.add('headroom--unpinned')
+    }
+    let headroom = new Headroom(headerElement)
+    headroom.init()
 }
-let headroom = new Headroom(headerElement)
-headroom.init()
+initHeadRoom();
 
 
 // /dashboard modal controls
