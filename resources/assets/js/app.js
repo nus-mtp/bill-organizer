@@ -17,13 +17,25 @@ $(document).ready(function(){
  })
 })
 
+
 $('.register.form').form({
   on: 'blur',
   inline: true,
   fields: {
+    name: {
+      identifier: 'name',
+      rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your name'
+      }]
+    },
     email: {
       identifier: 'email',
       rules: [{
+          type  : 'empty',
+          prompt: 'Please enter your email'
+      },
+      {
           type  : 'email',
           prompt: 'Please enter a valid email address'
       }]
@@ -40,6 +52,10 @@ $('.register.form').form({
       rules: [{
           type  : 'empty',
           prompt: 'Please confirm your password'
+      },
+      {
+          type  : 'match[password]',
+          prompt: 'Your passwords do not match'
       }]
     }
   }
@@ -62,14 +78,10 @@ $('.login.form').form({
       }]
     },
     password: {
-      identifier: 'password',
+      identifier: 'login-password',
       rules: [{
           type  : 'empty',
           prompt: 'Please enter your password'
-      },
-      {
-          type  : 'minLength[6]',
-          prompt: 'Your password must be at least 6 characters'
       }]
     }
   }

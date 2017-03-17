@@ -55,24 +55,23 @@
                                 {{ csrf_field() }}
                                 <div class="field">
                                   <label for="name">Name</label>
-                                  <input id="name" type="text" name="name" placeholder="Name" required autofocus>
+                                  <input id="name" type="text" name="name" placeholder="Name">
                                 </div>
                                 <div class="field">
                                   <label for="email">Email</label>
-                                  <input id="email" type="text" name="email" placeholder="Email" required>
+                                  <input id="email" type="text" name="email" placeholder="Email">
                                 </div>
                                 <div class="field">
                                   <label for="password">Password</label>
-                                  <input id="password" type="password" name="password" placeholder="Password" required>
+                                  <input id="password" type="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="field">
                                   <label for="password-confirm">Password Confirm</label>
-                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password" required>
+                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
                                 </div>
                                 <div class="action" style="text-align:right;">
                                   <button class="ui primary submit button" type="submit">Register</button>
                                 </div>
-
 
                             </form>
                           </div>
@@ -88,8 +87,8 @@
                                 <input id="email" type="text" name="email">
                               </div>
                               <div class="field">
-                                <label for="password">Password</label>
-                                <input id="password" type="password" name="password">
+                                <label for="login-password">Password</label>
+                                <input id="login-password" type="password" name="password">
                               </div>
                               <div class="checkbox">
                                 <label>
@@ -101,7 +100,6 @@
                               <div class="action" style="text-align:right;">
                                 <button class="ui primary submit button" type="submit">Login</button>
                               </div>
-                              
 
                             </form>
                           </div>
