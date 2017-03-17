@@ -30,23 +30,22 @@
         </script>
 
     </head>
+
     <body>
+
         <div class="ui basic segment">
-        @include('layouts.nav')
+            @include('layouts.nav')
         </div>
+
         <div class="ui basic padded segment">
             @yield('content')
         </div>
+
         <div class="footer">
             <!-- <p>&copy; {!! date('Y'); !!} <a href="">xxx</a></p> -->
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.3/headroom.min.js"></script>
-        @yield('pre-javascript')
-            <script src="/js/manifest.js"></script>
-            <script src="/js/vendor.js"></script>
-            <script src="/js/app.js"></script>
-        @yield('javascript')
+        @include('layouts.scripts')
          <!-- Dump all dynamic scripts into template -->
         @stack('module_scripts')
     </body>

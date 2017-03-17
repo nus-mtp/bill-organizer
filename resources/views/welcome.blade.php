@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <title>BillOrganiser</title>
-        <link href="css/app.css" rel="stylesheet" type="text/css">
+
+        <link rel="icon" type="image/ico" href="">
+        <!-- Local -->
+        <link rel="stylesheet" type="text/css" href="{{ '/css/app.css' }}">
+
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        @stack('module_styles')<!-- module specific styles -->
+        <!-- Scripts -->
+        <script>
+            window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+        </script>
 
     </head>
     <body class="dark-background">
 
         <div class="ui top fixed menu" style="background:none; border:none;">
             <div class="right menu">
+                <!--should not need this part anymore coz got auto-redirect-->
                 @if (Route::has('login'))
                     @if (Auth::check())
                         <div class="item">
@@ -20,10 +38,73 @@
                         </div>
                     @else
                         <div class="item">
-                            <a class="ui green button" href="{{ route('register') }}">Register</a>
+                            <button class="ui green register button" value="showModal">Register</button>
+                        </div>
+                        <!-- temp until modal form works -->
+                        <div class="item">
+                            <a class="ui green button" href="{{ url('/register') }}">Register old</a>
                         </div>
                         <div class="item">
-                            <a class="ui inverted green button" href="{{ route('login') }}">Login</a>
+                            <button class="ui inverted green login button" value="showModal">Login</button>
+                        </div>
+
+                        <div class="ui small register modal">
+                          <div class="header">Register</div>
+                          <div class="content" style="text-align:left;">
+                              <form class="ui register form" role="form" method="POST" action="{{ route('register') }}" >
+                                {{ csrf_field() }}
+                                <div class="field">
+                                  <label for="name">Name</label>
+                                  <input id="name" type="text" name="name" placeholder="Name" required autofocus>
+                                </div>
+                                <div class="field">
+                                  <label for="email">Email</label>
+                                  <input id="email" type="text" name="email" placeholder="Email" required>
+                                </div>
+                                <div class="field">
+                                  <label for="password">Password</label>
+                                  <input id="password" type="password" name="password" placeholder="Password" required>
+                                </div>
+                                <div class="field">
+                                  <label for="password-confirm">Password Confirm</label>
+                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password" required>
+                                </div>
+                                <div class="action" style="text-align:right;">
+                                  <button class="ui primary submit button" type="submit">Register</button>
+                                </div>
+                                <div class="ui error message"></div>
+
+                            </form>
+                          </div>
+                        </div>
+
+                        <div class="ui small login modal">
+                          <div class="header">Login</div>
+                          <div class="content" style="text-align:left;">
+                            <form class="ui login form" role="form" method="POST" action="{{ route('login') }}">
+                              {{ csrf_field() }}
+                              <div class="field">
+                                <label for="email">Email Address</label>
+                                <input id="email" type="text" name="email">
+                              </div>
+                              <div class="field">
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password">
+                              </div>
+                              <div class="checkbox">
+                                <label>
+                                  <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                </label>
+                              </div>
+                              <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}">Forgot Your Password?</a>
+
+                              <div class="action" style="text-align:right;">
+                                <button class="ui primary submit button" type="submit">Login</button>
+                              </div>
+                              <div class="ui error message"></div>
+
+                            </form>
+                          </div>
                         </div>
                     @endif
                 @endif
@@ -37,5 +118,8 @@
                 </div>
             </div>
         </div>
+
+        @include('layouts.scripts')
+
     </body>
 </html>
