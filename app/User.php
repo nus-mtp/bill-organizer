@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function create_record(Record $record) {
         return $this->records()->save($record);
     }
+
+    public function create_temp_record(TempRecord $record) {
+        return $this->temp_records()->save($record);
+    }
 }

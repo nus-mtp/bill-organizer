@@ -97,7 +97,7 @@ class RecordController extends Controller
             $file_name     = "{$record->id}.{$extension}";
             $user_id = auth()->id();
             $record_issuer = $record->issuer;
-            $path_to_store = "/users/{$user_id}/record_issuers/{$record_issuer->id}/records/";
+            $path_to_store = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
 
             return $path_of_uploaded_file = $file->storeAs($path_to_store, $file_name, ['visibility'=>'private']);
         }

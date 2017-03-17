@@ -39,6 +39,7 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
   Route::get('/record_issuers/{record_issuer}', 'RecordIssuerController@show')->name('show_record_issuer');
   Route::post('/record_issuers', 'RecordIssuerController@store');
   Route::post('/record_issuers/{record_issuer}/records', 'RecordIssuerController@store_record')->name('records');
+  Route::post('/record_issuers/{record_issuer}/temp_records', 'RecordIssuerController@store_temp_record')->name('temp_records');
   Route::delete('/record_issuers/{record_issuer}', 'RecordIssuerController@destroy');
 
   Route::get('/records/{record}', 'RecordController@show')->name('show_record_file');

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+use App\Image\ImageEditor;
 use App\RecordIssuerType;
 use App\Record;
 use App\RecordIssuer;
+use App\TempRecord;
 
 class RecordIssuerController extends Controller
 {
@@ -96,7 +100,7 @@ class RecordIssuerController extends Controller
         // TODO: extract these to FileHandler
         $file_extension = request()->file('record')->extension();
         $file_name = "{$saved_record->id}.{$file_extension}";
-        $dir_path = "/users/{$user_id}/record_issuers/{$record_issuer->id}/records/";
+        $dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
         $path = request()->file('record')
             ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
         // research on visibility public vs private -> currently there's not a lot of documentation on this
@@ -106,5 +110,50 @@ class RecordIssuerController extends Controller
         ]);
 
         return back();
+    }
+
+    /**
+     * Handles file upload and direct to the coordinates extraction page
+     */
+    public function store_temp_record(RecordIssuer $record_issuer) {
+        // authorize
+        $this->authorize('belongs_to_user', $record_issuer);
+
+        // validate or redirect
+        $this->validate(request(), [
+            'record' => 'required'
+        ]);
+
+        // store somewhere
+        $user_id = auth()->id();
+        $file_extension = request()->file('record')->extension();
+        $file_name = Carbon::now()->timestamp . ".{$file_extension}";
+        $dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records";
+        $path = request()->file('record')
+            ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
+
+        $saved_temp_record = auth()->user()->create_temp_record(
+            new TempRecord([
+                'record_issuer_id' => $record_issuer->id,
+                'path_to_file' => $path
+            ])
+        );
+
+        // convert pdf to images and store somewhere
+        $temp_images_dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
+            "{$saved_temp_record->id}/img/";
+        // for now, just convert page 1 (hard-coded)
+        $page_num = 0;
+        $file_name = "{$page_num}.jpg";
+
+        if(!Storage::exists($temp_images_dir_path)) {
+            Storage::makeDirectory($temp_images_dir_path, 0777, true, true);
+        }
+
+        // need to append 'app/' Is this a bug in Laravel??? Cannot use Storage::url and storage_path just return dir up to storage
+        ImageEditor::jpegFromPdf(storage_path('app/' . $path), $page_num, storage_path('app/' . $temp_images_dir_path . $file_name));
+
+        // is there any template?
+        // direct and pass arguments: image url, coordinates?
     }
 }

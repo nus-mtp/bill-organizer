@@ -233,7 +233,7 @@ class RecordIssuerControllerTest extends TestCase
 
         //    2. File should be saved in the storage (This didn't work. Let's wait for explanation from the Laravel developers)
          $saved_file_name = "{$saved_record->id}.pdf";
-         $path_to_store =  "/users/{$this->user->id}/record_issuers/{$this->record_issuer->id}/records/";
+         $path_to_store =  "users/{$this->user->id}/record_issuers/{$this->record_issuer->id}/records";
          Storage::disk('local')->assertExists($path_to_store . '/' . $saved_file_name);
 
         // success and redirected back
