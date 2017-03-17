@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
 
         $this->seedRecordIssuerType();
 
-        dd("Hello this is a debugger");
         // for each user
         for ($i = 0; $i < count(self::$names); $i++) {
 
