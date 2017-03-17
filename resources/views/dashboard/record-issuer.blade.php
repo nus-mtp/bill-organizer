@@ -172,7 +172,7 @@
                             <!-- modal content -->
                             <div class="content">
                                 <div class="ui fluid input">
-                                    <form method="POST" action="{{ route('temp_records', $record_issuer) }}"
+                                    <form method="POST" action="{{ route('store_temp_record', $record_issuer) }}"
                                           class="ui form" enctype="multipart/form-data" id="experimental-add-record">
                                         {{ csrf_field() }}
                                         <div class="field">

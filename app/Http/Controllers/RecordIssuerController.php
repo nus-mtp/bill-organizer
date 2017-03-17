@@ -163,9 +163,6 @@ class RecordIssuerController extends Controller
             );
         }
 
-        // from here pass to controller that does coords extraction.
-        // In that controller, check the record issuer having the temp record, see if there's any template
-        // Then get pages from DB and coords from template if exists
-
+        return redirect()->route('create_temp_record', $saved_temp_record);
     }
 }
