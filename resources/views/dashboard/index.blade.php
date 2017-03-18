@@ -35,24 +35,20 @@
                         <button class="circular blue ui icon add-bill-org button" value="showModal">
                             <i class="icon plus"></i>
                         </button>
-                        <p>Add New Billing Organisation</p>
+                        <p>Add New Record Issuer</p>
                     </div>
                 </div>
-
-                <div class="four wide column"></div>
-                <div class="four wide column"></div>
-                <div class="four wide column"></div>
-
             </div>
 
             <div class="ui small record-issuer modal">
                 <i class="close icon"></i>
                 <div class="header">Add new record issuer</div>
                 <div class="content">
-                    <div class="ui fluid input">
+                    <div class="ui fluid record-issuer form">
                         <form method="POST" action="{{ url('/dashboard/record_issuers') }}"
                               class="ui form" id="add-record-issuer">
                             {{ csrf_field() }}
+                            <div class="ui tiny error message"></div>
                             <div class="field">
                                 <label for="name">
                                     Name:
@@ -74,7 +70,7 @@
                 </div>
                 <div class="actions">
                     <div class="ui button approve green" data-value="yes">Add</div>
-                    <div class="ui button black cancel" data-value="no">Cancel</div>
+                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
                 </div>
             </div>
         </div>

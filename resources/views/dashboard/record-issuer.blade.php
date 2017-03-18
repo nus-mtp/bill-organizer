@@ -107,15 +107,16 @@
 
                 <!-- modal content -->
                 <div class="content">
-                    <div class="ui fluid input">
+                    <div class="ui fluid add-record form">
                         <form method="POST" action="{{ route('records', $record_issuer) }}"
                               class="ui form" enctype="multipart/form-data" id="add-record">
                             <!-- TODO: customize form based on type -->
                             <!-- TODO: research on semantic UI calendar -->
                             {{ csrf_field() }}
+                            <div class="ui tiny error message"></div>
                             <div class="field">
                                 <label for="record">Upload the record:</label>
-                                <input type="file" name="record" id="record">
+                                <input type="file" name="record" id="record" accept=".pdf, application/pdf">
                             </div>
 
                             <div class="field">
@@ -147,7 +148,7 @@
 
                 <div class="actions">
                     <div class="ui button approve green" data-value="yes">Add</div>
-                    <div class="ui button black cancel" data-value="no">Cancel</div>
+                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
                 </div>
 
             </div><!-- modal end -->
@@ -191,7 +192,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 @endsection
 <!-- page specific scripts -->
 @push('module_scripts')
