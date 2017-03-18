@@ -161,10 +161,10 @@ $('.del-bill-org.button').click(_ => {
     });
     
 // semantic ui custom form validation rule for file type
-$.fn.form.settings.rules.fileType = function(fileType) {
+$.fn.form.settings.rules.fileType = function() {
     fileName = document.getElementById('record').value;
     // return true means validated
-    return fileName.replace(/^.*\./, '') == fileType;
+    return fileName.replace(/^.*\./, '') == 'pdf';
 };
     
 $('.ui.form.add-record')
@@ -178,7 +178,7 @@ $('.ui.form.add-record')
                         prompt : 'Please choose a pdf file to upload'
                     },
                     {
-                        type   : 'fileType[pdf]',
+                        type   : 'fileType',
                         prompt : 'Only .pdf files are accepted'
                     }
                 ]

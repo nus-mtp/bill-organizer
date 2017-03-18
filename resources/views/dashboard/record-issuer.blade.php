@@ -116,7 +116,7 @@
                             <div class="ui tiny error message"></div>
                             <div class="field">
                                 <label for="record">Upload the record <atn>*</atn></label>
-                                <input type="file" name="record" id="record" accept=".pdf, application/pdf" value="example.pdf">
+                                <input type="file" name="record" id="record" accept=".pdf, application/pdf">
                             </div>
 
                             <div class="field">
