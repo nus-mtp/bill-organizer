@@ -51,21 +51,22 @@
                                 {{ csrf_field() }}
                                   <div class="ui tiny error message"></div>
                                 <div class="field">
-                                  <label for="name">Name</label>
+                                  <label for="name">Name <atn>*</atn></label>
                                   <input id="name" type="text" name="name" placeholder="Name" autofocus>
                                 </div>
                                 <div class="field">
-                                  <label for="email">Email</label>
+                                  <label for="email">Email <atn>*</atn></label>
                                   <input id="email" type="text" name="email" placeholder="Email">
                                 </div>
                                 <div class="field">
-                                  <label for="password">Password</label>
+                                  <label for="password">Password <atn>*</atn></label>
                                   <input id="password" type="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="field">
-                                  <label for="password-confirm">Password Confirm</label>
+                                  <label for="password-confirm">Password Confirm <atn>*</atn></label>
                                   <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
                                 </div>
+                                  <tnc><atn>*</atn> <i>Indicates required field</i><br><br></tnc>
                                 <div class="actions" style="text-align:right;">
                                     <button class="ui approve green button" type="submit">Register</button>
                                     <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
@@ -93,7 +94,7 @@
                                   <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                 </label>
                               </div>
-                              <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}">Forgot Your Password?</a>
+                              <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}"><tnc>Forgot Your Password?</tnc></a>
 
                               <div class="actions" style="text-align:right;">
                                     <button class="ui approve green button" type="submit">Login</button>

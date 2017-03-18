@@ -50,21 +50,18 @@
                             {{ csrf_field() }}
                             <div class="ui tiny error message"></div>
                             <div class="field">
-                                <label for="name">
-                                    Name:
-                                </label>
+                                <label for="name">Name <atn>*</atn></label>
                                 <input id="name" type="text" name="name" placeholder="Enter record issuer name">
                             </div>
                             <div class="field">
-                                <label for="type">
-                                    Type
-                                </label>
+                                <label for="type">Type</label>
                                 <select name="type" id="type">
                                     @foreach($record_issuer_types as $record_issuer_type)
                                         <option value="{{ $record_issuer_type->id }}">{{ $record_issuer_type->type }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            <tnc><atn>*</atn> <i>Indicates required field</i></tnc>
                         </form>
                     </div>
                 </div>

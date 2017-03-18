@@ -217,6 +217,50 @@ $('.ui.form.add-record')
             },
         }
     });
+    
+    $('.ui.form.edit-record')
+    .form({
+        inline : true,
+        on     : 'blur',
+        fields: {
+            issuedate: {
+                identifier: 'issue',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the date of issue'
+                    }
+                ]
+            },
+            recordperiod: {
+                identifier: 'period',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the record period'
+                    }
+                ]
+            },
+            duedate: {
+                identifier: 'duedate',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the due date'
+                    }
+                ]
+            },
+            amtdue: {
+                identifier: 'amtdue',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the amount'
+                    }
+                ]
+            },
+        }
+    });
 
   $('.delete-record.button').click((e) => {
     e.preventDefault()
