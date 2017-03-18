@@ -141,6 +141,22 @@ $(function () {
     }).modal('show')
   })
   
+$('.del-bill-org.button').click(_ => {
+    $('.ui.modal.record-issuer-del-cfm').modal({
+      onApprove: function () {
+          $('.ui.form').submit();
+          // need to return false to not close modal
+          // in case input failed the validation test
+          return false;
+      },
+      onSuccess: function () {
+          $('form#add-record-issuer').submit();
+          $('.modal').modal('hide');
+      }
+    }).modal('show')
+})
+  
+  
   $('.ui.form.record-issuer')
         .form({
         fields: {
