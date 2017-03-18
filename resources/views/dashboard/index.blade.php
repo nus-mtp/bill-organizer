@@ -24,7 +24,9 @@
 
                     <div class="add-bill-org card">
                         <div class="content">
-                            <center><p>Add New Record Issuer</p></center>
+                            <center>
+                                <p>Add New Record Issuer</p>
+                            </center>
                         </div>
                         <button class="fluid blue ui icon add-bill-org button">
                             <i class="icon plus"></i>
@@ -65,6 +67,21 @@
             <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
         </div>
     </div>
+
+    <!-- it doesnt delete according to which billorg was pressed D:
+    <div class="ui small record-issuer-del-cfm modal">
+        <i class="close icon"></i>
+        <div class="content">
+            <p>Are you sure you want to delete {{ $record_issuer->name }}</p>
+            <form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}" style="display: inline;">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <button type="submit" class="mini inverted red compact ui icon right floated button">
+                <i class="trash icon"></i>
+            </button>
+            </form>
+        </div>
+    </div>-->
 </div>
 
 @endsection
