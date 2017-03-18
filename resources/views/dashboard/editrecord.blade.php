@@ -3,8 +3,8 @@
 
 @section('content')
 <!--CONTENT-->
-<div class="ui fluid container">
-    <div class="ui grid">
+<div class="ui container">
+    <div class="ui stackable grid">
         <div class="sixteen wide column">
             <div class="ui breadcrumb">
                         <!-- TODO: Extract breadcrumbs and add links-->
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 
-                <div class="eight wide column">
+                <div class="ten wide column">
                     <div class="bill-image">
                         <div class="selRect" id="selidate"></div>
                         <div class="selRect" id="selrperiod"></div>
@@ -29,29 +29,33 @@
                     </div>
                 </div>
                 
-                <div class="eight wide column">
-                    for testing
+                <div class="six wide column">
                     <div class="ui message" id="temp">for test</div>
-                    <div class="ui form">
+                    <form class="ui edit-record form" id="edit-record">
+                        <div class="ui tiny error message" id="errormsg"></div>
                         <div class="field">
-                            <label>Issue Date</label>
-                            <input type="text" name="issuedate" placeholder="Issue Date" id="issue">
+                            <label>Issue Date <atn>*</atn></label>
+                            <input type="text" name="issuedate" placeholder="Issue Date" id="issue" onfocus="clearError();">
                         </div>
                         <div class="field">
                             <label>Record Period</label>
-                            <input type="text" name="recordperiod" placeholder="Record Period" id="period">
+                            <input type="text" name="recordperiod" placeholder="Record Period" id="period" onfocus="clearError();">
                         </div>
                         <div class="field">
                             <label>Due Date</label>
-                            <input type="text" name="duedate" placeholder="Due Date" id="duedate">
+                            <input type="text" name="duedate" placeholder="Due Date" id="duedate" onfocus="clearError();">
                         </div>
                         <div class="field">
-                            <label>Amount Due</label>
-                            <input type="text" name="amt-due" placeholder="e.g 400" id="amtdue">
+                            <label>Amount Due <atn>*</atn></label>
+                            <input type="text" name="amtdue" placeholder="e.g 400" id="amtdue" onfocus="clearError();">
                         </div>
-                        <button class="ui positive button" type="submit">Submit</button>
-                        <button class="ui black button" type="cancel">Cancel</button>
-                    </div>
+                        <tnc><atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                        <div class="actions">
+                            <button class="ui positive button" type="submit">Submit</button>
+                            <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html('');">Reset</button>
+                            <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 </div>
@@ -68,6 +72,16 @@
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
+    
+    function displayError(message){
+        // uses the error message that comes with the semantic ui form
+        document.getElementById("errormsg").innerHTML = message;
+        document.getElementById("errormsg").style.display = "block";
+    }
+    
+    function clearError(){
+        document.getElementById("errormsg").style.display = "none";
+    }
         
     function drawRect(box, coords){
         document.getElementById(box).style.left = coords[0] +'px';
@@ -197,12 +211,13 @@
             document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
         }
         else{
-            document.getElementById("temp").innerHTML = "Please click on a field before selecting";
+            displayError("Please click on a field before selecting");
         }
         selecting = false;
     }
     
     function getChangingCoords(e){
+        if (!selecting) { return; }
         var PosX = 0;
         var PosY = 0;
         if (!e) var e = window.event;
@@ -241,7 +256,7 @@
             drawRect('selamtdue',tempCoords);
         }
         else{
-            document.getElementById("temp").innerHTML = "Please click on a field before selecting";
+            displayError("Please click on a field before selecting");
         }
     }
     

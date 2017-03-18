@@ -115,12 +115,12 @@
                             {{ csrf_field() }}
                             <div class="ui tiny error message"></div>
                             <div class="field">
-                                <label for="record">Upload the record:</label>
+                                <label for="record">Upload the record <atn>*</atn></label>
                                 <input type="file" name="record" id="record" accept=".pdf, application/pdf">
                             </div>
 
                             <div class="field">
-                                <label for="issue_date">Issue date:</label>
+                                <label for="issue_date">Issue date <atn>*</atn></label>
                                 <input type="date" name="issue_date" id="issue_date" placeholder="Issue date">
                             </div>
 
@@ -138,10 +138,10 @@
 
                             <div class="field">
                                 <!-- TODO: customize based on type -->
-                                <label for="amount">{{ $amount_field_name }}:</label>
+                                <label for="amount">{{ $amount_field_name }} <atn>*</atn></label>
                                 <input type="number" name="amount" id="amount" placeholder="{{ $amount_field_name }}">
                             </div>
-
+                            <tnc><atn>*</atn> <i>Indicates required field</i></tnc>
                         </form>
                     </div><!-- end ui fluid input -->
                 </div><!-- end modal content -->
@@ -182,12 +182,6 @@
                             <div class="value">$901</div>
                             <div class="label">Due</div>
                         </div>
-
-{{--                        <div class="red statistic">
-                            <div class="value"><i class="frown icon"></i></div>
-                            <div class="label">Sadded</div>
-                        </div>--}}
-
                     </div>
                 </div>
             </div>

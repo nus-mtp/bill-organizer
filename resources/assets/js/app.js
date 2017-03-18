@@ -141,6 +141,10 @@ $(function () {
     }).modal('show')
   })
   
+$('.del-bill-org.button').click(_ => {
+    $('.ui.modal.record-issuer-del-cfm').modal('show')
+})
+  
   $('.ui.form.record-issuer')
         .form({
         fields: {
@@ -157,10 +161,10 @@ $(function () {
     });
     
 // semantic ui custom form validation rule for file type
-$.fn.form.settings.rules.fileType = function(fileType) {
+$.fn.form.settings.rules.fileType = function() {
     fileName = document.getElementById('record').value;
     // return true means validated
-    return fileName.replace(/^.*\./, '') == fileType;
+    return fileName.replace(/^.*\./, '') == 'pdf';
 };
     
 $('.ui.form.add-record')
@@ -174,7 +178,7 @@ $('.ui.form.add-record')
                         prompt : 'Please choose a pdf file to upload'
                     },
                     {
-                        type   : 'fileType[pdf]',
+                        type   : 'fileType',
                         prompt : 'Only .pdf files are accepted'
                     }
                 ]
@@ -208,6 +212,50 @@ $('.ui.form.add-record')
             },
             amount: {
                 identifier: 'amount',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the amount'
+                    }
+                ]
+            },
+        }
+    });
+    
+    $('.ui.form.edit-record')
+    .form({
+        inline : true,
+        on     : 'blur',
+        fields: {
+            issuedate: {
+                identifier: 'issue',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the date of issue'
+                    }
+                ]
+            },
+            recordperiod: {
+                identifier: 'period',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the record period'
+                    }
+                ]
+            },
+            duedate: {
+                identifier: 'duedate',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter the due date'
+                    }
+                ]
+            },
+            amtdue: {
+                identifier: 'amtdue',
                 rules: [
                     {
                         type   : 'empty',
