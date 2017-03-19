@@ -140,7 +140,9 @@ $(function () {
   })
 
   $('.del-bill-org.button').click(_ => {
-    $('.ui.modal.record-issuer-del-cfm').modal('show')
+    event.stopPropagation();
+    event.preventDefault();
+    //$('.ui.modal.record-issuer-del-cfm').modal('show')
   })
 
   $('.ui.form.record-issuer')

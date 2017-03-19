@@ -19,8 +19,7 @@
                     @endslot
                     @endcomponent
 
-                    <button class="ui circular mini blue right floated button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i>
-                    </button>
+                    <button class="ui circular tiny right floated icon button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i></button>
 
                     <div class="ui basic segment">
 
@@ -39,22 +38,27 @@
                         </div>
                         @endif
 
-                     @if(!empty($records))
-                            <h1>{{ $record_issuer->name }}</h1>
-                            <table class="ui green celled striped datatable table">
+                @if(!empty($records))
+                    <div class="ui right floated blue labeled add-record button" style="margin-top:13px;">
+                        <div class="ui blue icon button">
+                            <i class="add icon"></i>
+                        </div>
+                        <a class="ui basic blue label">Add new record</a>
+                    </div>
+                    <h1>{{ $record_issuer->name }}</h1>
+                    <table class="ui green celled striped datatable table">
 
                         <thead>
-                        <tr>
-                            <th>Issue date</th>
-                            <th>Period</th>
-                            @if($type === 'billing organization')
-                                <th>Due date</th>
-                            @endif
-                            <th>{{ $amount_field_name }}</th>
-                            <th><!-- dummy th for action buttons--></th>
-                        </tr>
+                            <tr>
+                                <th>Issue date</th>
+                                <th>Period</th>
+                                @if($type === 'billing organization')
+                                    <th>Due date</th>
+                                @endif
+                                <th>{{ $amount_field_name }}</th>
+                                <th><!-- dummy th for action buttons--></th>
+                            </tr>
                         </thead>
-
                         <tbody>
 
                         @foreach($records as $record)
@@ -66,10 +70,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="5" class="bordered centere aligned">
-                                    <button class="ui circular blue add-record icon button" value="showModal">
-                                        <i class="icon plus"></i>
-                                    </button>
-                                    <span>Add new record</span>
+                                <!--footer content-->
                                 </td>
                             </tr>
                         </tfoot>
@@ -100,11 +101,11 @@
                 var stats = document.getElementById('stats');
                 if(stats.style.display == 'none'){
                     document.getElementById('stats').style.display = 'block';
-                    document.getElementById('statsbutton').className = 'ui circular mini blue right floated button';
+                    document.getElementById('statsbutton').className = 'ui circular tiny right floated icon button';
                 }
                 else{
                     document.getElementById('stats').style.display = 'none';
-                    document.getElementById('statsbutton').className = 'ui circular mini right floated button';
+                    document.getElementById('statsbutton').className = 'ui circular tiny grey basic right floated icon button';
                 }
             }
     </script>

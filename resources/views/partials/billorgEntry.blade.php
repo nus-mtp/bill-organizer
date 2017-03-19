@@ -10,15 +10,15 @@
                 <i class="trash icon"></i>
             </button>
         </form>
-        <!--Dummy button, can comment this out if not implemented-->
+        <!--// Dummy button, can comment this out if not implemented
         <button type="submit" class="mini compact ui icon right floated button">
             <i class="edit icon"></i>
-        </button>
+        </button>-->
     </div>
 </a>
 
-<!-- use this when the modal works
-<div class="green card">
+<!--
+<a class="green card" href="{{ route('show_record_issuer', $record_issuer) }}">
     <div class="content" style="text-align:center;">
         <p>{{ $record_issuer->name }}</p>
     </div>
@@ -27,5 +27,4 @@
                 <i class="trash icon"></i>
             </button>
     </div>
-</div>
--->
+</a>-->
