@@ -48,7 +48,9 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
     Route::get('/records/{record}/edit', 'RecordController@edit')->name('edit_record'); // show form for edit record
     Route::put('/records/{record}', 'RecordController@update')->name('update_record'); // update record in database
 
-    Route::get('/temp_records/{temp_record}', 'TempRecordController@extract_coords')->name('temp_record_extract_coords');
+    Route::get('/temp_records/{temp_record}/coords', 'TempRecordController@show_extract_coords_page')->name('show_extract_coords_page');
+    Route::post('/temp_records/{temp_record}/coords', 'TempRecordController@extract_coords')->name('extract_coords');
+    Route::post('/temp_records/{temp_record}/values', 'TempRecordController@confirm_values')->name('confirm_values');
 
     Route::get('/temp_record_pages/{temp_record_page}', 'TempRecordPageController@show')->name('show_temp_record_page');
 });

@@ -21,7 +21,6 @@ class CreateTempRecordsTable extends Migration
             $table->date('issue_date')->nullable();
             $table->date('due_date')->nullable();
             $table->date('period')->nullable();
-            $table->boolean('has_values')->nullable();
             $table->double('amount', 15, 2)->nullable();
             $table->string('path_to_file', 1024);
             $table->timestamps();

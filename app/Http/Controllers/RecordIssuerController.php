@@ -161,6 +161,6 @@ class RecordIssuerController extends Controller
             );
         }
 
-        return redirect()->route('temp_record_extract_coords', $saved_temp_record);
+        return redirect()->route('show_extract_coords_page', $saved_temp_record);
     }
 }

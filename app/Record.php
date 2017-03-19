@@ -43,7 +43,6 @@ class Record extends Model
         return $this->issuer_type->type;
     }
 
-    // TODO: this is buggy. Fix this later. Type is ID, not string
     public function is_issuer_type_bill()
     {
         return $this->issuer_type_name() === RecordIssuerType::BILLORG_TYPE_NAME;
@@ -55,5 +54,19 @@ class Record extends Model
 
     public function setPeriodAttribute($value) {
         $this->attributes['period'] = Carbon::parse($value);
+    }
+
+    public function setIssueDateAttribute($value) {
+        $this->attributes['issue_date'] = Carbon::parse($value);
+    }
+
+    public function setDueDateAttribute($value) {
+        $this->attributes['due_date'] = Carbon::parse($value);
+    }
+
+    public function setAmountAttribute($value) {
+        // trim $ if any
+        $value = str_replace('$', '', $value);
+        $this->attributes['amount'] = $value;
     }
 }

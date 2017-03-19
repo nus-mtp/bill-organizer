@@ -2,12 +2,21 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+// TODO: Do we actually need a TempRecord?? Or is Record sufficient?
 class TempRecord extends Model
 {
-    public $fillable = ['path_to_file', 'record_issuer_id'];
+    public $fillable = ['path_to_file', 'record_issuer_id', 'template_id', 'issue_date', 'issue_date', 'due_date',
+        'period', 'amount'];
+
+    public $casts = [
+        'period' => 'date',
+        'issue_date' => 'date',
+        'due_date' => 'date'
+    ];
 
     public function user()
     {
@@ -32,5 +41,23 @@ class TempRecord extends Model
     public function template()
     {
         return $this->belongsTo(Template::class);
+    }
+
+    public function setPeriodAttribute($value) {
+        $this->attributes['period'] = Carbon::parse($value);
+    }
+
+    public function setIssueDateAttribute($value) {
+        $this->attributes['issue_date'] = Carbon::parse($value);
+    }
+
+    public function setDueDateAttribute($value) {
+        $this->attributes['due_date'] = Carbon::parse($value);
+    }
+
+    public function setAmountAttribute($value) {
+        // trim $ if any
+        $value = str_replace('$', '', $value);
+        $this->attributes['amount'] = $value;
     }
 }

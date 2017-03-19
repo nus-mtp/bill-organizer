@@ -56,4 +56,9 @@ class RecordIssuer extends Model
     {
         return $this->templates()->orderBy('created_at', 'desc')->first();
     }
+
+    public function create_template(Template $template)
+    {
+        return $this->templates()->save($template);
+    }
 }

@@ -7,53 +7,106 @@
     <div class="ui grid">
         <div class="sixteen wide column">
             <div class="ui breadcrumb">
-                        <!-- TODO: Extract breadcrumbs and add links-->
-                        <span class="section">Home</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="section">Dashboard</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="section">[insert billing organisation]</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active section">Edit Record</span>
-                    </div>
-                </div>
+                <!-- TODO: Extract breadcrumbs and add links-->
+                <span class="section">Home</span>
+                <i class="right angle icon divider"></i>
+                <span class="section">Dashboard</span>
+                <i class="right angle icon divider"></i>
+                <span class="section">[insert billing organisation]</span>
+                <i class="right angle icon divider"></i>
+                <span class="active section">Edit Record</span>
+            </div>
+        </div>
                 
-                <div class="eight wide column">
-                    <div class="bill-image">
-                        <div class="selRect" id="selidate"></div>
-                        <div class="selRect" id="selrperiod"></div>
-                        <div class="selRect" id="selddate"></div>
-                        <div class="selRect" id="selamtdue"></div>
-                        <img src="{{route('show_temp_record_page', $first_page)}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
-                        
-                    </div>
-                </div>
+        <div class="eight wide column">
+            <div class="bill-image">
+                <div class="selRect" id="selidate"></div>
+                <div class="selRect" id="selrperiod"></div>
+                <div class="selRect" id="selddate"></div>
+                <div class="selRect" id="selamtdue"></div>
+                <img src="{{route('show_temp_record_page', $first_page)}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
                 
-                <div class="eight wide column">
-                    for testing
-                    <div class="ui message" id="temp">for test</div>
-                    <div class="ui form">
+            </div>
+        </div>
+                
+        <div class="eight wide column">
+            for testing
+            <div class="ui message" id="temp">for test</div>
+            <div class="ui form">
+                <div class="field">
+                    <label>Issue Date</label>
+                    <input type="text" name="issuedate" placeholder="Issue Date" id="test_issue">
+                </div>
+                <div class="field">
+                    <label>Record Period</label>
+                    <input type="text" name="recordperiod" placeholder="Record Period" id="test_period">
+                </div>
+                @if($is_bill)
+                    <div class="field">
+                        <label>Due Date</label>
+                        <input type="text" name="duedate" placeholder="Due Date" id="test_duedate">
+                    </div>
+                @endif
+                <div class="field">
+                    <label>Amount Due</label>
+                    <input type="text" name="amt-due" placeholder="e.g 400" id="test_amtdue">
+                </div>
+            </div>
+
+            <br>
+
+            <div>
+                <form class="ui form" action="{{ route('extract_coords', $temp_record) }}" method="POST">
+                    {{ csrf_field() }}
+                    @foreach($field_area_inputs as $key => $val)
+                        <input type="hidden" name="{{$key}}" id="{{$key}}" value="{{$val}}">
+                    @endforeach
+                    @if(!$edit_value_mode)
+                        <div class="actions">
+                            <button class="ui positive button" type="submit">Submit</button>
+                            <button class="ui black button" type="cancel">Cancel</button>
+                        </div>
+                    @endif
+                </form>
+            </div>
+
+            @if($edit_value_mode)
+                <br><br>
+                <div>
+                    Real values
+                    <form class="ui form" action="{{ route('confirm_values', $temp_record) }}" method="POST">
+                        {{ csrf_field() }}
                         <div class="field">
                             <label>Issue Date</label>
-                            <input type="text" name="issuedate" placeholder="Issue Date" id="issue">
+                            <input type="date" name="issue_date" placeholder="Issue Date" id="issue_date"
+                                   value="{{$temp_record->issue_date->toDateString()}}">
                         </div>
                         <div class="field">
                             <label>Record Period</label>
-                            <input type="text" name="recordperiod" placeholder="Record Period" id="period">
+                            <input type="month" name="period" placeholder="Period" id="period"
+                                   value="{{$temp_record->period->format('Y-m')}}">
                         </div>
-                        <div class="field">
-                            <label>Due Date</label>
-                            <input type="text" name="duedate" placeholder="Due Date" id="duedate">
-                        </div>
+                        @if($is_bill)
+                            <div class="field">
+                                <label>Due Date</label>
+                                <input type="date" name="due_date" placeholder="Due Date" id="due_date"
+                                       value="{{$temp_record->due_date->toDateString()}}">
+                            </div>
+                        @endif
                         <div class="field">
                             <label>Amount Due</label>
-                            <input type="text" name="amt-due" placeholder="e.g 400" id="amtdue">
+                            <input type="text" name="amount" placeholder="e.g 400" id="amount"
+                                   value="{{$temp_record->amount}}">
                         </div>
-                        <button class="ui positive button" type="submit">Submit</button>
-                        <button class="ui black button" type="cancel">Cancel</button>
-                    </div>
+                        <div class="actions">
+                            <button class="ui positive button" type="submit">Submit</button>
+                            <button class="ui black button" type="cancel">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            @endif
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -136,19 +189,19 @@
         tempActField = activeField;
         activeField.value = PosX + ", " + PosY;
         
-        if(document.activeElement.id == 'issue'){
+        if(document.activeElement.id == 'test_issue'){
             issueDateC = [PosX, PosY];
             document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC[0] + ", " + issueDateC[1];
         }
-        else if(document.activeElement.id == 'period'){
+        else if(document.activeElement.id == 'test_period'){
             recPeriodC = [PosX, PosY];
             document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC[0] + ", " + recPeriodC[1];
         }
-        else if(document.activeElement.id == 'duedate'){
+        else if(document.activeElement.id == 'test_duedate'){
             dueDateC = [PosX, PosY];
             document.getElementById("temp").innerHTML = "Due Date: " + dueDateC[0] + ", " + dueDateC[1];
         }
-        else if(document.activeElement.id == 'amtdue'){
+        else if(document.activeElement.id == 'test_amtdue'){
             amtDueC = [PosX, PosY];
             document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC[0] + ", " + amtDueC[1];
         }
@@ -172,25 +225,25 @@
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
         
-        if(tempActField.id == 'issue'){
+        if(tempActField.id == 'test_issue'){
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
             drawRect('selidate',issueDateC);
             document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC;
         }
-        else if(tempActField.id == 'period'){
+        else if(tempActField.id == 'test_period'){
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
             drawRect('selrperiod',recPeriodC);
             document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
         }
-        else if(tempActField.id == 'duedate'){
+        else if(tempActField.id == 'test_duedate'){
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
             drawRect('selddate',dueDateC);
             document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
         }
-        else if(tempActField.id == 'amtdue'){
+        else if(tempActField.id == 'test_amtdue'){
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
             drawRect('selamtdue',amtDueC);
@@ -220,22 +273,22 @@
         PosY = PosY - ImgPos[1];
         var tempCoords;
         
-        if(tempActField.id == 'issue'){
+        if(tempActField.id == 'test_issue'){
             tempCoords = issueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selidate',tempCoords);
         }
-        else if(tempActField.id == 'period'){
+        else if(tempActField.id == 'test_period'){
             tempCoords = recPeriodC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selrperiod',tempCoords);
         }
-        else if(tempActField.id == 'duedate'){
+        else if(tempActField.id == 'test_duedate'){
             tempCoords = dueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selddate',tempCoords);
         }
-        else if(tempActField.id == 'amtdue'){
+        else if(tempActField.id == 'test_amtdue'){
             tempCoords = amtDueC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selamtdue',tempCoords);
@@ -279,20 +332,20 @@
                 PosY = 0;
             }
             
-            if(tempActField.id == 'issue'){
+            if(tempActField.id == 'test_issue'){
                 issueDateC = issueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Image size: " + billsize +
                                                         "<br>" + "Issue Date: " + issueDateC;
             }
-            else if(tempActField.id == 'period'){
+            else if(tempActField.id == 'test_period'){
                 recPeriodC = recPeriodC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
             }
-            else if(tempActField.id == 'duedate'){
+            else if(tempActField.id == 'test_duedate'){
                 dueDateC = dueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
             }
-            else if(tempActField.id == 'amtdue'){
+            else if(tempActField.id == 'test_amtdue'){
                 amtDueC = amtDueC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
             }
