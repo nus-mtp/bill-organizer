@@ -59,8 +59,6 @@ class RecordIssuerController extends Controller
     public function destroy(RecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
-        // TODO: extract these constants. It's not a good practice to refer to the same string literal everywhere
-        DB::table('records')->where('record_issuer_id', $record_issuer->id)->delete();
         $record_issuer->delete();
 
         return back();
@@ -163,6 +161,6 @@ class RecordIssuerController extends Controller
             );
         }
 
-        return redirect()->route('create_temp_record', $saved_temp_record);
+        return redirect()->route('temp_record_extract_coords', $saved_temp_record);
     }
 }

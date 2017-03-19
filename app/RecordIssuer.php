@@ -3,10 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RecordIssuer extends Model
 {
     public $fillable = ['name', 'type'];
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($record_issuer) {
+            DB::transaction(function () use ($record_issuer) {
+                $record_issuer->records()->delete();
+                $record_issuer->templates()->delete();
+            });
+        });
+    }
 
     public function user() {
         return $this->belongsTo(User::class);
