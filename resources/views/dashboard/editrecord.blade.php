@@ -72,11 +72,24 @@
     document.getElementById('bill').ondragstart = function(event) {
         event.preventDefault();
     };
+    window.onresize = function(event) {
+        issueDateC = resizeNCoords(nIssueDateC);
+        recPeriodC = resizeNCoords(nRecPeriodC);
+        dueDateC = resizeNCoords(nDueDateC);
+        amtDueC = resizeNCoords(nAmtDueC);
+        document.getElementById('temp').innerHTML = issueDateC;
+        
+        changePage(0);
+    };
 
     var issueDateC;
     var recPeriodC;
     var dueDateC;
     var amtDueC;
+    var nIssueDateC;
+    var nRecPeriodC;
+    var nDueDateC;
+    var nAmtDueC;
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
@@ -155,6 +168,10 @@
         recPeriodC = null;
         dueDateC = null;
         amtDueC = null;
+        nIssueDateC = null;
+        nRecPeriodC = null;
+        nDueDateC = null;
+        nAmtDueC = null;
     }
 
     function formatCoords(coords) {
@@ -174,8 +191,29 @@
         }
     }
 
-    function normalizeCoordinates(coords) {
+    function normalizeCoords(coords) {
         //return coords ratios
+        if (coords == null) { return; }
+        var temp = [0, 0, 0, 0];
+        var width = document.getElementById('bill').width;
+        var height = document.getElementById('bill').height;
+        temp[0] = coords[0] / width;
+        temp[1] = coords[1] / height;
+        temp[2] = coords[2] / width;
+        temp[3] = coords[3] / height;
+        return temp;
+    }
+    
+    function resizeNCoords(coords) {
+        if (coords == null) { return; }
+        var temp = [0, 0, 0, 0];
+        var width = document.getElementById('bill').width;
+        var height = document.getElementById('bill').height;
+        temp[0] = coords[0] * width;
+        temp[1] = coords[1] * height;
+        temp[2] = coords[2] * width;
+        temp[3] = coords[3] * height;
+        return temp;
     }
 
     function FindPosition(oElement) {
@@ -245,24 +283,28 @@
         if (tempActField.id == 'issue') {
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
+            nIssueDateC = normalizeCoords(issueDateC);
             drawRect('selidate', issueDateC);
             document.getElementById('selidate').setAttribute('data-page', currPage);
             tempActField.value = issueDateC;
         } else if (tempActField.id == 'period') {
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
+            nRecPeriodC = normalizeCoords(recPeriodC);
             drawRect('selrperiod', recPeriodC);
             document.getElementById('selrperiod').setAttribute('data-page', currPage);
             tempActField.value = recPeriodC;
         } else if (tempActField.id == 'duedate') {
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
+            nDueDateC = normalizeCoords(dueDateC);
             drawRect('selddate', dueDateC);
             document.getElementById('selddate').setAttribute('data-page', currPage);
             tempActField.value = dueDateC;
         } else if (tempActField.id == 'amtdue') {
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
+            nAmtDueC = normalizeCoords(amtDueC);
             drawRect('selamtdue', amtDueC);
             document.getElementById('selamtdue').setAttribute('data-page', currPage);
             tempActField.value = amtDueC;
