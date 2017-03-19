@@ -18,6 +18,16 @@ class TempRecord extends Model
         'due_date' => 'date'
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($temp_record) {
+            DB::transaction(function () use ($temp_record) {
+                $temp_record->pages()->delete();
+            });
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

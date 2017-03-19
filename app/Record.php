@@ -22,6 +22,16 @@ class Record extends Model
     public $fillable = ['issue_date', 'due_date', 'period', 'amount', 'path_to_file',
         'record_issuer_id', 'template_id'];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($temp_record) {
+            DB::transaction(function () use ($temp_record) {
+                $temp_record->pages()->delete();
+            });
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
