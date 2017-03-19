@@ -43,7 +43,7 @@ class RecordController extends Controller
         // need to prepend 'app/' because Storage::url is stupid. It returns storage/ instead of storage/app/
         $url = storage_path('app/' . $record->path_to_file);
         $url_parts = pathinfo($url);
-        $file_name = $url_parts['filename'] . '.' . $url_parts['extension'];
+        $file_name = "{$record->issuer->name}_{$record->issue_date->toDateString()}.{$url_parts['extension']}";
 
         return response()->download($url, $file_name);
     }
