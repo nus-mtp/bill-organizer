@@ -342,7 +342,7 @@ $('#js-stats-menu').dropdown({
 /* ================================================
 =            Dashboard - Record Table            =
 ================================================ */
-$('#js-delete-record-button').click(function (e) {
+/*$('#js-delete-record-button').click(function (e) {
   e.preventDefault()
   swal({
     title: 'Are you sure?',
@@ -353,7 +353,7 @@ $('#js-delete-record-button').click(function (e) {
     cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, delete it!'
   }).then(function () {
-    $('#delete-record').submit()
+    $('form#delete-record').submit()
     swal(
     'Deleted!',
     'Your file has been deleted.',
@@ -363,5 +363,5 @@ $('#js-delete-record-button').click(function (e) {
     return
   })
   // $("#delete-record").submit()
-})
+})*/
 
