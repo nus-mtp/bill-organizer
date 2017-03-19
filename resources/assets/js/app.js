@@ -68,6 +68,7 @@ const onLandingPageLoad = function () {
       }
     }).modal('show')
   })
+    
   $('.login.button').click(_ => {
     $('.login.modal').modal({
       onApprove: function () {
@@ -81,6 +82,7 @@ const onLandingPageLoad = function () {
       }
     }).modal('show')
   })
+    
   $('.register.form').form({
     fields: {
       name: {
@@ -116,6 +118,7 @@ const onLandingPageLoad = function () {
       }
     }
   })
+    
   $('.login.form').form({
     fields: {
       email: {
@@ -156,6 +159,7 @@ const onDashboardLoad = function (window) {
       }
     }).modal('show')
   })
+    
   $('.add-bill-org.button').click(_ => {
     $('.ui.modal.record-issuer').modal({
       onApprove: function () {
@@ -170,9 +174,13 @@ const onDashboardLoad = function (window) {
       }
     }).modal('show')
   })
+    
   $('.del-bill-org.button').click(_ => {
-    $('.ui.modal.record-issuer-del-cfm').modal('show')
+    event.stopPropagation();
+    event.preventDefault();
+    //$('.ui.modal.record-issuer-del-cfm').modal('show')
   })
+    
   $('.ui.form.record-issuer').form({
     fields: {
       name: {
@@ -232,6 +240,7 @@ const onDashboardLoad = function (window) {
       }
     }
   })
+    
   $('.ui.form.edit-record').form({
     inline: true,
     on: 'blur',
@@ -266,10 +275,12 @@ const onDashboardLoad = function (window) {
       }
     }
   })
-  $('.delete-record.button').click((e) => {
+    
+/*  $('.delete-record.button').click((e) => {
     e.preventDefault()
     $('form#delete-record').submit()
-  })
+  })*/
+    
   $('.logout.button').click((e) => {
     e.preventDefault()
     axios.post('/logout').then(_ => {
@@ -288,7 +299,7 @@ const onDashboardLoad = function (window) {
       cancelButtonColor: '#2ecc71',
       confirmButtonText: 'Yes, delete it!'
     }).then(function () {
-      $('#delete-record').submit()
+      $('form#delete-record').submit()
       swal('Deleted!', 'Your file has been deleted.', 'success')
     }, function (dismiss) {
       return
@@ -300,10 +311,10 @@ const onDashboardLoad = function (window) {
     let stats = document.getElementById('stats')
     if (stats.style.display == 'none') {
       document.getElementById('stats').style.display = 'block'
-      document.getElementById('statsbutton').className = 'ui circular mini blue right floated button'
+      document.getElementById('statsbutton').className = 'ui circular tiny right floated icon button'
     } else {
       document.getElementById('stats').style.display = 'none'
-      document.getElementById('statsbutton').className = 'ui circular mini right floated button'
+      document.getElementById('statsbutton').className = 'ui circular tiny grey basic right floated icon button'
     }
   }
 
