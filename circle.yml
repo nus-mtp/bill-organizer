@@ -18,6 +18,7 @@ dependencies:
   override:
     - npm install
     - composer install
+    - composer update
 compile:
   override:
     - npm run production
