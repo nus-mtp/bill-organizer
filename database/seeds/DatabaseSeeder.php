@@ -80,9 +80,12 @@ class DatabaseSeeder extends Seeder
     }
 
     private static function createNewTemplate($record_issuer) {
-        $template = factory(Template::class)->create([
-            'record_issuer_id' => $record_issuer->id
-        ]);
+        $template_data = ['record_issuer_id' => $record_issuer->id];
+        $is_bank = $record_issuer->type === RecordIssuerType::BANK_TYPE_ID;
+        if ($is_bank) {
+            $template_data = array_merge($template_data, ['due_date_area_id' => null]);
+        }
+        $template = factory(Template::class)->create($template_data);
         return $template;
     }
 
