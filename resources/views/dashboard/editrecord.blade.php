@@ -115,6 +115,7 @@
     }
 
     function drawRect(box, coords) {
+        if (coords == null) { return; }
         document.getElementById(box).style.display = 'block';
         document.getElementById(box).style.left = coords[0] + 'px';
         document.getElementById(box).style.top = coords[1] + 'px';
