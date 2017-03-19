@@ -59,7 +59,7 @@
                     <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
                 <div class="actions">
                     <button class="ui positive button" type="submit">Submit</button>
-                    <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); clearAllRects();">Reset</button>
+                    <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
                     <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
                 </div>
             </form>
@@ -147,6 +147,14 @@
         clearRect('selrperiod');
         clearRect('selddate');
         clearRect('selamtdue');
+    }
+    
+    function resetAllRects() {
+        clearAllRects();
+        issueDateC = null;
+        recPeriodC = null;
+        dueDateC = null;
+        amtDueC = null;
     }
 
     function formatCoords(coords) {
