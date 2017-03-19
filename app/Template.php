@@ -30,4 +30,9 @@ class Template extends Model
     {
         return $this->hasOne(FieldArea::class, 'id', 'amount_area_id');
     }
+
+    public function temp_records()
+    {
+        return $this->hasMany(TempRecord::class);
+    }
 }

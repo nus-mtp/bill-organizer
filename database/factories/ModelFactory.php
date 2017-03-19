@@ -125,11 +125,16 @@ $factory->define(Template::class, function(Generator $faker) {
 $factory->define(TempRecord::class, function(Generator $faker) {
     return [
         'user_id' => $user_id = function() {
-            return factory(App\User::class)->create()->id;
+            return factory(User::class)->create()->id;
         },
-        'record_issuer_id' => function() use ($user_id) {
-            return factory(App\RecordIssuer::class)->create([
+        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
+            return factory(RecordIssuer::class)->create([
                 'user_id' => $user_id
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
             ])->id;
         },
         'path_to_file' => 'whatever/tmp/file.pdf'

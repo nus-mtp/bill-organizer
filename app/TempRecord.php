@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class TempRecord extends Model
 {
@@ -26,5 +27,10 @@ class TempRecord extends Model
     public function pages()
     {
         return $this->hasMany(TempRecordPage::class);
+    }
+
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
     }
 }

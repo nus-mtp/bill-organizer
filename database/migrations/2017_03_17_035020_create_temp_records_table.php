@@ -17,10 +17,12 @@ class CreateTempRecordsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('record_issuer_id')->unsigned();
+            $table->integer('template_id')->unsigned();
             $table->string('path_to_file', 1024);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('record_issuer_id')->references('id')->on('record_issuers');
+            $table->foreign('template_id')->references('id')->on('templates');
         });
     }
 
