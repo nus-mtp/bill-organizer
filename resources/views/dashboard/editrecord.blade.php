@@ -1,4 +1,4 @@
- @extends('layouts.app') @section('content')
+@extends('layouts.app') @section('content')
 <!--CONTENT-->
 <div class="ui container">
     <div class="ui stackable grid">
@@ -17,10 +17,10 @@
 
         <div class="ten wide column">
             <div class="bill-image">
-                <div class="selRect" id="selidate"></div>
-                <div class="selRect" id="selrperiod"></div>
-                <div class="selRect" id="selddate"></div>
-                <div class="selRect" id="selamtdue"></div>
+                <div class="selRect" id="selidate" data-page="0"></div>
+                <div class="selRect" id="selrperiod" data-page="0"></div>
+                <div class="selRect" id="selddate" data-page="0"></div>
+                <div class="selRect" id="selamtdue" data-page="0"></div>
                 <!--Might remove wrapper later because might not need-->
                 <div id="bill-wrapper">
                     <img src="{{url('placeholderbill.jpg')}}" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
@@ -28,9 +28,9 @@
             </div>
             <center>
                 <div class="ui pagination menu">
-                    <a class="item" onclick="changePage(1)"><i class="caret left icon"></i></a>
-                    <a class="disabled item">1 of 2</a>
-                    <a class="item" onclick="changePage(2)"><i class="caret right icon"></i></a>
+                    <a class="item" onclick="changePage(-1)"><i class="caret left icon"></i></a>
+                    <a class="disabled item" id="pageno">1 of 2</a>
+                    <a class="item" onclick="changePage(1)"><i class="caret right icon"></i></a>
                 </div>
             </center>
         </div>
@@ -59,7 +59,7 @@
                     <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
                 <div class="actions">
                     <button class="ui positive button" type="submit">Submit</button>
-                    <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html('');">Reset</button>
+                    <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); clearAllRects();">Reset</button>
                     <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
                 </div>
             </form>
@@ -80,7 +80,11 @@
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
+    var currPage = 1;
+    var pageCount = 2; // should be length of the img array
     
+    // placeholder images
+    // to be replaced later with a single array of images/urls
     var img1 = "{{url('placeholderbill.jpg')}}";
     var img2 = "{{url('placeholderbill2.jpg')}}";
 
@@ -95,7 +99,14 @@
     }
     
     function changePage(num) {
-        if (num == 1) {
+        currPage += num;
+        // to make sure 1 <= currPage <= pageCount
+        currPage = Math.max(1, Math.min(currPage, pageCount));
+        document.getElementById('pageno').innerHTML = currPage + " of 2";
+        clearAllRects();
+        renderRectsonPage(currPage);
+        // if-else is hardcoded, replace with image array method later
+        if (currPage == 1) {
             document.getElementById('bill').src = img1;
         }
         else{
@@ -104,10 +115,37 @@
     }
 
     function drawRect(box, coords) {
+        document.getElementById(box).style.display = 'block';
         document.getElementById(box).style.left = coords[0] + 'px';
         document.getElementById(box).style.top = coords[1] + 'px';
         document.getElementById(box).style.width = (coords[2] - coords[0]) + 'px';
         document.getElementById(box).style.height = (coords[3] - coords[1]) + 'px';
+    }
+    
+    function renderRectsonPage(pagenum) {
+        if (document.getElementById('selidate').getAttribute('data-page') == pagenum) {
+            drawRect('selidate', issueDateC);
+        }
+        if (document.getElementById('selrperiod').getAttribute('data-page') == pagenum) {
+            drawRect('selrperiod', recPeriodC);
+        }
+        if (document.getElementById('selddate').getAttribute('data-page') == pagenum) {
+            drawRect('selddate', dueDateC);
+        }
+        if (document.getElementById('selamtdue').getAttribute('data-page') == pagenum) {
+            drawRect('selamtdue', amtDueC);
+        }        
+    }
+    
+    function clearRect(box) {
+        document.getElementById(box).style.display = 'none';
+    }
+    
+    function clearAllRects() {
+        clearRect('selidate');
+        clearRect('selrperiod');
+        clearRect('selddate');
+        clearRect('selamtdue');
     }
 
     function formatCoords(coords) {
@@ -162,25 +200,24 @@
         PosY = PosY - ImgPos[1];
         var activeField = document.activeElement;
         tempActField = activeField;
-        activeField.value = PosX + ", " + PosY;
+        //to prevent validation error from acting up
+        tempActField.value = "selecting...";
 
         if (document.activeElement.id == 'issue') {
             issueDateC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC[0] + ", " + issueDateC[1];
         } else if (document.activeElement.id == 'period') {
             recPeriodC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC[0] + ", " + recPeriodC[1];
         } else if (document.activeElement.id == 'duedate') {
             dueDateC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Due Date: " + dueDateC[0] + ", " + dueDateC[1];
         } else if (document.activeElement.id == 'amtdue') {
             amtDueC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC[0] + ", " + amtDueC[1];
         }
         selecting = true;
     }
 
     function getCoordsAgain(e) {
+        if (!selecting) { return; }
+        
         var PosX = 0;
         var PosY = 0;
         if (!e) var e = window.event;
@@ -195,27 +232,31 @@
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
-
+        
         if (tempActField.id == 'issue') {
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
             drawRect('selidate', issueDateC);
-            document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC;
+            document.getElementById('selidate').setAttribute('data-page', currPage);
+            tempActField.value = issueDateC;
         } else if (tempActField.id == 'period') {
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
             drawRect('selrperiod', recPeriodC);
-            document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
+            document.getElementById('selrperiod').setAttribute('data-page', currPage);
+            tempActField.value = recPeriodC;
         } else if (tempActField.id == 'duedate') {
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
             drawRect('selddate', dueDateC);
-            document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
+            document.getElementById('selddate').setAttribute('data-page', currPage);
+            tempActField.value = dueDateC;
         } else if (tempActField.id == 'amtdue') {
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
             drawRect('selamtdue', amtDueC);
-            document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
+            document.getElementById('selamtdue').setAttribute('data-page', currPage);
+            tempActField.value = amtDueC;
         } else {
             displayError("Please click on a field before selecting");
         }
