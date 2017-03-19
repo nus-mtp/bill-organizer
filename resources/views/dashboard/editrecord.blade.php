@@ -68,28 +68,17 @@
 </div>
 
 <script type="text/javascript">
-    // disable default image drag action so you can drag select box later
-    document.getElementById('bill').ondragstart = function(event) {
-        event.preventDefault();
-    };
-    window.onresize = function(event) {
-        issueDateC = resizeNCoords(nIssueDateC);
-        recPeriodC = resizeNCoords(nRecPeriodC);
-        dueDateC = resizeNCoords(nDueDateC);
-        amtDueC = resizeNCoords(nAmtDueC);
-        document.getElementById('temp').innerHTML = issueDateC;
-        
-        changePage(0);
-    };
-
+    // box coordinates used for rendering
     var issueDateC;
     var recPeriodC;
     var dueDateC;
     var amtDueC;
+    // normalized versions of the box coordinates
     var nIssueDateC;
     var nRecPeriodC;
     var nDueDateC;
     var nAmtDueC;
+    
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
@@ -100,6 +89,19 @@
     // to be replaced later with a single array of images/urls
     var img1 = "{{url('placeholderbill.jpg')}}";
     var img2 = "{{url('placeholderbill2.jpg')}}";
+    
+    // disable default image drag action so you can drag select box later
+    billImg.ondragstart = function(event) {
+        event.preventDefault();
+    };
+    window.onresize = function(event) {
+        issueDateC = resizeNCoords(nIssueDateC);
+        recPeriodC = resizeNCoords(nRecPeriodC);
+        dueDateC = resizeNCoords(nDueDateC);
+        amtDueC = resizeNCoords(nAmtDueC);
+        
+        changePage(0);
+    };
 
     function displayError(message) {
         // uses the error message that comes with the semantic ui form
@@ -111,6 +113,7 @@
         document.getElementById("errormsg").style.display = "none";
     }
     
+    // change bill page view and any related boxes
     function changePage(num) {
         currPage += num;
         // to make sure 1 <= currPage <= pageCount
@@ -120,13 +123,14 @@
         renderRectsonPage(currPage);
         // if-else is hardcoded, replace with image array method later
         if (currPage == 1) {
-            document.getElementById('bill').src = img1;
+            billImg.src = img1;
         }
         else{
-            document.getElementById('bill').src = img2;
+            billImg.src = img2;
         }
     }
 
+    // renders box given a set of coordinates
     function drawRect(box, coords) {
         if (coords == null) { return; }
         document.getElementById(box).style.display = 'block';
@@ -136,6 +140,7 @@
         document.getElementById(box).style.height = (coords[3] - coords[1]) + 'px';
     }
     
+    // renders boxes according to what page user is on
     function renderRectsonPage(pagenum) {
         if (document.getElementById('selidate').getAttribute('data-page') == pagenum) {
             drawRect('selidate', issueDateC);
@@ -155,6 +160,7 @@
         document.getElementById(box).style.display = 'none';
     }
     
+    // clears any rendered boxes
     function clearAllRects() {
         clearRect('selidate');
         clearRect('selrperiod');
@@ -162,6 +168,7 @@
         clearRect('selamtdue');
     }
     
+    // clear any rendered boxes and their related coordinates
     function resetAllRects() {
         clearAllRects();
         issueDateC = null;
@@ -174,9 +181,9 @@
         nAmtDueC = null;
     }
 
+    //normal selection is top-bottom or left-right
+    //this function standardizes bottom-top or right-left selection
     function formatCoords(coords) {
-        //normal selection is top-bottom or left-right
-        //this function standardizes bottom-top or right-left selection
         if (coords[0] > coords[2] && coords[1] > coords[3]) { //btmright to topleft
             temp = [coords[2], coords[3], coords[0], coords[1]];
             return temp;
@@ -191,12 +198,12 @@
         }
     }
 
+    // return coords ratios
     function normalizeCoords(coords) {
-        //return coords ratios
         if (coords == null) { return; }
         var temp = [0, 0, 0, 0];
-        var width = document.getElementById('bill').width;
-        var height = document.getElementById('bill').height;
+        var width = billImg.width;
+        var height = billImg.height;
         temp[0] = coords[0] / width;
         temp[1] = coords[1] / height;
         temp[2] = coords[2] / width;
@@ -204,11 +211,12 @@
         return temp;
     }
     
+    // converts normalized coords to rendering coords
     function resizeNCoords(coords) {
         if (coords == null) { return; }
         var temp = [0, 0, 0, 0];
-        var width = document.getElementById('bill').width;
-        var height = document.getElementById('bill').height;
+        var width = billImg.width;
+        var height = billImg.height;
         temp[0] = coords[0] * width;
         temp[1] = coords[1] * height;
         temp[2] = coords[2] * width;
