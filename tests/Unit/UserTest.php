@@ -21,7 +21,7 @@ class UserTest extends TestCase{
     public function testCanCreateUsers()
     {
         $users = factory(User::class,10)->make();
-        self::assertEquals(10, count($users));
+        self::assertCount(10, $users);
     }
 
 }
