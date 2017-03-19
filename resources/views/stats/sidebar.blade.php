@@ -6,11 +6,10 @@
     <form action="/stats/{{$record_issuer->id}}" id="stats-form" method="get">
         <select name= 'stats-options' class="ui dropdown" id ='js-stats-menu'>
             <option class="item selected" value="0">This Month</option>
-            <option class="item" value="1">past 6 months</option>
-            <option class="item" value="2">This year</option>
-            <option class="item" value="3">Past 2 years</option>
-            <option class="item" value="4">All of time</option>
-            <option class="item" value="5">Pre Big Bang</option>
+            <option class="item" value="6">past 6 months</option>
+            <option class="item" value="12">This year</option>
+            <option class="item" value="24">Past 2 years</option>
+            <option class="item" value="99999">All of time</option>
         </select>
     </form>
 

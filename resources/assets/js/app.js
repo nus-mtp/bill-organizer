@@ -332,6 +332,7 @@ let sendRequests = function ($form, param) {
 sendRequests($statsForm, 0)
 $('#js-stats-menu').dropdown({
   onChange: function (value, text) {
+      console.log(value);
     sendRequests($statsForm, value)
   }
 })
