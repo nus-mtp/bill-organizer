@@ -1,302 +1,414 @@
-
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.app') @section('content')
 <!--CONTENT-->
-<div class="ui fluid container">
-    <div class="ui grid">
+<div class="ui container">
+    <div class="ui stackable grid">
         <div class="sixteen wide column">
             <div class="ui breadcrumb">
-                        <!-- TODO: Extract breadcrumbs and add links-->
-                        <span class="section">Home</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="section">Dashboard</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="section">[insert billing organisation]</span>
-                        <i class="right angle icon divider"></i>
-                        <span class="active section">Edit Record</span>
-                    </div>
-                </div>
-                
-                <div class="eight wide column">
-                    <div class="bill-image">
-                        <div class="selRect" id="selidate"></div>
-                        <div class="selRect" id="selrperiod"></div>
-                        <div class="selRect" id="selddate"></div>
-                        <div class="selRect" id="selamtdue"></div>
-                        <img src="{{url('placeholderbill.jpg')}}" style="width:100%;" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
-                        
-                    </div>
-                </div>
-                
-                <div class="eight wide column">
-                    for testing
-                    <div class="ui message" id="temp">for test</div>
-                    <div class="ui form">
-                        <div class="field">
-                            <label>Issue Date</label>
-                            <input type="text" name="issuedate" placeholder="Issue Date" id="issue">
-                        </div>
-                        <div class="field">
-                            <label>Record Period</label>
-                            <input type="text" name="recordperiod" placeholder="Record Period" id="period">
-                        </div>
-                        <div class="field">
-                            <label>Due Date</label>
-                            <input type="text" name="duedate" placeholder="Due Date" id="duedate">
-                        </div>
-                        <div class="field">
-                            <label>Amount Due</label>
-                            <input type="text" name="amt-due" placeholder="e.g 400" id="amtdue">
-                        </div>
-                        <button class="ui positive button" type="submit">Submit</button>
-                        <button class="ui black button" type="cancel">Cancel</button>
-                    </div>
+                <!-- TODO: Extract breadcrumbs and add links-->
+                <span class="section">Home</span>
+                <i class="right angle icon divider"></i>
+                <span class="section">Dashboard</span>
+                <i class="right angle icon divider"></i>
+                <span class="section">[insert billing organisation]</span>
+                <i class="right angle icon divider"></i>
+                <span class="active section">Edit Record</span>
+            </div>
+        </div>
+
+        <div class="ten wide column">
+            <div class="bill-image">
+                <div class="selRect" id="selidate" data-page="0"></div>
+                <div class="selRect" id="selrperiod" data-page="0"></div>
+                <div class="selRect" id="selddate" data-page="0"></div>
+                <div class="selRect" id="selamtdue" data-page="0"></div>
+                <!--Might remove wrapper later because might not need-->
+                <div id="bill-wrapper">
+                    <img src="{{url('placeholderbill.jpg')}}" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
                 </div>
             </div>
+            <center>
+                <div class="ui pagination menu">
+                    <a class="item" onclick="changePage(-1)"><i class="caret left icon"></i></a>
+                    <a class="disabled item" id="pageno">1 of 2</a>
+                    <a class="item" onclick="changePage(1)"><i class="caret right icon"></i></a>
+                </div>
+            </center>
+        </div>
+
+        <div class="six wide column">
+            <div class="ui message" id="temp">for test</div>
+            <form class="ui edit-record form" id="edit-record">
+                <div class="ui tiny error message" id="errormsg"></div>
+                <div class="field">
+                    <label>Issue Date <atn>*</atn></label>
+                    <input type="text" name="issuedate" placeholder="Issue Date" id="issue" onfocus="clearError();">
+                </div>
+                <div class="field">
+                    <label>Record Period</label>
+                    <input type="text" name="recordperiod" placeholder="Record Period" id="period" onfocus="clearError();">
+                </div>
+                <div class="field">
+                    <label>Due Date</label>
+                    <input type="text" name="duedate" placeholder="Due Date" id="duedate" onfocus="clearError();">
+                </div>
+                <div class="field">
+                    <label>Amount Due <atn>*</atn></label>
+                    <input type="text" name="amtdue" placeholder="e.g 400" id="amtdue" onfocus="clearError();">
+                </div>
+                <tnc>
+                    <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                <div class="actions">
+                    <button class="ui positive button" type="submit">Submit</button>
+                    <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
+                    <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
-    
-    // disable default image drag action so you can drag select box later
-    document.getElementById('bill').ondragstart = function(event) { event.preventDefault(); };
-    
+    // box coordinates used for rendering
     var issueDateC;
     var recPeriodC;
     var dueDateC;
     var amtDueC;
+    // normalized versions of the box coordinates
+    var nIssueDateC;
+    var nRecPeriodC;
+    var nDueDateC;
+    var nAmtDueC;
+    
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
+    var currPage = 1;
+    var pageCount = 2; // should be length of the img array
+    
+    // placeholder images
+    // to be replaced later with a single array of images/urls
+    var img1 = "{{url('placeholderbill.jpg')}}";
+    var img2 = "{{url('placeholderbill2.jpg')}}";
+    
+    // disable default image drag action so you can drag select box later
+    billImg.ondragstart = function(event) {
+        event.preventDefault();
+    };
+    window.onresize = function(event) {
+        issueDateC = resizeNCoords(nIssueDateC);
+        recPeriodC = resizeNCoords(nRecPeriodC);
+        dueDateC = resizeNCoords(nDueDateC);
+        amtDueC = resizeNCoords(nAmtDueC);
         
-    function drawRect(box, coords){
-        document.getElementById(box).style.left = coords[0] +'px';
-        document.getElementById(box).style.top = coords[1] +'px';
-        document.getElementById(box).style.width = (coords[2]-coords[0]) +'px';
-        document.getElementById(box).style.height = (coords[3]-coords[1]) +'px';
+        changePage(0);
+    };
+
+    function displayError(message) {
+        // uses the error message that comes with the semantic ui form
+        document.getElementById("errormsg").innerHTML = message;
+        document.getElementById("errormsg").style.display = "block";
+    }
+
+    function clearError() {
+        document.getElementById("errormsg").style.display = "none";
     }
     
-    function formatCoords(coords){
-        //normal selection is top-bottom or left-right
-        //this function standardizes bottom-top or right-left selection
-        if(coords[0] > coords[2] && coords[1] > coords[3]){ //btmright to topleft
-            temp = [coords[2], coords[3], coords[0], coords[1]];
-            return temp;
-        }
-        else if(coords[0] > coords[2]){ //topright to btmleft
-            temp = [coords[2], coords[1], coords[0], coords[3]];
-            return temp;
-        }
-        else if(coords[1] > coords[3]){ //btmleft to topright
-            temp = [coords[0], coords[3], coords[2], coords[1]];
-            return temp;
+    // change bill page view and any related boxes
+    function changePage(num) {
+        currPage += num;
+        // to make sure 1 <= currPage <= pageCount
+        currPage = Math.max(1, Math.min(currPage, pageCount));
+        document.getElementById('pageno').innerHTML = currPage + " of 2";
+        clearAllRects();
+        renderRectsonPage(currPage);
+        // if-else is hardcoded, replace with image array method later
+        if (currPage == 1) {
+            billImg.src = img1;
         }
         else{
+            billImg.src = img2;
+        }
+    }
+
+    // renders box given a set of coordinates
+    function drawRect(box, coords) {
+        if (coords == null) { return; }
+        document.getElementById(box).style.display = 'block';
+        document.getElementById(box).style.left = coords[0] + 'px';
+        document.getElementById(box).style.top = coords[1] + 'px';
+        document.getElementById(box).style.width = (coords[2] - coords[0]) + 'px';
+        document.getElementById(box).style.height = (coords[3] - coords[1]) + 'px';
+    }
+    
+    // renders boxes according to what page user is on
+    function renderRectsonPage(pagenum) {
+        if (document.getElementById('selidate').getAttribute('data-page') == pagenum) {
+            drawRect('selidate', issueDateC);
+        }
+        if (document.getElementById('selrperiod').getAttribute('data-page') == pagenum) {
+            drawRect('selrperiod', recPeriodC);
+        }
+        if (document.getElementById('selddate').getAttribute('data-page') == pagenum) {
+            drawRect('selddate', dueDateC);
+        }
+        if (document.getElementById('selamtdue').getAttribute('data-page') == pagenum) {
+            drawRect('selamtdue', amtDueC);
+        }        
+    }
+    
+    function clearRect(box) {
+        document.getElementById(box).style.display = 'none';
+    }
+    
+    // clears any rendered boxes
+    function clearAllRects() {
+        clearRect('selidate');
+        clearRect('selrperiod');
+        clearRect('selddate');
+        clearRect('selamtdue');
+    }
+    
+    // clear any rendered boxes and their related coordinates
+    function resetAllRects() {
+        clearAllRects();
+        issueDateC = null;
+        recPeriodC = null;
+        dueDateC = null;
+        amtDueC = null;
+        nIssueDateC = null;
+        nRecPeriodC = null;
+        nDueDateC = null;
+        nAmtDueC = null;
+    }
+
+    //normal selection is top-bottom or left-right
+    //this function standardizes bottom-top or right-left selection
+    function formatCoords(coords) {
+        if (coords[0] > coords[2] && coords[1] > coords[3]) { //btmright to topleft
+            temp = [coords[2], coords[3], coords[0], coords[1]];
+            return temp;
+        } else if (coords[0] > coords[2]) { //topright to btmleft
+            temp = [coords[2], coords[1], coords[0], coords[3]];
+            return temp;
+        } else if (coords[1] > coords[3]) { //btmleft to topright
+            temp = [coords[0], coords[3], coords[2], coords[1]];
+            return temp;
+        } else {
             return coords;
         }
     }
-    
-    function normalizeCoordinates(coords){
-        //return coords ratios
+
+    // return coords ratios
+    function normalizeCoords(coords) {
+        if (coords == null) { return; }
+        var temp = [0, 0, 0, 0];
+        var width = billImg.width;
+        var height = billImg.height;
+        temp[0] = coords[0] / width;
+        temp[1] = coords[1] / height;
+        temp[2] = coords[2] / width;
+        temp[3] = coords[3] / height;
+        return temp;
     }
     
-    function FindPosition(oElement)
-    {
-        if(typeof( oElement.offsetParent ) != "undefined") {
-            for(var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent) {
+    // converts normalized coords to rendering coords
+    function resizeNCoords(coords) {
+        if (coords == null) { return; }
+        var temp = [0, 0, 0, 0];
+        var width = billImg.width;
+        var height = billImg.height;
+        temp[0] = coords[0] * width;
+        temp[1] = coords[1] * height;
+        temp[2] = coords[2] * width;
+        temp[3] = coords[3] * height;
+        return temp;
+    }
+
+    function FindPosition(oElement) {
+        if (typeof(oElement.offsetParent) != "undefined") {
+            for (var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent) {
                 posX += oElement.offsetLeft;
                 posY += oElement.offsetTop;
             }
-            return [ posX, posY ];
-        }
-        else {
-            return [ oElement.x, oElement.y ];
+            return [posX, posY];
+        } else {
+            return [oElement.x, oElement.y];
         }
     }
-    
+
     var ImgPos = FindPosition(billImg);
-    
-    function getCoordinates(e){
+
+    function getCoordinates(e) {
         var PosX = 0;
         var PosY = 0;
         if (!e) var e = window.event;
         if (e.pageX || e.pageY) {
             PosX = e.pageX;
             PosY = e.pageY;
-        }
-        else if (e.clientX || e.clientY) {
-            PosX = e.clientX + document.body.scrollLeft
-                + document.documentElement.scrollLeft;
-            PosY = e.clientY + document.body.scrollTop
-                + document.documentElement.scrollTop;
+        } else if (e.clientX || e.clientY) {
+            PosX = e.clientX + document.body.scrollLeft +
+                document.documentElement.scrollLeft;
+            PosY = e.clientY + document.body.scrollTop +
+                document.documentElement.scrollTop;
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
         var activeField = document.activeElement;
         tempActField = activeField;
-        activeField.value = PosX + ", " + PosY;
-        
-        if(document.activeElement.id == 'issue'){
+        //to prevent validation error from acting up
+        tempActField.value = "selecting...";
+
+        if (document.activeElement.id == 'issue') {
             issueDateC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC[0] + ", " + issueDateC[1];
-        }
-        else if(document.activeElement.id == 'period'){
+        } else if (document.activeElement.id == 'period') {
             recPeriodC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC[0] + ", " + recPeriodC[1];
-        }
-        else if(document.activeElement.id == 'duedate'){
+        } else if (document.activeElement.id == 'duedate') {
             dueDateC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Due Date: " + dueDateC[0] + ", " + dueDateC[1];
-        }
-        else if(document.activeElement.id == 'amtdue'){
+        } else if (document.activeElement.id == 'amtdue') {
             amtDueC = [PosX, PosY];
-            document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC[0] + ", " + amtDueC[1];
         }
         selecting = true;
     }
-    
-    function getCoordsAgain(e){
+
+    function getCoordsAgain(e) {
+        if (!selecting) { return; }
+        
         var PosX = 0;
         var PosY = 0;
         if (!e) var e = window.event;
         if (e.pageX || e.pageY) {
             PosX = e.pageX;
             PosY = e.pageY;
-        }
-        else if (e.clientX || e.clientY) {
-            PosX = e.clientX + document.body.scrollLeft
-                + document.documentElement.scrollLeft;
-            PosY = e.clientY + document.body.scrollTop
-                + document.documentElement.scrollTop;
+        } else if (e.clientX || e.clientY) {
+            PosX = e.clientX + document.body.scrollLeft +
+                document.documentElement.scrollLeft;
+            PosY = e.clientY + document.body.scrollTop +
+                document.documentElement.scrollTop;
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
         
-        if(tempActField.id == 'issue'){
+        if (tempActField.id == 'issue') {
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
-            drawRect('selidate',issueDateC);
-            document.getElementById("temp").innerHTML = "Issue Date: " + issueDateC;
-        }
-        else if(tempActField.id == 'period'){
+            nIssueDateC = normalizeCoords(issueDateC);
+            drawRect('selidate', issueDateC);
+            document.getElementById('selidate').setAttribute('data-page', currPage);
+            tempActField.value = issueDateC;
+        } else if (tempActField.id == 'period') {
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
-            drawRect('selrperiod',recPeriodC);
-            document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
-        }
-        else if(tempActField.id == 'duedate'){
+            nRecPeriodC = normalizeCoords(recPeriodC);
+            drawRect('selrperiod', recPeriodC);
+            document.getElementById('selrperiod').setAttribute('data-page', currPage);
+            tempActField.value = recPeriodC;
+        } else if (tempActField.id == 'duedate') {
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
-            drawRect('selddate',dueDateC);
-            document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
-        }
-        else if(tempActField.id == 'amtdue'){
+            nDueDateC = normalizeCoords(dueDateC);
+            drawRect('selddate', dueDateC);
+            document.getElementById('selddate').setAttribute('data-page', currPage);
+            tempActField.value = dueDateC;
+        } else if (tempActField.id == 'amtdue') {
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
-            drawRect('selamtdue',amtDueC);
-            document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
-        }
-        else{
-            document.getElementById("temp").innerHTML = "Please click on a field before selecting";
+            nAmtDueC = normalizeCoords(amtDueC);
+            drawRect('selamtdue', amtDueC);
+            document.getElementById('selamtdue').setAttribute('data-page', currPage);
+            tempActField.value = amtDueC;
+        } else {
+            displayError("Please click on a field before selecting");
         }
         selecting = false;
     }
-    
-    function getChangingCoords(e){
+
+    function getChangingCoords(e) {
+        if (!selecting) {
+            return;
+        }
         var PosX = 0;
         var PosY = 0;
         if (!e) var e = window.event;
         if (e.pageX || e.pageY) {
             PosX = e.pageX;
             PosY = e.pageY;
-        }
-        else if (e.clientX || e.clientY) {
-            PosX = e.clientX + document.body.scrollLeft
-                + document.documentElement.scrollLeft;
-            PosY = e.clientY + document.body.scrollTop
-                + document.documentElement.scrollTop;
+        } else if (e.clientX || e.clientY) {
+            PosX = e.clientX + document.body.scrollLeft +
+                document.documentElement.scrollLeft;
+            PosY = e.clientY + document.body.scrollTop +
+                document.documentElement.scrollTop;
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
         var tempCoords;
-        
-        if(tempActField.id == 'issue'){
+
+        if (tempActField.id == 'issue') {
             tempCoords = issueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
-            drawRect('selidate',tempCoords);
-        }
-        else if(tempActField.id == 'period'){
+            drawRect('selidate', tempCoords);
+        } else if (tempActField.id == 'period') {
             tempCoords = recPeriodC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
-            drawRect('selrperiod',tempCoords);
-        }
-        else if(tempActField.id == 'duedate'){
+            drawRect('selrperiod', tempCoords);
+        } else if (tempActField.id == 'duedate') {
             tempCoords = dueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
-            drawRect('selddate',tempCoords);
-        }
-        else if(tempActField.id == 'amtdue'){
+            drawRect('selddate', tempCoords);
+        } else if (tempActField.id == 'amtdue') {
             tempCoords = amtDueC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
-            drawRect('selamtdue',tempCoords);
-        }
-        else{
-            document.getElementById("temp").innerHTML = "Please click on a field before selecting";
+            drawRect('selamtdue', tempCoords);
+        } else {
+            displayError("Please click on a field before selecting");
         }
     }
-    
-    function coordsFailSafe(e){        
-        if(selecting){
+
+    function coordsFailSafe(e) {
+        if (selecting) {
             var PosX = 0;
             var PosY = 0;
             if (!e) var e = window.event;
             if (e.pageX || e.pageY) {
                 PosX = e.pageX;
                 PosY = e.pageY;
-            }
-            else if (e.clientX || e.clientY) {
-                PosX = e.clientX + document.body.scrollLeft
-                    + document.documentElement.scrollLeft;
-                PosY = e.clientY + document.body.scrollTop
-                    + document.documentElement.scrollTop;
+            } else if (e.clientX || e.clientY) {
+                PosX = e.clientX + document.body.scrollLeft +
+                    document.documentElement.scrollLeft;
+                PosY = e.clientY + document.body.scrollTop +
+                    document.documentElement.scrollTop;
             }
             PosX = PosX - ImgPos[0];
             PosY = PosY - ImgPos[1];
-            
+
             var billsize = [document.getElementById('bill').width, document.getElementById('bill').height];
-            
+
             //adjust coordinates to fit in image
-            if(PosX > billsize[0]) {
-                PosX = billsize[0]; 
+            if (PosX > billsize[0]) {
+                PosX = billsize[0];
             }
-            if(PosY > billsize[1]) {
-               PosY = billsize[1];
-            }
-            else if(PosX < 0) {
+            if (PosY > billsize[1]) {
+                PosY = billsize[1];
+            } else if (PosX < 0) {
                 PosX = 0;
-            }
-            else if(PosY < 0) {
+            } else if (PosY < 0) {
                 PosY = 0;
             }
-            
-            if(tempActField.id == 'issue'){
+
+            if (tempActField.id == 'issue') {
                 issueDateC = issueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Image size: " + billsize +
-                                                        "<br>" + "Issue Date: " + issueDateC;
-            }
-            else if(tempActField.id == 'period'){
+                    "<br>" + "Issue Date: " + issueDateC;
+            } else if (tempActField.id == 'period') {
                 recPeriodC = recPeriodC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
-            }
-            else if(tempActField.id == 'duedate'){
+            } else if (tempActField.id == 'duedate') {
                 dueDateC = dueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
-            }
-            else if(tempActField.id == 'amtdue'){
+            } else if (tempActField.id == 'amtdue') {
                 amtDueC = amtDueC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
             }
-            
+
             //document.getElementById('temp').innerHTML = "Image size: " + billsize +
             //                                            "<br>" + "mouseupped outside image at: " + PosX + ", " + PosY;
         }
