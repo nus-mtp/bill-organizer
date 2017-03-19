@@ -26,9 +26,9 @@ class Record extends Model
     protected static function boot() {
         parent::boot();
 
-        static::deleting(function($temp_record) {
-            DB::transaction(function () use ($temp_record) {
-                $temp_record->pages()->delete();
+        static::deleting(function($record) {
+            DB::transaction(function () use ($record) {
+                $record->pages()->delete();
             });
         });
     }
@@ -66,7 +66,7 @@ class Record extends Model
 
     public function pages()
     {
-        return $this->hasMany(TempRecordPage::class);
+        return $this->hasMany(RecordPage::class);
     }
 
     public function template()
