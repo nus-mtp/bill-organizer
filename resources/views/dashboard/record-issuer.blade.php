@@ -92,7 +92,9 @@
     <script>
             $(function(){
                 $('.datatable').DataTable();
+                $("#delete-record")
             })
+
 
             function togglestats(){
                 var stats = document.getElementById('stats');
