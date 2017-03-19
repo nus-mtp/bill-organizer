@@ -19,7 +19,7 @@
                     @endslot
                     @endcomponent
 
-                    <button class="ui circular mini blue right floated button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i>
+                    <button class="ui circular mini blue right floated button" id="statsbutton"><i class="bar chart icon"></i>
                     </button>
 
                     <div class="ui basic segment">
@@ -89,25 +89,11 @@
 @push('module_scripts')
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
     <script>
-            $(function(){
-                $('.datatable').DataTable();
-                $("#delete-record")
-            })
-
-
-            function togglestats(){
-                var stats = document.getElementById('stats');
-                if(stats.style.display == 'none'){
-                    document.getElementById('stats').style.display = 'block';
-                    document.getElementById('statsbutton').className = 'ui circular mini blue right floated button';
-                }
-                else{
-                    document.getElementById('stats').style.display = 'none';
-                    document.getElementById('statsbutton').className = 'ui circular mini right floated button';
-                }
-            }
+    $(function(){
+        $('.datatable').DataTable();
+        onDashboardLoad(window);
+    })
     </script>
 <!-- end page specific scripts -->
 @endpush
