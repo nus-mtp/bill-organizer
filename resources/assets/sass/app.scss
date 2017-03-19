@@ -13,11 +13,12 @@
 @import 'forms';
 
 // modules
-@import 'modules/upload';
+@import 'modules/stats';
 
 // page specific styles
 // if the styles for a page get significantly large,
 // we extract styles belonging to the page from global styles
+
 .headroom--pinned {
   visibility: visible;
   visibility: 1;

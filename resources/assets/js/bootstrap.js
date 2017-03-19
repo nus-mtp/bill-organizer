@@ -10,6 +10,7 @@ require('./semantic')
 require('semantic-ui-calendar/dist/calendar')
 window.swal = require('sweetalert2')
 window.axios = require('axios')
+window.Chart = require('chart.js')
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
   'X-Requested-With': 'XMLHttpRequest'

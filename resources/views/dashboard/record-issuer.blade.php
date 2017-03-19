@@ -19,7 +19,8 @@
                     @endslot
                     @endcomponent
 
-                    <button class="ui circular tiny right floated icon button" id="statsbutton" onclick="togglestats();"><i class="bar chart icon"></i></button>
+                    <button class="ui circular tiny right floated icon button" id="statsbutton"><i class="bar chart icon"></i>
+                    </button>
 
                     <div class="ui basic segment">
 
@@ -59,6 +60,7 @@
                                 <th><!-- dummy th for action buttons--></th>
                             </tr>
                         </thead>
+
                         <tbody>
 
                         @foreach($records as $record)
@@ -91,23 +93,10 @@
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
     <script>
-            $(function(){
-                $('.datatable').DataTable();
-                $("#delete-record")
-            })
-
-
-            function togglestats(){
-                var stats = document.getElementById('stats');
-                if(stats.style.display == 'none'){
-                    document.getElementById('stats').style.display = 'block';
-                    document.getElementById('statsbutton').className = 'ui circular tiny right floated icon button';
-                }
-                else{
-                    document.getElementById('stats').style.display = 'none';
-                    document.getElementById('statsbutton').className = 'ui circular tiny grey basic right floated icon button';
-                }
-            }
+    $(function(){
+        $('.datatable').DataTable();
+        onDashboardLoad(window);
+    })
     </script>
 <!-- end page specific scripts -->
 @endpush

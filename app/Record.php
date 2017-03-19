@@ -60,7 +60,7 @@ class Record extends Model
     }
 
     public function scopePastMonthsBills($query, $months){
-        if ($months === 0) {self::scopeCurrMonthBills($query);}
+        if ((int)$months === 0) {return self::scopeCurrMonthBills($query);}
         $until = new Carbon("last day of this month");
         $from = $until->copy()->subMonth($months);
         return $query->whereBetween('issue_date', [$from, $until]);

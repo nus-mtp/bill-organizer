@@ -117,6 +117,11 @@
         </div>
 
         @include('layouts.scripts')
+        <script type="text/javascript">
+          $(function(){
+            onLandingPageLoad();
+          })
+        </script>
 
     </body>
 </html>

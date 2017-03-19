@@ -19,7 +19,7 @@ class Statistics {
     }
 
     public function getNumOfPastMonthsBills(RecordIssuer $billorg, $months){
-        if ($months === 0) return $this->countCurrMonthBills($billorg);
+        if ((int)$months === 0) return $this->countCurrMonthBills($billorg);
         $records = $billorg ->records();
         $until = new Carbon('last day of this month');
         $from  = $until->copy()->subMonth($months);
@@ -28,6 +28,11 @@ class Statistics {
 
     public function getBillsTotalAmountForCurrMonth(RecordIssuer $billorg){
         return $billorg->records()->currMonthBills()->sum('amount');
+    }
+
+    public function getBillsForPastMonths(RecordIssuer $billorg, $months){
+        return $billorg->records()->pastMonthsBills($months)
+            ->select( 'issue_date', 'amount')->orderBy('issue_date')->get();
     }
 
     public function getBillsTotalAmountForPastMonths(RecordIssuer $billorg, $months){
