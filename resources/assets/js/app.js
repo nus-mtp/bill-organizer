@@ -277,7 +277,7 @@ const onDashboardLoad = function (window) {
     })
   })
 
-  $('#js-delete-record-button').click(function (e) {
+  $('.js-delete-record-button').click(function (e) {
     e.preventDefault()
     swal({
       title: 'Are you sure?',

@@ -16,7 +16,7 @@
                 <i class="download icon"></i>
             </a>
 
-            <a href="{{ route('delete_record_file', $record) }}" id="js-delete-record-button" class="ui button">
+            <a href="{{ route('delete_record_file', $record) }}"  class="ui button js-delete-record-button">
                 <form method="POST" action="{{ route('show_record_file', $record) }}"
                       style="display: none;" id="delete-record">
                     {{ csrf_field() }}
