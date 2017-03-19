@@ -68,20 +68,21 @@
         </div>
     </div>
 
-    <!-- it doesnt delete according to which billorg was pressed D:
     <div class="ui small record-issuer-del-cfm modal">
         <i class="close icon"></i>
         <div class="content">
-            <p>Are you sure you want to delete {{ $record_issuer->name }}</p>
+            <p>Are you sure you want to delete this record issuer?</p>
+        </div>
+        <div class="actions">
             <form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}" style="display: inline;">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
-                <button type="submit" class="mini inverted red compact ui icon right floated button">
-                <i class="trash icon"></i>
-            </button>
-            </form>
+                <button type="submit" class="red ui right floated button">
+                    Delete
+                </button>
+            </form>        
         </div>
-    </div>-->
+    </div>
 </div>
 
 @endsection
