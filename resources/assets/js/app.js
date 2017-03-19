@@ -144,8 +144,7 @@ $(function () {
 $('.del-bill-org.button').click(_ => {
     event.stopPropagation();
     event.preventDefault();
-    //$('#cfm-content').html('Are you sure you want to delete {{ $record_issuer->name }}?');
-    $('.ui.modal.record-issuer-del-cfm').modal('show')
+    //$('.ui.modal.record-issuer-del-cfm').modal('show')
 })
   
   $('.ui.form.record-issuer')
