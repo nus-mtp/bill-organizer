@@ -8,6 +8,7 @@ window._ = require('lodash')
 window.$ = window.jQuery = require('jquery')
 require('./semantic')
 require('semantic-ui-calendar/dist/calendar')
+window.swal = require('sweetalert2')
 window.axios = require('axios')
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
@@ -18,7 +19,6 @@ $.ajaxSetup({
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 })
-
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -332,8 +332,34 @@ let sendRequests = function ($form, param) {
 sendRequests($statsForm, 0)
 $('#js-stats-menu').dropdown({
   onChange: function (value, text) {
-      console.log(value);
+    console.log(value)
     sendRequests($statsForm, value)
   }
+})
+
+/* ================================================
+=            Dashboard - Record Table            =
+================================================ */
+$('#js-delete-record-button').click(function (e) {
+  e.preventDefault()
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(function () {
+    $('#delete-record').submit()
+    swal(
+    'Deleted!',
+    'Your file has been deleted.',
+    'success'
+  )
+  }, function (dismiss) {
+    return
+  })
+  // $("#delete-record").submit()
 })
 

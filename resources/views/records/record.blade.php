@@ -7,14 +7,16 @@
     <td>${{ $record->amount }}</td>
     <td style="text-align: right; width: 1%">
         <div class="ui small basic icon buttons">
-            <a href="{{ route('show_record_file', $record) }}" class="ui button">
+
+            <a href="{{ route('show_record_file', $record) }}" class="ui button" role="button">
                 <i class="file icon"></i>
             </a>
-            <a href="{{ route('download_record_file', $record) }}" class="ui button">
+
+            <a href="{{ route('download_record_file', $record) }}" class="ui button" role="button">
                 <i class="download icon"></i>
             </a>
-            <a href="{{ route('delete_record_file', $record) }}" onclick="event.preventDefault();
-                                            document.getElementById('delete-record').submit()" class="ui button">
+
+            <a href="{{ route('delete_record_file', $record) }}" id="js-delete-record-button" class="ui button">
                 <form method="POST" action="{{ route('show_record_file', $record) }}"
                       style="display: none;" id="delete-record">
                     {{ csrf_field() }}
