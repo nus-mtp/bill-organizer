@@ -51,7 +51,21 @@ class DatabaseSeeder extends Seeder
                 // and a record for each record issuer
                 self::createNewRecord($user, $record_issuer);
                 // and a template
-                self::createNewTemplate($record_issuer);
+                // self::createNewTemplate($record_issuer);
+                if ($name === 'SP Services') {
+                    $period_area = self::createNewFieldArea(1, 1018, 32, 101, 39);
+                    $issue_date_area = self::createNewFieldArea(1, 990, 28, 136, 44);
+                    $amount_area = self::createNewFieldArea(1, 964, 1452, 116, 36);
+                    $due_date_area = self::createNewFieldArea(1, 451, 1410, 125, 23);
+
+                    $template = Template::create([
+                        'record_issuer_id' => $record_issuer->id,
+                        'period_area_id' => $period_area->id,
+                        'issue_date_area_id' => $issue_date_area->id,
+                        'amount_area_id' => $amount_area->id,
+                        'due_date_area_id' => $due_date_area->id
+                    ]);
+                }
             }
         }
     }
@@ -87,6 +101,10 @@ class DatabaseSeeder extends Seeder
         }
         $template = factory(Template::class)->create($template_data);
         return $template;
+    }
+
+    private static function createNewFieldArea($page, $x, $y, $w, $h) {
+        return FieldArea::create(compact('page', 'x', 'y', 'w', 'h'));
     }
 
 }
