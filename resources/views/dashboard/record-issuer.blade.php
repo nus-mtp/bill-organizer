@@ -28,17 +28,18 @@
                             <div class="ui tiny message">
                                 <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
                             </div>
+                            {{-- TODO: Once it's confirmed that we don't need this old method of storing record, delete--}}
+                            {{--<div class="dotted-container">--}}
+                                {{--<button class="ui circular blue add-record icon button" value="showModal">--}}
+                                {{--<i class="icon plus"></i>--}}
+                                {{--</button>--}}
+                                {{--<span>Add new record</span>--}}
+                            {{--</div>--}}
                             <div class="dotted-container">
                                 <button class="ui circular blue add-record icon button" value="showModal">
-                                <i class="icon plus"></i>
-                                </button>
-                                <span>Add new record</span>
-                            </div>
-                            <div class="dotted-container">
-                                <button class="ui circular blue experimental-add-record icon button" value="showModal">
                                     <i class="icon plus"></i>
                                 </button>
-                                <span>(Experimental) Add new record</span>
+                                <span>Add new record</span>
                             </div>
                         @endif
 
@@ -94,6 +95,15 @@
                                 </tbody>
 
                                 <tfoot>
+                                    {{-- TODO: Once it's confirmed that we don't need this old method of storing record, delete--}}
+                                    {{--<tr>--}}
+                                        {{--<td colspan="5" class="bordered center aligned">--}}
+                                            {{--<button class="ui circular blue add-record icon button" value="showModal">--}}
+                                                {{--<i class="icon plus"></i>--}}
+                                            {{--</button>--}}
+                                            {{--<span>Add new record</span>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
                                     <tr>
                                         <td colspan="5" class="bordered center aligned">
                                             <button class="ui circular blue add-record icon button" value="showModal">
@@ -102,18 +112,61 @@
                                             <span>Add new record</span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="5" class="bordered center aligned">
-                                            <button class="ui circular blue experimental-add-record icon button" value="showModal">
-                                                <i class="icon plus"></i>
-                                            </button>
-                                            <span>(Experimental) Add new record</span>
-                                        </td>
-                                    </tr>
                                 </tfoot>
 
                             </table>
                         @endif
+
+                        {{-- TODO: Once it's confirmed that we don't need this old method of storing record, delete--}}
+                        {{--<div class="ui small add-record modal">--}}
+                            {{--<i class="close icon"></i>--}}
+                            {{--<div class="header">Add new record</div>--}}
+
+                            {{--<!-- modal content -->--}}
+                            {{--<div class="content">--}}
+                                {{--<div class="ui fluid input">--}}
+                                    {{--<form method="POST" action="{{ route('records', $record_issuer) }}"--}}
+                                          {{--class="ui form" enctype="multipart/form-data" id="add-record">--}}
+                                        {{--<!-- TODO: customize form based on type -->--}}
+                                        {{--<!-- TODO: research on semantic UI calendar -->--}}
+                                        {{--{{ csrf_field() }}--}}
+                                        {{--<div class="field">--}}
+                                            {{--<label for="record">Upload the record:</label>--}}
+                                            {{--<input type="file" name="record" id="record">--}}
+                                        {{--</div>--}}
+
+                                        {{--<div class="field">--}}
+                                            {{--<label for="issue_date">Issue date:</label>--}}
+                                            {{--<input type="date" name="issue_date" id="issue_date" placeholder="Issue date">--}}
+                                        {{--</div>--}}
+
+                                        {{--<div class="field">--}}
+                                            {{--<label for="period">Record period:</label>--}}
+                                            {{--<input type="month" name="period" id="period" placeholder="Record period">--}}
+                                        {{--</div>--}}
+
+                                        {{--@if($type === 'billing organization')--}}
+                                            {{--<div class="field">--}}
+                                                {{--<label for="due_date">Due date:</label>--}}
+                                                {{--<input type="date" name="due_date" id="due_date" placeholder="Due date">--}}
+                                            {{--</div>--}}
+                                        {{--@endif--}}
+
+                                        {{--<div class="field">--}}
+                                            {{--<!-- TODO: customize based on type -->--}}
+                                            {{--<label for="amount">{{ $amount_field_name }}:</label>--}}
+                                            {{--<input type="number" name="amount" id="amount" placeholder="{{ $amount_field_name }}">--}}
+                                        {{--</div>--}}
+
+                                    {{--</form>--}}
+                                {{--</div><!-- end ui fluid input -->--}}
+                            {{--</div><!-- end modal content -->--}}
+
+                            {{--<div class="actions">--}}
+                                {{--<div class="ui button approve green" data-value="yes">Add</div>--}}
+                                {{--<div class="ui button black cancel" data-value="no">Cancel</div>--}}
+                            {{--</div>--}}
+                        {{--</div><!-- modal end -->--}}
 
                         <div class="ui small add-record modal">
                             <i class="close icon"></i>
@@ -122,58 +175,8 @@
                             <!-- modal content -->
                             <div class="content">
                                 <div class="ui fluid input">
-                                    <form method="POST" action="{{ route('records', $record_issuer) }}"
-                                          class="ui form" enctype="multipart/form-data" id="add-record">
-                                        <!-- TODO: customize form based on type -->
-                                        <!-- TODO: research on semantic UI calendar -->
-                                        {{ csrf_field() }}
-                                        <div class="field">
-                                            <label for="record">Upload the record:</label>
-                                            <input type="file" name="record" id="record">
-                                        </div>
-
-                                        <div class="field">
-                                            <label for="issue_date">Issue date:</label>
-                                            <input type="date" name="issue_date" id="issue_date" placeholder="Issue date">
-                                        </div>
-
-                                        <div class="field">
-                                            <label for="period">Record period:</label>
-                                            <input type="month" name="period" id="period" placeholder="Record period">
-                                        </div>
-
-                                        @if($type === 'billing organization')
-                                            <div class="field">
-                                                <label for="due_date">Due date:</label>
-                                                <input type="date" name="due_date" id="due_date" placeholder="Due date">
-                                            </div>
-                                        @endif
-
-                                        <div class="field">
-                                            <!-- TODO: customize based on type -->
-                                            <label for="amount">{{ $amount_field_name }}:</label>
-                                            <input type="number" name="amount" id="amount" placeholder="{{ $amount_field_name }}">
-                                        </div>
-
-                                    </form>
-                                </div><!-- end ui fluid input -->
-                            </div><!-- end modal content -->
-
-                            <div class="actions">
-                                <div class="ui button approve green" data-value="yes">Add</div>
-                                <div class="ui button black cancel" data-value="no">Cancel</div>
-                            </div>
-                        </div><!-- modal end -->
-
-                        <div class="ui small experimental-add-record modal">
-                            <i class="close icon"></i>
-                            <div class="header">(Experimental) Add new record</div>
-
-                            <!-- modal content -->
-                            <div class="content">
-                                <div class="ui fluid input">
                                     <form method="POST" action="{{ route('store_temp_record', $record_issuer) }}"
-                                          class="ui form" enctype="multipart/form-data" id="experimental-add-record">
+                                          class="ui form" enctype="multipart/form-data" id="add-record">
                                         {{ csrf_field() }}
                                         <div class="field">
                                             <label for="record">Upload the record:</label>
@@ -226,18 +229,20 @@
 @endsection
 <!-- page specific scripts -->
 @push('module_scripts')
-    <!-- TODO: Kenan move this to app.js -->
-    <script>
-        $( document ).ready(function() {
-            $('.experimental-add-record.button').click(function() {
-                $('.ui.modal.experimental-add-record').modal({
-                    onApprove: function() {
-                        $('form#experimental-add-record').submit();
-                    }
-                }).modal('show');
-            });
-        });
-    </script>
+
+    {{-- TODO: Once it's confirmed that we don't need this old method of storing record, delete--}}
+    {{-- TODO: Kenan move this to app.js --}}
+    {{--<script>--}}
+        {{--$( document ).ready(function() {--}}
+            {{--$('.experimental-add-record.button').click(function() {--}}
+                {{--$('.ui.modal.experimental-add-record').modal({--}}
+                    {{--onApprove: function() {--}}
+                        {{--$('form#experimental-add-record').submit();--}}
+                    {{--}--}}
+                {{--}).modal('show');--}}
+            {{--});--}}
+        {{--});--}}
+    {{--</script>--}}
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
     <script>

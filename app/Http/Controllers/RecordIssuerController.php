@@ -69,6 +69,8 @@ class RecordIssuerController extends Controller
     /**
      * Store_record is here because it needs to be validated that the RecordIssuer belongs to the current user
      */
+    // TODO: Once it's confirmed that we don't need this old method of storing record, delete
+    /*
     public function store_record(RecordIssuer $record_issuer) {
         // only if this record_issuer belongs to me can I add a new record. I shouldn't be able to add to other user's record issuer
         $this->authorize('belongs_to_user', $record_issuer);
@@ -111,6 +113,7 @@ class RecordIssuerController extends Controller
 
         return back();
     }
+    */
 
     /**
      * Handles file upload and direct to the coordinates extraction page

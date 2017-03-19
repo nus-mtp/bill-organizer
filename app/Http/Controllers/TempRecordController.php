@@ -234,6 +234,8 @@ class TempRecordController extends Controller
                     new RecordPage(['path' => $path])
                 );
             }
+
+            $temp_record->delete();
         });
 
         return redirect()->route('show_record_issuer', $temp_record->record_issuer);
