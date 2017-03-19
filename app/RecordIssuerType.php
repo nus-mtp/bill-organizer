@@ -22,9 +22,15 @@ class RecordIssuerType extends Model
         return $record_issuer_types[$rand_index];
     }
 
+    public static function getIdOfType($type)
+    {
+        return static::where('type',$type)->first()->id;
+    }
+
    public function record_issuer()
   {
     return $this->hasMany(RecordIssuer::class,'type');
   }
+
 
 }
