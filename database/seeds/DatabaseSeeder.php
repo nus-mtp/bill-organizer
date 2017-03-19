@@ -48,10 +48,7 @@ class DatabaseSeeder extends Seeder
                     'user_id' => $user->id
                 ]);
 
-                // and a record for each record issuer
-                self::createNewRecord($user, $record_issuer);
-                // and a template
-                // self::createNewTemplate($record_issuer);
+                // create a template
                 if ($name === 'SP Services') {
                     $period_area = self::createNewFieldArea(0, 1018, 32, 101, 39);
                     $issue_date_area = self::createNewFieldArea(0, 990, 28, 136, 44);
@@ -65,7 +62,11 @@ class DatabaseSeeder extends Seeder
                         'amount_area_id' => $amount_area->id,
                         'due_date_area_id' => $due_date_area->id
                     ]);
+                } else {
+                    $template = self::createNewTemplate($record_issuer);
                 }
+                // and a record for each record issuer
+                self::createNewRecord($user, $record_issuer, $template);
             }
         }
     }
@@ -81,13 +82,14 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-    private static function createNewRecord($user, $record_issuer) {
+    private static function createNewRecord($user, $record_issuer, $template = null) {
         // need to specify due date because it's related to the type of the record issuer
         $is_bill = $record_issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
         $due_date = $is_bill ? Carbon::now()->addDays(random_int(0, 120))->toDateString() : null;
         $record = factory(Record::class)->create([
             'user_id' => $user->id,
             'record_issuer_id' => $record_issuer->id,
+            'template_id' => $template->id,
             'due_date' => $due_date
         ]);
         return $record;

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Record;
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 use App\Image\ImageEditor;
 
 use App\FieldArea;
 use App\RecordIssuerType;
+use App\RecordPage;
 use App\Template;
 use App\TempRecord;
 
@@ -182,6 +186,56 @@ class TempRecordController extends Controller
     }
 
     public function confirm_values(TempRecord $temp_record) {
-        dd(request()->all());
+        $is_bill = $temp_record->record_issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
+        $field_area_names = ['issue_date', 'period', 'amount'];
+        if ($is_bill) {
+            $field_area_names = array_merge($field_area_names, ['due_date']);
+        }
+
+        foreach ($field_area_names as $field_area_name) {
+            $rules[$field_area_name] = 'required';
+        }
+
+        $this->validate(request(), $rules);
+
+        $temp_record->update(request($field_area_names));
+
+        // link record to template
+        DB::transaction(function ()  use ($temp_record) {
+            // link record to temprecord's doc
+            // do i need to append 'app/'?
+            $user_id = auth()->id();
+            $record_issuer = $temp_record->record_issuer;
+            $dest_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/";
+            $src_path = storage_path('app/' . $temp_record->path_to_file);
+            // TODO: is putFile or move better?
+            $path = Storage::putFile($dest_path, new File($src_path));
+
+            $record = auth()->user()->create_record(
+                new Record([
+                    'record_issuer_id' => $temp_record->record_issuer->id,
+                    'template_id' => $temp_record->template->id,
+                    'issue_date' => $temp_record->issue_date,
+                    'due_date' => $temp_record->due_date,
+                    'period' => $temp_record->period,
+                    'amount' => $temp_record->amount,
+                    'path_to_file' => $path
+                ])
+            );
+
+            // link record to temprecord's pages
+            foreach ($temp_record->pages as $page) {
+                $dest_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
+                    "{$record->id}/img/";
+                $src_path = storage_path('app/' .$page->path);
+                $basename = pathinfo($page->path)['basename'];
+                $path = Storage::putFileAs($dest_path, new File($src_path), $basename);
+                $record->pages()->save(
+                    new RecordPage(['path' => $path])
+                );
+            }
+        });
+
+        return redirect()->route('show_record_issuer', $temp_record->record_issuer);
     }
 }

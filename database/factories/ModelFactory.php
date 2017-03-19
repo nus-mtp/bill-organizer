@@ -79,11 +79,16 @@ $factory->define(Record::class, function(Generator $faker){
             return factory(App\User::class)->create()->id;
         },
         'path_to_file' => 'whatever/tmp/file.pdf',
-        'record_issuer_id' => function() use ($issuer_type, $user_id) {
+        'record_issuer_id' => $record_issuer_id = function() use ($issuer_type, $user_id) {
             return factory(App\RecordIssuer::class)->create([
                 'type' => $issuer_type,
                 'user_id' => $user_id
-            ]);
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
         }
     ];
 });

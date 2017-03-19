@@ -20,7 +20,12 @@ class Record extends Model
     ];
 
     public $fillable = ['issue_date', 'due_date', 'period', 'amount', 'path_to_file',
-        'record_issuer_id'];
+        'record_issuer_id', 'template_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function issuer() {
         return $this->belongsTo(RecordIssuer::class, 'record_issuer_id');
@@ -48,8 +53,14 @@ class Record extends Model
         return $this->issuer_type_name() === RecordIssuerType::BILLORG_TYPE_NAME;
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function pages()
+    {
+        return $this->hasMany(TempRecordPage::class);
+    }
+
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
     }
 
     public function setPeriodAttribute($value) {
@@ -62,11 +73,5 @@ class Record extends Model
 
     public function setDueDateAttribute($value) {
         $this->attributes['due_date'] = Carbon::parse($value);
-    }
-
-    public function setAmountAttribute($value) {
-        // trim $ if any
-        $value = str_replace('$', '', $value);
-        $this->attributes['amount'] = $value;
     }
 }
