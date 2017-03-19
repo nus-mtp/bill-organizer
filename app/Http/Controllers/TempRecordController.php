@@ -61,14 +61,12 @@ class TempRecordController extends Controller
             }
         }
 
-        // TODO: display only first page until front-end is ready for multiple images. Change this later
-        $first_page = $temp_record->pages->first();
         $edit_value_mode = false;
 
         // TODO: If there's already a template, embed the coordinates and pre-select the boxes
         return view(
             'records.experimental_edit',
-            compact('temp_record', 'first_page', 'is_bill', 'field_area_inputs', 'edit_value_mode')
+            compact('temp_record', 'is_bill', 'field_area_inputs', 'edit_value_mode')
         );
     }
 
@@ -170,14 +168,12 @@ class TempRecordController extends Controller
 
         $temp_record->update($ocr_results);
 
-        // TODO: display only first page until front-end is ready for multiple images. Change this later
-        $first_page = $temp_record->pages->first();
         $field_area_inputs = compact(request()->all());
         $edit_value_mode = true;
         // Pass back to the same page, with coords and values filled
         return view(
             'records.experimental_edit',
-            compact('temp_record', 'first_page', 'is_bill', 'field_area_inputs', 'edit_value_mode')
+            compact('temp_record', 'is_bill', 'field_area_inputs', 'edit_value_mode')
         );
 
         // User has to confirm or edit the value field
