@@ -27,5 +27,9 @@
             <div class="label">Spent</div>
         </div>
 
+        <canvas id="spentBarChart" width="400" height="400">
+
+        </canvas>
+
     </div>
 </div>

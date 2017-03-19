@@ -24,6 +24,7 @@
     "vue": "^2.0.1"
   },
   "dependencies": {
+    "chartjs": "^0.3.24",
     "sweetalert2": "^6.4.4"
   }
 }
