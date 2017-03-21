@@ -102,7 +102,7 @@
                             <div class="field">
                                 <label>Record Period</label>
                                 <input type="month" name="period" placeholder="Period" id="period"
-                                       value="{{$temp_record->asdperiod->format('Y-m')}}">
+                                       value="{{$temp_record->period->format('Y-m')}}">
                             </div>
                             @if($is_bill)
                                 <div class="field">
