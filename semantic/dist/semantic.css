@@ -2801,8 +2801,8 @@ http://learnsemantic.com/developing/customizing.html
 .ui.inverted.green.buttons .button,
 .ui.inverted.green.button {
   background-color: transparent;
-  box-shadow: 0px 0px 0px 2px #229553 inset !important;
-  color: #229553;
+  box-shadow: 0px 0px 0px 2px #2ecc71 inset !important;
+  color: #2ecc71;
 }
 
 .ui.inverted.green.buttons .button:hover,
@@ -2819,22 +2819,22 @@ http://learnsemantic.com/developing/customizing.html
 
 .ui.inverted.green.buttons .button:hover,
 .ui.inverted.green.button:hover {
-  background-color: #188547;
+  background-color: #22be64;
 }
 
 .ui.inverted.green.buttons .button:focus,
 .ui.inverted.green.button:focus {
-  background-color: #117d3f;
+  background-color: #19b85d;
 }
 
 .ui.inverted.green.buttons .active.button,
 .ui.inverted.green.active.button {
-  background-color: #168846;
+  background-color: #1fc264;
 }
 
 .ui.inverted.green.buttons .button:active,
 .ui.inverted.green.button:active {
-  background-color: #196b3c;
+  background-color: #25a25a;
 }
 
 /* Inverted Basic */
@@ -2850,29 +2850,29 @@ http://learnsemantic.com/developing/customizing.html
 .ui.inverted.green.basic.buttons .button:hover,
 .ui.inverted.green.buttons .basic.button:hover,
 .ui.inverted.green.basic.button:hover {
-  box-shadow: 0px 0px 0px 2px #188547 inset !important;
-  color: #229553 !important;
+  box-shadow: 0px 0px 0px 2px #22be64 inset !important;
+  color: #2ecc71 !important;
 }
 
 .ui.inverted.green.basic.buttons .button:focus,
 .ui.inverted.green.basic.buttons .button:focus,
 .ui.inverted.green.basic.button:focus {
-  box-shadow: 0px 0px 0px 2px #117d3f inset !important;
-  color: #229553 !important;
+  box-shadow: 0px 0px 0px 2px #19b85d inset !important;
+  color: #2ecc71 !important;
 }
 
 .ui.inverted.green.basic.buttons .active.button,
 .ui.inverted.green.buttons .basic.active.button,
 .ui.inverted.green.basic.active.button {
-  box-shadow: 0px 0px 0px 2px #168846 inset !important;
-  color: #229553 !important;
+  box-shadow: 0px 0px 0px 2px #1fc264 inset !important;
+  color: #2ecc71 !important;
 }
 
 .ui.inverted.green.basic.buttons .button:active,
 .ui.inverted.green.buttons .basic.button:active,
 .ui.inverted.green.basic.button:active {
-  box-shadow: 0px 0px 0px 2px #196b3c inset !important;
-  color: #229553 !important;
+  box-shadow: 0px 0px 0px 2px #25a25a inset !important;
+  color: #2ecc71 !important;
 }
 
 /*--- Orange ---*/
@@ -6789,11 +6789,11 @@ a.ui.green.header:hover {
 /* Inverted */
 
 .ui.inverted.green.header {
-  color: #229553 !important;
+  color: #2ecc71 !important;
 }
 
 a.ui.inverted.green.header:hover {
-  color: #188547 !important;
+  color: #22be64 !important;
 }
 
 /*--- Teal ---*/
@@ -7437,7 +7437,7 @@ i.green.icon {
 }
 
 i.inverted.green.icon {
-  color: #229553 !important;
+  color: #2ecc71 !important;
 }
 
 i.inverted.bordered.green.icon,
@@ -27150,7 +27150,7 @@ a.ui.card:hover,
 .ui.inverted.green.statistics .statistic > .value,
 .ui.statistics .inverted.green.statistic > .value,
 .ui.inverted.green.statistic > .value {
-  color: #229553;
+  color: #2ecc71;
 }
 
 .ui.inverted.teal.statistics .statistic > .value,
@@ -32159,7 +32159,7 @@ a.ui.nag {
 }
 
 .ui.green.inverted.progress .bar {
-  background-color: #229553;
+  background-color: #2ecc71;
 }
 
 /* Teal */
