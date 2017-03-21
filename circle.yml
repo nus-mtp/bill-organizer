@@ -16,7 +16,12 @@ database:
       GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
   pre:
-    - sudo apt-get update; sudo apt-get install php-imagick
+    - sudo apt-get --reinstall install libept1.4.12
+    - sudo apt-get install -y aptitude
+    - sudo aptitude -y install imagemagick
+    - sudo aptitude -y install libmagickcore-dev
+    - sudo aptitude -y install libmagickwand-dev
+    - sudo aptitude -y install php-imagick
   override:
     - npm install
     - composer install
