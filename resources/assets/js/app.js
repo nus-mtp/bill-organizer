@@ -68,7 +68,7 @@ const onLandingPageLoad = function () {
       }
     }).modal('show')
   })
-    
+
   $('.login.button').click(_ => {
     $('.login.modal').modal({
       onApprove: function () {
@@ -82,7 +82,7 @@ const onLandingPageLoad = function () {
       }
     }).modal('show')
   })
-    
+
   $('.register.form').form({
     fields: {
       name: {
@@ -118,7 +118,7 @@ const onLandingPageLoad = function () {
       }
     }
   })
-    
+
   $('.login.form').form({
     fields: {
       email: {
@@ -159,7 +159,7 @@ const onDashboardLoad = function (window) {
       }
     }).modal('show')
   })
-    
+
   $('.add-bill-org.button').click(_ => {
     $('.ui.modal.record-issuer').modal({
       onApprove: function () {
@@ -174,13 +174,13 @@ const onDashboardLoad = function (window) {
       }
     }).modal('show')
   })
-    
+
   $('.del-bill-org.button').click(_ => {
-    event.stopPropagation();
-    event.preventDefault();
-    //$('.ui.modal.record-issuer-del-cfm').modal('show')
+    event.stopPropagation()
+    event.preventDefault()
+    // $('.ui.modal.record-issuer-del-cfm').modal('show')
   })
-    
+
   $('.ui.form.record-issuer').form({
     fields: {
       name: {
@@ -240,7 +240,7 @@ const onDashboardLoad = function (window) {
       }
     }
   })
-    
+
   $('.ui.form.edit-record').form({
     inline: true,
     on: 'blur',
@@ -275,12 +275,12 @@ const onDashboardLoad = function (window) {
       }
     }
   })
-    
+
 /*  $('.delete-record.button').click((e) => {
     e.preventDefault()
     $('form#delete-record').submit()
-  })*/
-    
+  }) */
+
   $('.logout.button').click((e) => {
     e.preventDefault()
     axios.post('/logout').then(_ => {
@@ -290,6 +290,7 @@ const onDashboardLoad = function (window) {
 
   $('.js-delete-record-button').click(function (e) {
     e.preventDefault()
+    $deleteRecordForm = $(this).find('form')
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -298,9 +299,9 @@ const onDashboardLoad = function (window) {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#2ecc71',
       confirmButtonText: 'Yes, delete it!'
-    }).then(function () {
-      $('form#delete-record').submit()
-      swal('Deleted!', 'Your file has been deleted.', 'success')
+    }).then(function (e) {
+      console.log($deleteRecordForm.attr('action'))
+      $deleteRecordForm.submit()
     }, function (dismiss) {
       return
     })
@@ -337,8 +338,8 @@ const onDashboardLoad = function (window) {
   }
   let sendRequests = function ($form, param) {
     axios.all([getStatsData($form, param)]).then(axios.spread(function (response) {
-        setText(response.data)
-        createChart(response.data.data)
+      setText(response.data)
+      createChart(response.data.data)
     }))
   }
   sendRequests($statsForm, 0)
@@ -347,31 +348,31 @@ const onDashboardLoad = function (window) {
       sendRequests($statsForm, value)
     }
   })
-    let createChart = function (data) {
-        var ctx = document.getElementById('amountBarChart')
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: data.labels,
-                datasets: [{
-                    label: '$ spent for period',
-                    data: data.data,
-                    backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-                    borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+  let createChart = function (data) {
+    var ctx = document.getElementById('amountBarChart')
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: '$ spent for period',
+          data: data.data,
+          backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+          borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
             }
-        })
-    };
+          }]
+        }
+      }
+    })
+  }
 }
 
 /* ===============================
