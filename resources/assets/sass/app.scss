@@ -1,5 +1,6 @@
 @import 'semantic';
 @import 'node_modules/semantic-ui-calendar/dist/calendar.min';
+@import 'node_modules/sweetalert2/dist/sweetalert2.min';
 // we use semantic to manage stuff that are unlikely to change
 // and customize it inside semantic to change things globally
 
@@ -12,11 +13,12 @@
 @import 'forms';
 
 // modules
-@import 'modules/upload';
+@import 'modules/stats';
 
 // page specific styles
 // if the styles for a page get significantly large,
 // we extract styles belonging to the page from global styles
+
 .headroom--pinned {
   visibility: visible;
   visibility: 1;

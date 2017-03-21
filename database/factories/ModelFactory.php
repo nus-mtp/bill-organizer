@@ -75,7 +75,25 @@ $factory->defineAs(App\RecordIssuer::class,RecordIssuerType::BANK_STATEMENT_TYPE
 });
 
 $factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, function(Faker\Generator $faker){
-    $issue_date = Carbon::createFromTimeStamp($faker->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
+    $issue_date = Carbon::createFromTimestamp($faker->unique()->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
+    $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
+    return [
+        'issue_date' => $issue_date,
+        'due_date' => $due_date ,
+        'period' => $issue_date->format('Y-m'),
+        'amount' => $faker->randomFloat(2, 0, 5000),
+        'path_to_file' => 'whatever/tmp/file.pdf',
+    ];
+});
+
+$factory->defineAs(App\Record::class,"curr_month_bill", function(Faker\Generator $faker){
+    /*
+     https://github.com/fzaninotto/Faker/issues/1165 dateTimeThisMonth generate wrong time
+    $issue_date = Carbon::createFromTimestamp($faker->unique()->dateTimeThisMonth->getTimestamp());
+    */
+    $from = new Carbon("first day of this month");
+    $until = new Carbon("last day of this month");
+    $issue_date = $faker->unique()->dateTimeBetween($from,$until);
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
         'issue_date' => $issue_date,

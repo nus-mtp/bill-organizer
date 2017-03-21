@@ -15,9 +15,12 @@ database:
       CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';
       GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install php-imagick
   override:
     - npm install
     - composer install
+    - composer update
 compile:
   override:
     - npm run production

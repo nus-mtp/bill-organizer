@@ -48,3 +48,16 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
   Route::put('/records/{record}', 'RecordController@update')->name('update_record'); // update record in database
 
 });
+
+// stats routes
+Route::group(['prefix'=>'stats', 'middleware' => 'auth'], function () {
+    Route::get('/{record_issuer}', [
+        'as'         => 'showAllTimeStats',
+        'uses'     => 'StatsController@index'
+    ]);
+
+    Route::get('/{record_issuer}/{month}', [
+        'as'         => 'showAllTimeStats',
+        'uses'     => 'StatsController@show'
+    ]);
+});

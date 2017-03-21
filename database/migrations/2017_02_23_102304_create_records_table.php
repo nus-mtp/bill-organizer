@@ -25,7 +25,6 @@ class CreateRecordsTable extends Migration
             $table->integer('record_issuer_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('record_issuer_id')->references('id')->on('record_issuers');
-            $table->unique(['record_issuer_id', 'issue_date']);
         });
     }
 

@@ -18,9 +18,10 @@ class UserTest extends TestCase{
         Eloquent::unguard(); //disables mass assignment protection
 
     }
-    public function test_create_users()
+    public function testCanCreateUsers()
     {
         $users = factory(User::class,10)->make();
-        self::assertEquals(10, count($users));
+        self::assertCount(10, $users);
     }
+
 }

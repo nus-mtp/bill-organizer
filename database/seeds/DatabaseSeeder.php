@@ -50,7 +50,9 @@ class DatabaseSeeder extends Seeder
                 ]);
 
                 // and a record for each record issuer
-                $this->createNewRecord($user, $record_issuer);
+                for ($counter = 0; $counter <=20; $counter++){
+                    $this->createNewRecord($user, $record_issuer);
+                }
             }
         }
     }

@@ -2,95 +2,109 @@
 =            Globals            =
 ===============================*/
 
-body,
-html {
-    color: #636b6f;
-    font-size: $base-font-size;
+body, html {
+  color: #636b6f;
+  font-size: $base-font-size;
 }
 
 h1, h2, h3, h4 {
-    color: $sea-green;
-    font-family: $heading-font-family;
-    font-weight: inherit;
-    line-height: 1.2;
-    margin: 1.414em 0 .5em 0;
+  color: $sea-green;
+  font-family: $heading-font-family;
+  font-weight: inherit;
+  line-height: 1.2;
+  margin: 1.414em 0 .5em 0;
 }
 
 h1 {
-    font-size: 3.157rem;
-    font-weight: 400;
-    margin-top: 0;
+  font-size: 3.157rem;
+  font-weight: 400;
+  margin-top: 0;
 }
 
 h2 {
-    font-size: 2.369rem;
+  font-size: 2.369rem;
 }
 
 h3 {
-    font-size: 1.777rem;
+  font-size: 1.777rem;
 }
 
 h4 {
-    font-size: 1.333rem;
+  font-size: 1.333rem;
 }
 
 p {
-    margin-bottom: 1.3em;
+  margin-bottom: 1.3em;
+}
+
+.tnc {
+  font-size: 0.8rem;
+}
+
+.atn {
+  color: $smashed-pumpkin;
 }
 
 .full-height {
-    height: 100vh;
+  height: 100vh;
 }
 
 .flex-center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .position-ref {
-    position: relative;
+  position: relative;
 }
 
 .top-right {
-    position: absolute;
-    right: 10px;
-    top: 18px;
+  position: absolute;
+  right: 10px;
+  top: 18px;
 }
 
 .title {
-    color: $bill-green;
-    font-family: $heading-font-name, sans-serif;
-    font-size: 4rem;
+  color: $bill-green;
+  font-family: $heading-font-name, sans-serif;
+  font-size: 4rem;
 }
 
 .m-b-md {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .dotted-container {
-    padding: 25px 15px 25px 15px;
-    width: 100%;
-    height: auto;
-    text-align: center;
-    color: $manganese-blue;
-    border: $manganese-blue 3px dashed;
+  padding: 25px 15px 25px 15px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  color: $manganese-blue;
+  border: $manganese-blue 3px dashed;
 }
 
 .bill-image {
-    width: 100%;
-    height: auto;
-    margin-top: 0px;
-    border: $bill-green 1px solid;
-    position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+  border: $bill-green 1px solid;
+  position: relative;
 }
 
 .selRect {
-    width: auto;
-    height: auto;
-    position: absolute;
-    background-color: $manganese-blue;
-    border: black 1px dashed;
-    opacity: 0.3;
-    pointer-events:none;
+  width: auto;
+  height: auto;
+  position: absolute;
+  background-color: $manganese-blue;
+  border: black 1px dashed;
+  opacity: 0.3;
+  pointer-events: none;
 }
+
+
+/*----------  layout rules  ----------*/
+.left-bordered {
+  border-left: 1px solid #ccc;
+}
+
