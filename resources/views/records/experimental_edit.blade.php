@@ -1,97 +1,134 @@
-@extends('layouts.app') @section('content')
-<!--CONTENT-->
-<div class="ui container">
-    <div class="ui stackable grid">
-        <div class="sixteen wide column">
-            <div class="ui breadcrumb">
-                <!-- TODO: Extract breadcrumbs and add links-->
-                <span class="section">Home</span>
-                <i class="right angle icon divider"></i>
-                <span class="section">Dashboard</span>
-                <i class="right angle icon divider"></i>
-                <span class="section">[insert billing organisation]</span>
-                <i class="right angle icon divider"></i>
-                <span class="active section">Edit Record</span>
-            </div>
-        </div>
+@extends('layouts.app')
 
-        <div class="ten wide column">
-            <div class="bill-image">
-                <div class="selRect" id="selidate" data-page="0"></div>
-                <div class="selRect" id="selrperiod" data-page="0"></div>
-                <div class="selRect" id="selddate" data-page="0"></div>
-                <div class="selRect" id="selamtdue" data-page="0"></div>
-                <!--Might remove wrapper later because might not need-->
-                <div id="bill-wrapper">
-                    <img src="{{url('placeholderbill.jpg')}}" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
+@section('content')
+    <!--CONTENT-->
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="sixteen wide column">
+                <div class="ui breadcrumb">
+                    <!-- TODO: Extract breadcrumbs and add links-->
+                    <span class="section">Home</span>
+                    <i class="right angle icon divider"></i>
+                    <span class="section">Dashboard</span>
+                    <i class="right angle icon divider"></i>
+                    <span class="section">[insert billing organisation]</span>
+                    <i class="right angle icon divider"></i>
+                    <span class="active section">Edit Record</span>
                 </div>
             </div>
-            <center>
-                <div class="ui pagination menu">
-                    <a class="item" onclick="changePage(-1)"><i class="caret left icon"></i></a>
-                    <a class="disabled item" id="pageno">1 of 2</a>
-                    <a class="item" onclick="changePage(1)"><i class="caret right icon"></i></a>
-                </div>
-            </center>
-        </div>
 
-        <div class="six wide column">
-            <div class="ui message" id="temp">for test</div>
-            <form class="ui edit-record form" id="edit-record">
-                <div class="ui tiny error message" id="errormsg"></div>
-                <div class="field">
-                    <label>Issue Date <atn>*</atn></label>
-                    <input type="text" name="issuedate" placeholder="Issue Date" id="issue" onfocus="clearError();">
+            <div class="ten wide column">
+                <div class="bill-image">
+                    <div class="selRect" id="selidate" data-page="0"></div>
+                    <div class="selRect" id="selrperiod" data-page="0"></div>
+                    <div class="selRect" id="selddate" data-page="0"></div>
+                    <div class="selRect" id="selamtdue" data-page="0"></div>
+                    <!--Might remove wrapper later because might not need-->
+                    <div id="bill-wrapper">
+                        {{--<img src="{{url('placeholderbill.jpg')}}" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">--}}
+                        <img id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
+                        @foreach($temp_record->pages as $page)
+                            <p style="display: none;">{{route('show_temp_record_page', $page->id)}}</p>
+                        @endforeach
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Record Period</label>
-                    <input type="text" name="recordperiod" placeholder="Record Period" id="period" onfocus="clearError();">
-                </div>
-                <div class="field">
-                    <label>Due Date</label>
-                    <input type="text" name="duedate" placeholder="Due Date" id="duedate" onfocus="clearError();">
-                </div>
-                <div class="field">
-                    <label>Amount Due <atn>*</atn></label>
-                    <input type="text" name="amtdue" placeholder="e.g 400" id="amtdue" onfocus="clearError();">
-                </div>
-                <tnc>
-                    <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                <center>
+                    <div class="ui pagination menu">
+                        <a class="item" onclick="changePage(-1)"><i class="caret left icon"></i></a>
+                        <a class="disabled item" id="pageno">1 of 2</a>
+                        <a class="item" onclick="changePage(1)"><i class="caret right icon"></i></a>
+                    </div>
+                </center>
+            </div>
 
-                <!--ADDED DEVICE-RESPONSIVE STUFF FOR FUN-->
-                <div class="ui equal width grid">
-                    <div class="computer only column">
-                        <div class="actions">
-                            <button class="ui black cancel right floated button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
-                            <button class="ui right floated button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
-                            <button class="ui positive right floated button" type="submit">Submit</button>
+            <div class="six wide column">
+                <div class="ui message" id="temp">for test</div>
+                <form id="test" class="ui edit-record form" id="edit-record">
+                    <div class="ui tiny error message" id="errormsg"></div>
+                    <div class="field">
+                        <label>Issue Date <atn>*</atn></label>
+                        <input type="text" name="issuedate" placeholder="Issue Date" id="test_issue_date" onfocus="clearError();">
+                    </div>
+                    <div class="field">
+                        <label>Record Period</label>
+                        <input type="text" name="recordperiod" placeholder="Record Period" id="test_period" onfocus="clearError();">
+                    </div>
+                    @if($is_bill)
+                        <div class="field">
+                            <label>Due Date</label>
+                            <input type="text" name="duedate" placeholder="Due Date" id="test_due_date" onfocus="clearError();">
                         </div>
+                    @endif
+                    <div class="field">
+                        <label>Amount Due <atn>*</atn></label>
+                        <input type="text" name="amtdue" placeholder="e.g 400" id="test_amount" onfocus="clearError();">
                     </div>
+                    <tnc>
+                        <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                    {{--<div class="actions">--}}
+                    {{--<button class="ui positive button" type="submit">Submit</button>--}}
+                    {{--<button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>--}}
+                    {{--<button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>--}}
+                    {{--</div>--}}
+                </form>
 
-                    <div class="mobile only column">
-                        <button class="ui fluid positive button" type="submit">Submit</button>
-                    </div>
-                    <div class="mobile only column">
-                        <button class="ui fluid button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
-                    </div>
-                    <div class="mobile only column">
-                        <button class="ui fluid black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
-                    </div>
-
-                    <div class="tablet only column">
-                        <div class="actions">
-                            <button class="fluid compact ui positive button" type="submit" style="margin-bottom: 10px;">Submit</button>
-                            <button class="fluid compact ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();" style="margin-bottom: 10px;">Reset</button>
-                            <button class="fluid compact ui black cancel button" type="reset" onclick="window.location.href=document.referrer;" style="margin-bottom: 10px;">Cancel</button>
-                        </div>
-                    </div>
+                <div>
+                    <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">
+                        {{ csrf_field() }}
+                        @foreach($field_area_inputs as $key => $val)
+                            <input type="hidden" name="{{$key}}" id="{{$key}}" value="{{$val}}">
+                        @endforeach
+                        @if(!$edit_value_mode)
+                            <div class="actions">
+                                <button class="ui positive button" type="submit">Submit</button>
+                                <button class="ui button" type="reset" onclick="$('form#test').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
+                                <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                            </div>
+                        @endif
+                    </form>
                 </div>
-                <!--END OF RESPONSIVE BUTTONS LOL-->
-            </form>
+
+                @if($edit_value_mode)
+                    <br><br>
+                    <div>
+                        Real values
+                        <form class="ui form" action="{{ route('confirm_values', $temp_record) }}" method="POST">
+                            {{ csrf_field() }}
+                            <div class="field">
+                                <label>Issue Date</label>
+                                <input type="date" name="issue_date" placeholder="Issue Date" id="issue_date"
+                                       value="{{$temp_record->issue_date->toDateString()}}">
+                            </div>
+                            <div class="field">
+                                <label>Record Period</label>
+                                <input type="month" name="period" placeholder="Period" id="period"
+                                       value="{{$temp_record->asdperiod->format('Y-m')}}">
+                            </div>
+                            @if($is_bill)
+                                <div class="field">
+                                    <label>Due Date</label>
+                                    <input type="date" name="due_date" placeholder="Due Date" id="due_date"
+                                           value="{{$temp_record->due_date->toDateString()}}">
+                                </div>
+                            @endif
+                            <div class="field">
+                                <label>Amount Due</label>
+                                <input type="text" name="amount" placeholder="e.g 400" id="amount"
+                                       value="{{$temp_record->amount}}">
+                            </div>
+                            <div class="actions">
+                                <button class="ui positive button" type="submit">Submit</button>
+                                <button class="ui black button" type="cancel">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
-</div>
+@endsection
 
+@push('module_scripts')
 <script type="text/javascript">
     // box coordinates used for rendering
     var issueDateC;
@@ -107,13 +144,56 @@
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
-    var currPage = 1;
+    var currPage = 0; // page is 0-indexed
     var pageCount = 2; // should be length of the img array
 
     // placeholder images
     // to be replaced later with a single array of images/urls
-    var img1 = "{{url('placeholderbill.jpg')}}";
-    var img2 = "{{url('placeholderbill2.jpg')}}";
+    // TEDDY
+    {{--var img1 = "{{url('placeholderbill.jpg')}}";--}}
+    {{--var img2 = "{{url('placeholderbill2.jpg')}}";--}}
+    var img_urls = [];
+    // END OF TEDDY
+
+    // TEDDY
+    $(document).ready(function() {
+        var bill_p_selector = ".bill-image #bill-wrapper > p"
+        $(bill_p_selector).each(function(_) {
+            var this_url = this.innerText;
+            img_urls.push(this_url);
+        });
+        pageCount = $(bill_p_selector).length;
+
+        changePage(0);
+
+        // registerListeners();
+    });
+
+    /*
+    function registerListeners() {
+        $("form#coords-form button[type='submit']").click(function() {
+            event.preventDefault();
+            var is_bill = Boolean("{{$is_bill}}");
+            var attrs = ['issue_date', 'period', 'amount'];
+            if (is_bill) {
+                attrs.push('due_date');
+            }
+
+            for (var i = 0; i < attrs.length; i++) {
+                var dest_input_attrs = ['page', 'x', 'y', 'w', 'h'];
+                var src_input_name = "test_" + attrs[i];
+                // TODO: Yan Ling fix the hard-coded page
+                var page = 0, x, y, w, h; // page are hard-coded as 0 for now
+                var coords = $("input#" + src_input_name).val().split(",");
+                x = coords[0];
+                y = coords[1];
+                w = coords[2] - coords[0];
+                h = coords[3] - coords[1];
+
+            }
+        })
+    }*/
+    // END OF TEDDY
 
     // disable default image drag action so you can drag select box later
     billImg.ondragstart = function(event) {
@@ -142,23 +222,29 @@
     function changePage(num) {
         currPage += num;
         // to make sure 1 <= currPage <= pageCount
-        currPage = Math.max(1, Math.min(currPage, pageCount));
-        document.getElementById('pageno').innerHTML = currPage + " of 2";
+        // TEDDY
+        currPage = Math.max(0, Math.min(currPage, pageCount - 1));
+        document.getElementById('pageno').innerHTML = currPage + 1 + " of " + pageCount;
+        // END OF TEDDY
         clearAllRects();
         renderRectsonPage(currPage);
         // if-else is hardcoded, replace with image array method later
+        // TEDDY
+        billImg.src = img_urls[currPage];
+        /*
         if (currPage == 1) {
             billImg.src = img1;
-        } else {
+        }
+        else{
             billImg.src = img2;
         }
+        */
+        // END OF TEDDY
     }
 
     // renders box given a set of coordinates
     function drawRect(box, coords) {
-        if (coords == null) {
-            return;
-        }
+        if (coords == null) { return; }
         document.getElementById(box).style.display = 'block';
         document.getElementById(box).style.left = coords[0] + 'px';
         document.getElementById(box).style.top = coords[1] + 'px';
@@ -226,24 +312,22 @@
 
     // return coords ratios
     function normalizeCoords(coords) {
-        if (coords == null) {
-            return;
-        }
-        var temp = [0, 0, 0, 0];
+        if (coords == null) { return; }
+        var temp = [0, 0, 0, 0, 0, 0];
         var width = billImg.width;
         var height = billImg.height;
         temp[0] = coords[0] / width;
         temp[1] = coords[1] / height;
         temp[2] = coords[2] / width;
         temp[3] = coords[3] / height;
+        temp[4] = Math.abs(coords[0] - coords[2]);
+        temp[5] = Math.abs(coords[1] - coords[3]);
         return temp;
     }
 
     // converts normalized coords to rendering coords
     function resizeNCoords(coords) {
-        if (coords == null) {
-            return;
-        }
+        if (coords == null) { return; }
         var temp = [0, 0, 0, 0];
         var width = billImg.width;
         var height = billImg.height;
@@ -253,6 +337,21 @@
         temp[3] = coords[3] * height;
         return temp;
     }
+     
+     // given input (e.g. 'issue_date') and its related values,
+     // fill in the hidden attribute fields for this input
+     function updateHiddenInput(input, page, x, y, w, h) {
+         var id = input+"_page";
+         document.getElementById(id).value = page;
+         id = input+"_x";
+         document.getElementById(id).value = x;
+         id = input+"_y"
+         document.getElementById(id).value = y;
+         id = input+"_w"
+         document.getElementById(id).value = w;
+         id = input+"_h"
+         document.getElementById(id).value = h;
+     }
 
     function FindPosition(oElement) {
         if (typeof(oElement.offsetParent) != "undefined") {
@@ -288,22 +387,20 @@
         //to prevent validation error from acting up
         tempActField.value = "selecting...";
 
-        if (document.activeElement.id == 'issue') {
+        if (document.activeElement.id == 'test_issue_date') {
             issueDateC = [PosX, PosY];
-        } else if (document.activeElement.id == 'period') {
+        } else if (document.activeElement.id == 'test_period') {
             recPeriodC = [PosX, PosY];
-        } else if (document.activeElement.id == 'duedate') {
+        } else if (document.activeElement.id == 'test_due_date') {
             dueDateC = [PosX, PosY];
-        } else if (document.activeElement.id == 'amtdue') {
+        } else if (document.activeElement.id == 'test_amount') {
             amtDueC = [PosX, PosY];
         }
         selecting = true;
     }
 
     function getCoordsAgain(e) {
-        if (!selecting) {
-            return;
-        }
+        if (!selecting) { return; }
 
         var PosX = 0;
         var PosY = 0;
@@ -320,33 +417,45 @@
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
 
-        if (tempActField.id == 'issue') {
+        if (tempActField.id == 'test_issue_date') {
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
             nIssueDateC = normalizeCoords(issueDateC);
             drawRect('selidate', issueDateC);
             document.getElementById('selidate').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('issue_date', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = issueDateC;
-        } else if (tempActField.id == 'period') {
+        } else if (tempActField.id == 'test_period') {
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
             nRecPeriodC = normalizeCoords(recPeriodC);
             drawRect('selrperiod', recPeriodC);
             document.getElementById('selrperiod').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('period', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = recPeriodC;
-        } else if (tempActField.id == 'duedate') {
+        } else if (tempActField.id == 'test_due_date') {
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
             nDueDateC = normalizeCoords(dueDateC);
             drawRect('selddate', dueDateC);
             document.getElementById('selddate').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('amount', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = dueDateC;
-        } else if (tempActField.id == 'amtdue') {
+        } else if (tempActField.id == 'test_amount') {
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
             nAmtDueC = normalizeCoords(amtDueC);
             drawRect('selamtdue', amtDueC);
             document.getElementById('selamtdue').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('due_date', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = amtDueC;
         } else {
             displayError("Please click on a field before selecting");
@@ -374,19 +483,19 @@
         PosY = PosY - ImgPos[1];
         var tempCoords;
 
-        if (tempActField.id == 'issue') {
+        if (tempActField.id == 'test_issue_date') {
             tempCoords = issueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selidate', tempCoords);
-        } else if (tempActField.id == 'period') {
+        } else if (tempActField.id == 'test_period') {
             tempCoords = recPeriodC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selrperiod', tempCoords);
-        } else if (tempActField.id == 'duedate') {
+        } else if (tempActField.id == 'test_due_date') {
             tempCoords = dueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selddate', tempCoords);
-        } else if (tempActField.id == 'amtdue') {
+        } else if (tempActField.id == 'test_amount') {
             tempCoords = amtDueC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selamtdue', tempCoords);
@@ -426,17 +535,17 @@
                 PosY = 0;
             }
 
-            if (tempActField.id == 'issue') {
+            if (tempActField.id == 'test_issue_date') {
                 issueDateC = issueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Image size: " + billsize +
                     "<br>" + "Issue Date: " + issueDateC;
-            } else if (tempActField.id == 'period') {
+            } else if (tempActField.id == 'test_period') {
                 recPeriodC = recPeriodC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
-            } else if (tempActField.id == 'duedate') {
+            } else if (tempActField.id == 'test_due_date') {
                 dueDateC = dueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
-            } else if (tempActField.id == 'amtdue') {
+            } else if (tempActField.id == 'test_amount') {
                 amtDueC = amtDueC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
             }
@@ -448,4 +557,4 @@
     }
 
 </script>
-@endsection
+@endpush
