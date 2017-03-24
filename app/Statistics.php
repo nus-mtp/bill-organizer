@@ -23,6 +23,7 @@ class Statistics {
         $records = $billorg ->records();
         $until = new Carbon('last day of this month');
         $from  = $until->copy()->subMonth($months);
+
         return $records->whereBetween('issue_date',array($from, $until))->count();
     }
 
