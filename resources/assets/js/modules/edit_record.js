@@ -40,7 +40,15 @@ $(document).ready(function() {
         loadAttrstoBox('due_date', 'selddate');
     }
 
-    window.onresize();
+    billImg.onload = function() {
+        issueDateC = resizeNCoords(nIssueDateC);
+        recPeriodC = resizeNCoords(nRecPeriodC);
+        dueDateC = resizeNCoords(nDueDateC);
+        amtDueC = resizeNCoords(nAmtDueC);
+
+        changePage(0);
+    }
+    billImg.src = img_urls[currPage];
 
     // registerListeners();
 });
@@ -235,13 +243,15 @@ function normalizeCoords(coords) {
 // converts normalized coords to rendering coords
 function resizeNCoords(coords) {
     if (coords == null) { return; }
-    var temp = [0, 0, 0, 0];
+    var temp = [0, 0, 0, 0, 0, 0];
     var width = billImg.width;
     var height = billImg.height;
     temp[0] = coords[0] * width;
     temp[1] = coords[1] * height;
     temp[2] = coords[2] * width;
     temp[3] = coords[3] * height;
+    temp[4] = coords[2] - coords[0];
+    temp[5] = coords[3] - coords[1];
     return temp;
 }
 
