@@ -40,7 +40,7 @@ $(document).ready(function() {
         loadAttrstoBox('due_date', 'selddate');
     }
 
-    changePage(0);
+    window.onresize();
 
     // registerListeners();
 });
