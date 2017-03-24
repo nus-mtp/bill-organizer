@@ -18,6 +18,7 @@ var pageCount = 2; // should be length of the img array
 // placeholder images
 // to be replaced later with a single array of images/urls
 // TEDDY
+var ImgPos;
 var img_urls = [];
 // END OF TEDDY
 
@@ -45,6 +46,8 @@ $(document).ready(function() {
         recPeriodC = resizeNCoords(nRecPeriodC);
         dueDateC = resizeNCoords(nDueDateC);
         amtDueC = resizeNCoords(nAmtDueC);
+
+        ImgPos = FindPosition(billImg);
 
         clearAllRects();
         renderRectsonPage(currPage);
@@ -283,7 +286,6 @@ function FindPosition(oElement) {
     }
 }
 
-var ImgPos = FindPosition(billImg);
 
 function getCoordinates(e) {
     var PosX = 0;
