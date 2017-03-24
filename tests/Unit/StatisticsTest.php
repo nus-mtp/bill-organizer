@@ -32,6 +32,7 @@ class StatisticsTest extends TestCase
         $this->stats = new Statistics();
     }
 
+    /*
     public function testStatisticsCanBeCreated(){
         self::assertInstanceOf(Statistics:: class, new Statistics());
     }
@@ -86,7 +87,7 @@ class StatisticsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /*
+
     public function testCanGetBillsTotalAmountForCurrMonth(){
         $currMonthBills = $this->createBillsForCurrentMonth($this->billOrgs[0],10);
         $this->createBillsForPast6MonthsExcludeCurrMonth();
@@ -94,9 +95,7 @@ class StatisticsTest extends TestCase
         $actual = $this->stats->getBillsTotalAmountForCurrMonth($this->billOrgs[0]);
         self::assertEquals($expected, $actual);
     }
-    */
 
-    /*
     public function testCanGetBillsTotalAmountForPastNMonths(){
         $n = random_int(1,12);
         $until = new Carbon("last day of this month");
@@ -108,9 +107,8 @@ class StatisticsTest extends TestCase
     }
     */
 
-
     /* -----------------  helpers ----------------- */
-
+    /*
     private function createRandomNumOfBills($lowerBound, $upperBound) {
         $numOfRandomBills = random_int($lowerBound, $upperBound);
         $bills = $this->createRandBills($this->billOrgs[0], $numOfRandomBills);
@@ -157,4 +155,5 @@ class StatisticsTest extends TestCase
         $from = $until->copy()->subMonth(6);
         $this->createRandBillsForPeriod($from, $until);
     }
+    */
 }
