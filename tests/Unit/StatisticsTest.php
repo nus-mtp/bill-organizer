@@ -96,6 +96,7 @@ class StatisticsTest extends TestCase
     }
     */
 
+    /*
     public function testCanGetBillsTotalAmountForPastNMonths(){
         $n = random_int(1,12);
         $until = new Carbon("last day of this month");
@@ -105,6 +106,7 @@ class StatisticsTest extends TestCase
         $actual = $this->stats->getBillsTotalAmountForPastMonths($this->billOrgs[0], $n);
         self::assertEquals($expected,$actual);
     }
+    */
 
 
     /* -----------------  helpers ----------------- */
