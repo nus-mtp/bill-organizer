@@ -57,11 +57,36 @@
                 </div>
                 <tnc>
                     <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
-                <div class="actions">
-                    <button class="ui positive button" type="submit">Submit</button>
-                    <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
-                    <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+
+                <!--ADDED DEVICE-RESPONSIVE STUFF FOR FUN-->
+                <div class="ui equal width grid">
+                    <div class="computer only column">
+                        <div class="actions">
+                            <button class="ui black cancel right floated button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                            <button class="ui right floated button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
+                            <button class="ui positive right floated button" type="submit">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="mobile only column">
+                        <button class="ui fluid positive button" type="submit">Submit</button>
+                    </div>
+                    <div class="mobile only column">
+                        <button class="ui fluid button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
+                    </div>
+                    <div class="mobile only column">
+                        <button class="ui fluid black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                    </div>
+
+                    <div class="tablet only column">
+                        <div class="actions">
+                            <button class="fluid compact ui positive button" type="submit" style="margin-bottom: 10px;">Submit</button>
+                            <button class="fluid compact ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();" style="margin-bottom: 10px;">Reset</button>
+                            <button class="fluid compact ui black cancel button" type="reset" onclick="window.location.href=document.referrer;" style="margin-bottom: 10px;">Cancel</button>
+                        </div>
+                    </div>
                 </div>
+                <!--END OF RESPONSIVE BUTTONS LOL-->
             </form>
         </div>
     </div>
@@ -78,18 +103,18 @@
     var nRecPeriodC;
     var nDueDateC;
     var nAmtDueC;
-    
+
     var billImg = document.getElementById('bill');
     var tempActField;
     var selecting = false;
     var currPage = 1;
     var pageCount = 2; // should be length of the img array
-    
+
     // placeholder images
     // to be replaced later with a single array of images/urls
     var img1 = "{{url('placeholderbill.jpg')}}";
     var img2 = "{{url('placeholderbill2.jpg')}}";
-    
+
     // disable default image drag action so you can drag select box later
     billImg.ondragstart = function(event) {
         event.preventDefault();
@@ -99,7 +124,7 @@
         recPeriodC = resizeNCoords(nRecPeriodC);
         dueDateC = resizeNCoords(nDueDateC);
         amtDueC = resizeNCoords(nAmtDueC);
-        
+
         changePage(0);
     };
 
@@ -112,7 +137,7 @@
     function clearError() {
         document.getElementById("errormsg").style.display = "none";
     }
-    
+
     // change bill page view and any related boxes
     function changePage(num) {
         currPage += num;
@@ -124,22 +149,23 @@
         // if-else is hardcoded, replace with image array method later
         if (currPage == 1) {
             billImg.src = img1;
-        }
-        else{
+        } else {
             billImg.src = img2;
         }
     }
 
     // renders box given a set of coordinates
     function drawRect(box, coords) {
-        if (coords == null) { return; }
+        if (coords == null) {
+            return;
+        }
         document.getElementById(box).style.display = 'block';
         document.getElementById(box).style.left = coords[0] + 'px';
         document.getElementById(box).style.top = coords[1] + 'px';
         document.getElementById(box).style.width = (coords[2] - coords[0]) + 'px';
         document.getElementById(box).style.height = (coords[3] - coords[1]) + 'px';
     }
-    
+
     // renders boxes according to what page user is on
     function renderRectsonPage(pagenum) {
         if (document.getElementById('selidate').getAttribute('data-page') == pagenum) {
@@ -153,13 +179,13 @@
         }
         if (document.getElementById('selamtdue').getAttribute('data-page') == pagenum) {
             drawRect('selamtdue', amtDueC);
-        }        
+        }
     }
-    
+
     function clearRect(box) {
         document.getElementById(box).style.display = 'none';
     }
-    
+
     // clears any rendered boxes
     function clearAllRects() {
         clearRect('selidate');
@@ -167,7 +193,7 @@
         clearRect('selddate');
         clearRect('selamtdue');
     }
-    
+
     // clear any rendered boxes and their related coordinates
     function resetAllRects() {
         clearAllRects();
@@ -200,7 +226,9 @@
 
     // return coords ratios
     function normalizeCoords(coords) {
-        if (coords == null) { return; }
+        if (coords == null) {
+            return;
+        }
         var temp = [0, 0, 0, 0];
         var width = billImg.width;
         var height = billImg.height;
@@ -210,10 +238,12 @@
         temp[3] = coords[3] / height;
         return temp;
     }
-    
+
     // converts normalized coords to rendering coords
     function resizeNCoords(coords) {
-        if (coords == null) { return; }
+        if (coords == null) {
+            return;
+        }
         var temp = [0, 0, 0, 0];
         var width = billImg.width;
         var height = billImg.height;
@@ -271,8 +301,10 @@
     }
 
     function getCoordsAgain(e) {
-        if (!selecting) { return; }
-        
+        if (!selecting) {
+            return;
+        }
+
         var PosX = 0;
         var PosY = 0;
         if (!e) var e = window.event;
@@ -287,7 +319,7 @@
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
-        
+
         if (tempActField.id == 'issue') {
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);

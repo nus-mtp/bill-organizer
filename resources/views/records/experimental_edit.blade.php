@@ -164,6 +164,15 @@
         });
         pageCount = $(bill_p_selector).length;
 
+        loadAttrstoBox('issue_date', 'selidate');
+        loadAttrstoBox('period', 'selrperiod');
+        loadAttrstoBox('amount', 'selamtdue');
+        
+        var is_bill = Boolean("{{$is_bill}}");
+        if (is_bill) {
+            loadAttrstoBox('due_date', 'selddate');
+        }
+
         changePage(0);
 
         // registerListeners();
@@ -223,8 +232,8 @@
         currPage += num;
         // to make sure 1 <= currPage <= pageCount
         // TEDDY
-        currPage = Math.max(0, Math.min(currPage, pageCount-1));
-        document.getElementById('pageno').innerHTML = currPage+1 + " of " + pageCount;
+        currPage = Math.max(0, Math.min(currPage, pageCount - 1));
+        document.getElementById('pageno').innerHTML = currPage + 1 + " of " + pageCount;
         // END OF TEDDY
         clearAllRects();
         renderRectsonPage(currPage);
@@ -242,6 +251,37 @@
         // END OF TEDDY
     }
 
+    // use this to load attribute when page loads for the first time
+    function loadAttrstoBox(input, box) {
+        var id = input+"_page";
+        document.getElementById(box).getAttribute('data-page') = document.getElementById(id).value;
+        temp = [0, 0, 0, 0, 0, 0];
+        id = input+"_x";
+        temp[0] = document.getElementById(id).value;
+        id = input+"_y"
+        temp[1] = document.getElementById(id).value;
+        id = input+"_w"
+        temp[4] = document.getElementById(id).value;
+        id = input+"_h"
+        temp[5] = document.getElementById(id).value;
+        temp[2] = temp[0] + temp[4];
+        temp[3] = temp[1] + temp[5];
+        if (box == 'selidate') {
+            nIssueDateC = temp;
+        }
+        else if (box == 'selrperiod') {
+            nRecPeriodC = temp;
+        }
+        else if (box == 'selddate') {
+            nDueDateC = temp;
+        }
+        else if (box == 'selamtdue') {
+            nAmtDueC = temp;
+        }
+        else {
+            return;
+        }
+    }
     // renders box given a set of coordinates
     function drawRect(box, coords) {
         if (coords == null) { return; }
@@ -313,13 +353,15 @@
     // return coords ratios
     function normalizeCoords(coords) {
         if (coords == null) { return; }
-        var temp = [0, 0, 0, 0];
+        var temp = [0, 0, 0, 0, 0, 0];
         var width = billImg.width;
         var height = billImg.height;
         temp[0] = coords[0] / width;
         temp[1] = coords[1] / height;
         temp[2] = coords[2] / width;
         temp[3] = coords[3] / height;
+        temp[4] = coords[2] - coords[0];
+        temp[5] = coords[3] - coords[1];
         return temp;
     }
 
@@ -335,6 +377,21 @@
         temp[3] = coords[3] * height;
         return temp;
     }
+
+     // given input (e.g. 'issue_date') and its related values,
+     // fill in the hidden attribute fields for this input
+     function updateHiddenInput(input, page, x, y, w, h) {
+         var id = input+"_page";
+         document.getElementById(id).value = page;
+         id = input+"_x";
+         document.getElementById(id).value = x;
+         id = input+"_y"
+         document.getElementById(id).value = y;
+         id = input+"_w"
+         document.getElementById(id).value = w;
+         id = input+"_h"
+         document.getElementById(id).value = h;
+     }
 
     function FindPosition(oElement) {
         if (typeof(oElement.offsetParent) != "undefined") {
@@ -400,12 +457,15 @@
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
 
-        if (tempActField.id == 'test_issue_date_date') {
+        if (tempActField.id == 'test_issue_date') {
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
             nIssueDateC = normalizeCoords(issueDateC);
             drawRect('selidate', issueDateC);
             document.getElementById('selidate').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('issue_date', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = issueDateC;
         } else if (tempActField.id == 'test_period') {
             recPeriodC = recPeriodC.concat([PosX, PosY]);
@@ -413,6 +473,9 @@
             nRecPeriodC = normalizeCoords(recPeriodC);
             drawRect('selrperiod', recPeriodC);
             document.getElementById('selrperiod').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('period', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = recPeriodC;
         } else if (tempActField.id == 'test_due_date') {
             dueDateC = dueDateC.concat([PosX, PosY]);
@@ -420,6 +483,9 @@
             nDueDateC = normalizeCoords(dueDateC);
             drawRect('selddate', dueDateC);
             document.getElementById('selddate').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('amount', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = dueDateC;
         } else if (tempActField.id == 'test_amount') {
             amtDueC = amtDueC.concat([PosX, PosY]);
@@ -427,6 +493,9 @@
             nAmtDueC = normalizeCoords(amtDueC);
             drawRect('selamtdue', amtDueC);
             document.getElementById('selamtdue').setAttribute('data-page', currPage);
+            // fill hidden fields
+            updateHiddenInput('due_date', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+            // fill displayed fields
             tempActField.value = amtDueC;
         } else {
             displayError("Please click on a field before selecting");
