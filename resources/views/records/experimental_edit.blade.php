@@ -164,6 +164,15 @@
         });
         pageCount = $(bill_p_selector).length;
 
+        loadAttrstoBox('issue_date', 'selidate');
+        loadAttrstoBox('period', 'selrperiod');
+        loadAttrstoBox('amount', 'selamtdue');
+        
+        var is_bill = Boolean("{{$is_bill}}");
+        if (is_bill) {
+            loadAttrstoBox('due_date', 'selddate');
+        }
+        
         changePage(0);
 
         // registerListeners();
@@ -242,6 +251,38 @@
         // END OF TEDDY
     }
 
+    // use this to load attribute when page loads for the first time
+    function loadAttrstoBox(input, box) {
+        var id = input+"_page";
+        document.getElementById(box).getAttribute('data-page') = document.getElementById(id).value;
+        temp = [0, 0, 0, 0, 0, 0];
+        id = input+"_x";
+        temp[0] = document.getElementById(id).value;
+        id = input+"_y"
+        temp[1] = document.getElementById(id).value;
+        id = input+"_w"
+        temp[4] = document.getElementById(id).value;
+        id = input+"_h"
+        temp[5] = document.getElementById(id).value;
+        temp[2] = temp[0] + temp[4];
+        temp[3] = temp[1] + temp[5];
+        if (box == 'selidate') {
+            nIssueDateC = temp;
+        }
+        else if (box == 'selrperiod') {
+            nRecPeriodC = temp;
+        }
+        else if (box == 'selddate') {
+            nDueDateC = temp;
+        }
+        else if (box == 'selamtdue') {
+            nAmtDueC = temp;
+        }
+        else {
+            return;
+        }
+    }
+     
     // renders box given a set of coordinates
     function drawRect(box, coords) {
         if (coords == null) { return; }
@@ -320,8 +361,8 @@
         temp[1] = coords[1] / height;
         temp[2] = coords[2] / width;
         temp[3] = coords[3] / height;
-        temp[4] = Math.abs(coords[0] - coords[2]);
-        temp[5] = Math.abs(coords[1] - coords[3]);
+        temp[4] = coords[2] - coords[0];
+        temp[5] = coords[3] - coords[1];
         return temp;
     }
 
