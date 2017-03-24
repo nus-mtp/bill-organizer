@@ -46,7 +46,8 @@ $(document).ready(function() {
         dueDateC = resizeNCoords(nDueDateC);
         amtDueC = resizeNCoords(nAmtDueC);
 
-        changePage(0);
+        clearAllRects();
+        renderRectsonPage(currPage);
     }
     billImg.src = img_urls[currPage];
 
