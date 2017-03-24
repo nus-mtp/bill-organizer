@@ -86,6 +86,7 @@ class StatisticsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    /*
     public function testCanGetBillsTotalAmountForCurrMonth(){
         $currMonthBills = $this->createBillsForCurrentMonth($this->billOrgs[0],10);
         $this->createBillsForPast6MonthsExcludeCurrMonth();
@@ -93,6 +94,7 @@ class StatisticsTest extends TestCase
         $actual = $this->stats->getBillsTotalAmountForCurrMonth($this->billOrgs[0]);
         self::assertEquals($expected, $actual);
     }
+    */
 
     public function testCanGetBillsTotalAmountForPastNMonths(){
         $n = random_int(1,12);
