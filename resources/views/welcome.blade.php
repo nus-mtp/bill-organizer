@@ -50,26 +50,26 @@
                               <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
                                 {{ csrf_field() }}
                                   <div class="ui tiny error message"></div>
-                                <div class="field">
+                                <div class="inline field">
                                   <label for="name">Name <span class="atn">*</span></label>
-                                  <input id="name" type="text" name="name" placeholder="Name" autofocus>
+                                  <input id="name" type="text" name="name" placeholder="Name" style="margin-left: 5.5em;">
                                 </div>
-                                <div class="field">
+                                <div class="inline field">
                                   <label for="email">Email <span class="atn">*</span></label>
-                                  <input id="email" type="text" name="email" placeholder="Email">
+                                  <input id="email" type="text" name="email" placeholder="Email" style="margin-left: 5.7em;">
                                 </div>
-                                <div class="field">
+                                <div class="inline field">
                                   <label for="password">Password <span class="atn">*</span></label>
-                                  <input id="password" type="password" name="password" placeholder="Password">
+                                  <input id="password" type="password" name="password" placeholder="Password" style="margin-left: 3.9em;">
                                 </div>
-                                <div class="field">
+                                <div class="inline field">
                                   <label for="password-confirm">Password Confirm <span class="atn">*</span></label>
                                   <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
                                 </div>
                                   <span class="tnc"><span class="atn">*</span> <i>Indicates required field</i><br><br></span>
                                 <div class="actions" style="text-align:right;">
                                     <button class="ui approve green button" type="submit">Register</button>
-                                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
+                                    <div class="ui black clear cancel button" data-value="no">Cancel</div>
                                 </div>
                             </form>
                           </div>
@@ -81,13 +81,13 @@
                             <form class="ui login form" id="login" role="form" method="POST" action="{{ route('login') }}">
                               {{ csrf_field() }}
                                 <div class="ui tiny error message"></div>
-                              <div class="field">
-                                <label for="email">Email Address</label>
+                              <div class="inline field">
+                                <label for="email">Email Address <span class="atn">*</span></label>
                                 <input id="email" type="text" name="email">
                               </div>
-                              <div class="field">
-                                <label for="password">Password</label>
-                                <input id="login_password" type="password" name="password">
+                              <div class="inline field">
+                                  <label for="password">Password <span class="atn">*</span></label>
+                                <input id="login_password" type="password" name="password" style="margin-left: 2.1em;">
                               </div>
                               <div class="checkbox">
                                 <label>
@@ -98,7 +98,7 @@
 
                               <div class="actions" style="text-align:right;">
                                     <button class="ui approve green button" type="submit">Login</button>
-                                    <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>
+                                    <div class="ui black clear cancel button" data-value="no">Cancel</div>
                               </div>
                             </form>
                           </div>
