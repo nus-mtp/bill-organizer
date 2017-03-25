@@ -84,6 +84,8 @@ const onLandingPageLoad = function () {
   })
 
   $('.register.form').form({
+      on: 'change',
+      inline: true,
     fields: {
       name: {
         identifier: 'name',
@@ -124,6 +126,8 @@ const onLandingPageLoad = function () {
   })
 
   $('.login.form').form({
+    on: 'change',
+    inline: true,
     fields: {
       email: {
         identifier: 'email',
