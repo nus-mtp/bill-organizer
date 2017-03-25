@@ -58,7 +58,7 @@ const onLandingPageLoad = function () {
   $('.register.button').click(_ => {
     $('.register.modal').modal({
       onApprove: function () {
-        $('.ui.form').submit()
+        $('form#register').submit()
         $('.register.modal').modal('refresh')
         return false
       },
@@ -72,7 +72,7 @@ const onLandingPageLoad = function () {
   $('.login.button').click(_ => {
     $('.login.modal').modal({
       onApprove: function () {
-        $('.ui.form').submit()
+        $('form#login').submit()
         $('.login.modal').modal('refresh')
         return false
       },
