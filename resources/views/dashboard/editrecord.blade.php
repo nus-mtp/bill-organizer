@@ -34,22 +34,22 @@
                     <form class="ui edit-record form" id="edit-record">
                         <div class="ui tiny error message" id="errormsg"></div>
                         <div class="field">
-                            <label>Issue Date <atn>*</atn></label>
+                            <label>Issue Date <span class="atn">*</span></label>
                             <input type="text" name="issuedate" placeholder="Issue Date" id="issue" onfocus="clearError();">
                         </div>
                         <div class="field">
-                            <label>Record Period</label>
+                            <label>Record Period <span class="atn">*</span></label>
                             <input type="text" name="recordperiod" placeholder="Record Period" id="period" onfocus="clearError();">
                         </div>
                         <div class="field">
-                            <label>Due Date</label>
+                            <label>Due Date <span class="atn">*</span></label>
                             <input type="text" name="duedate" placeholder="Due Date" id="duedate" onfocus="clearError();">
                         </div>
                         <div class="field">
-                            <label>Amount Due <atn>*</atn></label>
+                            <label>Amount Due <span class="atn">*</span></label>
                             <input type="text" name="amtdue" placeholder="e.g 400" id="amtdue" onfocus="clearError();">
                         </div>
-                        <tnc><atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                        <span class="tnc"><span class="atn">*</span> <i>Indicates required field</i><br><br></span>
                         <div class="actions">
                             <button class="ui positive button" type="submit">Submit</button>
                             <button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html('');">Reset</button>

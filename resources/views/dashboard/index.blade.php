@@ -46,7 +46,7 @@
                     {{ csrf_field() }}
                     <div class="ui tiny error message"></div>
                     <div class="field">
-                        <label for="name">Name <atn>*</atn></label>
+                        <label for="name">Name <span class="atn">*</span></label>
                         <input id="name" type="text" name="name" placeholder="Enter record issuer name">
                     </div>
                     <div class="field">
@@ -57,8 +57,8 @@
                                     @endforeach
                                 </select>
                     </div>
-                    <tnc>
-                        <atn>*</atn> <i>Indicates required field</i></tnc>
+                    <span class="tnc">
+                        <span class="atn">*</span> <i>Indicates required field</i></span>
                 </form>
             </div>
         </div>
