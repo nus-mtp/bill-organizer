@@ -51,22 +51,22 @@
                                 {{ csrf_field() }}
                                   <div class="ui tiny error message"></div>
                                 <div class="field">
-                                  <label for="name">Name <atn>*</atn></label>
+                                  <label for="name">Name <span class="atn">*</span></label>
                                   <input id="name" type="text" name="name" placeholder="Name" autofocus>
                                 </div>
                                 <div class="field">
-                                  <label for="email">Email <atn>*</atn></label>
+                                  <label for="email">Email <span class="atn">*</span></label>
                                   <input id="email" type="text" name="email" placeholder="Email">
                                 </div>
                                 <div class="field">
-                                  <label for="password">Password <atn>*</atn></label>
+                                  <label for="password">Password <span class="atn">*</span></label>
                                   <input id="password" type="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="field">
-                                  <label for="password-confirm">Password Confirm <atn>*</atn></label>
+                                  <label for="password-confirm">Password Confirm <span class="atn">*</span></label>
                                   <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
                                 </div>
-                                  <tnc><atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                                  <span class="tnc"><span class="atn">*</span> <i>Indicates required field</i><br><br></span>
                                 <div class="actions" style="text-align:right;">
                                     <button class="ui approve green button" type="submit">Register</button>
                                     <div class="ui button black cancel" data-value="no" onclick="$('form').form('reset'); $('.form .message').html('');">Cancel</div>

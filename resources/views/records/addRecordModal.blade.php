@@ -12,41 +12,38 @@
                 {{ csrf_field() }}
                 <div class="ui tiny error message"></div>
                 <div class="field">
-                    <label for="record">Upload the record
-                        <atn>*</atn>
+                    <label for="record">Upload the record <span class="atn">*</span>
                     </label>
                     <input type="file" name="record" id="record" accept=".pdf, application/pdf">
                 </div>
 
                 <div class="field">
-                    <label for="issue_date">Issue date
-                        <atn>*</atn>
+                    <label for="issue_date">Issue date <span class="atn">*</span>
                     </label>
                     <input type="date" name="issue_date" id="issue_date" placeholder="Issue date">
                 </div>
 
                 <div class="field">
-                    <label for="period">Record period:</label>
+                    <label for="period">Record period <span class="atn">*</span></label>
                     <input type="month" name="period" id="period" placeholder="Record period">
                 </div>
 
                 @if($type === 'billing organization')
                     <div class="field">
-                        <label for="due_date">Due date:</label>
+                        <label for="due_date">Due date <span class="atn">*</span></label>
                         <input type="date" name="due_date" id="due_date" placeholder="Due date">
                     </div>
                 @endif
 
                 <div class="field">
                     <!-- TODO: customize based on type -->
-                    <label for="amount">{{ $amount_field_name }}
-                        <atn>*</atn>
+                    <label for="amount">{{ $amount_field_name }} <span class="atn">*</span>
                     </label>
                     <input type="number" name="amount" id="amount" placeholder="{{ $amount_field_name }}">
                 </div>
-                <tnc>
-                    <atn>*</atn>
-                    <i>Indicates required field</i></tnc>
+                <span class="tnc">
+                    <span class="atn">*</span>
+                    <i>Indicates required field</i></span>
             </form>
         </div><!-- end ui fluid input -->
     </div><!-- end modal content -->
