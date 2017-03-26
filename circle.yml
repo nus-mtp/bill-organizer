@@ -7,8 +7,6 @@ machine:
     Asia/Singapore
   environment:
     BILLORG_TEST_DB_URL: mysql://homestead:secret@127.0.0.1:3306/billorg_testing
-  pre:
-    - sudo apt-get update && sudo apt-get install php5-imagick && sudo php5enmod imagick
 database:
   override:
     - >
@@ -17,6 +15,9 @@ database:
       CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';
       GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
+  pre:
+    - pecl install imagick
+    # - sudo apt-get update && sudo apt-get install php5-imagick && sudo php5enmod imagick
     # - sudo apt-get --reinstall install libept1.4.12
     # - sudo apt-get install -y aptitude
     # - sudo aptitude -y install imagemagick
