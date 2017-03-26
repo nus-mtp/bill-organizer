@@ -2,7 +2,7 @@ machine:
   node:
     version: 6.9.5
   php:
-    version: 5.6.4
+    version: 7.0.11
   timezone:
     Asia/Singapore
   environment:
