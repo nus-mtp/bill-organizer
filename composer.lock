@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc47aa06fc17f645f92d43110561a666",
+    "content-hash": "f2672a95e87e9a64bf7d675ba338c32d",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1814,6 +1814,48 @@
             "time": "2017-02-20T13:45:48+00:00"
         },
         {
+            "name": "thiagoalessio/tesseract_ocr",
+            "version": "1.0.0-RC",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thiagoalessio/tesseract-ocr-for-php.git",
+                "reference": "b22008ee163330aaaaae97424aa8b7dde8246882"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thiagoalessio/tesseract-ocr-for-php/zipball/b22008ee163330aaaaae97424aa8b7dde8246882",
+                "reference": "b22008ee163330aaaaae97424aa8b7dde8246882",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Thiago Alessio Pereira",
+                    "email": "thiagoalessio@me.com",
+                    "homepage": "http://thiagoalessio.me"
+                }
+            ],
+            "description": "A wrapper to work with Tesseract OCR inside PHP.",
+            "keywords": [
+                "OCR",
+                "Tesseract",
+                "text recognition"
+            ],
+            "time": "2016-04-20T23:29:55+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "2.2.0",
             "source": {
@@ -3399,11 +3441,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "thiagoalessio/tesseract_ocr": 5
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.4 <=7.1.0",
+        "php": ">=7.0.11 <7.1",
         "ext-imagick": "*"
     },
     "platform-dev": []
