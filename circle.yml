@@ -16,8 +16,9 @@ database:
       GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
   pre:
-    # - pecl install imagick
-    - sudo apt-get update && sudo apt-get install php5-imagick && sudo php5enmod imagick
+    - yes "" | pecl install imagick
+    - echo "extension=imagick.so" > /opt/circleci/php/$(phpenv global)/etc/conf.d/imagick.ini
+    #- sudo apt-get update && sudo apt-get install php5-imagick && sudo php5enmod imagick
     # - sudo apt-get --reinstall install libept1.4.12
     # - sudo apt-get install -y aptitude
     # - sudo aptitude -y install imagemagick
