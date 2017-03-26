@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Record;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,14 @@ class TempRecordController extends Controller
             foreach ($field_area_names as $field_area_name) {
                 $area_attr_name = $field_area_name . '_area';
                 $field_area = $chosen_template->$area_attr_name;
+
+                $record_page = $temp_record->pages[$field_area->page];
+                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
+                $field_area->x /= $page_geometry['width'];
+                $field_area->w /= $page_geometry['width'];
+                $field_area->y /= $page_geometry['height'];
+                $field_area->h /= $page_geometry['height'];
+
                 foreach ($field_area_attrs as $attr) {
                     $field_area_inputs["{$field_area_name}_{$attr}"] = $field_area->$attr;
                 }
@@ -70,6 +79,7 @@ class TempRecordController extends Controller
         );
     }
 
+    // TODO: Should I store the coords as normalized coords in DB?
     public function extract_coords(TempRecord $temp_record) {
         // Get the coords (and validate)
         // TODO: extract these long lists of validation to a specialized form handler
@@ -104,8 +114,21 @@ class TempRecordController extends Controller
             foreach ($field_area_names as $field_area_name) {
                 $area_attr_name = $field_area_name . '_area';
                 $field_area = $chosen_template->$area_attr_name;
+
+                // TODO: Remove this cursed ugly, duplicated code
+                // TODO: Move comparing coords to helper
+                $EPS = 0.0001;
+                $record_page = $temp_record->pages[$field_area->page];
+                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
+
+                $normalized_val = ['page' => $field_area->page];
+                $normalized_val['x'] = $field_area->x / $page_geometry['width'];
+                $normalized_val['w'] = $field_area->w / $page_geometry['width'];
+                $normalized_val['y'] = $field_area->y / $page_geometry['height'];
+                $normalized_val['h'] = $field_area->h / $page_geometry['height'];
+
                 foreach ($field_area_attrs as $attr) {
-                    $is_local_match = request("{$field_area_name}_{$attr}") === $field_area->$attr;
+                    $is_local_match = abs(request("{$field_area_name}_{$attr}") - $normalized_val[$attr]) < $EPS ;
                     if (!$is_local_match) {
                         break;
                     }
@@ -124,9 +147,16 @@ class TempRecordController extends Controller
             $template_data = [];
             foreach ($field_area_names as $field_area_name) {
                 $field_area_data = [];
-                foreach($field_area_attrs as $attr) {
-                    $field_area_data[$attr] = request("{$field_area_name}_{$attr}");
-                }
+
+                $field_area_data['page'] = request("{$field_area_name}_page");
+                $record_page = $temp_record->pages[$field_area_data['page']];
+                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
+
+                $field_area_data['x'] = (int) request("{$field_area_name}_x") * $page_geometry['width'];
+                $field_area_data['w'] = (int) ceil(request("{$field_area_name}_w") * $page_geometry['width']);
+                $field_area_data['y'] = (int) ("{$field_area_name}_y") * $page_geometry['height'];
+                $field_area_data['h'] = (int) ceil(request("{$field_area_name}_h") * $page_geometry['height']);
+
                 $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
             }
 

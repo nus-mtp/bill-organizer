@@ -14,6 +14,15 @@ class ImageEditor
     }
 
     /**
+     * Returns the width and height of the image as an associative array
+     */
+    public static function getImageGeometry($path) {
+        $imagick = new Imagick();
+        $imagick->pingImage($path);
+        return $imagick->getImagePage();
+    }
+
+    /**
      * Equivalent to the following CLI command:
      *     exec("convert -density 150 {$src}[{$pageNum}] -quality 100 -flatten -sharpen 0x1.0
      *      {$dest}");
