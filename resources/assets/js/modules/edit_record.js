@@ -23,6 +23,7 @@ var img_urls = [];
 // END OF TEDDY
 
 // TEDDY
+// TODO: If coords exists, should populate the input fields that show the coords too
 $(document).ready(function() {
     var billPSelector = ".bill-image #bill-wrapper > p.img-url";
     $(billPSelector).each(function(_) {
@@ -70,7 +71,6 @@ $(document).ready(function() {
  for (var i = 0; i < attrs.length; i++) {
  var dest_input_attrs = ['page', 'x', 'y', 'w', 'h'];
  var src_input_name = "test_" + attrs[i];
- // TODO: Yan Ling fix the hard-coded page
  var page = 0, x, y, w, h; // page are hard-coded as 0 for now
  var coords = $("input#" + src_input_name).val().split(",");
  x = coords[0];
@@ -130,6 +130,7 @@ function changePage(num) {
     // END OF TEDDY
 }
 
+// TODO: Should add validation for coords
 // use this to load attribute when page loads for the first time
 function loadAttrstoBox(input, box) {
     var id = input+"_page";
@@ -239,8 +240,8 @@ function normalizeCoords(coords) {
     temp[1] = coords[1] / height;
     temp[2] = coords[2] / width;
     temp[3] = coords[3] / height;
-    temp[4] = coords[2] - coords[0];
-    temp[5] = coords[3] - coords[1];
+    temp[4] = temp[2] - temp[0];
+    temp[5] = temp[3] - temp[1];
     return temp;
 }
 
@@ -248,14 +249,14 @@ function normalizeCoords(coords) {
 function resizeNCoords(coords) {
     if (coords == null) { return; }
     var temp = [0, 0, 0, 0, 0, 0];
-    var width = billImg.width;
+    var width = billImg.width;temp
     var height = billImg.height;
     temp[0] = coords[0] * width;
     temp[1] = coords[1] * height;
     temp[2] = coords[2] * width;
     temp[3] = coords[3] * height;
-    temp[4] = coords[2] - coords[0];
-    temp[5] = coords[3] - coords[1];
+    temp[4] = temp[2] - temp[0];
+    temp[5] = temp[3] - temp[1];
     return temp;
 }
 
@@ -344,7 +345,7 @@ function getCoordsAgain(e) {
         drawRect('selidate', issueDateC);
         document.getElementById('selidate').setAttribute('data-page', currPage);
         // fill hidden fields
-        updateHiddenInput('issue_date', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+        updateHiddenInput('issue_date', currPage, nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
         // fill displayed fields
         tempActField.value = issueDateC;
     } else if (tempActField.id == 'test_period') {
@@ -354,7 +355,7 @@ function getCoordsAgain(e) {
         drawRect('selrperiod', recPeriodC);
         document.getElementById('selrperiod').setAttribute('data-page', currPage);
         // fill hidden fields
-        updateHiddenInput('period', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+        updateHiddenInput('period', currPage, nRecPeriodC[0], nRecPeriodC[1], nRecPeriodC[4], nRecPeriodC[5]);
         // fill displayed fields
         tempActField.value = recPeriodC;
     } else if (tempActField.id == 'test_due_date') {
@@ -364,7 +365,7 @@ function getCoordsAgain(e) {
         drawRect('selddate', dueDateC);
         document.getElementById('selddate').setAttribute('data-page', currPage);
         // fill hidden fields
-        updateHiddenInput('amount', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+        updateHiddenInput('due_date', currPage, nDueDateC[0], nDueDateC[1], nDueDateC[4], nDueDateC[5]);
         // fill displayed fields
         tempActField.value = dueDateC;
     } else if (tempActField.id == 'test_amount') {
@@ -374,7 +375,7 @@ function getCoordsAgain(e) {
         drawRect('selamtdue', amtDueC);
         document.getElementById('selamtdue').setAttribute('data-page', currPage);
         // fill hidden fields
-        updateHiddenInput('due_date', nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
+        updateHiddenInput('amount', currPage, nAmtDueC[0], nAmtDueC[1], nAmtDueC[4], nAmtDueC[5]);
         // fill displayed fields
         tempActField.value = amtDueC;
     } else {
