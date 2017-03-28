@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<html lang="{{ config('app.locale') }}">---
+layout: index
+---
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,12 +47,24 @@
                             <button class="ui inverted green login button">Login</button>
                         </div>
 
-                        <div class="ui small register modal">
+                        <div class="ui small register modal" id="fuck">
                           <div class="header">Register</div>
                           <div class="content" style="text-align:left;">
                               <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
                                 {{ csrf_field() }}
-                                  <div class="ui tiny error message"></div>
+                                  
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                                  
+                                @if ($errors->has('email'))
+                                    <span class="help-block" id="emailerror">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                                  
                                 <div class="inline field">
                                   <label for="name">Name <span class="atn">*</span></label>
                                   <input id="name" type="text" name="name" placeholder="Name" style="margin-left: 5.5em;">
@@ -150,7 +164,7 @@
             </div>
 
          </div>
-
+        
         </div>
 
 
@@ -160,6 +174,9 @@
         <script type="text/javascript">
           $(function(){
             onLandingPageLoad();
+              if(document.getElementById('emailerror')){
+            showModalwithErrors();        
+        }
 
             Typed.new(".hero-text .typed-text", {
               strings: ["Being Organized", "Is Being In Control.", "Get started now"],
@@ -177,6 +194,10 @@
             })
 
           })
+          
+          function showModalwithErrors(){
+              $('#fuck').modal('show');
+          }
         </script>
 
     </body>
