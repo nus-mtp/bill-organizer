@@ -80,9 +80,10 @@ class TempRecordController extends Controller
     }
 
     // TODO: Should I store the coords as normalized coords in DB?
+    // TODO: Warn user if duplicate record
     public function extract_coords(TempRecord $temp_record) {
         // Get the coords (and validate)
-        // TODO: extract these long lists of validation to a specialized form handler
+        // TODO: extract these long lists of validation to a specialized form handler and do typecasting
         // TODO: creation of many models should be inside a DB transaction to maintain integrity
         $field_area_names = ['issue_date', 'period', 'amount'];
         $field_area_attrs = ['page', 'x', 'y', 'w', 'h'];
@@ -105,37 +106,37 @@ class TempRecordController extends Controller
         $chosen_template = null;
         if ($temp_record->template !== null) {
             $chosen_template = $temp_record->template;
-        } else if ($temp_record->record_issuer->template !== null) {
-            $chosen_template = $temp_record->record_issuer->template;
+        } else if ($temp_record->record_issuer->latest_template() !== null) {
+            $chosen_template = $temp_record->record_issuer->latest_template();
         }
 
-        $is_match = false;
+        $is_match = $chosen_template !== null; // true if all field area matches
         if ($chosen_template !== null) {
+            $does_field_area_match = true;
             foreach ($field_area_names as $field_area_name) {
                 $area_attr_name = $field_area_name . '_area';
                 $field_area = $chosen_template->$area_attr_name;
 
                 // TODO: Remove this cursed ugly, duplicated code
                 // TODO: Move comparing coords to helper
-                $EPS = 0.0001;
                 $record_page = $temp_record->pages[$field_area->page];
                 $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
 
-                $normalized_val = ['page' => $field_area->page];
-                $normalized_val['x'] = $field_area->x / $page_geometry['width'];
-                $normalized_val['w'] = $field_area->w / $page_geometry['width'];
-                $normalized_val['y'] = $field_area->y / $page_geometry['height'];
-                $normalized_val['h'] = $field_area->h / $page_geometry['height'];
+                $page_match = $field_area->page === (int) request("{$field_area_name}_page");
+                // allow +- 1 pixel deviation.
+                // TODO: beautify
+                $x_match = abs($field_area->x - ((double) request("{$field_area_name}_x")) * $page_geometry['width']) < 2;
+                $y_match = abs($field_area->y - ((double) request("{$field_area_name}_y")) * $page_geometry['height']) < 2;
+                $w_match = abs($field_area->w - ((double) request("{$field_area_name}_w")) * $page_geometry['width']) < 2;
+                $h_match = abs($field_area->h - ((double) request("{$field_area_name}_h")) * $page_geometry['height']) < 2;
 
-                foreach ($field_area_attrs as $attr) {
-                    $is_local_match = abs(request("{$field_area_name}_{$attr}") - $normalized_val[$attr]) < $EPS ;
-                    if (!$is_local_match) {
-                        break;
-                    }
+                $does_field_area_match = $page_match && $x_match && $y_match && $w_match && $h_match;
+
+                if (!$does_field_area_match) {
+                    $is_match = false;
+                    break;
                 }
             }
-            // if never hit break, everything matches
-            $is_match = true;
         }
 
         // $is_match is true only if template exists and matches the request data
@@ -152,9 +153,9 @@ class TempRecordController extends Controller
                 $record_page = $temp_record->pages[$field_area_data['page']];
                 $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
 
-                $field_area_data['x'] = (int) request("{$field_area_name}_x") * $page_geometry['width'];
+                $field_area_data['x'] = (int) (request("{$field_area_name}_x") * $page_geometry['width']);
                 $field_area_data['w'] = (int) ceil(request("{$field_area_name}_w") * $page_geometry['width']);
-                $field_area_data['y'] = (int) ("{$field_area_name}_y") * $page_geometry['height'];
+                $field_area_data['y'] = (int) (request("{$field_area_name}_y") * $page_geometry['height']);
                 $field_area_data['h'] = (int) ceil(request("{$field_area_name}_h") * $page_geometry['height']);
 
                 $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
@@ -198,7 +199,8 @@ class TempRecordController extends Controller
 
         $temp_record->update($ocr_results);
 
-        $field_area_inputs = compact(request()->all());
+        $field_area_inputs = request()->all();
+        unset($field_area_inputs['_token']);
         $edit_value_mode = true;
         // Pass back to the same page, with coords and values filled
         return view(
@@ -263,6 +265,10 @@ class TempRecordController extends Controller
 
             $temp_record->delete();
         });
+        // TODO: delete the respective tmp dir
+        // TODO: delete the temp records
+        // TODO: Need a mechanism to show user the temp records when they logged in
+        // TODO: clean up resources (for instance, delete unused field areas, etc)
 
         return redirect()->route('show_record_issuer', $temp_record->record_issuer);
     }
