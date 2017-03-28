@@ -44,23 +44,23 @@
                             <button class="ui inverted green login button">Login</button>
                         </div>
 
-                        <div class="ui small register modal" id="fuck">
+                        <div class="ui small register modal">
                           <div class="header">Register</div>
-                          <div class="content" style="text-align:left;">
+                          <div class="content">
+                              
+                              <div class="ui tiny register error message hidden">
+                                      <ul>
+                                          @if ($errors->has('name'))
+                                            <li id="regnameerror">{{ $errors->first('name') }}</li>
+                                          @endif
+                                          @if ($errors->has('email'))
+                                            <li id="regemailerror">{{ $errors->first('email') }}</li>
+                                          @endif
+                                      </ul>
+                                  </div>
+                              
                               <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
                                 {{ csrf_field() }}
-                                  
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                                  
-                                @if ($errors->has('email'))
-                                    <span class="help-block" id="emailerror">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
                                   
                                 <div class="inline field">
                                   <label for="name">Name <span class="atn">*</span></label>
@@ -90,9 +90,20 @@
                         <div class="ui small login modal">
                           <div class="header">Login</div>
                           <div class="content">
+                              <div class="ui tiny login error message hidden">
+                                      <ul>
+                                          @if ($errors->login->has('email'))
+                                            <li id="loginemailerror">{{ $errors->login->first('email') }}</li>
+                                          @endif
+
+                                          @if ($errors->login->has('password'))
+                                            <li id="loginpwerror">{{ $errors->login->first('password') }}</li>
+                                          @endif
+                                      </ul>
+                                  </div>
                             <form class="ui login form" id="login" role="form" method="POST" action="{{ route('login') }}">
                               {{ csrf_field() }}
-                                <div class="ui tiny error message"></div>
+                                
                               <div class="inline field">
                                 <label for="email">Email Address <span class="atn">*</span></label>
                                 <input id="email" type="text" name="email">
@@ -132,14 +143,16 @@
         <script type="text/javascript">
           $(function(){
             onLandingPageLoad();
-              if(document.getElementById('emailerror')){
-            showModalwithErrors();        
-        }
+              if(document.getElementById('regemailerror') || document.getElementById('regnameerror')){
+                  $('.register.modal').modal('show');
+                  $('.register.error.message').show();
+              }
+              if(document.getElementById('loginemailerror') || document.getElementById('loginpwerror')){
+                  $('.login.modal').modal('show');
+                  $('.login.error.message').show();
+              }
           })
           
-          function showModalwithErrors(){
-              $('#fuck').modal('show');
-          }
         </script>
 
     </body>
