@@ -43,35 +43,37 @@
             </div>
 
             <div class="six wide column">
-                <div class="ui message" id="temp">for test</div>
-                <form id="test" class="ui edit-record form" id="edit-record">
-                    <div class="ui tiny error message" id="errormsg"></div>
-                    <div class="field">
-                        <label>Issue Date <atn>*</atn></label>
-                        <input type="text" name="issuedate" placeholder="Issue Date" id="test_issue_date" onfocus="clearError();">
-                    </div>
-                    <div class="field">
-                        <label>Record Period</label>
-                        <input type="text" name="recordperiod" placeholder="Record Period" id="test_period" onfocus="clearError();">
-                    </div>
-                    @if($is_bill)
+                @if(!$edit_value_mode)
+                    <div class="ui message" id="temp">for test</div>
+                    <form id="test" class="ui edit-record form" id="edit-record">
+                        <div class="ui tiny error message" id="errormsg"></div>
                         <div class="field">
-                            <label>Due Date</label>
-                            <input type="text" name="duedate" placeholder="Due Date" id="test_due_date" onfocus="clearError();">
+                            <label>Issue Date <atn>*</atn></label>
+                            <input type="text" name="issuedate" placeholder="Issue Date" id="test_issue_date" onfocus="clearError();">
                         </div>
-                    @endif
-                    <div class="field">
-                        <label>Amount Due <atn>*</atn></label>
-                        <input type="text" name="amtdue" placeholder="e.g 400" id="test_amount" onfocus="clearError();">
-                    </div>
-                    <tnc>
-                        <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
-                    {{--<div class="actions">--}}
-                    {{--<button class="ui positive button" type="submit">Submit</button>--}}
-                    {{--<button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>--}}
-                    {{--<button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>--}}
-                    {{--</div>--}}
-                </form>
+                        <div class="field">
+                            <label>Record Period</label>
+                            <input type="text" name="recordperiod" placeholder="Record Period" id="test_period" onfocus="clearError();">
+                        </div>
+                        @if($is_bill)
+                            <div class="field">
+                                <label>Due Date</label>
+                                <input type="text" name="duedate" placeholder="Due Date" id="test_due_date" onfocus="clearError();">
+                            </div>
+                        @endif
+                        <div class="field">
+                            <label>Amount Due <atn>*</atn></label>
+                            <input type="text" name="amtdue" placeholder="e.g 400" id="test_amount" onfocus="clearError();">
+                        </div>
+                        <tnc>
+                            <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                        {{--<div class="actions">--}}
+                        {{--<button class="ui positive button" type="submit">Submit</button>--}}
+                        {{--<button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>--}}
+                        {{--<button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>--}}
+                        {{--</div>--}}
+                    </form>
+                @endif
 
                 <div>
                     <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">
@@ -90,9 +92,7 @@
                 </div>
 
                 @if($edit_value_mode)
-                    <br><br>
                     <div>
-                        Real values
                         <form class="ui form" action="{{ route('confirm_values', $temp_record) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="field">
