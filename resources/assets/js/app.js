@@ -339,26 +339,50 @@ const onDashboardLoad = function (window) {
   let $statsContainer = $('.js-stats-container')
   let $billCounterText = $statsContainer.find('.js-bill-count .value')
   let $billTotalText = $statsContainer.find('.js-bill-total .value')
+  let myChart = null;
   let setText = function (data) {
     const currencySymbol = 'S$'
     $billCounterText.text(data.billCount)
     $billTotalText.text(currencySymbol + data.total)
   }
-  let sendRequests = function ($form, param) {
+  let initChart = function ($form, param) {
     axios.all([getStatsData($form, param)]).then(axios.spread(function (response) {
       setText(response.data)
-      createChart(response.data.data)
+      myChart = createChart(response.data.data)
     }))
   }
-  sendRequests($statsForm, 0)
+
+  let refreshChart = function($form, param) {
+      axios.all([getStatsData($form, param)]).then(axios.spread(function (response) {
+          setText(response.data)
+          updateChart(response.data.data, myChart)
+      }))
+  }
+  initChart($statsForm, 0)
+
   $('#js-stats-menu').dropdown({
     onChange: function (value, text) {
-      sendRequests($statsForm, value)
+      refreshChart($statsForm, value)
     }
   })
+
+  let updateChart = function (data, myChart) {
+    console.log(data);
+    let dataObj = {
+        labels: data.labels,
+        datasets: [{
+            label: '$ spent for period',
+            data: data.data,
+            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+            borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+            borderWidth: 1
+        }]}
+       myChart.config.data = dataObj
+       myChart.update();
+  }
   let createChart = function (data) {
-    var ctx = document.getElementById('amountBarChart')
-    var myChart = new Chart(ctx, {
+    let ctx = document.getElementById('amountBarChart')
+    myChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: data.labels,
@@ -381,6 +405,7 @@ const onDashboardLoad = function (window) {
       }
     })
   }
+  return myChart;
 }
 
 /* ===============================
