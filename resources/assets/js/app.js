@@ -58,7 +58,7 @@ const onLandingPageLoad = function () {
   $('.register.button').click(_ => {
     $('.register.modal').modal({
       onApprove: function () {
-        $('.ui.form').submit()
+        $('form#register').submit()
         $('.register.modal').modal('refresh')
         return false
       },
@@ -72,7 +72,7 @@ const onLandingPageLoad = function () {
   $('.login.button').click(_ => {
     $('.login.modal').modal({
       onApprove: function () {
-        $('.ui.form').submit()
+        $('form#login').submit()
         $('.login.modal').modal('refresh')
         return false
       },
@@ -84,6 +84,8 @@ const onLandingPageLoad = function () {
   })
 
   $('.register.form').form({
+      on: 'change',
+      inline: true,
     fields: {
       name: {
         identifier: 'name',
@@ -95,6 +97,10 @@ const onLandingPageLoad = function () {
       email: {
         identifier: 'email',
         rules: [{
+          type: 'empty',
+          prompt: 'Please enter your email address'
+        }, 
+        {
           type: 'email',
           prompt: 'Please enter a valid email address'
         }]
@@ -120,6 +126,8 @@ const onLandingPageLoad = function () {
   })
 
   $('.login.form').form({
+    on: 'change',
+    inline: true,
     fields: {
       email: {
         identifier: 'email',
@@ -374,6 +382,8 @@ const onDashboardLoad = function (window) {
     })
   }
 }
+
+$(onDashboardLoad);
 
 /* ===============================
 =            Export list            =
