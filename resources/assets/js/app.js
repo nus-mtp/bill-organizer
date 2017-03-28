@@ -383,8 +383,6 @@ const onDashboardLoad = function (window) {
   }
 }
 
-$(onDashboardLoad);
-
 /* ===============================
 =            Export list            =
 =============================== */

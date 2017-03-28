@@ -13,15 +13,15 @@ class Statistics {
 
     public function countCurrMonthBills(RecordIssuer $billorg){
         $records = $billorg ->records();
-        $from  = new Carbon('first day of this month');
-        $until = new Carbon('last day of this month');
+        $from  = DateHelper::firstDayOfCurrMonth();
+        $until = DateHelper::lastDayOfCurrMonth();
         return $records->whereBetween('issue_date',array($from, $until))->count();
     }
 
     public function getNumOfPastMonthsBills(RecordIssuer $billorg, $months){
         if ((int)$months === 0) return $this->countCurrMonthBills($billorg);
         $records = $billorg ->records();
-        $until = new Carbon('last day of this month');
+        $until = DateHelper::lastDayOfCurrMonth();
         $from  = $until->copy()->subMonth($months);
 
         return $records->whereBetween('issue_date',array($from, $until))->count();
