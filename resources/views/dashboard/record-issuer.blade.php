@@ -41,7 +41,7 @@
                                         <th>Due date</th>
                                     @endif
                                     <th>{{ $amount_field_name }}</th>
-                                    <th><!-- dummy th for action buttons--></th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
