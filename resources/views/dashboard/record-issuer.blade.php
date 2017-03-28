@@ -95,7 +95,6 @@
     <script>
     $(function(){
         $('.datatable').DataTable();
-        onDashboardLoad(window);
     })
     </script>
 <!-- end page specific scripts -->
