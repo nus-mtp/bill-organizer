@@ -5,7 +5,8 @@ html, body{
 
 .header.container {
     height: 80vh;
-    background-image: #3d3745, url('header.jpg');
+    background-image: url('header.jpg');
+    background-color: #3d3745;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
