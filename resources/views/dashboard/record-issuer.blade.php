@@ -14,9 +14,9 @@
                 <div class="column">
 
                     @component('partials.breadscrumb')
-                    @slot('active_section')
-                    {{ $record_issuer->name }}
-                    @endslot
+                        @slot('active_section')
+                          <a href="{{route('show_record_issuer',['record_issuer'=>$record_issuer])}}">{{$record_issuer->name}}</a>
+                        @endslot
                     @endcomponent
 
                     <button class="ui circular tiny right floated icon button" id="statsbutton"><i class="bar chart icon"></i>
