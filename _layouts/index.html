@@ -85,22 +85,22 @@
         </div>
     </div>
     <script>
+        var $colwidth = "";
         $(
-            var $menu = $('#menu');
-            var $colwidth = "calc("+$('#mColumn').width "- 6rem)";
-            $menu.css("width", $colwidth);
+            $colwidth = "calc("+$('#mColumn').css('width')+"-6rem)";
+            $('#menu').css("width", $colwidth);
         )
-        $(window).onresize(function(e) {
-            $colwidth = "calc("+$('#mColumn').width "- 6rem)";
-            $menu.css("width", $colwidth);
+        $(window).resize(function(e) {
+            $colwidth = "calc("+$('#mColumn').css('width')+"-6rem)";
+            $('#menu').css("width", $colwidth);
         })
         $(window).scroll(function(e) {
             var $threshold = $('#fancyheader').height();
             if ($(this).scrollTop() > $threshold) {
-                $menu.addClass("scrollfix");
+                $('#menu').addClass("scrollfix");
             }
             else {
-                $menu.removeClass("scrollfix");
+                $('#menu').removeClass("scrollfix");
             }
         });
     </script>
