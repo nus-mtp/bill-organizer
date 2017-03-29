@@ -6,6 +6,7 @@
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -13,7 +14,7 @@
 
     <div class="ui centered relaxed grid">
         <div class="four wide column">
-            <div class="ui vertical fluid menu">
+            <div class="ui vertical fluid menu" id="menu">
                 <div class="item">
                     <div class="header">BillOrganiser</div>
                     <div class="menu">
@@ -45,7 +46,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="ten wide column">
             <div class="ui basic segment" id="intro">
                 <p>BillOrganiser is a alskdlhfkhsd askdhfkjhsdf aksdhfkjs.</p>
@@ -64,6 +65,18 @@
             </div>
         </div>
     </div>
+    <script>
+        $(window).scroll(function(e) {
+            var $menu = $('#menu');
+            var $threshold = $('#fancyheader').height();
+            if ($(this).scrollTop() > $threshold) {
+                $menu.addClass("scrollfix");
+            }
+            else {
+                $menu.removeClass("scrollfix");
+            }
+        });
+    </script>
 </body>
 
 </html>

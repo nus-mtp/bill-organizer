@@ -24,6 +24,12 @@ h1, h2, h3, h4, h5 {
     color: #2dcc70;
     font-family: 'Source Sans Pro',sans-serif;
     font-size: 4.5rem;
+    text-align: center;
     vertical-align: middle;
     padding-top: 30vh;
+}
+
+.scrollfix {
+    position:fixed;
+    top: 10px;
 }
