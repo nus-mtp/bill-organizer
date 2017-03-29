@@ -3,15 +3,12 @@
 @import 'node_modules/sweetalert2/dist/sweetalert2.min';
 // we use semantic to manage stuff that are unlikely to change
 // and customize it inside semantic to change things globally
-
 // global configurations
 @import 'settings/variables';
 @import 'settings/mixins';
 @import 'settings/globals';
 @import 'settings/themes';
-
 @import 'forms';
-
 // modules
 @import 'modules/stats';
 
@@ -25,7 +22,7 @@
 }
 
 .headroom--unpinned {
-  visibility:hidden;
+  visibility: hidden;
   opacity: 0;
   transition: visibility 1s, opacity 0.07s ease-in;
 }
@@ -33,74 +30,82 @@
 .hero {
   $left-margin: 20px;
   background: url('images/hero.jpg');
-  background-size:cover;
+  background-size: cover;
   background-position: 50% 0;
   background-repeat: no-repeat;
-  height:100vh;
+  min-height: 70vh;
 
   .title-text {
     font-family: 'Source Sans Pro', sans-serif;
-    display:none;
+    display: none;
   }
   .title {
-      font-size:1.4rem;
-      color: $bill-green;
-      font-family: $heading-font-name, sans-serif;
+    font-size: 1.4rem;
+    color: $bill-green;
+    font-family: $heading-font-name, sans-serif;
   }
   .hero-text {
-    margin-top:50px;
-    display:flex;
+    margin-top: 20%;
+    display: flex;
 
   }
-  .hero-text h2{
+  .hero-text h2 {
     color: white;
-    font-size:2.5rem;
-    margin:auto;
+    font-size: 2.5rem;
+    margin: auto;
   }
   .action-btn-container {
-    display:none;
-    margin-top:80px;
-    text-align:center;
+    display: none;
+    margin-top: 30px;
+    text-align: center;
   }
 
   .action-btn {
-    font-size:1.5rem;
-    padding:20px 50px;
+    font-size: 1.5rem;
+    padding: 20px 50px;
   }
 
-  @media screen and (min-width: 768px){
-    height:60vh;
-    display:block;
+  @media screen and (min-width: 768px) {
+    height: 60vh;
+    display: block;
     padding-top: 10px;
     padding-left: $left-margin;
-   .hero-text h2{
-    color: white;
-    font-size:4.4rem;
-    margin:auto;
+    .hero-text {
+      margin-top: 10%;
+    }
+    .hero-text h2 {
+      color: white;
+      font-size: 4.4rem;
+      margin: auto;
     }
     .title-text {
-      display:inline;
-      font-size:3rem;
+      display: inline;
+      font-size: 3rem;
     }
-
     .title {
-      font-size:2rem;
+      font-size: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 960px) {
+    .hero-text {
+      margin-top: 5%;
     }
   }
 
   @media screen and (min-width: 1280px) {
-  .hero-text {
-    margin-top:70px;
-   }
-  .action-btn-container {
-    margin-top:10px;
-    text-align:center;
-   }
+    .hero-text {
+      margin-top: 50px;
+    }
+    .action-btn-container {
+      margin-top: 40px;
+      text-align: center;
+    }
   }
 }
 
 .featured {
-  text-align:center;
+  text-align: center;
   margin-top: 50px;
   h1.header.featured-headline {
     color: black;

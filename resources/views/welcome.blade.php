@@ -129,7 +129,7 @@
 
         <div class="ui container featured">
 
-          <div class="ui equal width grid">
+          <div class="ui stackable equal width grid">
 
             <div class="column">
               <i class="large green file icon"></i>
