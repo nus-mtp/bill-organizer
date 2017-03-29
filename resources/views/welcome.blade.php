@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">---
-layout: index
----
+<html lang="{{ config('app.locale') }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -137,7 +135,7 @@ layout: index
 
         <div class="hero">
             <div class="title">
-              <img src="{{url('icon.png')}}" style="height: 100px;vertical-align:middle">
+              <img src="{{url('icon.png')}}" style="height: 42px; vertical-align:middle">
               <div class="title-text">
                 Bill<font color="white">Organiser</font>
               </div>

@@ -38,6 +38,8 @@
   .title-text {
     font-family: 'Source Sans Pro', sans-serif;
     display: none;
+    font-size: 0.5rem;
+    vertical-align: middle;
   }
   .title {
     font-size: 1.4rem;
@@ -50,7 +52,7 @@
 
   }
   .hero-text h2 {
-    color: white;
+    color: white;       
     font-size: 2.5rem;
     margin: auto;
   }
