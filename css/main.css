@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
 html, body{
-    font-family: arial;
+    font-family: 'Varela Round', sans-serif;
     font-size: 12px;
 }
 
@@ -11,8 +14,12 @@ html, body{
     background-repeat: no-repeat;
     background-position: center;
     background-blend-mode: overlay;
+    vertical-align: middle;
 }
 
 .title-text {
     color: #2dcc70;
+    font-family: 'Source Sans Pro',sans-serif;
+    font-size: 4.5rem;
+    vertical-align: middle;
 }
