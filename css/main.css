@@ -3,3 +3,10 @@ html, body{
     font-size: 12px;
 }
 
+.header.container {
+    height: 80vh;
+    background-image: url('{{ site.baseurl }}/img/header.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
