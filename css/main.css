@@ -4,10 +4,14 @@
 html, body{
     font-family: 'Varela Round', sans-serif;
     font-size: 12px;
+    color: #515151;
 }
 
-h1, h2, h3, h4, h5 {
+h1 {
     color: seagreen;
+}
+h2, h3, h4, h5 {
+    color: #3d3745;
 }
 
 .header.container {

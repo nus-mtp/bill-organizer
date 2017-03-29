@@ -13,7 +13,7 @@
     {% include header.html %}
 
     <div class="ui centered relaxed grid">
-        <div class="four wide column">
+        <div class="four wide column" id="mColumn">
             <div class="ui vertical fluid menu" id="menu">
                 <div class="item">
                     <div class="header">BillOrganiser</div>
@@ -25,15 +25,15 @@
                 <div class="item">
                     <div class="header">Getting Started</div>
                     <div class="menu">
-                        <a class="item">Download</a>
-                        <a class="item">Install</a>
-                        <a class="item">Run</a>
+                        <a class="item" href="#download">Download</a>
+                        <a class="item" href="#install">Install</a>
+                        <a class="item" href="#run">Run</a>
                     </div>
                 </div>
                 <div class="item">
                     <div class="header">Contributing</div>
                     <div class="menu">
-                        <a class="item">Setup</a>
+                        <a class="item" href="#setup">Setup</a>
                         <a class="item" href="#readme">Common Errors</a>
                     </div>
                 </div>
@@ -52,13 +52,32 @@
                 <p>BillOrganiser is a alskdlhfkhsd askdhfkjhsdf aksdhfkjs.</p>
             </div>
             <div class="ui basic segment" id="features">
-                <h1>Features</h1>
+                <h2>Features</h2>
                 <p>insert demo video here and maybe some words</p>
+            </div>
+            <h1>Getting Started</h1>
+            <div class="ui basic segment" id="download">
+                <h2>Download</h2>
+                <p>[Instructions on how to download]</p>
+            </div>
+            <div class="ui basic segment" id="install">
+                <h2>Install</h2>
+                <p>[Instructions on how to install]</p>
+            </div>
+            <div class="ui basic segment" id="run">
+                <h2>Run</h2>
+                <p>[Instructions on how to run]</p>
+            </div>
+            <h1>Contributing</h1>
+            <div class="ui basic segment" id="setup">
+                <h2>Setup</h2>
+                <p>[Instructions on how to setup]</p>
             </div>
             <div class="ui basic segment" id="readme">
                 <h1>Common Errors</h1>
                 {{ content }}
             </div>
+            <h1>Support</h1>
             <div class="ui basic segment" id="team">
                 <h1>elegant-owls</h1>
                 <p>team members here</p>
@@ -71,9 +90,11 @@
             var $threshold = $('#fancyheader').height();
             if ($(this).scrollTop() > $threshold) {
                 $menu.addClass("scrollfix");
+                $menu.css("width", $('#mColumn').css("width"));
             }
             else {
                 $menu.removeClass("scrollfix");
+                $menu.css("width", "100%");
             }
         });
     </script>
