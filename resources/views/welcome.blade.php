@@ -159,7 +159,7 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.6/typed.min.js"></script>
         <script type="text/javascript">
           $(function(){
-            window.onLandingPageLoad();
+            onLandingPageLoad();
 
             Typed.new(".hero-text .typed-text", {
               strings: ["Being Organized", "Is Being In Control.", "Get started now"],

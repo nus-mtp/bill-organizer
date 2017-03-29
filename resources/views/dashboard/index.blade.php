@@ -88,3 +88,10 @@
 </div>
 
 @endsection
+@push('module_scripts')
+<script>
+$(function () {
+   onDashboardIndexPageLoad(window);
+})
+</script>
+@endpush

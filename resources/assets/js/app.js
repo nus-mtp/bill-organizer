@@ -99,7 +99,7 @@ const onLandingPageLoad = function () {
         rules: [{
           type: 'empty',
           prompt: 'Please enter your email address'
-        }, 
+        },
         {
           type: 'email',
           prompt: 'Please enter a valid email address'
@@ -149,10 +149,45 @@ const onLandingPageLoad = function () {
     }
   })
 }
+const onDashboardIndexPageLoad = function(window) {
+    $('.add-bill-org.button').click(_ => {
+        $('.ui.modal.record-issuer').modal({
+            onApprove: function () {
+                $('.ui.form').submit()
+                // need to return false to not close modal
+                // in case input failed the validation test
+                return false
+            },
+            onSuccess: function () {
+                $('form#add-record-issuer').submit()
+                $('.modal').modal('hide')
+            }
+        }).modal('show')
+    })
+
+    $('.del-bill-org.button').click(_ => {
+        event.stopPropagation()
+        event.preventDefault()
+        // $('.ui.modal.record-issuer-del-cfm').modal('show')
+    })
+
+    $('.ui.form.record-issuer').form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter record issuer name'
+                }]
+            }
+        }
+    })
+}
+
 
 /* ----------   RecordIssuer.blade---------- */
 
-const onDashboardLoad = function (window) {
+const onRecordsPageLoad = function (window) {
   // /dashboard modal controls
 
   $('.add-record.button').click(_ => {
@@ -168,38 +203,6 @@ const onDashboardLoad = function (window) {
     }).modal('show')
   })
 
-  $('.add-bill-org.button').click(_ => {
-    $('.ui.modal.record-issuer').modal({
-      onApprove: function () {
-        $('.ui.form').submit()
-                // need to return false to not close modal
-                // in case input failed the validation test
-        return false
-      },
-      onSuccess: function () {
-        $('form#add-record-issuer').submit()
-        $('.modal').modal('hide')
-      }
-    }).modal('show')
-  })
-
-  $('.del-bill-org.button').click(_ => {
-    event.stopPropagation()
-    event.preventDefault()
-    // $('.ui.modal.record-issuer-del-cfm').modal('show')
-  })
-
-  $('.ui.form.record-issuer').form({
-    fields: {
-      name: {
-        identifier: 'name',
-        rules: [{
-          type: 'empty',
-          prompt: 'Please enter record issuer name'
-        }]
-      }
-    }
-  })
     // semantic ui custom form validation rule for file type
   $.fn.form.settings.rules.fileType = function () {
     fileName = document.getElementById('record').value
@@ -284,10 +287,6 @@ const onDashboardLoad = function (window) {
     }
   })
 
-/*  $('.delete-record.button').click((e) => {
-    e.preventDefault()
-    $('form#delete-record').submit()
-  }) */
 
   $('.logout.button').click((e) => {
     e.preventDefault()
@@ -413,7 +412,8 @@ const onDashboardLoad = function (window) {
 =============================== */
 
 var exportModules = (function (window) {
-  window.onDashboardLoad = onDashboardLoad
+  window.onDashboardIndexPageLoad = onDashboardIndexPageLoad
+  window.onRecordsPageLoad = onRecordsPageLoad
   window.onLandingPageLoad = onLandingPageLoad
 })(window)
 

@@ -95,7 +95,7 @@
     <script>
     $(function(){
         $('.datatable').DataTable();
-        onDashboardLoad(window);
+        onRecordsPageLoad(window);
     })
     </script>
 <!-- end page specific scripts -->
