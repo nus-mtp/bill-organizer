@@ -35,5 +35,5 @@ h2, h3, h4, h5 {
 
 .scrollfix {
     position:fixed;
-    top: 10px;
+    top: 1rem;
 }
