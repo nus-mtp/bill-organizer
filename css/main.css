@@ -12,3 +12,7 @@ html, body{
     background-position: center;
     background-blend-mode: overlay;
 }
+
+.title-text {
+    color: #2dcc70;
+}

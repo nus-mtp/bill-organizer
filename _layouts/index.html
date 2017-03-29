@@ -11,14 +11,14 @@
 <body>
     {% include header.html %}
 
-    <div class="ui centered grid">
+    <div class="ui centered relaxed grid">
         <div class="four wide column">
-            <div class="ui vertical fluid menu">
+            <div class="ui left fixed vertical sticky fluid menu">
                 <div class="item">
                     <div class="header">BillOrganiser</div>
                     <div class="menu">
-                        <a class="item">Introduction</a>
-                        <a class="item">Features</a>
+                        <a class="item" href="#intro">Introduction</a>
+                        <a class="item" href="#features">Features</a>
                     </div>
                 </div>
                 <div class="item">
@@ -33,7 +33,7 @@
                     <div class="header">Contributing</div>
                     <div class="menu">
                         <a class="item">Setup</a>
-                        <a class="item">Common Errors</a>
+                        <a class="item" href="#readme">Common Errors</a>
                     </div>
                 </div>
                 <div class="item">
@@ -45,10 +45,30 @@
                 </div>
             </div>
         </div>
-        <div class="ten wide column">
-            {{ content }}
+        <div class="ten wide column" id="sticktothis">
+            <div class="ui basic segment" id="intro">
+                <p>BillOrganiser is a alskdlhfkhsd askdhfkjhsdf aksdhfkjs.</p>
+            </div>
+            <div class="ui basic segment" id="features">
+                <h1>Features</h1>
+                <p>insert demo video here and maybe some words</p>
+            </div>
+            <div class="ui basic segment" id="readme">
+                {{ content }}
+            </div>
+            <div class="ui basic segment" id="team">
+                <h1>elegant-owls</h1>
+                <p>team members here</p>
+            </div>
         </div>
     </div>
+    <script>
+        $('.ui.sticky')
+            .sticky({
+            context: '#sticktothis'
+  })
+;
+    </script>
 </body>
 
 </html>
