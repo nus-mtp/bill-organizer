@@ -85,15 +85,6 @@
         </div>
     </div>
     <script>
-        var $colwidth = "";
-        $(
-            $colwidth = "calc("+$('#mColumn').css('width')+"-6rem)";
-            $('#menu').css("width", $colwidth);
-        )
-        $(window).resize(function(e) {
-            $colwidth = "calc("+$('#mColumn').css('width')+"-6rem)";
-            $('#menu').css("width", $colwidth);
-        })
         $(window).scroll(function(e) {
             var $threshold = $('#fancyheader').height();
             if ($(this).scrollTop() > $threshold) {
