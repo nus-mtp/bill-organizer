@@ -95,11 +95,16 @@
 
   @media screen and (min-width: 1280px) {
     .hero-text {
-      margin-top: 50px;
+      margin-top: 60px;
     }
     .action-btn-container {
       margin-top: 40px;
       text-align: center;
+    }
+    .hero-text h2 {
+      color: white;
+      font-size: 5.4rem;
+      margin: auto;
     }
   }
 }
