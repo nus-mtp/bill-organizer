@@ -5,21 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-trait AuthenticatesUser {
-        protected function sendFailedLoginResponse(Request $request)
-    {
-        $errors = [$this->username() => trans('auth.failed')];
-
-        if ($request->expectsJson()) {
-            return response()->json($errors, 422);
-        }
-
-        return redirect()->back()
-            ->withInput($request->only($this->username(), 'remember'))
-            ->withErrors($errors, 'login');
-    }
-}
-
 class LoginController extends Controller
 {
     /*
@@ -33,7 +18,22 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        sendFailedLoginResponse as tsendFailedLoginResponse;
+    }
+    
+    public function sendFailedLoginResponse(Request $request)
+    {
+        $errors = [$this->username() => trans('auth.failed')];
+
+        if ($request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors, 'login');
+    }
 
     /**
      * Where to redirect users after login.
