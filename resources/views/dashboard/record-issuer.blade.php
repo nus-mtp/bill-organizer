@@ -13,7 +13,7 @@
             <div class="ui equal width grid">
                 <div class="column">
 
-                    @component('partials.breadscrumb')
+                    @component('partials.breadcrumbs')
                         @slot('active_section')
                           <a href="{{route('show_record_issuer',['record_issuer'=>$record_issuer])}}">{{$record_issuer->name}}</a>
                         @endslot
