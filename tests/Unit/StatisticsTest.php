@@ -109,8 +109,10 @@ class StatisticsTest extends TestCase
         $actual = $this->stats->getBillsTotalAmountForPastMonths($this->billOrgs[0], $n);
         self::assertEquals($expected,$actual);
     }
+    */
 
     /* -----------------  helpers ----------------- */
+    /*
     private function createRandomNumOfBills($lowerBound, $upperBound) {
         $numOfRandomBills = random_int($lowerBound, $upperBound);
         $bills = $this->createRandBills($this->billOrgs[0], $numOfRandomBills);
