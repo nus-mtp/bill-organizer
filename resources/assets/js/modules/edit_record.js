@@ -249,7 +249,7 @@ function normalizeCoords(coords) {
 function resizeNCoords(coords) {
     if (coords == null) { return; }
     var temp = [0, 0, 0, 0, 0, 0];
-    var width = billImg.width;temp
+    var width = billImg.width;
     var height = billImg.height;
     temp[0] = coords[0] * width;
     temp[1] = coords[1] * height;

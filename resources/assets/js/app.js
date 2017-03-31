@@ -305,3 +305,9 @@ $('.ui.calendar-month').calendar({
   }
 })
 
+// for detecting active menu item in edit record
+$('.select').click(function(){
+    $('.select').removeClass("active");
+    $('.select').removeClass("doing");
+    $(this).addClass("active doing");
+});

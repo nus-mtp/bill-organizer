@@ -101,8 +101,12 @@ img {
     width: auto;
     height: auto;
     position: absolute;
-    background-color: $manganese-blue;
+    background-color: $bill-green;
     border: black 1px dashed;
     opacity: 0.3;
     pointer-events:none;
+}
+
+.selRect.active {
+    background-color: $manganese-blue;
 }

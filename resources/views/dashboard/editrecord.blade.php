@@ -39,24 +39,26 @@
             <div class="ui message" id="temp">for test</div>
             <form class="ui edit-record form" id="edit-record">
                 <div class="ui tiny error message" id="errormsg"></div>
-                <div class="field">
-                    <label>Issue Date <atn>*</atn></label>
-                    <input type="text" name="issuedate" placeholder="Issue Date" id="issue" onfocus="clearError();">
-                </div>
-                <div class="field">
-                    <label>Record Period</label>
-                    <input type="text" name="recordperiod" placeholder="Record Period" id="period" onfocus="clearError();">
-                </div>
-                <div class="field">
-                    <label>Due Date</label>
-                    <input type="text" name="duedate" placeholder="Due Date" id="duedate" onfocus="clearError();">
-                </div>
-                <div class="field">
-                    <label>Amount Due <atn>*</atn></label>
-                    <input type="text" name="amtdue" placeholder="e.g 400" id="amtdue" onfocus="clearError();">
-                </div>
-                <tnc>
-                    <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
+                
+                <div class="ui fluid four item compact labeled icon menu">
+                    <a class="select item" id="issue" onclick="test('#selidate');">
+                        <i class="grey edit icon" id="issuedateicon"></i>
+                        Issue<br>Date
+                    </a>
+                    <a class="select item" id="period" onclick="test('#selrperiod');">
+                        <i class="grey edit icon" id="recordperiodicon"></i>
+                        Record<br>Period
+                    </a>
+                    <a class="select item" id="duedate" onclick="test('#selddate');">
+                        <i class="grey edit icon" id="duedateicon"></i>
+                        Due<br>Date
+                    </a>
+                    <a class="select item" id="amtdue" onclick="test('#selamtdue');">
+                        <i class="grey edit icon" id="amtdueicon"></i>
+                        Amount<br>Due
+                    </a>
+                </div>                
+                <br><br>
 
                 <!--ADDED DEVICE-RESPONSIVE STUFF FOR FUN-->
                 <div class="ui equal width grid">
@@ -92,7 +94,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript">    
     // box coordinates used for rendering
     var issueDateC;
     var recPeriodC;
@@ -114,11 +116,16 @@
     // to be replaced later with a single array of images/urls
     var img1 = "{{url('placeholderbill.jpg')}}";
     var img2 = "{{url('placeholderbill2.jpg')}}";
+    
+    billImg.onload = function() {
+        ImgPos = FindPosition(billImg);
+    }
 
     // disable default image drag action so you can drag select box later
     billImg.ondragstart = function(event) {
         event.preventDefault();
     };
+    
     window.onresize = function(event) {
         issueDateC = resizeNCoords(nIssueDateC);
         recPeriodC = resizeNCoords(nRecPeriodC);
@@ -127,6 +134,11 @@
 
         changePage(0);
     };
+    
+    function test(id) {
+        $('.selRect').removeClass("active");
+        $(id).addClass("active");
+    }
 
     function displayError(message) {
         // uses the error message that comes with the semantic ui form
@@ -266,8 +278,6 @@
         }
     }
 
-    var ImgPos = FindPosition(billImg);
-
     function getCoordinates(e) {
         var PosX = 0;
         var PosY = 0;
@@ -283,18 +293,15 @@
         }
         PosX = PosX - ImgPos[0];
         PosY = PosY - ImgPos[1];
-        var activeField = document.activeElement;
-        tempActField = activeField;
-        //to prevent validation error from acting up
-        tempActField.value = "selecting...";
+        tempActField = $('.doing').get(0);
 
-        if (document.activeElement.id == 'issue') {
+        if (tempActField.id == 'issue') {
             issueDateC = [PosX, PosY];
-        } else if (document.activeElement.id == 'period') {
+        } else if (tempActField.id == 'period') {
             recPeriodC = [PosX, PosY];
-        } else if (document.activeElement.id == 'duedate') {
+        } else if (tempActField.id == 'duedate') {
             dueDateC = [PosX, PosY];
-        } else if (document.activeElement.id == 'amtdue') {
+        } else if (tempActField.id == 'amtdue') {
             amtDueC = [PosX, PosY];
         }
         selecting = true;
@@ -321,33 +328,31 @@
         PosY = PosY - ImgPos[1];
 
         if (tempActField.id == 'issue') {
+            $('#issuedateicon').removeClass('edit');
+            $('#issuedateicon').addClass('check circle outline');
             issueDateC = issueDateC.concat([PosX, PosY]);
             issueDateC = formatCoords(issueDateC);
             nIssueDateC = normalizeCoords(issueDateC);
             drawRect('selidate', issueDateC);
             document.getElementById('selidate').setAttribute('data-page', currPage);
-            tempActField.value = issueDateC;
         } else if (tempActField.id == 'period') {
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
             nRecPeriodC = normalizeCoords(recPeriodC);
             drawRect('selrperiod', recPeriodC);
             document.getElementById('selrperiod').setAttribute('data-page', currPage);
-            tempActField.value = recPeriodC;
         } else if (tempActField.id == 'duedate') {
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
             nDueDateC = normalizeCoords(dueDateC);
             drawRect('selddate', dueDateC);
             document.getElementById('selddate').setAttribute('data-page', currPage);
-            tempActField.value = dueDateC;
         } else if (tempActField.id == 'amtdue') {
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
             nAmtDueC = normalizeCoords(amtDueC);
             drawRect('selamtdue', amtDueC);
             document.getElementById('selamtdue').setAttribute('data-page', currPage);
-            tempActField.value = amtDueC;
         } else {
             displayError("Please click on a field before selecting");
         }
@@ -375,6 +380,8 @@
         var tempCoords;
 
         if (tempActField.id == 'issue') {
+            $('#issuedateicon').removeClass('grey');
+            $('#issuedateicon').addClass('green');
             tempCoords = issueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selidate', tempCoords);
@@ -427,6 +434,8 @@
             }
 
             if (tempActField.id == 'issue') {
+                $('#issuedateicon').removeClass('edit');
+                $('#issuedateicon').addClass('check circle outline');
                 issueDateC = issueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Image size: " + billsize +
                     "<br>" + "Issue Date: " + issueDateC;
@@ -446,6 +455,5 @@
         }
         selecting = false;
     }
-
 </script>
 @endsection
