@@ -26,9 +26,9 @@
         </script>
 
     </head>
-    <body class="dark-background">
+    <body>
 
-        <div class="ui top fixed menu" style="background:none; border:none;">
+        <div class="ui inverted secondary top fixed menu">
             <div class="right menu">
                 <!--should not need this part anymore coz got auto-redirect-->
                 @if (Route::has('login'))
@@ -40,6 +40,7 @@
                         <div class="item">
                             <button class="ui green register button">Register</button>
                         </div>
+
                         <div class="item">
                             <button class="ui inverted green login button">Login</button>
                         </div>
@@ -103,23 +104,78 @@
                             </form>
                           </div>
                         </div>
+
                     @endif
                 @endif
             </div>
         </div>
 
-        <div class="flex-center position-ref full-height">
-            <div class="ui center aligned container">
-                <div class="title m-b-md">
-                    <div class="title"><img src="{{url('icon.png')}}" style="height: 100px;vertical-align:middle"> Bill<font color="white">Organiser</font></div>
-                </div>
+        <div class="hero">
+            <div class="title">
+              <img src="/icon.png" style="height: 100px;vertical-align:middle">
+              <div class="title-text">
+                Bill<font color="white">Organiser</font>
+              </div>
             </div>
+
+            <div class="hero-text">
+              <h2 class="typed-text"></h2>
+            </div>
+            <div class="action-btn-container">
+              <button class="ui green register button action-btn">Join Us</button>
+            </div>
+
         </div>
 
+        <div class="ui container featured">
+
+          <div class="ui stackable equal width grid">
+
+            <div class="column">
+              <i class="large green file icon"></i>
+              <h1 class="ui header featured-headline">File Bills and Statements</h1>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            </div>
+
+            <div class="column">
+              <i class="large green search icon"></i>
+              <h1 class="ui header featured-headline">Ultra Fast Search</h1>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            </div>
+
+            <div class="column">
+              <i class="large green bar chart icon"></i>
+              <h1 class="ui header featured-headline">Statistic Insights</h1>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            </div>
+
+         </div>
+
+        </div>
+
+
+
         @include('layouts.scripts')
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.6/typed.min.js"></script>
         <script type="text/javascript">
           $(function(){
             onLandingPageLoad();
+
+            Typed.new(".hero-text .typed-text", {
+              strings: ["Being Organized", "Is Being In Control.", "Get started now"],
+              // Optionally use an HTML element to grab strings from (must wrap each string in a <p>)
+              typeSpeed: 3,
+              startDelay: 100,
+              backSpeed: 1,
+              shuffle: false,
+              backDelay: 2500,
+              loop: false,
+              showCursor: true,
+              callback: function() {
+                $('.action-btn-container').css('display','block');
+              }
+            })
+
           })
         </script>
 
