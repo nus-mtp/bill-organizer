@@ -46,7 +46,7 @@
                         Issue<br>Date
                     </a>
                     <a class="select item" id="period" onclick="test('#selrperiod');">
-                        <i class="grey edit icon" id="recordperiodicon"></i>
+                        <i class="grey edit icon" id="rperiodicon"></i>
                         Record<br>Period
                     </a>
                     <a class="select item" id="duedate" onclick="test('#selddate');">
@@ -336,18 +336,24 @@
             drawRect('selidate', issueDateC);
             document.getElementById('selidate').setAttribute('data-page', currPage);
         } else if (tempActField.id == 'period') {
+            $('#rperiodicon').removeClass('edit');
+            $('#rperiodicon').addClass('check circle outline');
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             recPeriodC = formatCoords(recPeriodC);
             nRecPeriodC = normalizeCoords(recPeriodC);
             drawRect('selrperiod', recPeriodC);
             document.getElementById('selrperiod').setAttribute('data-page', currPage);
-        } else if (tempActField.id == 'duedate') {
+        } else if (tempActField.id == 'duedate') {           
+            $('#duedateicon').removeClass('edit');
+            $('#duedateicon').addClass('check circle outline');
             dueDateC = dueDateC.concat([PosX, PosY]);
             dueDateC = formatCoords(dueDateC);
             nDueDateC = normalizeCoords(dueDateC);
             drawRect('selddate', dueDateC);
             document.getElementById('selddate').setAttribute('data-page', currPage);
         } else if (tempActField.id == 'amtdue') {
+            $('#amtdueicon').removeClass('edit');
+            $('#amtdueicon').addClass('check circle outline');
             amtDueC = amtDueC.concat([PosX, PosY]);
             amtDueC = formatCoords(amtDueC);
             nAmtDueC = normalizeCoords(amtDueC);
@@ -381,19 +387,29 @@
 
         if (tempActField.id == 'issue') {
             $('#issuedateicon').removeClass('grey');
-            $('#issuedateicon').addClass('green');
+            $('#issuedateicon').removeClass('check circle outline');
+            $('#issuedateicon').addClass('green edit');
             tempCoords = issueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selidate', tempCoords);
         } else if (tempActField.id == 'period') {
+            $('#rperiodicon').removeClass('grey');
+            $('#rperiodicon').removeClass('check circle outline');
+            $('#rperiodicon').addClass('green edit');
             tempCoords = recPeriodC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selrperiod', tempCoords);
         } else if (tempActField.id == 'duedate') {
+            $('#duedateicon').removeClass('grey');
+            $('#duedateicon').removeClass('check circle outline');
+            $('#duedateicon').addClass('green edit');
             tempCoords = dueDateC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selddate', tempCoords);
         } else if (tempActField.id == 'amtdue') {
+            $('#amtdueicon').removeClass('grey');
+            $('#amtdueicon').removeClass('check circle outline');
+            $('#amtdueicon').addClass('green edit');
             tempCoords = amtDueC.concat([PosX, PosY]);
             tempCoords = formatCoords(tempCoords);
             drawRect('selamtdue', tempCoords);
@@ -440,12 +456,18 @@
                 document.getElementById("temp").innerHTML = "Image size: " + billsize +
                     "<br>" + "Issue Date: " + issueDateC;
             } else if (tempActField.id == 'period') {
+                $('#rperiodicon').removeClass('edit');
+                $('#rperiodicon').addClass('check circle outline');
                 recPeriodC = recPeriodC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
             } else if (tempActField.id == 'duedate') {
+                $('#duedateicon').removeClass('edit');
+                $('#duedateicon').addClass('check circle outline');
                 dueDateC = dueDateC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
             } else if (tempActField.id == 'amtdue') {
+                $('#amtdueicon').removeClass('edit');
+                $('#amtdueicon').addClass('check circle outline');
                 amtDueC = amtDueC.concat([PosX, PosY]);
                 document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
             }
