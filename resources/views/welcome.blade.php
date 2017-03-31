@@ -157,19 +157,19 @@
             <div class="column">
               <i class="large green file icon"></i>
               <h1 class="ui header featured-headline">File Bills and Statements</h1>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              <p>Automatically organise your uploaded bills</p>
             </div>
 
             <div class="column">
               <i class="large green search icon"></i>
-              <h1 class="ui header featured-headline">Ultra Fast Search</h1>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              <h1 class="ui header featured-headline">Fast Search</h1>
+              <p>Quickly and efficiently search for bills by date</p>
             </div>
 
             <div class="column">
               <i class="large green bar chart icon"></i>
               <h1 class="ui header featured-headline">Statistic Insights</h1>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              <p>View aggregate statistics of your expenses</p>
             </div>
         
          </div>
