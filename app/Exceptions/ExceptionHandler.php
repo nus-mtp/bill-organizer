@@ -20,7 +20,6 @@ class ExceptionHandler extends Handler
         // use whoops handler if environment is development
         if (config('app.debug'))
         {
-            dd(config('app.debug'));
             $whoopsExceptionHandler = new Run();
 
             $whoopsExceptionHandler->pushHandler(new PrettyPageHandler());
