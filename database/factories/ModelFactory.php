@@ -87,12 +87,8 @@ $factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, functi
 });
 
 $factory->defineAs(App\Record::class,"curr_month_bill", function(Faker\Generator $faker){
-    /*
-     https://github.com/fzaninotto/Faker/issues/1165 dateTimeThisMonth generate wrong time
-    $issue_date = Carbon::createFromTimestamp($faker->unique()->dateTimeThisMonth->getTimestamp());
-    */
-    $from = new Carbon("first day of this month");
-    $until = new Carbon("last day of this month");
+    $from = \App\DateHelper::firstDayOfCurrMonth();
+    $until = \App\DateHelper::lastDayOfCurrMonth();
     $issue_date = $faker->unique()->dateTimeBetween($from,$until);
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
