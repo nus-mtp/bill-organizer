@@ -36,7 +36,6 @@ class StatisticsTest extends TestCase
         unset($this->billOrgs);
         parent::tearDown();
     }
-    /*
     public function testStatisticsCanBeCreated(){
         self::assertInstanceOf(Statistics:: class, new Statistics());
     }
@@ -109,10 +108,8 @@ class StatisticsTest extends TestCase
         $actual = $this->stats->getBillsTotalAmountForPastMonths($this->billOrgs[0], $n);
         self::assertEquals($expected,$actual);
     }
-    */
 
     /* -----------------  helpers ----------------- */
-    /*
     private function createRandomNumOfBills($lowerBound, $upperBound) {
         $numOfRandomBills = random_int($lowerBound, $upperBound);
         $bills = $this->createRandBills($this->billOrgs[0], $numOfRandomBills);
@@ -159,5 +156,4 @@ class StatisticsTest extends TestCase
         $from = $until->copy()->subMonth(6);
         $this->createRandBillsForPeriod($from, $until);
     }
-    */
 }
