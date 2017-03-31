@@ -1,8 +1,11 @@
 <div class="ui breadcrumb">
-    <!-- TODO: Extract breadcrumbs and add links-->
-    <span class="section">Home</span>
+    <span class="section">
+        Home
+    </span>
     <i class="right angle icon divider"></i>
-    <span class="active">Dashboard</span>
-    <i class="right angle icon divider"></i>
-    {{$active_section}}
+    <a href="{{route('dashboard')}}">Dashboard</a>
+    @if (Route::is('show_record_issuer'))
+        <i class="right angle icon divider"></i>
+        {{$active_section}}
+    @endif
 </div>

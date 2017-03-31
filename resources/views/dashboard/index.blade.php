@@ -46,7 +46,7 @@
                     {{ csrf_field() }}
                     <div class="ui tiny error message"></div>
                     <div class="field">
-                        <label for="name">Name <atn>*</atn></label>
+                        <label for="name">Name <span class="atn">*</span></label>
                         <input id="name" type="text" name="name" placeholder="Enter record issuer name">
                     </div>
                     <div class="field">
@@ -57,8 +57,8 @@
                                     @endforeach
                                 </select>
                     </div>
-                    <tnc>
-                        <atn>*</atn> <i>Indicates required field</i></tnc>
+                    <span class="tnc">
+                        <span class="atn">*</span> <i>Indicates required field</i></span>
                 </form>
             </div>
         </div>
@@ -68,23 +68,30 @@
         </div>
     </div>
 
-    <!-- nope it still doesnt work nvm
-    <div class="ui small record-issuer-del-cfm modal">
-        <i class="close icon"></i>
-        <div class="content">
-            <p>Are you sure you want to delete this record issuer?</p>
-        </div>
-        <div class="actions">
-            <form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button type="submit" class="ui inverted red button">
-                    Delete
-                </button>
-                <div class="ui button black cancel">Cancel</div>
-            </form>
-        </div>
-    </div>-->
+    <!-- nope it still doesnt work nvm -->
+    {{--<div class="ui small record-issuer-del-cfm modal">--}}
+        {{--<i class="close icon"></i>--}}
+        {{--<div class="content">--}}
+            {{--<p>Are you sure you want to delete this record issuer?</p>--}}
+        {{--</div>--}}
+        {{--<div class="actions">--}}
+            {{--<form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}">--}}
+                {{--{{ csrf_field() }}--}}
+                {{--{{ method_field('DELETE') }}--}}
+                {{--<button type="submit" class="ui inverted red button">--}}
+                    {{--Delete--}}
+                {{--</button>--}}
+                {{--<div class="ui button black cancel">Cancel</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 </div>
 
 @endsection
+@push('module_scripts')
+<script>
+$(function () {
+   onDashboardIndexPageLoad(window);
+})
+</script>
+@endpush
