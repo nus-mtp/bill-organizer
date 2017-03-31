@@ -135,7 +135,7 @@
 
         <div class="hero">
             <div class="title">
-              <img src="{{url('icon.png')}}" style="height: 42px; vertical-align:middle">
+              <img src="/icon.png" style="height: 100px;vertical-align:middle">
               <div class="title-text">
                 Bill<font color="white">Organiser</font>
               </div>

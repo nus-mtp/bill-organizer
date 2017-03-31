@@ -6,7 +6,7 @@
     <div class="ui fluid container">
         <div class="ui grid">
             <div class="sixteen wide column">
-                {{-- todo: first and second level breadscrump slots--}} @component('partials.breadscrumb') @slot('active_section') @endslot @endcomponent
+                {{-- todo: first and second level breadscrump slots--}} @component('partials.breadcrumbs') @slot('active_section') @endslot @endcomponent
             </div>
 
             @if(empty($record_issuers))

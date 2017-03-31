@@ -13,7 +13,7 @@
             <div class="ui equal width grid">
                 <div class="column">
 
-                    @component('partials.breadscrumb')
+                    @component('partials.breadcrumbs')
                         @slot('active_section')
                           <a href="{{route('show_record_issuer',['record_issuer'=>$record_issuer])}}">{{$record_issuer->name}}</a>
                         @endslot
@@ -24,63 +24,38 @@
 
                     <div class="ui basic segment">
 
-                        @if(empty($records))
-                            <h1>{{ $record_issuer->name }}</h1>
-
-                            <div class="ui tiny message">
-                               <p>There isn't any record yet - start by adding one below! (ﾉ^ヮ^)ﾉ*:・ﾟ✧</p>
+                        <div class="ui right floated blue labeled add-record button" style="margin-top:13px;">
+                            <div class="ui blue icon button">
+                                <i class="add icon"></i>
                             </div>
-
-                        <div class="dotted-container">
-                            <button class="ui circular blue add-record icon button" value="showModal">
-                            <i class="icon plus"></i>
-                            </button>
-                            <span>Add new record</span>
+                            <a class="ui basic blue label">Add new record</a>
                         </div>
-                        @endif
+                        <h1>{{ $record_issuer->name }}</h1>
+                        <table class="ui green celled striped datatable table">
 
-                @if(!empty($records))
-                    <div class="ui right floated blue labeled add-record button" style="margin-top:13px;">
-                        <div class="ui blue icon button">
-                            <i class="add icon"></i>
-                        </div>
-                        <a class="ui basic blue label">Add new record</a>
-                    </div>
-                    <h1>{{ $record_issuer->name }}</h1>
-                    <table class="ui green celled striped datatable table">
+                            <thead>
+                                <tr>
+                                    <th>Issue date</th>
+                                    <th>Period</th>
+                                    @if($type === 'billing organization')
+                                        <th>Due date</th>
+                                    @endif
+                                    <th>{{ $amount_field_name }}</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
 
-                        <thead>
-                            <tr>
-                                <th>Issue date</th>
-                                <th>Period</th>
-                                @if($type === 'billing organization')
-                                    <th>Due date</th>
-                                @endif
-                                <th>{{ $amount_field_name }}</th>
-                                <th><!-- dummy th for action buttons--></th>
-                            </tr>
-                        </thead>
+                            <tbody>
 
-                        <tbody>
+                            @foreach($records as $record)
+                                @include('records.record')
+                            @endforeach
 
-                        @foreach($records as $record)
-                            @include('records.record')
-                        @endforeach
+                            </tbody>
 
-                        </tbody>
+                        </table>
 
-                        <tfoot>
-                            <tr>
-                                <td colspan="5" class="bordered centere aligned">
-                                <!--footer content-->
-                                </td>
-                            </tr>
-                        </tfoot>
-
-                    </table>
-                     @endif
-
-                    @include('records.addRecordModal')
+                        @include('records.addRecordModal')
                     </div><!-- basic segment end -->
                 </div><!-- column end -->
                 @include('stats.sidebar')

@@ -36,7 +36,6 @@ class StatisticsTest extends TestCase
         unset($this->billOrgs);
         parent::tearDown();
     }
-    
     public function testStatisticsCanBeCreated(){
         self::assertInstanceOf(Statistics:: class, new Statistics());
     }
@@ -94,7 +93,6 @@ class StatisticsTest extends TestCase
 
     public function testCanGetBillsTotalAmountForCurrMonth(){
         $currMonthBills = $this->createBillsForCurrentMonth($this->billOrgs[0],10);
-        $this->createBillsForPast6MonthsExcludeCurrMonth();
         $expected = $currMonthBills->sum('amount');
         $actual = $this->stats->getBillsTotalAmountForCurrMonth($this->billOrgs[0]);
         self::assertEquals($expected, $actual);
