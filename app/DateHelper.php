@@ -19,7 +19,7 @@ class DateHelper{
 
     public static function lastDayOfLastMonth(){
       $date = new Carbon('last day of last month');
-      $date->endOfday();
+      $date->startOfDay();
       return $date;
     }
 }
