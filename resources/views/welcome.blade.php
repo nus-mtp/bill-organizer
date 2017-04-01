@@ -135,7 +135,7 @@
 
         <div class="hero">
             <div class="title">
-              <img src="/icon.png" style="height: 100px;vertical-align:middle">
+              <img src="/icon.png" style="height: 50px;vertical-align:middle">
               <div class="title-text">
                 Bill<font color="white">Organiser</font>
               </div>
