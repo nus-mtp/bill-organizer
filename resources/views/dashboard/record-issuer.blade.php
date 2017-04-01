@@ -69,8 +69,8 @@
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
     <script>
     $(function(){
-        $('.datatable').DataTable();
         onRecordsPageLoad(window);
+        $('.datatable').DataTable();
     })
     </script>
 <!-- end page specific scripts -->

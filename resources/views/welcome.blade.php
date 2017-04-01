@@ -47,10 +47,22 @@
 
                         <div class="ui small register modal">
                           <div class="header">Register</div>
-                          <div class="content" style="text-align:left;">
+                          <div class="content">
+                              
+                              <div class="ui tiny register error message hidden">
+                                      <ul>
+                                          @if ($errors->has('name'))
+                                            <li id="regnameerror">{{ $errors->first('name') }}</li>
+                                          @endif
+                                          @if ($errors->has('email'))
+                                            <li id="regemailerror">{{ $errors->first('email') }}</li>
+                                          @endif
+                                      </ul>
+                                  </div>
+                              
                               <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
                                 {{ csrf_field() }}
-                                  <div class="ui tiny error message"></div>
+                                  
                                 <div class="inline field">
                                   <label for="name">Name <span class="atn">*</span></label>
                                   <input id="name" type="text" name="name" placeholder="Name" style="margin-left: 5.5em;">
@@ -79,9 +91,20 @@
                         <div class="ui small login modal">
                           <div class="header">Login</div>
                           <div class="content">
+                              <div class="ui tiny login error message hidden">
+                                      <ul>
+                                          @if ($errors->login->has('email'))
+                                            <li id="loginemailerror">{{ $errors->login->first('email') }}</li>
+                                          @endif
+
+                                          @if ($errors->login->has('password'))
+                                            <li id="loginpwerror">{{ $errors->login->first('password') }}</li>
+                                          @endif
+                                      </ul>
+                                  </div>
                             <form class="ui login form" id="login" role="form" method="POST" action="{{ route('login') }}">
                               {{ csrf_field() }}
-                                <div class="ui tiny error message"></div>
+                                
                               <div class="inline field">
                                 <label for="email">Email Address <span class="atn">*</span></label>
                                 <input id="email" type="text" name="email">
@@ -112,7 +135,7 @@
 
         <div class="hero">
             <div class="title">
-              <img src="/icon.png" style="height: 100px;vertical-align:middle">
+              <img src="/icon.png" style="height: 50px;vertical-align:middle">
               <div class="title-text">
                 Bill<font color="white">Organiser</font>
               </div>
@@ -134,23 +157,23 @@
             <div class="column">
               <i class="large green file icon"></i>
               <h1 class="ui header featured-headline">File Bills and Statements</h1>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              <p>Automatically organise your uploaded bills</p>
             </div>
 
             <div class="column">
               <i class="large green search icon"></i>
-              <h1 class="ui header featured-headline">Ultra Fast Search</h1>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              <h1 class="ui header featured-headline">Fast Search</h1>
+              <p>Quickly and efficiently search for bills by date</p>
             </div>
 
             <div class="column">
               <i class="large green bar chart icon"></i>
               <h1 class="ui header featured-headline">Statistic Insights</h1>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              <p>View aggregate statistics of your expenses</p>
             </div>
-
+        
          </div>
-
+        
         </div>
 
 
@@ -160,6 +183,14 @@
         <script type="text/javascript">
           $(function(){
             onLandingPageLoad();
+              if(document.getElementById('regemailerror') || document.getElementById('regnameerror')){
+                  $('.register.modal').modal('show');
+                  $('.register.error.message').show();
+              }
+              if(document.getElementById('loginemailerror') || document.getElementById('loginpwerror')){
+                  $('.login.modal').modal('show');
+                  $('.login.error.message').show();
+              }
 
             Typed.new(".hero-text .typed-text", {
               strings: ["Being Organized", "Is Being In Control.", "Get started now"],
@@ -177,6 +208,7 @@
             })
 
           })
+          
         </script>
 
     </body>
