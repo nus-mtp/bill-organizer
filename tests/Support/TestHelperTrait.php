@@ -105,6 +105,10 @@ trait TestHelperTrait
         $record->path_to_file = "/sroage/com/example/1/file123.pdf";
         $record->user_id = $user->id;
         $record->record_issuer_id = $orgModel->id;
+        // must use factory because the idea is that Record must have a template. TempRecord doesn't have to.
+        $record->template_id = factory(\App\Template::class)->create([
+            'record_issuer_id' => $orgModel->id
+        ])->id;
         return $record;
     }
 

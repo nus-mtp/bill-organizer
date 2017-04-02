@@ -1,17 +1,20 @@
 <?php
 
-
 namespace Tests\Unit;
 
+use Tests\TestCase;
+use Tests\Support\TestHelperTrait;
+use Tests\Support\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use App\Record;
 use App\RecordIssuer;
 use App\RecordIssuerType;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\Support\TestHelperTrait;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Template;
+use App\User;
 
-class RecordIssuerTest extends TestCase{
+class RecordIssuerTest extends TestCase
+{
     use DatabaseMigrations;
     use DatabaseTransactions;
     use TestHelperTrait;
@@ -20,13 +23,56 @@ class RecordIssuerTest extends TestCase{
 
     private $user;
 
-    public function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
-        $this->prepareDbForTests();
+
+        $this->runDatabaseMigrations();
+
         $this->user = $this->generateUserInDb();
+        $this->record_issuer = factory(RecordIssuer::class)->create([
+            'user_id' => $this->user->id
+        ]);
+        factory(Record::class)->create([
+            'record_issuer_id' => $this->record_issuer->id,
+            'user_id' => $this->user->id
+        ]);
+        factory(Template::class)->create([
+            'record_issuer_id' => $this->record_issuer->id
+        ]);
     }
 
-    public function testCanCreateEmptyRecordIssuerClass(){
+    public function testGetUser()
+    {
+        $this->assertNotNull($this->record_issuer->user);
+    }
+
+    public function testGetName() {
+        $this->assertNotNull($this->record_issuer->name);
+    }
+
+    public function testGetRecords()
+    {
+        $this->assertNotNull($this->record_issuer->records);
+    }
+
+    public function testGetIssuerType()
+    {
+        $this->assertNotNull($this->record_issuer->issuer_type);
+    }
+
+    public function testGetTemplates()
+    {
+        $this->assertNotNull($this->record_issuer->templates);
+    }
+
+    public function testGetLatestTemplate()
+    {
+        $this->assertNotNull($this->record_issuer->latest_template());
+    }
+
+    public function testCanCreateEmptyRecordIssuerClass()
+    {
        $this->assertInstanceOf(RecordIssuer::class, new RecordIssuer());
     }
 
@@ -53,6 +99,5 @@ class RecordIssuerTest extends TestCase{
         $actual = $recordIssuer->user_id;
         self::assertEquals($expected,$actual);
     }
-
 
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 class Record extends Model
@@ -20,7 +21,22 @@ class Record extends Model
     ];
 
     public $fillable = ['issue_date', 'due_date', 'period', 'amount', 'path_to_file',
-        'record_issuer_id'];
+        'record_issuer_id', 'template_id'];
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($record) {
+            DB::transaction(function () use ($record) {
+                $record->pages()->delete();
+            });
+        });
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function issuer() {
         return $this->belongsTo(RecordIssuer::class, 'record_issuer_id');
@@ -43,14 +59,19 @@ class Record extends Model
         return $this->issuer_type->type;
     }
 
-    // TODO: this is buggy. Fix this later. Type is ID, not string
     public function is_issuer_type_bill()
     {
         return $this->issuer_type_name() === RecordIssuerType::BILLORG_TYPE_NAME;
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function pages()
+    {
+        return $this->hasMany(RecordPage::class);
+    }
+
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
     }
 
     public function scopeCurrMonthBills($query) {
@@ -70,4 +91,11 @@ class Record extends Model
         $this->attributes['period'] = Carbon::parse($value);
     }
 
+    public function setIssueDateAttribute($value) {
+        $this->attributes['issue_date'] = Carbon::parse($value);
+    }
+
+    public function setDueDateAttribute($value) {
+        $this->attributes['due_date'] = Carbon::parse($value);
+    }
 }

@@ -417,3 +417,9 @@ var exportModules = (function (window) {
   window.onLandingPageLoad = onLandingPageLoad
 })(window)
 
+// for detecting active menu item in edit record
+$('.select').click(function(){
+    $('.select').removeClass("active");
+    $('.select').removeClass("doing");
+    $(this).addClass("active doing");
+});

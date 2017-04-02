@@ -10,7 +10,7 @@
         "laravel/tinker": "~1.0",
         "fzaninotto/faker": "~1.6",
         "ext-imagick": "*",
-        "thiagoalessio/tesseract_ocr": "1.0.0-RC" 
+        "thiagoalessio/tesseract_ocr": "1.0.0-RC"
     },
     "require-dev": {
         "filp/whoops": "^2.1",

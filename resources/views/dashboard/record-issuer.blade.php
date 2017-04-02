@@ -23,7 +23,6 @@
                     </button>
 
                     <div class="ui basic segment">
-
                         <div class="ui right floated blue labeled add-record button" style="margin-top:13px;">
                             <div class="ui blue icon button">
                                 <i class="add icon"></i>
@@ -65,6 +64,20 @@
 @endsection
 <!-- page specific scripts -->
 @push('module_scripts')
+
+    {{-- TODO: Once it's confirmed that we don't need this old method of storing record, delete--}}
+    {{-- TODO: Kenan move this to app.js --}}
+    {{--<script>--}}
+        {{--$( document ).ready(function() {--}}
+            {{--$('.experimental-add-record.button').click(function() {--}}
+                {{--$('.ui.modal.experimental-add-record').modal({--}}
+                    {{--onApprove: function() {--}}
+                        {{--$('form#experimental-add-record').submit();--}}
+                    {{--}--}}
+                {{--}).modal('show');--}}
+            {{--});--}}
+        {{--});--}}
+    {{--</script>--}}
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
     <script>

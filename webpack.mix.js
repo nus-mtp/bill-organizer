@@ -14,13 +14,14 @@ mix.browserSync('localhost:8000')
  */
 
 mix.copy('semantic/dist/semantic.css', 'resources/assets/sass/semantic.css')
-  .copy('semantic/dist/semantic.js', 'resources/assets/js/semantic.js')
-  .js('resources/assets/js/app.js', 'public/js').extract([
-    'jquery',
-    'lodash',
-    'axios',
-    './resources/assets/js/semantic.js'
-  ]).sass('resources/assets/sass/app.scss', 'public/css')
+    .copy('semantic/dist/semantic.js', 'resources/assets/js/semantic.js')
+    .copy('resources/assets/js/modules/edit_record.js', 'public/js/modules')
+    .js('resources/assets/js/app.js', 'public/js').extract([
+        'jquery',
+        'lodash',
+        'axios',
+        './resources/assets/js/semantic.js'
+    ]).sass('resources/assets/sass/app.scss', 'public/css')
 
 // Full API
 // mix.js(src, output);

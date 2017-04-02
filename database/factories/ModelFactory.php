@@ -12,13 +12,17 @@
 */
 
 use Carbon\Carbon;
-// use Faker/Generator //use with full namespace to avoid platform error
-// use App\FieldAreas;
+use Faker\Generator;
+use Illuminate\Support\Facades\DB;
+
+use App\FieldArea;
 use App\Record;
 use App\RecordIssuer;
 use App\RecordIssuerType;
 use App\User;
-//use App\Template;
+use App\Template;
+use App\TempRecord;
+use App\TempRecordPage;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Faker\Generator $faker) {
@@ -78,11 +82,28 @@ $factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, functi
     $issue_date = Carbon::createFromTimestamp($faker->unique()->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
-        'issue_date' => $issue_date,
-        'due_date' => $due_date ,
+        'issue_date' => $issue_date->toDateString(),
+        'due_date' => $due_date->format('Y-m-d'),
         'period' => $issue_date->format('Y-m'),
         'amount' => $faker->randomFloat(2, 0, 5000),
         'path_to_file' => 'whatever/tmp/file.pdf',
+        'user_id' => $user_id = function() {
+            /* Cannot move this outside of the returned array and do $user_id = factory(App\User::class)->create()->id;
+             * because that will cause the factory to create a new user, even if user_id is overrode
+             */
+            return factory(App\User::class)->create()->id;
+        },
+        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
+            return factory(App\RecordIssuer::class)->create([
+                'type' => RecordIssuerType::BILLORG_TYPE_ID,
+                'user_id' => $user_id
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
+        }
     ];
 });
 
@@ -92,11 +113,28 @@ $factory->defineAs(App\Record::class,"curr_month_bill", function(Faker\Generator
     $issue_date = $faker->unique()->dateTimeBetween($from,$until);
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
-        'issue_date' => $issue_date,
-        'due_date' => $due_date ,
+        'issue_date' => $issue_date->format('Y-m-d'),
+        'due_date' => $due_date->format('Y-m-d'),
         'period' => $issue_date->format('Y-m'),
         'amount' => $faker->randomFloat(2, 0, 5000),
         'path_to_file' => 'whatever/tmp/file.pdf',
+        'user_id' => $user_id = function() {
+            /* Cannot move this outside of the returned array and do $user_id = factory(App\User::class)->create()->id;
+             * because that will cause the factory to create a new user, even if user_id is overrode
+             */
+            return factory(App\User::class)->create()->id;
+        },
+        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
+            return factory(App\RecordIssuer::class)->create([
+                'type' => RecordIssuerType::BILLORG_TYPE_ID,
+                'user_id' => $user_id
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
+        }
     ];
 });
 
@@ -129,44 +167,77 @@ $factory->define(Record::class, function(Faker\Generator $faker){
             return factory(App\User::class)->create()->id;
         },
         'path_to_file' => 'whatever/tmp/file.pdf',
-        'record_issuer_id' => function() use ($issuer_type, $user_id) {
+        'record_issuer_id' => $record_issuer_id = function() use ($issuer_type, $user_id) {
             return factory(App\RecordIssuer::class)->create([
                 'type' => $issuer_type,
                 'user_id' => $user_id
-            ]);
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
         }
     ];
 });
 
 
-/**
- * A4 pixels size is 2480x3508 in 300 DPI. Currently, the DPI we're using is supposedly not
- * going to be more than 300 DPI
- */
-/*$factory->define(FieldAreas::class, function(Generator $faker) {
-   return [
-       'page' => rand(),
-       'x' => rand(0, 2480),
-       'y' => rand(0, 3508),
-       'w' => rand(0, 2480),
-       'h' => rand(0, 3508)
-   ];
-});*/
-
-
-
-/*$factory->define(Template::class, function(Generator $faker) {
-    $record_issuer_id = factory(RecordIssuer::class)->create()->id;
-    $issue_date_area_id = factory(FieldAreas::class)->create()->id;
-    $due_date_area_id = factory(FieldAreas::class)->create()->id;
-    $period_area_id = factory(FieldAreas::class)->create()->id;
-    $amount_area_id = factory(FieldAreas::class)->create()->id;
-
+$factory->define(FieldArea::class, function(Generator $faker) {
     return [
-        'record_issuer_id' => $record_issuer_id,
-        'issue_date_area_id' => $issue_date_area_id,
-        'due_date_area_id' => $due_date_area_id,
-        'period_area_id' => $period_area_id,
-        'amount_area_id' => $amount_area_id
+        'page' => rand(1, 3),
+        'x' => $x = rand(0, Config::get('constants.A4_W_PIXELS') - 1),
+        'y' => $y = rand(0, Config::get('constants.A4_H_PIXELS') - 1),
+        'w' => rand(0, Config::get('constants.A4_W_PIXELS') - $x),
+        'h' => rand(0, Config::get('constants.A4_H_PIXELS') - $y)
     ];
-});*/
+});
+
+
+
+$factory->define(Template::class, function(Generator $faker) {
+    return [
+        'record_issuer_id' => function() {
+            return factory(RecordIssuer::class)->create()->id;
+        },
+        'issue_date_area_id' => function() {
+            return factory(FieldArea::class)->create()->id;
+        },
+        'due_date_area_id' => function() {
+            return factory(FieldArea::class)->create()->id;
+        },
+        'period_area_id' => function() {
+            return factory(FieldArea::class)->create()->id;
+        },
+        'amount_area_id' => function() {
+            return factory(FieldArea::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(TempRecord::class, function(Generator $faker) {
+    return [
+        'user_id' => $user_id = function() {
+            return factory(User::class)->create()->id;
+        },
+        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
+            return factory(RecordIssuer::class)->create([
+                'user_id' => $user_id
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
+        },
+        'path_to_file' => 'whatever/tmp/file.pdf'
+    ];
+});
+
+$factory->define(TempRecordPage::class, function(Generator $faker) {
+    return [
+        'temp_record_id' => function() {
+            return factory(TempRecord::class)->create()->id;
+        },
+        'path' => 'whatever/tmp/1/1.jpg'
+    ];
+});

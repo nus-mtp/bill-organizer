@@ -26,6 +26,14 @@ class RecordTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->runDatabaseMigrations();
+
+        // setup stuff you need for testing here, create models, create database if needed (Support/DatabaseMigrations
+        // trait do this for u, just import at top)
+        // $this->artisan('migrate');
+        // $this->artisan('db:seed');
+        // Eloquent::unguard(); disables mass assignment protection
         $this->prepareDbForTests();
         $this->user = $this->generateUserInDb();
         $this->billOrg = $this->createRandBillOrg($this->user);

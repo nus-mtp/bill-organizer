@@ -45,6 +45,10 @@ p {
   color: $smashed-pumpkin;
 }
 
+img {
+    max-width: 100%;
+}
+
 .full-height {
   height: 100vh;
 }
@@ -87,18 +91,22 @@ p {
 }
 
 .selRect {
-  width: auto;
-  height: auto;
-  position: absolute;
-  background-color: $manganese-blue;
-  border: black 1px dashed;
-  opacity: 0.3;
-  pointer-events: none;
+    width: auto;
+    height: auto;
+    position: absolute;
+    background-color: $manganese-blue;
+    border: black 1px dashed;
+    opacity: 0.3;
+    pointer-events: none;
 }
+
+.selRect.active {
+    background-color: $manganese-blue;
+}
+
 
 
 /*----------  layout rules  ----------*/
 .left-bordered {
   border-left: 1px solid #ccc;
 }
-

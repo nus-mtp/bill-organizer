@@ -7,6 +7,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 use Whoops\Util\Misc;
@@ -18,6 +19,7 @@ class ExceptionHandler extends Handler
     protected function convertExceptionToResponse(Exception $e)
     {
         // use whoops handler if environment is development
+
         if (config('app.debug'))
         {
             $whoopsExceptionHandler = new Run();
@@ -27,6 +29,8 @@ class ExceptionHandler extends Handler
             $this->returnJsonIfAjaxRequestReceived($whoopsExceptionHandler);
 
             $whoopsExceptionHandler->register();
+
+            $e = FlattenException::create($e);
 
             return Response::create(
                 $whoopsExceptionHandler->handleException($e),
