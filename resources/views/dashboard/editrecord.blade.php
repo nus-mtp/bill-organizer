@@ -39,7 +39,6 @@
             <div class="ui message" id="temp">for test</div>
             <form class="ui edit-record form" id="edit-record">
                 <div class="ui tiny error message" id="errormsg"></div>
-                
                 <div class="ui fluid four item compact labeled icon menu">
                     <a class="select item" id="issue" onclick="test('#selidate');">
                         <i class="grey edit icon" id="issuedateicon"></i>

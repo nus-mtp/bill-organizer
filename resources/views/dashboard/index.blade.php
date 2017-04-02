@@ -6,7 +6,7 @@
     <div class="ui fluid container">
         <div class="ui grid">
             <div class="sixteen wide column">
-                {{-- todo: first and second level breadscrump slots--}} @component('partials.breadscrumb') @slot('active_section') @endslot @endcomponent
+                {{-- todo: first and second level breadscrump slots--}} @component('partials.breadcrumbs') @slot('active_section') @endslot @endcomponent
             </div>
 
             @if(empty($record_issuers))
@@ -46,7 +46,7 @@
                     {{ csrf_field() }}
                     <div class="ui tiny error message"></div>
                     <div class="field">
-                        <label for="name">Name <atn>*</atn></label>
+                        <label for="name">Name <span class="atn">*</span></label>
                         <input id="name" type="text" name="name" placeholder="Enter record issuer name">
                     </div>
                     <div class="field">
@@ -57,8 +57,8 @@
                                     @endforeach
                                 </select>
                     </div>
-                    <tnc>
-                        <atn>*</atn> <i>Indicates required field</i></tnc>
+                    <span class="tnc">
+                        <span class="atn">*</span> <i>Indicates required field</i></span>
                 </form>
             </div>
         </div>
@@ -68,20 +68,30 @@
         </div>
     </div>
 
-    <!-- it doesnt delete according to which billorg was pressed D:
-    <div class="ui small record-issuer-del-cfm modal">
-        <i class="close icon"></i>
-        <div class="content">
-            <p>Are you sure you want to delete {{ $record_issuer->name }}</p>
-            <form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}" style="display: inline;">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button type="submit" class="mini inverted red compact ui icon right floated button">
-                <i class="trash icon"></i>
-            </button>
-            </form>
-        </div>
-    </div>-->
+    <!-- nope it still doesnt work nvm -->
+    {{--<div class="ui small record-issuer-del-cfm modal">--}}
+        {{--<i class="close icon"></i>--}}
+        {{--<div class="content">--}}
+            {{--<p>Are you sure you want to delete this record issuer?</p>--}}
+        {{--</div>--}}
+        {{--<div class="actions">--}}
+            {{--<form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}">--}}
+                {{--{{ csrf_field() }}--}}
+                {{--{{ method_field('DELETE') }}--}}
+                {{--<button type="submit" class="ui inverted red button">--}}
+                    {{--Delete--}}
+                {{--</button>--}}
+                {{--<div class="ui button black cancel">Cancel</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 </div>
 
 @endsection
+@push('module_scripts')
+<script>
+$(function () {
+   onDashboardIndexPageLoad(window);
+})
+</script>
+@endpush

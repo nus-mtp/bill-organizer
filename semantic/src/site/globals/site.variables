@@ -36,17 +36,17 @@ http://learnsemantic.com/developing/customizing.html
     Border Radius
 --------------------*/
 
-@relativeBorderRadius: @relative4px;
-@absoluteBorderRadius: @4px;
+@relativeBorderRadius: @relative2px;
+@absoluteBorderRadius: @2px;
 
 /*-------------------
     Brand Colors
 --------------------*/
 
-@primaryColor        : @blue;
+@primaryColor        : @emerald-green;
 @secondaryColor      : @black;
 
-@lightPrimaryColor   : @lightBlue;
+@lightPrimaryColor   : @sea-green;
 @lightSecondaryColor : @lightBlack;
 
 /*--------------
@@ -187,26 +187,36 @@ http://learnsemantic.com/developing/customizing.html
 --------------------*/
 
 /*---  Colors  ---*/
-@red              : #DB2828;
+@red              : #e53d00;
 @orange           : #F2711C;
-@yellow           : #FBBD08;
+@yellow           : #ffe900;
 @olive            : #B5CC18;
-@green            : #21BA45;
+@green            : #2ecc71;
 @teal             : #00B5AD;
-@blue             : #2185D0;
+@blue             : #2e7ecf;
 @violet           : #6435C9;
 @purple           : #A333C8;
 @pink             : #E03997;
 @brown            : #A5673F;
 @grey             : #767676;
 @black            : #1B1C1D;
+@emerald-green    : #2ecc71;
+@sea-green        : #229553;
+@coquelicot       : #e53d00;
+@middle-yellow    : #ffe900;
+@naples-yellow    : #fada5e;
+@smashed-pumpkin  : #f26c4f;
+@manganese-blue   : #2e7ecf;
+@azurish-white    : #dbf9f4;
+@peach            : #f7c597;
+@baby-powder      : #fffffa;
 
 /*---  Light Colors  ---*/
 @lightRed         : #FF695E;
 @lightOrange      : #FF851B;
 @lightYellow      : #FFE21F;
 @lightOlive       : #D9E778;
-@lightGreen       : #2ECC40;
+@lightGreen       : #2ecc71;
 @lightTeal        : #6DFFFF;
 @lightBlue        : #54C8FF;
 @lightViolet      : #A291FB;

@@ -74,6 +74,19 @@ class Record extends Model
         return $this->belongsTo(Template::class);
     }
 
+    public function scopeCurrMonthBills($query) {
+        $from  = DateHelper::firstDayOfCurrMonth();
+        $until = DateHelper::lastDayOfCurrMonth();
+        return $query->whereBetween('issue_date',[$from, $until]);
+    }
+
+    public function scopePastMonthsBills($query, $months){
+        if ((int)$months === 0) {return self::scopeCurrMonthBills($query);}
+        $until = DateHelper::lastDayOfCurrMonth();
+        $from = $until->copy()->subMonth($months);
+        return $query->whereBetween('issue_date', [$from, $until]);
+    }
+
     public function setPeriodAttribute($value) {
         $this->attributes['period'] = Carbon::parse($value);
     }

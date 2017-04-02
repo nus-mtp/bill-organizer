@@ -79,14 +79,62 @@ $factory->defineAs(App\RecordIssuer::class,RecordIssuerType::BANK_STATEMENT_TYPE
 });
 
 $factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, function(Faker\Generator $faker){
-    $issue_date = Carbon::createFromTimeStamp($faker->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
+    $issue_date = Carbon::createFromTimestamp($faker->unique()->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
-        'issue_date' => $issue_date,
-        'due_date' => $due_date ,
+        'issue_date' => $issue_date->toDateString(),
+        'due_date' => $due_date->format('Y-m-d'),
         'period' => $issue_date->format('Y-m'),
         'amount' => $faker->randomFloat(2, 0, 5000),
         'path_to_file' => 'whatever/tmp/file.pdf',
+        'user_id' => $user_id = function() {
+            /* Cannot move this outside of the returned array and do $user_id = factory(App\User::class)->create()->id;
+             * because that will cause the factory to create a new user, even if user_id is overrode
+             */
+            return factory(App\User::class)->create()->id;
+        },
+        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
+            return factory(App\RecordIssuer::class)->create([
+                'type' => RecordIssuerType::BILLORG_TYPE_ID,
+                'user_id' => $user_id
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
+        }
+    ];
+});
+
+$factory->defineAs(App\Record::class,"curr_month_bill", function(Faker\Generator $faker){
+    $from = \App\DateHelper::firstDayOfCurrMonth();
+    $until = \App\DateHelper::lastDayOfCurrMonth();
+    $issue_date = $faker->unique()->dateTimeBetween($from,$until);
+    $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
+    return [
+        'issue_date' => $issue_date->format('Y-m-d'),
+        'due_date' => $due_date->format('Y-m-d'),
+        'period' => $issue_date->format('Y-m'),
+        'amount' => $faker->randomFloat(2, 0, 5000),
+        'path_to_file' => 'whatever/tmp/file.pdf',
+        'user_id' => $user_id = function() {
+            /* Cannot move this outside of the returned array and do $user_id = factory(App\User::class)->create()->id;
+             * because that will cause the factory to create a new user, even if user_id is overrode
+             */
+            return factory(App\User::class)->create()->id;
+        },
+        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
+            return factory(App\RecordIssuer::class)->create([
+                'type' => RecordIssuerType::BILLORG_TYPE_ID,
+                'user_id' => $user_id
+            ])->id;
+        },
+        'template_id' => function() use ($record_issuer_id) {
+            return factory(Template::class)->create([
+                'record_issuer_id' => $record_issuer_id
+            ])->id;
+        }
     ];
 });
 

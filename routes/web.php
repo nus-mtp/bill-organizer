@@ -54,3 +54,16 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
 
     Route::get('/temp_record_pages/{temp_record_page}', 'TempRecordPageController@show')->name('show_temp_record_page');
 });
+
+// stats routes
+Route::group(['prefix'=>'stats', 'middleware' => 'auth'], function () {
+    Route::get('/{record_issuer}', [
+        'as'         => 'showAllTimeStats',
+        'uses'     => 'StatsController@index'
+    ]);
+
+    Route::get('/{record_issuer}/{month}', [
+        'as'         => 'showAllTimeStats',
+        'uses'     => 'StatsController@show'
+    ]);
+});

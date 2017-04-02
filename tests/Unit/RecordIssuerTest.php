@@ -29,9 +29,7 @@ class RecordIssuerTest extends TestCase
 
         $this->runDatabaseMigrations();
 
-        $this->user = $this->generateUsersInDatabase()[0];
-
-        $user = factory(User::class)->create();
+        $this->user = $this->generateUserInDb();
         $this->record_issuer = factory(RecordIssuer::class)->create([
             'user_id' => $this->user->id
         ]);
@@ -78,31 +76,28 @@ class RecordIssuerTest extends TestCase
        $this->assertInstanceOf(RecordIssuer::class, new RecordIssuer());
     }
 
-    public function testCanSaveRecordIssuerInDatabase()
-    {
-        $recordIssuer = $this->createRecordIssuerModel(self::FIRST_EXAMPLE_RECORD_ISSUER_NAME);
+    public function testCanSaveRecordIssuerInDb() {
+        $recordIssuer = $this->makeRecordIssuerWoFactory(self::FIRST_EXAMPLE_RECORD_ISSUER_NAME);
         $this->user->record_issuers()->save($recordIssuer);
         self::assertTrue($recordIssuer->exists);
     }
 
-    public function testCanCreateABillingOrganizationInDbUsingFactory()
-    {
-        $org = $this->generateBillOrgs($this->user,1)[0];
+    public function testCanCreateABillingOrganizationInDbUsingFactory(){
+        $org = $this->createRandBillOrg($this->user);
         self::assertTrue($org->exists);
     }
 
-    public function testCanCreateBankStatementOrgTypeInDbUsingFactory()
-    {
-        $org = $this->generateBanks($this->user, 1)[0];
+    public function testCanCreateBankStatementOrgTypeInDbUsingFactory(){
+        $org = $this->createRandStatementIssuer($this->user);
         self::assertTrue($org->exists);
     }
 
-    public function testCreatedOrganizationBelongToCorrectUser()
-    {
-        $recordIssuer = $this->createRecordIssuerModel(self::FIRST_EXAMPLE_RECORD_ISSUER_NAME);
+    public function testCreatedOrganizationShouldBelongToCorrectUser(){
+        $recordIssuer = $this->makeRecordIssuerWoFactory(self::FIRST_EXAMPLE_RECORD_ISSUER_NAME);
         $this->user->record_issuers()->save($recordIssuer);
         $expected = $this->user->id;
         $actual = $recordIssuer->user_id;
         self::assertEquals($expected,$actual);
     }
+
 }

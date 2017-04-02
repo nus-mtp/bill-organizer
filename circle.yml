@@ -2,7 +2,7 @@ machine:
   node:
     version: 6.9.5
   php:
-    version: 7.1.0
+    version: 7.0.11
   timezone:
     Asia/Singapore
   environment:
@@ -15,9 +15,20 @@ database:
       CREATE USER 'homestead'@'%' IDENTIFIED BY 'secret';
       GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%' WITH GRANT OPTION;"
 dependencies:
+  pre:
+    - yes "" | pecl install imagick
+    - echo "extension=imagick.so" > /opt/circleci/php/$(phpenv global)/etc/conf.d/imagick.ini
+    #- sudo apt-get update && sudo apt-get install php5-imagick && sudo php5enmod imagick
+    # - sudo apt-get --reinstall install libept1.4.12
+    # - sudo apt-get install -y aptitude
+    # - sudo aptitude -y install imagemagick
+    # - sudo aptitude -y install libmagickcore-dev
+    # - sudo aptitude -y install libmagickwand-dev
+    # - sudo aptitude -y install php-imagick
   override:
     - npm install
     - composer install
+    - composer update
 compile:
   override:
     - npm run production

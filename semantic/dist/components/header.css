@@ -323,13 +323,13 @@ h5.ui.header .sub.header {
 /*--- Red ---*/
 
 .ui.red.header {
-  color: #DB2828 !important;
+  color: #e53d00 !important;
 }
 a.ui.red.header:hover {
-  color: #d01919 !important;
+  color: #cc3600 !important;
 }
 .ui.red.dividing.header {
-  border-bottom: 2px solid #DB2828;
+  border-bottom: 2px solid #e53d00;
 }
 
 /* Inverted */
@@ -383,13 +383,13 @@ a.ui.inverted.olive.header:hover {
 /*--- Yellow ---*/
 
 .ui.yellow.header {
-  color: #FBBD08 !important;
+  color: #ffe900 !important;
 }
 a.ui.yellow.header:hover {
-  color: #eaae00 !important;
+  color: #e6d200 !important;
 }
 .ui.yellow.dividing.header {
-  border-bottom: 2px solid #FBBD08;
+  border-bottom: 2px solid #ffe900;
 }
 
 /* Inverted */
@@ -403,21 +403,21 @@ a.ui.inverted.yellow.header:hover {
 /*--- Green ---*/
 
 .ui.green.header {
-  color: #21BA45 !important;
+  color: #2ecc71 !important;
 }
 a.ui.green.header:hover {
-  color: #16ab39 !important;
+  color: #22be64 !important;
 }
 .ui.green.dividing.header {
-  border-bottom: 2px solid #21BA45;
+  border-bottom: 2px solid #2ecc71;
 }
 
 /* Inverted */
 .ui.inverted.green.header {
-  color: #2ECC40 !important;
+  color: #2ecc71 !important;
 }
 a.ui.inverted.green.header:hover {
-  color: #22be34 !important;
+  color: #22be64 !important;
 }
 
 /*--- Teal ---*/
@@ -443,13 +443,13 @@ a.ui.inverted.teal.header:hover {
 /*--- Blue ---*/
 
 .ui.blue.header {
-  color: #2185D0 !important;
+  color: #2e7ecf !important;
 }
 a.ui.blue.header:hover {
-  color: #1678c2 !important;
+  color: #2271c1 !important;
 }
 .ui.blue.dividing.header {
-  border-bottom: 2px solid #2185D0;
+  border-bottom: 2px solid #2e7ecf;
 }
 
 /* Inverted */
@@ -634,7 +634,7 @@ a.ui.inverted.grey.header:hover {
   padding: 0.8125rem 1rem;
   box-shadow: none;
   border: 1px solid #D4D4D5;
-  border-radius: 0.25rem;
+  border-radius: 0.125rem;
 }
 .ui.tiny.block.header {
   font-size: 0.875rem;
@@ -675,12 +675,12 @@ a.ui.inverted.grey.header:hover {
 }
 .ui.top.attached.header {
   margin-bottom: 0em;
-  border-radius: 0.25rem 0.25rem 0em 0em;
+  border-radius: 0.125rem 0.125rem 0em 0em;
 }
 .ui.bottom.attached.header {
   margin-top: 0em;
   border-top: none;
-  border-radius: 0em 0em 0.25rem 0.25rem;
+  border-radius: 0em 0em 0.125rem 0.125rem;
 }
 
 /* Attached Sizes */
