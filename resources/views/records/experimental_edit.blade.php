@@ -98,18 +98,18 @@
                             <div class="field">
                                 <label>Issue Date</label>
                                 <input type="date" name="issue_date" placeholder="Issue Date" id="issue_date"
-                                       value="{{$temp_record->issue_date->toDateString()}}">
+                                       value="{{$temp_record->issue_date ? $temp_record->issue_date->toDateString() : null}}">
                             </div>
                             <div class="field">
                                 <label>Record Period</label>
                                 <input type="month" name="period" placeholder="Period" id="period"
-                                       value="{{$temp_record->period->format('Y-m')}}">
+                                       value="{{$temp_record->period ? $temp_record->period->format('Y-m') : null}}">
                             </div>
                             @if($is_bill)
                                 <div class="field">
                                     <label>Due Date</label>
                                     <input type="date" name="due_date" placeholder="Due Date" id="due_date"
-                                           value="{{$temp_record->due_date->toDateString()}}">
+                                           value="{{$temp_record->due_date ? $temp_record->due_date->toDateString() : null}}">
                                 </div>
                             @endif
                             <div class="field">

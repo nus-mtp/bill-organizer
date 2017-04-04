@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 class Record extends Model
@@ -29,6 +30,20 @@ class Record extends Model
         static::deleting(function($record) {
             DB::transaction(function () use ($record) {
                 $record->pages()->delete();
+
+                if(Storage::exists($record->path_to_file)) {
+                    Storage::delete($record->path_to_file);
+                }
+
+                // TODO: paths should be handled by filehandler helper
+                // TODO: TempRecord and Record has different attr name that refers to RecordIssuer
+                $user_id = auth()->id();
+                $record_issuer = $record->issuer;
+                $record_dir = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/{$record->id}/";
+
+                if(Storage::exists($record_dir)) {
+                    Storage::deleteDirectory($record_dir);
+                }
             });
         });
     }
