@@ -7,7 +7,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>BillOrganiser</title>
+        <title>Owlganizer</title>
 
         <link rel="icon" type="image/ico" href="">
         <!-- Local -->
@@ -137,7 +137,7 @@
             <div class="title">
               <img src="/icon.png" style="height: 50px;vertical-align:middle">
               <div class="title-text">
-                Bill<font color="white">Organiser</font>
+                Owl<font color="white">ganizer</font>
               </div>
             </div>
 

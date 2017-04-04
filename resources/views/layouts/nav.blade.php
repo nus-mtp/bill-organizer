@@ -3,7 +3,7 @@
 <div class="ui top fixed menu" style="background:#2ecc71;">
     <div class="ui container">
         <a href="{{ url('/') }}" class="header item"><img class="logo" src="{{url('alt-icon.png')}}">
-            &nbsp&nbsp&nbsp&nbsp BillOrganiser
+            &nbsp&nbsp&nbsp&nbsp Owlganizer
         </a>
 
         @if (Auth::check())
