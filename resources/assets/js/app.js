@@ -253,8 +253,6 @@ const onRecordsPageLoad = function (window) {
   })
 
   $('.ui.form.edit-record').form({
-    inline: true,
-    on: 'blur',
     fields: {
       issuedate: {
         identifier: 'issue',
@@ -422,4 +420,5 @@ $('.select').click(function(){
     $('.select').removeClass("active");
     $('.select').removeClass("doing");
     $(this).addClass("active doing");
+    clearError();
 });

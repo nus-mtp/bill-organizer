@@ -115,6 +115,7 @@
     // to be replaced later with a single array of images/urls
     var img1 = "{{url('placeholderbill.jpg')}}";
     var img2 = "{{url('placeholderbill2.jpg')}}";
+    var ImgPos;
     
     billImg.onload = function() {
         ImgPos = FindPosition(billImg);
@@ -294,14 +295,19 @@
         PosY = PosY - ImgPos[1];
         tempActField = $('.doing').get(0);
 
-        if (tempActField.id == 'issue') {
-            issueDateC = [PosX, PosY];
-        } else if (tempActField.id == 'period') {
-            recPeriodC = [PosX, PosY];
-        } else if (tempActField.id == 'duedate') {
-            dueDateC = [PosX, PosY];
-        } else if (tempActField.id == 'amtdue') {
-            amtDueC = [PosX, PosY];
+        if (tempActField) {
+            if (tempActField.id == 'issue') {
+                issueDateC = [PosX, PosY];
+            } else if (tempActField.id == 'period') {
+                recPeriodC = [PosX, PosY];
+            } else if (tempActField.id == 'duedate') {
+                dueDateC = [PosX, PosY];
+            } else if (tempActField.id == 'amtdue') {
+                amtDueC = [PosX, PosY];
+            }
+        }
+        else {
+            displayError("Please click on an item below before selecting");
         }
         selecting = true;
     }
@@ -359,7 +365,7 @@
             drawRect('selamtdue', amtDueC);
             document.getElementById('selamtdue').setAttribute('data-page', currPage);
         } else {
-            displayError("Please click on a field before selecting");
+            displayError("Please click on an item below before selecting");
         }
         selecting = false;
     }
@@ -413,7 +419,7 @@
             tempCoords = formatCoords(tempCoords);
             drawRect('selamtdue', tempCoords);
         } else {
-            displayError("Please click on a field before selecting");
+            displayError("Please click on an item below before selecting");
         }
     }
 
