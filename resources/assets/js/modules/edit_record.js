@@ -24,9 +24,9 @@ var img_urls = [];
 
 // TEDDY
 // TODO: If coords exists, should populate the input fields that show the coords too
-$(document).ready(function() {
+$(document).ready(function () {
     var billPSelector = ".bill-image #bill-wrapper > p.img-url";
-    $(billPSelector).each(function(_) {
+    $(billPSelector).each(function (_) {
         var this_url = this.innerText;
         img_urls.push(this_url);
     });
@@ -42,7 +42,7 @@ $(document).ready(function() {
         loadAttrstoBox('due_date', 'selddate');
     }
 
-    billImg.onload = function() {
+    billImg.onload = function () {
         issueDateC = resizeNCoords(nIssueDateC);
         recPeriodC = resizeNCoords(nRecPeriodC);
         dueDateC = resizeNCoords(nDueDateC);
@@ -84,10 +84,10 @@ $(document).ready(function() {
 // END OF TEDDY
 
 // disable default image drag action so you can drag select box later
-billImg.ondragstart = function(event) {
+billImg.ondragstart = function (event) {
     event.preventDefault();
 };
-window.onresize = function(event) {
+window.onresize = function (event) {
     issueDateC = resizeNCoords(nIssueDateC);
     recPeriodC = resizeNCoords(nRecPeriodC);
     dueDateC = resizeNCoords(nDueDateC);
@@ -95,6 +95,11 @@ window.onresize = function(event) {
 
     changePage(0);
 };
+
+function selAnother(id) {
+    $('.selRect').removeClass("active");
+    $(id).addClass("active");
+}
 
 function displayError(message) {
     // uses the error message that comes with the semantic ui form
@@ -133,38 +138,36 @@ function changePage(num) {
 // TODO: Should add validation for coords
 // use this to load attribute when page loads for the first time
 function loadAttrstoBox(input, box) {
-    var id = input+"_page";
+    var id = input + "_page";
     document.getElementById(box).setAttribute('data-page', document.getElementById(id).value);
     temp = [0, 0, 0, 0, 0, 0];
-    id = input+"_x";
+    id = input + "_x";
     temp[0] = Number(document.getElementById(id).value);
-    id = input+"_y"
+    id = input + "_y"
     temp[1] = Number(document.getElementById(id).value);
-    id = input+"_w"
+    id = input + "_w"
     temp[4] = Number(document.getElementById(id).value);
-    id = input+"_h"
+    id = input + "_h"
     temp[5] = Number(document.getElementById(id).value);
     temp[2] = temp[0] + temp[4];
     temp[3] = temp[1] + temp[5];
     if (box == 'selidate') {
         nIssueDateC = temp;
-    }
-    else if (box == 'selrperiod') {
+    } else if (box == 'selrperiod') {
         nRecPeriodC = temp;
-    }
-    else if (box == 'selddate') {
+    } else if (box == 'selddate') {
         nDueDateC = temp;
-    }
-    else if (box == 'selamtdue') {
+    } else if (box == 'selamtdue') {
         nAmtDueC = temp;
-    }
-    else {
+    } else {
         return;
     }
 }
 // renders box given a set of coordinates
 function drawRect(box, coords) {
-    if (coords == null) { return; }
+    if (coords == null) {
+        return;
+    }
     document.getElementById(box).style.display = 'block';
     document.getElementById(box).style.left = coords[0] + 'px';
     document.getElementById(box).style.top = coords[1] + 'px';
@@ -232,7 +235,9 @@ function formatCoords(coords) {
 
 // return coords ratios
 function normalizeCoords(coords) {
-    if (coords == null) { return; }
+    if (coords == null) {
+        return;
+    }
     var temp = [0, 0, 0, 0, 0, 0];
     var width = billImg.width;
     var height = billImg.height;
@@ -247,7 +252,9 @@ function normalizeCoords(coords) {
 
 // converts normalized coords to rendering coords
 function resizeNCoords(coords) {
-    if (coords == null) { return; }
+    if (coords == null) {
+        return;
+    }
     var temp = [0, 0, 0, 0, 0, 0];
     var width = billImg.width;
     var height = billImg.height;
@@ -263,20 +270,20 @@ function resizeNCoords(coords) {
 // given input (e.g. 'issue_date') and its related values,
 // fill in the hidden attribute fields for this input
 function updateHiddenInput(input, page, x, y, w, h) {
-    var id = input+"_page";
+    var id = input + "_page";
     document.getElementById(id).value = page;
-    id = input+"_x";
+    id = input + "_x";
     document.getElementById(id).value = x;
-    id = input+"_y"
+    id = input + "_y"
     document.getElementById(id).value = y;
-    id = input+"_w"
+    id = input + "_w"
     document.getElementById(id).value = w;
-    id = input+"_h"
+    id = input + "_h"
     document.getElementById(id).value = h;
 }
 
 function FindPosition(oElement) {
-    if (typeof(oElement.offsetParent) != "undefined") {
+    if (typeof (oElement.offsetParent) != "undefined") {
         for (var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent) {
             posX += oElement.offsetLeft;
             posY += oElement.offsetTop;
@@ -303,25 +310,28 @@ function getCoordinates(e) {
     }
     PosX = PosX - ImgPos[0];
     PosY = PosY - ImgPos[1];
-    var activeField = document.activeElement;
-    tempActField = activeField;
-    //to prevent validation error from acting up
-    tempActField.value = "selecting...";
+    tempActField = $('.doing').get(0);
 
-    if (document.activeElement.id == 'test_issue_date') {
-        issueDateC = [PosX, PosY];
-    } else if (document.activeElement.id == 'test_period') {
-        recPeriodC = [PosX, PosY];
-    } else if (document.activeElement.id == 'test_due_date') {
-        dueDateC = [PosX, PosY];
-    } else if (document.activeElement.id == 'test_amount') {
-        amtDueC = [PosX, PosY];
+    if (tempActField) {
+        if (tempActField.id == 'issue') {
+            issueDateC = [PosX, PosY];
+        } else if (tempActField.id == 'period') {
+            recPeriodC = [PosX, PosY];
+        } else if (tempActField.id == 'duedate') {
+            dueDateC = [PosX, PosY];
+        } else if (tempActField.id == 'amtdue') {
+            amtDueC = [PosX, PosY];
+        }
+    } else {
+        displayError("Please click on an item below before selecting");
     }
     selecting = true;
 }
 
 function getCoordsAgain(e) {
-    if (!selecting) { return; }
+    if (!selecting) {
+        return;
+    }
 
     var PosX = 0;
     var PosY = 0;
@@ -338,7 +348,9 @@ function getCoordsAgain(e) {
     PosX = PosX - ImgPos[0];
     PosY = PosY - ImgPos[1];
 
-    if (tempActField.id == 'test_issue_date') {
+    if (tempActField.id == 'issue') {
+        $('#issuedateicon').removeClass('edit');
+        $('#issuedateicon').addClass('check circle outline');
         issueDateC = issueDateC.concat([PosX, PosY]);
         issueDateC = formatCoords(issueDateC);
         nIssueDateC = normalizeCoords(issueDateC);
@@ -346,9 +358,10 @@ function getCoordsAgain(e) {
         document.getElementById('selidate').setAttribute('data-page', currPage);
         // fill hidden fields
         updateHiddenInput('issue_date', currPage, nIssueDateC[0], nIssueDateC[1], nIssueDateC[4], nIssueDateC[5]);
-        // fill displayed fields
-        tempActField.value = issueDateC;
-    } else if (tempActField.id == 'test_period') {
+
+    } else if (tempActField.id == 'period') {
+        $('#rperiodicon').removeClass('edit');
+        $('#rperiodicon').addClass('check circle outline');
         recPeriodC = recPeriodC.concat([PosX, PosY]);
         recPeriodC = formatCoords(recPeriodC);
         nRecPeriodC = normalizeCoords(recPeriodC);
@@ -356,9 +369,10 @@ function getCoordsAgain(e) {
         document.getElementById('selrperiod').setAttribute('data-page', currPage);
         // fill hidden fields
         updateHiddenInput('period', currPage, nRecPeriodC[0], nRecPeriodC[1], nRecPeriodC[4], nRecPeriodC[5]);
-        // fill displayed fields
-        tempActField.value = recPeriodC;
-    } else if (tempActField.id == 'test_due_date') {
+
+    } else if (tempActField.id == 'duedate') {
+        $('#duedateicon').removeClass('edit');
+        $('#duedateicon').addClass('check circle outline');
         dueDateC = dueDateC.concat([PosX, PosY]);
         dueDateC = formatCoords(dueDateC);
         nDueDateC = normalizeCoords(dueDateC);
@@ -366,9 +380,10 @@ function getCoordsAgain(e) {
         document.getElementById('selddate').setAttribute('data-page', currPage);
         // fill hidden fields
         updateHiddenInput('due_date', currPage, nDueDateC[0], nDueDateC[1], nDueDateC[4], nDueDateC[5]);
-        // fill displayed fields
-        tempActField.value = dueDateC;
-    } else if (tempActField.id == 'test_amount') {
+
+    } else if (tempActField.id == 'amtdue') {
+        $('#amtdueicon').removeClass('edit');
+        $('#amtdueicon').addClass('check circle outline');
         amtDueC = amtDueC.concat([PosX, PosY]);
         amtDueC = formatCoords(amtDueC);
         nAmtDueC = normalizeCoords(amtDueC);
@@ -376,10 +391,9 @@ function getCoordsAgain(e) {
         document.getElementById('selamtdue').setAttribute('data-page', currPage);
         // fill hidden fields
         updateHiddenInput('amount', currPage, nAmtDueC[0], nAmtDueC[1], nAmtDueC[4], nAmtDueC[5]);
-        // fill displayed fields
-        tempActField.value = amtDueC;
+
     } else {
-        displayError("Please click on a field before selecting");
+        displayError("Please click on an item below before selecting");
     }
     selecting = false;
 }
@@ -404,24 +418,36 @@ function getChangingCoords(e) {
     PosY = PosY - ImgPos[1];
     var tempCoords;
 
-    if (tempActField.id == 'test_issue_date') {
+    if (tempActField.id == 'issue') {
+        $('#issuedateicon').removeClass('grey');
+        $('#issuedateicon').removeClass('check circle outline');
+        $('#issuedateicon').addClass('green edit');
         tempCoords = issueDateC.concat([PosX, PosY]);
         tempCoords = formatCoords(tempCoords);
         drawRect('selidate', tempCoords);
-    } else if (tempActField.id == 'test_period') {
+    } else if (tempActField.id == 'period') {
+        $('#rperiodicon').removeClass('grey');
+        $('#rperiodicon').removeClass('check circle outline');
+        $('#rperiodicon').addClass('green edit');
         tempCoords = recPeriodC.concat([PosX, PosY]);
         tempCoords = formatCoords(tempCoords);
         drawRect('selrperiod', tempCoords);
-    } else if (tempActField.id == 'test_due_date') {
+    } else if (tempActField.id == 'duedate') {
+        $('#duedateicon').removeClass('grey');
+        $('#duedateicon').removeClass('check circle outline');
+        $('#duedateicon').addClass('green edit');
         tempCoords = dueDateC.concat([PosX, PosY]);
         tempCoords = formatCoords(tempCoords);
         drawRect('selddate', tempCoords);
-    } else if (tempActField.id == 'test_amount') {
+    } else if (tempActField.id == 'amtdue') {
+        $('#amtdueicon').removeClass('grey');
+        $('#amtdueicon').removeClass('check circle outline');
+        $('#amtdueicon').addClass('green edit');
         tempCoords = amtDueC.concat([PosX, PosY]);
         tempCoords = formatCoords(tempCoords);
         drawRect('selamtdue', tempCoords);
     } else {
-        displayError("Please click on a field before selecting");
+        displayError("Please click on an item below before selecting");
     }
 }
 
@@ -456,17 +482,25 @@ function coordsFailSafe(e) {
             PosY = 0;
         }
 
-        if (tempActField.id == 'test_issue_date') {
+        if (tempActField.id == 'issue') {
+            $('#issuedateicon').removeClass('edit');
+            $('#issuedateicon').addClass('check circle outline');
             issueDateC = issueDateC.concat([PosX, PosY]);
             document.getElementById("temp").innerHTML = "Image size: " + billsize +
                 "<br>" + "Issue Date: " + issueDateC;
-        } else if (tempActField.id == 'test_period') {
+        } else if (tempActField.id == 'period') {
+            $('#rperiodicon').removeClass('edit');
+            $('#rperiodicon').addClass('check circle outline');
             recPeriodC = recPeriodC.concat([PosX, PosY]);
             document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
-        } else if (tempActField.id == 'test_due_date') {
+        } else if (tempActField.id == 'duedate') {
+            $('#duedateicon').removeClass('edit');
+            $('#duedateicon').addClass('check circle outline');
             dueDateC = dueDateC.concat([PosX, PosY]);
             document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
-        } else if (tempActField.id == 'test_amount') {
+        } else if (tempActField.id == 'amtdue') {
+            $('#amtdueicon').removeClass('edit');
+            $('#amtdueicon').addClass('check circle outline');
             amtDueC = amtDueC.concat([PosX, PosY]);
             document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
         }

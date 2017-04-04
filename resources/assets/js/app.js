@@ -252,34 +252,34 @@ const onRecordsPageLoad = function (window) {
     }
   })
 
-  $('.ui.form.edit-record').form({
+  $('#coords-form').form({
     fields: {
-      issuedate: {
-        identifier: 'issue',
+      issue_date_page: {
+        identifier: 'issue_date_page',
         rules: [{
           type: 'empty',
-          prompt: 'Please enter the date of issue'
+          prompt: 'Please select the date of issue'
         }]
       },
-      recordperiod: {
-        identifier: 'period',
+      period_page: {
+        identifier: 'period_page',
         rules: [{
           type: 'empty',
-          prompt: 'Please enter the record period'
+          prompt: 'Please select the record period'
         }]
       },
-      duedate: {
-        identifier: 'duedate',
+      due_date_page: {
+        identifier: 'due_date_page',
         rules: [{
           type: 'empty',
-          prompt: 'Please enter the due date'
+          prompt: 'Please select the due date'
         }]
       },
-      amtdue: {
-        identifier: 'amtdue',
+      amount_page: {
+        identifier: 'amount_page',
         rules: [{
           type: 'empty',
-          prompt: 'Please enter the amount'
+          prompt: 'Please select the amount'
         }]
       }
     }

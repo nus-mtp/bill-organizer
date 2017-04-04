@@ -43,43 +43,37 @@
             </div>
 
             <div class="six wide column">
-                @if(!$edit_value_mode)
-                    <div class="ui message" id="temp">for test</div>
-                    <form id="test" class="ui edit-record form" id="edit-record">
-                        <div class="ui tiny error message" id="errormsg"></div>
-                        <div class="field">
-                            <label>Issue Date <atn>*</atn></label>
-                            <input type="text" name="issuedate" placeholder="Issue Date" id="test_issue_date" onfocus="clearError();">
-                        </div>
-                        <div class="field">
-                            <label>Record Period</label>
-                            <input type="text" name="recordperiod" placeholder="Record Period" id="test_period" onfocus="clearError();">
-                        </div>
-                        @if($is_bill)
-                            <div class="field">
-                                <label>Due Date</label>
-                                <input type="text" name="duedate" placeholder="Due Date" id="test_due_date" onfocus="clearError();">
-                            </div>
-                        @endif
-                        <div class="field">
-                            <label>Amount Due <atn>*</atn></label>
-                            <input type="text" name="amtdue" placeholder="e.g 400" id="test_amount" onfocus="clearError();">
-                        </div>
-                        <tnc>
-                            <atn>*</atn> <i>Indicates required field</i><br><br></tnc>
-                        {{--<div class="actions">--}}
-                        {{--<button class="ui positive button" type="submit">Submit</button>--}}
-                        {{--<button class="ui button" type="reset" onclick="$('form').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>--}}
-                        {{--<button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>--}}
-                        {{--</div>--}}
-                    </form>
-                @endif
-
+                
+                <div class="ui message" id="temp">for test</div>
+                <div class="ui tiny error message" id="errormsg"></div>
+                <div class="ui fluid four item compact labeled icon menu">
+                    <a class="select item" id="issue" onclick="selAnother('#selidate');">
+                        <i class="grey edit icon" id="issuedateicon"></i>
+                        Issue<br>Date
+                    </a>
+                    <a class="select item" id="period" onclick="selAnother('#selrperiod');">
+                        <i class="grey edit icon" id="rperiodicon"></i>
+                        Record<br>Period
+                    </a>
+                    <a class="select item" id="duedate" onclick="selAnother('#selddate');">
+                        <i class="grey edit icon" id="duedateicon"></i>
+                        Due<br>Date
+                    </a>
+                    <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
+                        <i class="grey edit icon" id="amtdueicon"></i>
+                        Amount<br>Due
+                    </a>
+                </div>                
+                <br><br>
+                
+                <!--hidden inputs below-->
                 <div>
                     <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">
                         {{ csrf_field() }}
                         @foreach($field_area_inputs as $key => $val)
-                            <input type="hidden" name="{{$key}}" id="{{$key}}" value="{{$val}}">
+                            <div class="field">
+                                <input type="hidden" name="{{$key}}" id="{{$key}}" value="{{$val}}">
+                            </div>
                         @endforeach
                         @if(!$edit_value_mode)
                             <div class="actions">

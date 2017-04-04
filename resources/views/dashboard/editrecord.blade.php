@@ -40,19 +40,19 @@
             <form class="ui edit-record form" id="edit-record">
                 <div class="ui tiny error message" id="errormsg"></div>
                 <div class="ui fluid four item compact labeled icon menu">
-                    <a class="select item" id="issue" onclick="test('#selidate');">
+                    <a class="select item" id="issue" onclick="selAnother('#selidate');">
                         <i class="grey edit icon" id="issuedateicon"></i>
                         Issue<br>Date
                     </a>
-                    <a class="select item" id="period" onclick="test('#selrperiod');">
+                    <a class="select item" id="period" onclick="selAnother('#selrperiod');">
                         <i class="grey edit icon" id="rperiodicon"></i>
                         Record<br>Period
                     </a>
-                    <a class="select item" id="duedate" onclick="test('#selddate');">
+                    <a class="select item" id="duedate" onclick="selAnother('#selddate');">
                         <i class="grey edit icon" id="duedateicon"></i>
                         Due<br>Date
                     </a>
-                    <a class="select item" id="amtdue" onclick="test('#selamtdue');">
+                    <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
                         <i class="grey edit icon" id="amtdueicon"></i>
                         Amount<br>Due
                     </a>
@@ -135,7 +135,7 @@
         changePage(0);
     };
     
-    function test(id) {
+    function selAnother(id) {
         $('.selRect').removeClass("active");
         $(id).addClass("active");
     }
