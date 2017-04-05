@@ -31,7 +31,7 @@ Download and install nodejs at https://nodejs.org/en/download/
 
 ### Windows
 1. Ghostscript
-   Download the `.exe.` file from [here](https://sourceforge.net/projects/ghostscript/files/GPL%20Ghostscript/9.09/)
+   Download the `.exe` file from [here](https://sourceforge.net/projects/ghostscript/files/GPL%20Ghostscript/9.09/)
 2. ImageMagick
    Follow the instructions [here](https://www.imagemagick.org/script/download.php#windows)
    If there's any configuration asking about ghostscript, choose yes?
