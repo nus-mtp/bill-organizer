@@ -17,7 +17,30 @@ extension=php_sockets.dll
 Download and install Composer at https://getcomposer.org/download/  
 Download and install nodejs at https://nodejs.org/en/download/
 
-## 3. Setup the project
+## 3. Install the following dependencies
+### Ubuntu 16.04
+1. Ghostscript  
+   `sudo apt-get install ghostscript libgs-dev`
+2. ImageMagick
+   Follow the instructions [here](https://www.imagemagick.org/script/install-source.php).  
+   Also, during the configure phase, use the `--with-gslib=yes` flag. ie: `./configure --with-gslib=yes`
+3. PHP Imagick extension
+   `sudo apt install php-imagick` (for php >=7.0)
+4. Tesseract
+   `sudo apt-get install tesseract-ocr`
+
+### Windows
+1. Ghostscript
+   Download the `.exe.` file from [here](https://sourceforge.net/projects/ghostscript/files/GPL%20Ghostscript/9.09/)
+2. ImageMagick
+   Follow the instructions [here](https://www.imagemagick.org/script/download.php#windows)
+   If there's any configuration asking about ghostscript, choose yes?
+3. PHP Imagick extension
+   Try [this](https://refreshless.com/blog/imagick-pecl-imagemagick-windows/)?
+4. Tesseract
+   Download version 3.02 from [here](https://sourceforge.net/projects/tesseract-ocr-alt/files/). I'm pretty sure you should download `tesseract-ocr-setup-3.02.02.exe`, but not sure if `tesseract-3.02.02-win32-lib-include-dirs.zip` is needed as well. Try it out.
+
+## 4. Setup the project
 1 clone project from github
 ```bash
 git clone git@github.com:nus-mtp/bill-organizer.git
