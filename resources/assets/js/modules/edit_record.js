@@ -140,6 +140,7 @@ function changePage(num) {
 function loadAttrstoBox(input, box) {
     var id = input + "_page";
     document.getElementById(box).setAttribute('data-page', document.getElementById(id).value);
+    var hasTemplate = (document.getElementById(box).getAttribute('data-page') != 0);
     temp = [0, 0, 0, 0, 0, 0];
     id = input + "_x";
     temp[0] = Number(document.getElementById(id).value);
@@ -153,12 +154,28 @@ function loadAttrstoBox(input, box) {
     temp[3] = temp[1] + temp[5];
     if (box == 'selidate') {
         nIssueDateC = temp;
+        if (hasTemplate) {
+            $('#issuedateicon').removeClass('grey edit');
+            $('#issuedateicon').addClass('green check circle outline');
+        }
     } else if (box == 'selrperiod') {
         nRecPeriodC = temp;
+        if (hasTemplate) {
+            $('#rperiodicon').removeClass('grey edit');
+            $('#rperiodicon').addClass('green check circle outline');
+        }
     } else if (box == 'selddate') {
         nDueDateC = temp;
+        if (hasTemplate) {
+            $('#duedateicon').removeClass('grey edit');
+            $('#duedateicon').addClass('green check circle outline');
+        }
     } else if (box == 'selamtdue') {
         nAmtDueC = temp;
+        if (hasTemplate) {
+            $('#amtdueicon').removeClass('grey edit');
+            $('#amtdueicon').addClass('green check circle outline');
+        }
     } else {
         return;
     }
@@ -486,23 +503,18 @@ function coordsFailSafe(e) {
             $('#issuedateicon').removeClass('edit');
             $('#issuedateicon').addClass('check circle outline');
             issueDateC = issueDateC.concat([PosX, PosY]);
-            document.getElementById("temp").innerHTML = "Image size: " + billsize +
-                "<br>" + "Issue Date: " + issueDateC;
         } else if (tempActField.id == 'period') {
             $('#rperiodicon').removeClass('edit');
             $('#rperiodicon').addClass('check circle outline');
             recPeriodC = recPeriodC.concat([PosX, PosY]);
-            document.getElementById("temp").innerHTML = "Record Period: " + recPeriodC;
         } else if (tempActField.id == 'duedate') {
             $('#duedateicon').removeClass('edit');
             $('#duedateicon').addClass('check circle outline');
             dueDateC = dueDateC.concat([PosX, PosY]);
-            document.getElementById("temp").innerHTML = "Due Date: " + dueDateC;
         } else if (tempActField.id == 'amtdue') {
             $('#amtdueicon').removeClass('edit');
             $('#amtdueicon').addClass('check circle outline');
             amtDueC = amtDueC.concat([PosX, PosY]);
-            document.getElementById("temp").innerHTML = "Amount Due: " + amtDueC;
         }
 
         //document.getElementById('temp').innerHTML = "Image size: " + billsize +

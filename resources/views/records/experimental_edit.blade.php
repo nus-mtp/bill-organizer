@@ -42,33 +42,31 @@
                 </center>
             </div>
 
-            <div class="six wide column">
-                
-                <div class="ui message" id="temp">for test</div>
-                <div class="ui tiny error message" id="errormsg"></div>
-                <div class="ui fluid four item compact labeled icon menu">
-                    <a class="select item" id="issue" onclick="selAnother('#selidate');">
-                        <i class="grey edit icon" id="issuedateicon"></i>
-                        Issue<br>Date
-                    </a>
-                    <a class="select item" id="period" onclick="selAnother('#selrperiod');">
-                        <i class="grey edit icon" id="rperiodicon"></i>
-                        Record<br>Period
-                    </a>
-                    <a class="select item" id="duedate" onclick="selAnother('#selddate');">
-                        <i class="grey edit icon" id="duedateicon"></i>
-                        Due<br>Date
-                    </a>
-                    <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
-                        <i class="grey edit icon" id="amtdueicon"></i>
-                        Amount<br>Due
-                    </a>
-                </div>                
-                <br><br>
-                
+            <div class="six wide column">                
                 <!--hidden inputs below-->
                 <div>
                     <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">
+                        <div class="ui tiny error message" id="errormsg"></div>
+                        @if($edit_value_mode)                
+                        <div class="ui fluid four item compact labeled icon menu">
+                            <a class="select item" id="issue" onclick="selAnother('#selidate');">
+                                <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
+                            </a>
+                            <a class="select item" id="period" onclick="selAnother('#selrperiod');">
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Record<br>Period
+                            </a>
+                            <a class="select item" id="duedate" onclick="selAnother('#selddate');">
+                                <i class="grey edit icon" id="duedateicon"></i>
+                                Due<br>Date
+                            </a>
+                            <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
+                                <i class="grey edit icon" id="amtdueicon"></i>
+                                Amount<br>Due
+                            </a>
+                        </div>                
+                        <br><br>
+                        @endif
+                        
                         {{ csrf_field() }}
                         @foreach($field_area_inputs as $key => $val)
                             <div class="field">
