@@ -1,6 +1,7 @@
 @extends('layouts.app')
 <!-- we want to have individual page display its title on top of browser -->
-@section('title', 'Dashboard') @section('content')
+@section('title', 'Dashboard')
+@section('content')
 <!--CONTENT-->
 <div class="ui main container">
     <div class="ui fluid container">

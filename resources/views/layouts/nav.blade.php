@@ -1,9 +1,11 @@
 <!--TOP MENU-->
-<header id="header">
-<div class="ui top fixed menu" style="background:#2ecc71;">
+<header id="header" class="brand-header">
+<div class="ui top fixed menu header">
     <div class="ui container">
-        <a href="{{ url('/') }}" class="header item"><img class="logo" src="{{url('alt-icon.png')}}">
-            &nbsp&nbsp&nbsp&nbsp Owlganizer
+        <a href="{{ url('/') }}" style="border-left:none" class="header item"><img class="logo" src="{{url('alt-icon.png')}}" >
+        <div class="brand-logo">
+            <span class="gray-text">Owl</span>ganizer
+        </div>
         </a>
 
         @if (Auth::check())

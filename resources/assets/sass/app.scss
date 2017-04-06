@@ -125,3 +125,34 @@
     padding-top:3%;
   }
 }
+
+.brand-header {
+  .header {
+    background:darken(#2ecc71,2%);
+    border:none;
+
+    a.item {
+      color:white;
+      border:none;
+    }
+
+    a.item.active {
+      color:white;
+    }
+
+    a.header.item {
+      text-align:cetner;
+      padding-left:20px;
+      font-size: 1.3rem;
+    }
+    .green-text {
+      color:#2ecc71;
+    }
+    .gray-text {
+      color: #2C2421;
+    }
+    .brand-logo {
+      margin-left:15px;
+    }
+  }
+}
