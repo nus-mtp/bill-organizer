@@ -168,7 +168,6 @@ const onDashboardIndexPageLoad = function (window) {
   $('.js-btn-del-billorg').click(function (e) {
     e.preventDefault()
     $deleteBillorgForm = $('#deleteBillorgForm')
-    console.log($deleteBillorgForm)
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
