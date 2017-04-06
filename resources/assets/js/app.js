@@ -84,8 +84,8 @@ const onLandingPageLoad = function () {
   })
 
   $('.register.form').form({
-      on: 'change',
-      inline: true,
+    on: 'change',
+    inline: true,
     fields: {
       name: {
         identifier: 'name',
@@ -100,10 +100,10 @@ const onLandingPageLoad = function () {
           type: 'empty',
           prompt: 'Please enter your email address'
         },
-        {
-          type: 'email',
-          prompt: 'Please enter a valid email address'
-        }]
+          {
+            type: 'email',
+            prompt: 'Please enter a valid email address'
+          }]
       },
       password: {
         identifier: 'password',
@@ -149,41 +149,54 @@ const onLandingPageLoad = function () {
     }
   })
 }
-const onDashboardIndexPageLoad = function(window) {
-    $('.add-bill-org.button').click(_ => {
-        $('.ui.modal.record-issuer').modal({
-            onApprove: function () {
-                $('.ui.form').submit()
+const onDashboardIndexPageLoad = function (window) {
+  $('.add-bill-org.button').click(_ => {
+    $('.ui.modal.record-issuer').modal({
+      onApprove: function () {
+        $('.ui.form').submit()
                 // need to return false to not close modal
                 // in case input failed the validation test
-                return false
-            },
-            onSuccess: function () {
-                $('form#add-record-issuer').submit()
-                $('.modal').modal('hide')
-            }
-        }).modal('show')
-    })
+        return false
+      },
+      onSuccess: function () {
+        $('form#add-record-issuer').submit()
+        $('.modal').modal('hide')
+      }
+    }).modal('show')
+  })
 
-    $('.del-bill-org.button').click(_ => {
-        event.stopPropagation()
-        event.preventDefault()
-        // $('.ui.modal.record-issuer-del-cfm').modal('show')
+  $('.js-btn-del-billorg').click(function (e) {
+    e.preventDefault()
+    $deleteBillorgForm = $('#deleteBillorgForm')
+    console.log($deleteBillorgForm)
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#2ecc71',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function (e) {
+      // console.log($deleteBillorgForm.attr('action'))
+      $deleteBillorgForm.submit()
+    }, function (dismiss) {
+      return
     })
+  })
 
-    $('.ui.form.record-issuer').form({
-        fields: {
-            name: {
-                identifier: 'name',
-                rules: [{
-                    type: 'empty',
-                    prompt: 'Please enter record issuer name'
-                }]
-            }
-        }
-    })
+  $('.ui.form.record-issuer').form({
+    fields: {
+      name: {
+        identifier: 'name',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please enter record issuer name'
+        }]
+      }
+    }
+  })
 }
-
 
 /* ----------   RecordIssuer.blade---------- */
 
@@ -276,8 +289,8 @@ const onRecordsPageLoad = function (window) {
     }, function (dismiss) {
       return
     })
-  })  
-  
+  })
+
   /* ----------  stats sidebar scripts  ---------- */
 
   let toggleStatsSidebar = function toggleStats () {
@@ -303,7 +316,7 @@ const onRecordsPageLoad = function (window) {
   let $statsContainer = $('.js-stats-container')
   let $billCounterText = $statsContainer.find('.js-bill-count .value')
   let $billTotalText = $statsContainer.find('.js-bill-total .value')
-  let myChart = null;
+  let myChart = null
   let setText = function (data) {
     const currencySymbol = 'S$'
     $billCounterText.text(data.billCount)
@@ -316,11 +329,11 @@ const onRecordsPageLoad = function (window) {
     }))
   }
 
-  let refreshChart = function($form, param) {
-      axios.all([getStatsData($form, param)]).then(axios.spread(function (response) {
-          setText(response.data)
-          updateChart(response.data.data, myChart)
-      }))
+  let refreshChart = function ($form, param) {
+    axios.all([getStatsData($form, param)]).then(axios.spread(function (response) {
+      setText(response.data)
+      updateChart(response.data.data, myChart)
+    }))
   }
   initChart($statsForm, 0)
 
@@ -331,18 +344,18 @@ const onRecordsPageLoad = function (window) {
   })
 
   let updateChart = function (data, myChart) {
-    console.log(data);
+    console.log(data)
     let dataObj = {
-        labels: data.labels,
-        datasets: [{
-            label: '$ spent for period',
-            data: data.data,
-            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-            borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-            borderWidth: 1
-        }]}
-       myChart.config.data = dataObj
-       myChart.update();
+      labels: data.labels,
+      datasets: [{
+        label: '$ spent for period',
+        data: data.data,
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+        borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+        borderWidth: 1
+      }]}
+    myChart.config.data = dataObj
+    myChart.update()
   }
   let createChart = function (data) {
     let ctx = document.getElementById('amountBarChart')
@@ -369,65 +382,65 @@ const onRecordsPageLoad = function (window) {
       }
     })
   }
-  return myChart;
+  return myChart
 }
 
 /* ----------   editrecord.blade---------- */
-  
-  const onEditPageLoad = function (window) {
+
+const onEditPageLoad = function (window) {
     // for detecting active menu item in edit record
-    $('.select').click(function(){
-        $('.select').removeClass("active");
-        $('.select').removeClass("doing");
-        $(this).addClass("active doing");
-        clearError();
-    });
+  $('.select').click(function () {
+    $('.select').removeClass('active')
+    $('.select').removeClass('doing')
+    $(this).addClass('active doing')
+    clearError()
+  })
 
     // in the case that there is alrdy a template
-    if($('#issue_date_page').val()){
-        $('#issuedateicon').removeClass('grey edit');
-        $('#issuedateicon').addClass('green check circle outline');
-    }
-    if($('#period_page').val()){
-        $('#rperiodicon').removeClass('grey edit');
-        $('#rperiodicon').addClass('green check circle outline');
-    }
-    if($('#due_date_page').val()){
-        $('#duedateicon').removeClass('grey edit');
-        $('#duedateicon').addClass('green check circle outline');
-    }
-    if($('#amount_page').val()){
-        $('#amtdueicon').removeClass('grey edit');
-        $('#amtdueicon').addClass('green check circle outline');
-    }
-      
-    $('.ui.positive.ocr.button').click(function (e) {
+  if ($('#issue_date_page').val()) {
+    $('#issuedateicon').removeClass('grey edit')
+    $('#issuedateicon').addClass('green check circle outline')
+  }
+  if ($('#period_page').val()) {
+    $('#rperiodicon').removeClass('grey edit')
+    $('#rperiodicon').addClass('green check circle outline')
+  }
+  if ($('#due_date_page').val()) {
+    $('#duedateicon').removeClass('grey edit')
+    $('#duedateicon').addClass('green check circle outline')
+  }
+  if ($('#amount_page').val()) {
+    $('#amtdueicon').removeClass('grey edit')
+    $('#amtdueicon').addClass('green check circle outline')
+  }
+
+  $('.ui.positive.ocr.button').click(function (e) {
         // e.preventDefault(); // not sure if need this
-        var hasError = false;
-        var error = "<ul>";
-        if(!$('#issue_date_page').val()){
-            error += "<li>Please select the issue date";
-            hasError = true;
-        }
-        if(!$('#period_page').val()){
-            error += "<li>Please select the record period";
-            hasError = true;
-        }
-        if(!$('#due_date_page').val()){
-            error += "<li>Please select the due date";
-            hasError = true;
-        }
-        if(!$('#amount_page').val()){
-            error += "<li>Please select the amount due";
-            hasError = true;
-        }
-        if(hasError) {
-            displayError(error);
-            return false;
-        }
-    })  
-      
-    /*$('#coords-form').form({
+    var hasError = false
+    var error = '<ul>'
+    if (!$('#issue_date_page').val()) {
+      error += '<li>Please select the issue date'
+      hasError = true
+    }
+    if (!$('#period_page').val()) {
+      error += '<li>Please select the record period'
+      hasError = true
+    }
+    if (!$('#due_date_page').val()) {
+      error += '<li>Please select the due date'
+      hasError = true
+    }
+    if (!$('#amount_page').val()) {
+      error += '<li>Please select the amount due'
+      hasError = true
+    }
+    if (hasError) {
+      displayError(error)
+      return false
+    }
+  })
+
+    /* $('#coords-form').form({
     fields: {
       issue_date_page: {
         identifier: 'issue_date_page',
@@ -458,7 +471,7 @@ const onRecordsPageLoad = function (window) {
         }]
       }
     }
-  })*/
+  }) */
 }
 
 /* ===============================

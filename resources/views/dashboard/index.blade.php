@@ -20,7 +20,8 @@
                 @endif
 
                 <div class="ui four doubling cards" style="width:100%;">
-                    @foreach($record_issuers as $record_issuer) @include('partials.billorgEntry') @endforeach
+                    @foreach($record_issuers as $record_issuer)
+                    @include('partials.billorgEntry') @endforeach
 
                     <div class="add-bill-org card">
                         <div class="content">
@@ -68,23 +69,6 @@
         </div>
     </div>
 
-    <!-- nope it still doesnt work nvm -->
-    {{--<div class="ui small record-issuer-del-cfm modal">--}}
-        {{--<i class="close icon"></i>--}}
-        {{--<div class="content">--}}
-            {{--<p>Are you sure you want to delete this record issuer?</p>--}}
-        {{--</div>--}}
-        {{--<div class="actions">--}}
-            {{--<form method="POST" action="{{ url('/dashboard/record_issuers/' . $record_issuer->id) }}">--}}
-                {{--{{ csrf_field() }}--}}
-                {{--{{ method_field('DELETE') }}--}}
-                {{--<button type="submit" class="ui inverted red button">--}}
-                    {{--Delete--}}
-                {{--</button>--}}
-                {{--<div class="ui button black cancel">Cancel</div>--}}
-            {{--</form>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 </div>
 
 @endsection
