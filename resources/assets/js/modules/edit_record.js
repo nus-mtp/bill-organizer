@@ -54,7 +54,8 @@ $(document).ready(function () {
         renderRectsonPage(currPage);
     }
     billImg.src = img_urls[currPage];
-
+    
+    onEditPageLoad(window);
     // registerListeners();
 });
 

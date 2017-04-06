@@ -58,6 +58,23 @@
                     </a>
                 </div>                
                 <br><br>
+                
+                <form class="ui form" id="coords-form">
+                    <div class="field">
+                        <input type="hidden" name="issue_date_page" id="issue_date_page" value="">
+                    </div>
+                    <div class="field">
+                        <input type="hidden" name="period_page" id="period_page" value="0">
+                    </div>
+                    <div class="field">
+                        <input type="hidden" name="due_date_page" id="due_date_page" value="">
+                    </div>
+                    <div class="field">
+                        <input type="hidden" name="amount_page" id="amount_page" value="0">
+                    </div>
+                    <div class="ui submit button">Submit</div>
+                    <div class="ui error message"></div>
+                </form>
 
                 <!--ADDED DEVICE-RESPONSIVE STUFF FOR FUN-->
                 <div class="ui equal width grid">
@@ -93,6 +110,7 @@
     </div>
 </div>
 
+@push('module_scripts')
 <script type="text/javascript">    
     // box coordinates used for rendering
     var issueDateC;
@@ -117,9 +135,10 @@
     var img2 = "{{url('placeholderbill2.jpg')}}";
     var ImgPos;
     
-    billImg.onload = function() {
+    $(function () {
+        onEditPageLoad(window);
         ImgPos = FindPosition(billImg);
-    }
+    })
 
     // disable default image drag action so you can drag select box later
     billImg.ondragstart = function(event) {
@@ -483,4 +502,5 @@
         selecting = false;
     }
 </script>
+@endpush
 @endsection
