@@ -316,7 +316,7 @@ const onRecordsPageLoad = function (window) {
   let $statsContainer = $('.js-stats-container')
   let $billCounterText = $statsContainer.find('.js-bill-count .value')
   let $billTotalText = $statsContainer.find('.js-bill-total .value')
-  let myChart = null
+  let myChart = 'hello'
   let setText = function (data) {
     const currencySymbol = 'S$'
     $billCounterText.text(data.billCount)
@@ -356,9 +356,10 @@ const onRecordsPageLoad = function (window) {
     myChart.config.data = dataObj
     myChart.update()
   }
+
   let createChart = function (data) {
     let ctx = document.getElementById('amountBarChart')
-    myChart = new Chart(ctx, {
+    let config = {
       type: 'bar',
       data: {
         labels: data.labels,
@@ -379,10 +380,10 @@ const onRecordsPageLoad = function (window) {
           }]
         }
       }
-    })
+    }
+    myChart = new Chart(ctx, config)
+    return myChart
   }
-  console.log(myChart)
-  return myChart
 }
 
 /* ----------   editrecord.blade---------- */
