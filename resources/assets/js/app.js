@@ -344,7 +344,6 @@ const onRecordsPageLoad = function (window) {
   })
 
   let updateChart = function (data, myChart) {
-    console.log(data)
     let dataObj = {
       labels: data.labels,
       datasets: [{
@@ -382,6 +381,7 @@ const onRecordsPageLoad = function (window) {
       }
     })
   }
+  console.log(myChart)
   return myChart
 }
 
