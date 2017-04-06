@@ -52,7 +52,7 @@
 
   }
   .hero-text h2 {
-    color: white;       
+    color: white;
     font-size: 2.5rem;
     margin: auto;
   }
@@ -117,5 +117,11 @@
   h1.header.featured-headline {
     color: black;
     font-size: 1.3rem;
+  }
+}
+
+.ui.segment {
+  &.main {
+    padding-top:3%;
   }
 }

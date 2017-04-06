@@ -33,7 +33,7 @@
 
     <body>
 
-        <div class="ui basic segment">
+        <div class="ui basic main segment">
             @include('layouts.nav')
         </div>
 

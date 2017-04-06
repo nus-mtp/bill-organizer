@@ -2,7 +2,7 @@
 <!-- we want to have individual page display its title on top of browser -->
 @section('title', 'Dashboard') @section('content')
 <!--CONTENT-->
-<div class="ui main container" style="background:white; min-height: 100vh;">
+<div class="ui main container">
     <div class="ui fluid container">
         <div class="ui grid">
             <div class="sixteen wide column">
