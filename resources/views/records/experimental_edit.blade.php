@@ -52,7 +52,8 @@
 
             <div class="six wide column">
                 <div class="ui tiny error message" id="errormsg"></div>
-                        @if(!$edit_value_mode)                
+                    @if(!$edit_value_mode)
+                        @if($is_bill)
                         <div class="ui fluid four item compact labeled icon menu">
                             <a class="select item" id="issue" onclick="selAnother('#selidate');">
                                 <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
@@ -68,7 +69,23 @@
                                 <i class="grey edit icon" id="amtdueicon"></i>
                                 Amount<br>Due
                             </a>
-                        </div>                
+                        </div>
+                        @endif
+                <!--for banks-->
+                        @if(!$is_bill)
+                        <div class="ui fluid three item compact labeled icon menu">
+                            <a class="select item" id="issue" onclick="selAnother('#selidate');">
+                                <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
+                            </a>
+                            <a class="select item" id="period" onclick="selAnother('#selrperiod');">
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Record<br>Period
+                            </a>
+                            <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
+                                <i class="grey edit icon" id="amtdueicon"></i>
+                                Amount<br>Due
+                            </a>
+                        </div>
+                        @endif
                         <br><br>
                         @endif
                 
@@ -84,7 +101,7 @@
                         @if(!$edit_value_mode)
                             <div class="actions">
                                 <button class="ui positive ocr button" type="submit">Submit</button>
-                                <button class="ui button" type="reset" onclick="$('form#test').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
+                                <button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>
                                 <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
                             </div>
                         @endif
