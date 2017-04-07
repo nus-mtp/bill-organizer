@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@push('module_styles')
+<style>
+    #errormsg {
+        display: none;
+    }
+</style>
+@endpush
+
 @section('content')
     <!--CONTENT-->
     <div class="ui container">
