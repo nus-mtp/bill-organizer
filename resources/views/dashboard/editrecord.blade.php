@@ -56,7 +56,22 @@
                         <i class="grey edit icon" id="amtdueicon"></i>
                         Amount<br>Due
                     </a>
-                </div>                
+                </div>
+                
+                <div class="ui fluid three item compact labeled icon menu">
+                    <a class="select item" id="issue" onclick="selAnother('#selidate');">
+                        <i class="grey edit icon" id="issuedateicon"></i>
+                        Issue<br>Date
+                    </a>
+                    <a class="select item" id="period" onclick="selAnother('#selrperiod');">
+                        <i class="grey edit icon" id="rperiodicon"></i>
+                        Record<br>Period
+                    </a>
+                    <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
+                        <i class="grey edit icon" id="amtdueicon"></i>
+                        Amount<br>Due
+                    </a>
+                </div> 
                 <br><br>
                 
                 <form class="ui form" id="coords-form">
@@ -73,6 +88,7 @@
                         <input type="hidden" name="amount_page" id="amount_page" value="0">
                     </div>
                     <button class="ui positive ocr button" type="submit">Submit</button>
+                    <button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>
                     <div class="ui error message"></div>
                 </form>
 
