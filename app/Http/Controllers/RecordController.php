@@ -52,7 +52,6 @@ class RecordController extends Controller
         $this->authorize('belongs_to_user', $record);
 
         // TODO: handle deletion failure
-        $deletion_success = Storage::delete($record->path_to_file);
         $record->delete();
 
         return back();

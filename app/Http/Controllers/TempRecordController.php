@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Record;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
@@ -12,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Image\ImageEditor;
 
 use App\FieldArea;
+use App\Record;
 use App\RecordIssuerType;
 use App\RecordPage;
 use App\Template;
@@ -72,7 +72,6 @@ class TempRecordController extends Controller
 
         $edit_value_mode = false;
 
-        // TODO: If there's already a template, embed the coordinates and pre-select the boxes
         return view(
             'records.experimental_edit',
             compact('temp_record', 'is_bill', 'field_area_inputs', 'edit_value_mode')
@@ -263,10 +262,9 @@ class TempRecordController extends Controller
                 );
             }
 
+            // Delete the temp record, associated pages are automatically deleted
             $temp_record->delete();
         });
-        // TODO: delete the respective tmp dir
-        // TODO: delete the temp records
         // TODO: Need a mechanism to show user the temp records when they logged in
         // TODO: clean up resources (for instance, delete unused field areas, etc)
 
