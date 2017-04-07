@@ -252,42 +252,6 @@ const onRecordsPageLoad = function (window) {
     }
   })
 
-  $('.ui.form.edit-record').form({
-    inline: true,
-    on: 'blur',
-    fields: {
-      issuedate: {
-        identifier: 'issue',
-        rules: [{
-          type: 'empty',
-          prompt: 'Please enter the date of issue'
-        }]
-      },
-      recordperiod: {
-        identifier: 'period',
-        rules: [{
-          type: 'empty',
-          prompt: 'Please enter the record period'
-        }]
-      },
-      duedate: {
-        identifier: 'duedate',
-        rules: [{
-          type: 'empty',
-          prompt: 'Please enter the due date'
-        }]
-      },
-      amtdue: {
-        identifier: 'amtdue',
-        rules: [{
-          type: 'empty',
-          prompt: 'Please enter the amount'
-        }]
-      }
-    }
-  })
-
-
   $('.logout.button').click((e) => {
     e.preventDefault()
     axios.post('/logout').then(_ => {
@@ -312,7 +276,8 @@ const onRecordsPageLoad = function (window) {
     }, function (dismiss) {
       return
     })
-  })
+  })  
+  
   /* ----------  stats sidebar scripts  ---------- */
 
   let toggleStatsSidebar = function toggleStats () {
@@ -407,6 +372,95 @@ const onRecordsPageLoad = function (window) {
   return myChart;
 }
 
+/* ----------   editrecord.blade---------- */
+  
+  const onEditPageLoad = function (window) {
+    // for detecting active menu item in edit record
+    $('.select').click(function(){
+        $('.select').removeClass("active");
+        $('.select').removeClass("doing");
+        $(this).addClass("active doing");
+        clearError();
+    });
+
+    // in the case that there is alrdy a template
+    if($('#issue_date_page').val()){
+        $('#issuedateicon').removeClass('grey edit');
+        $('#issuedateicon').addClass('green check circle outline');
+    }
+    if($('#period_page').val()){
+        $('#rperiodicon').removeClass('grey edit');
+        $('#rperiodicon').addClass('green check circle outline');
+    }
+    if($('#due_date_page').val()){
+        $('#duedateicon').removeClass('grey edit');
+        $('#duedateicon').addClass('green check circle outline');
+    }
+    if($('#amount_page').val()){
+        $('#amtdueicon').removeClass('grey edit');
+        $('#amtdueicon').addClass('green check circle outline');
+    }
+      
+    $('.ui.positive.ocr.button').click(function (e) {
+        // e.preventDefault(); // not sure if need this
+        var hasError = false;
+        var error = "<ul>";
+        if(!$('#issue_date_page').val()){
+            error += "<li>Please select the issue date";
+            hasError = true;
+        }
+        if(!$('#period_page').val()){
+            error += "<li>Please select the record period";
+            hasError = true;
+        }
+        if(!$('#due_date_page').val()){
+            error += "<li>Please select the due date";
+            hasError = true;
+        }
+        if(!$('#amount_page').val()){
+            error += "<li>Please select the amount due";
+            hasError = true;
+        }
+        if(hasError) {
+            displayError(error);
+            return false;
+        }
+    })  
+      
+    /*$('#coords-form').form({
+    fields: {
+      issue_date_page: {
+        identifier: 'issue_date_page',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please select the date of issue'
+        }]
+      },
+      period_page: {
+        identifier: 'period_page',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please select the record period'
+        }]
+      },
+      due_date_page: {
+        identifier: 'due_date_page',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please select the due date'
+        }]
+      },
+      amount_page: {
+        identifier: 'amount_page',
+        rules: [{
+          type: 'empty',
+          prompt: 'Please select the amount'
+        }]
+      }
+    }
+  })*/
+}
+
 /* ===============================
 =            Export list            =
 =============================== */
@@ -415,11 +469,5 @@ var exportModules = (function (window) {
   window.onDashboardIndexPageLoad = onDashboardIndexPageLoad
   window.onRecordsPageLoad = onRecordsPageLoad
   window.onLandingPageLoad = onLandingPageLoad
+  window.onEditPageLoad = onEditPageLoad
 })(window)
-
-// for detecting active menu item in edit record
-$('.select').click(function(){
-    $('.select').removeClass("active");
-    $('.select').removeClass("doing");
-    $(this).addClass("active doing");
-});
