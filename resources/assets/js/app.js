@@ -401,6 +401,32 @@ const onRecordsPageLoad = function (window) {
         $('#amtdueicon').addClass('green check circle outline');
     }
       
+    $('.ui.positive.ocr.button').click(function (e) {
+        // e.preventDefault(); // not sure if need this
+        var hasError = false;
+        var error = "<ul>";
+        if(!$('#issue_date_page').val()){
+            error += "<li>Please select the issue date";
+            hasError = true;
+        }
+        if(!$('#period_page').val()){
+            error += "<li>Please select the record period";
+            hasError = true;
+        }
+        if(!$('#due_date_page').val()){
+            error += "<li>Please select the due date";
+            hasError = true;
+        }
+        if(!$('#amount_page').val()){
+            error += "<li>Please select the amount due";
+            hasError = true;
+        }
+        if(hasError) {
+            displayError(error);
+            return false;
+        }
+    })  
+      
     /*$('#coords-form').form({
     fields: {
       issue_date_page: {

@@ -42,12 +42,9 @@
                 </center>
             </div>
 
-            <div class="six wide column">                
-                <!--hidden inputs below-->
-                <div>
-                    <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">
-                        <div class="ui tiny error message" id="errormsg"></div>
-                        @if($edit_value_mode)                
+            <div class="six wide column">
+                <div class="ui tiny error message" id="errormsg"></div>
+                        @if(!$edit_value_mode)                
                         <div class="ui fluid four item compact labeled icon menu">
                             <a class="select item" id="issue" onclick="selAnother('#selidate');">
                                 <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
@@ -66,7 +63,10 @@
                         </div>                
                         <br><br>
                         @endif
-                        
+                
+                <!--hidden inputs below-->
+                <div>
+                    <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">                        
                         {{ csrf_field() }}
                         @foreach($field_area_inputs as $key => $val)
                             <div class="field">
@@ -75,7 +75,7 @@
                         @endforeach
                         @if(!$edit_value_mode)
                             <div class="actions">
-                                <button class="ui positive button" type="submit">Submit</button>
+                                <button class="ui positive ocr button" type="submit">Submit</button>
                                 <button class="ui button" type="reset" onclick="$('form#test').form('clear'); $('.form .message').html(''); resetAllRects();">Reset</button>
                                 <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
                             </div>

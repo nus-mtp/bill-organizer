@@ -72,7 +72,7 @@
                     <div class="field">
                         <input type="hidden" name="amount_page" id="amount_page" value="0">
                     </div>
-                    <div class="ui submit button">Submit</div>
+                    <button class="ui positive ocr button" type="submit">Submit</button>
                     <div class="ui error message"></div>
                 </form>
 
