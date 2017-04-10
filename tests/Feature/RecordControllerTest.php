@@ -124,10 +124,10 @@ class RecordControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testDestroyAsOwner()
-    {
-        // Not sure how to test this one. Storage::spy didn't mock the Storage
-    }
+//    public function testDestroyAsOwner()
+//    {
+//        // Not sure how to test this one. Storage::spy didn't mock the Storage
+//    }
 
     /**
      * Tests for RecordController@edit
