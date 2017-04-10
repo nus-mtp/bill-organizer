@@ -107,9 +107,10 @@ class RecordController extends Controller
         return null;
     }
 
-    // TODO: add a policy!
     // TODO: clean up. You made it work. Now make it right
     public function show_extract_coords_page(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
         // Determine field_area_inputs based on type first
         $is_bill = $record->issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
         $field_area_names = ['issue_date', 'period', 'amount'];
@@ -165,6 +166,8 @@ class RecordController extends Controller
     // TODO: Should I store the coords as normalized coords in DB?
     // TODO: Warn user if duplicate record
     public function extract_coords(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
         // Get the coords (and validate)
         // TODO: extract these long lists of validation to a specialized form handler and do typecasting
         // TODO: creation of many models should be inside a DB transaction to maintain integrity
@@ -290,6 +293,8 @@ class RecordController extends Controller
     }
 
     public function confirm_values(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
         $is_bill = $record->issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
         $field_area_names = ['issue_date', 'period', 'amount'];
         if ($is_bill) {

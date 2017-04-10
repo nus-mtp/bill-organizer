@@ -13,8 +13,7 @@ class RecordPageController extends Controller
     }
 
     public function show(RecordPage $record_page) {
-        // TODO: Add a policy!!!
-        // $this->authorize('belongs_to_user', $record_page);
+        $this->authorize('belongs_to_user', $record_page);
 
         $url = storage_path('app/' . $record_page->path);
 

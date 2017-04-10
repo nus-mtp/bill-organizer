@@ -40,12 +40,12 @@ class RecordIssuerController extends Controller
     }
 
     public function store() {
-        // TODO: determine if should add max len constraint?
+        // TODO:
         // Validate the type -- research on Validator
         // $record_issuer_types = RecordIssuerType::pluck('id');
 
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|max:191',
             'type' => 'required'
         ]);
 
@@ -63,57 +63,6 @@ class RecordIssuerController extends Controller
 
         return back();
     }
-
-
-    // TODO: clean up this mess if possible?
-    /**
-     * Store_record is here because it needs to be validated that the RecordIssuer belongs to the current user
-     */
-    // TODO: Once it's confirmed that we don't need this old method of storing record, delete
-    /*
-    public function store_record(RecordIssuer $record_issuer) {
-        // only if this record_issuer belongs to me can I add a new record. I shouldn't be able to add to other user's record issuer
-        $this->authorize('belongs_to_user', $record_issuer);
-
-        // Date format received: YYYY-MM-DD
-        $this->validate(request(), [
-            'record' => 'required',
-            'issue_date' => 'required',
-            'period' => 'required',
-            'amount' => 'required'
-        ]);
-
-        if (self::$record_issuer_types[$record_issuer->type] === 'billing organization') {
-            $this->validate(request(), [
-                'due_date' => 'required'
-            ]);
-        }
-
-        $user_id = auth()->id();
-
-        $saved_record = auth()->user()->create_record(
-            new Record(
-                request(['issue_date', 'due_date', 'amount', 'period']) + [
-                    'record_issuer_id' => $record_issuer->id
-                ]
-            )
-        );
-
-        // TODO: extract these to FileHandler
-        $file_extension = request()->file('record')->extension();
-        $file_name = "{$saved_record->id}.{$file_extension}";
-        $dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
-        $path = request()->file('record')
-            ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
-        // research on visibility public vs private -> currently there's not a lot of documentation on this
-
-        $saved_record->update([
-            'path_to_file' => $path
-        ]);
-
-        return back();
-    }
-    */
 
     // TODO: In a transaction?
     /**
