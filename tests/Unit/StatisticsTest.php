@@ -37,6 +37,12 @@ class StatisticsTest extends TestCase
         parent::tearDown();
     }
 
+    // a test just to suppress the warning
+    public function testBasicTest()
+    {
+        $this->assertTrue(true);
+    }
+
     /*
      * Commenting statistics test for now -- must respect that (record_issuer, issue_date) tuple must be unique
      *
