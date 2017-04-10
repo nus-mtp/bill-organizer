@@ -38,15 +38,14 @@ Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {
 
     Route::get('/record_issuers/{record_issuer}', 'RecordIssuerController@show')->name('show_record_issuer');
     Route::post('/record_issuers', 'RecordIssuerController@store');
-//    Route::post('/record_issuers/{record_issuer}/records', 'RecordIssuerController@store_record')->name('records');
     Route::post('/record_issuers/{record_issuer}/upload_record', 'RecordIssuerController@upload_record_file')->name('upload_record_file');
     Route::delete('/record_issuers/{record_issuer}', 'RecordIssuerController@destroy');
 
     Route::get('/records/{record}', 'RecordController@show')->name('show_record_file');
     Route::get('/records/{record}/download', 'RecordController@download')->name('download_record_file');
     Route::delete('/records/{record}', 'RecordController@destroy')->name('delete_record_file');
-    Route::get('/records/{record}/edit', 'RecordController@edit')->name('edit_record'); // show form for edit record
-    Route::put('/records/{record}', 'RecordController@update')->name('update_record'); // update record in database
+//    Route::get('/records/{record}/edit', 'RecordController@edit')->name('edit_record'); // show form for edit record
+//    Route::put('/records/{record}', 'RecordController@update')->name('update_record'); // update record in database
 
     Route::get('/records/{record}/template', 'RecordController@add_template')->name('add_template');
     Route::post('/records/{record}/template', 'RecordController@store_template')->name('store_template');
