@@ -61,7 +61,6 @@ class RecordIssuerController extends Controller
         return back();
     }
 
-    // TODO: In a transaction?
     /**
      * Handles file upload and direct to the coordinates extraction page
      */
@@ -71,6 +70,7 @@ class RecordIssuerController extends Controller
         $this->authorize('belongs_to_user', $record_issuer);
 
         // validate or redirect
+        // TODO: validate isPDF
         $this->validate(request(), [
             'record' => 'required'
         ]);

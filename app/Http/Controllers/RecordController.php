@@ -166,107 +166,30 @@ class RecordController extends Controller
         $this->validate(request(), $rules);
 
 
-        $is_match = false; // true if all field area matches
-        if ($record->template !== null) {
-            $is_match = true;
 
-            foreach ($field_area_names as $field_area_name) {
-                $area_attr_name = $field_area_name . '_area';
-                $field_area = $record->template->$area_attr_name;
-
-                // TODO: Remove this cursed ugly, duplicated code
-                // TODO: Move comparing coords to helper
-                $record_page = $record->pages[$field_area->page];
-                $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
-
-                $page_match = $field_area->page === (int) request("{$field_area_name}_page");
-
-                // allow +- 1 pixel deviation.
-                $x_match = abs(($field_area->x - request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
-                $y_match = abs(($field_area->y - request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
-                $w_match = abs(($field_area->w - request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
-                $h_match = abs(($field_area->h - request("{$field_area_name}_h")) * $page_geometry['height']) <= 1;
-
-                $does_field_area_match = $page_match && $x_match && $y_match && $w_match && $h_match;
-
-                if (!$does_field_area_match) {
-                    $is_match = false;
-                    break;
-                }
-            }
-        }
-
+        $is_match = self::matches_template($record, $field_area_names); // true if all field area matches
         // $is_match is true only if template exists and matches the request data
-        if ($is_match) {
-            // if match template, point to that template
-            $final_template = $record->template;
-        } else {
-            // Otherwise (whether template doens't exist or doesn't match), create a new template with field areas
-            $template_data = [];
-            foreach ($field_area_names as $field_area_name) {
-                $field_area_data = [];
-
-                $field_area_data['page'] = request("{$field_area_name}_page");
-                $field_area_data['x'] = request("{$field_area_name}_x");
-                $field_area_data['w'] = request("{$field_area_name}_w");
-                $field_area_data['y'] = request("{$field_area_name}_y");
-                $field_area_data['h'] = request("{$field_area_name}_h");
-
-                $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
-            }
-
-            // TODO: Shouldn't just create a template like that from a temporary one (add a new attribute called active instead)
-            $final_template = $record->issuer->create_template(
-                new Template($template_data)
-            );
+        if (!$is_match) {
+            self::create_new_template($record, $field_area_names);
         }
 
-        // Set record to point to $template
-        $record->update([
-            'template_id' => $final_template->id
-        ]);
 
-        // Extract images by the coordinates and store it in temp dir
-        // Interpret the texts using Tesseract, save the value
-        $record_images_dir_path = StorageHelper::createRecordImagesDir($record);
 
-        // TODO: Don't do OCR if matches record's template?
-        $ocr_results = [];
-        foreach ($field_area_names as $field_area_name) {
-            $area_attr_name = $field_area_name . '_area';
-            $field_area = $final_template->$area_attr_name;
-            $crop_input_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area->page . ".jpg");
-            $crop_output_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area_name . ".jpg");
-
-            $record_page = $record->pages[$field_area->page];
-            $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
-
-            $actual_x = (int) ($field_area->x * $page_geometry['width']);
-            $actual_y = (int) ($field_area->y * $page_geometry['height']);
-            $actual_w = (int) ceil($field_area->w * $page_geometry['width']);
-            $actual_h = (int) ceil($field_area->h * $page_geometry['height']);
-
-            ImageEditor::cropJpeg(
-                $crop_input_filename, $crop_output_filename,
-                $actual_x, $actual_y, $actual_w, $actual_h
-            );
-            $ocr_results[$field_area_name] = ImageEditor::recognizeTextFromJpeg($crop_output_filename);
-        }
-
+        // Interpret the texts using OCR, save the value
+        $ocr_results = self::runOcr($record, $field_area_names);
         $record->update(array_merge($ocr_results, ['temporary' => false]));
+
+
 
         $field_area_inputs = request()->all();
         unset($field_area_inputs['_token']);
         $edit_value_mode = true;
+
         // Pass back to the same page, with coords and values filled
         return view(
             'records.experimental_edit',
             compact('record', 'is_bill', 'field_area_inputs', 'edit_value_mode')
         );
-
-        // User has to confirm or edit the value field
-        // Press OK
-        // Pass to store_record_experimental, move the file to permanent place and also the pages
     }
 
     public function confirm_values(Record $record) {
@@ -289,5 +212,92 @@ class RecordController extends Controller
         // TODO: Need a mechanism to show user the temp records when they logged in
 
         return redirect()->route('show_record_issuer', $record->issuer);
+    }
+
+    private static function matches_template(Record $record, $field_area_names) {
+        $is_match = false; // true if all field area matches
+        if ($record->template !== null) {
+            $is_match = true;
+
+            foreach ($field_area_names as $field_area_name) {
+                $area_attr_name = $field_area_name . '_area';
+                $field_area = $record->template->$area_attr_name;
+
+                $record_page = $record->pages[$field_area->page];
+                $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
+
+                $page_match = $field_area->page === (int) request("{$field_area_name}_page");
+
+                // allow +- 1 pixel deviation.
+                $x_match = abs(($field_area->x - request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
+                $y_match = abs(($field_area->y - request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
+                $w_match = abs(($field_area->w - request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
+                $h_match = abs(($field_area->h - request("{$field_area_name}_h")) * $page_geometry['height']) <= 1;
+
+                $does_field_area_match = $page_match && $x_match && $y_match && $w_match && $h_match;
+
+                if (!$does_field_area_match) {
+                    $is_match = false;
+                    break;
+                }
+            }
+        }
+
+        return $is_match;
+    }
+
+    private static function create_new_template(Record $record, $field_area_names) {
+        $template_data = [];
+        foreach ($field_area_names as $field_area_name) {
+            $field_area_data = [];
+
+            $field_area_data['page'] = request("{$field_area_name}_page");
+            $field_area_data['x'] = request("{$field_area_name}_x");
+            $field_area_data['w'] = request("{$field_area_name}_w");
+            $field_area_data['y'] = request("{$field_area_name}_y");
+            $field_area_data['h'] = request("{$field_area_name}_h");
+
+            $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
+        }
+
+        // TODO: Shouldn't just create a template like that from a temporary one (add a new attribute called active instead)
+        $created_template = $record->issuer->create_template(
+            new Template($template_data)
+        );
+
+        // Set record to point to $template
+        $record->update([
+            'template_id' => $created_template->id
+        ]);
+
+        return $created_template;
+    }
+
+    private static function runOcr(Record $record, $field_area_names) {
+        $record_images_dir_path = StorageHelper::createRecordImagesDir($record);
+
+        $ocr_results = [];
+        foreach ($field_area_names as $field_area_name) {
+            $area_attr_name = $field_area_name . '_area';
+            $field_area = $record->template->$area_attr_name;
+            $crop_input_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area->page . ".jpg");
+            $crop_output_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area_name . ".jpg");
+
+            $record_page = $record->pages[$field_area->page];
+            $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
+
+            $actual_x = (int) ($field_area->x * $page_geometry['width']);
+            $actual_y = (int) ($field_area->y * $page_geometry['height']);
+            $actual_w = (int) ceil($field_area->w * $page_geometry['width']);
+            $actual_h = (int) ceil($field_area->h * $page_geometry['height']);
+
+            ImageEditor::cropJpeg(
+                $crop_input_filename, $crop_output_filename,
+                $actual_x, $actual_y, $actual_w, $actual_h
+            );
+            $ocr_results[$field_area_name] = ImageEditor::recognizeTextFromJpeg($crop_output_filename);
+        }
+
+        return $ocr_results;
     }
 }
