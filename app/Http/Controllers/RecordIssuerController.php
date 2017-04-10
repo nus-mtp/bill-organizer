@@ -29,7 +29,7 @@ class RecordIssuerController extends Controller
     public function show(RecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
-        $records = $record_issuer->records;
+        $records = $record_issuer->records()->temporary(false)->get();
         $type = self::$record_issuer_types[$record_issuer->type]; // $record_issuer type is an ID
         $amount_field_name = $type === 'bank' ? 'Balance' : 'Amount due';
 
@@ -77,6 +77,7 @@ class RecordIssuerController extends Controller
 
         $path = StorageHelper::storeUploadedRecordFile(request()->file('record'), $record_issuer);
         $saved_record = auth()->user()->create_record(
+            // use template from record_issuer immediately if exists
             new Record([
                 'template_id' => $record_issuer->latest_template() ? $record_issuer->latest_template()->id : null,
                 'temporary' => true,

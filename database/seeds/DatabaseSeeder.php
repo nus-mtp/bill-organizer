@@ -50,10 +50,10 @@ class DatabaseSeeder extends Seeder
 
                 // create a template
                 if ($name === 'SP Services') {
-                    $period_area = self::createNewFieldArea(0, 1018, 32, 101, 39);
-                    $issue_date_area = self::createNewFieldArea(0, 990, 28, 136, 44);
-                    $amount_area = self::createNewFieldArea(0, 964, 1452, 116, 36);
-                    $due_date_area = self::createNewFieldArea(0, 455, 1413, 119, 17);
+                    $period_area = self::createNewFieldArea(0, 0.845255, 0.0148075, 0.115328, 0.0256663);
+                    $issue_date_area = self::createNewFieldArea(0, 0.870073, 0.0167818, 0.0846715, 0.0207305);
+                    $amount_area = self::createNewFieldArea(0, 0.738686, 0.840079, 0.246715, 0.0157947);
+                    $due_date_area = self::createNewFieldArea(0, 0.374126, 0.815166, 0.122378, 0.0118483);
 
                     $template = Template::create([
                         'record_issuer_id' => $record_issuer->id,

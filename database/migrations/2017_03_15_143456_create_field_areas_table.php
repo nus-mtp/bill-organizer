@@ -23,10 +23,10 @@ class CreateFieldAreasTable extends Migration
         Schema::create('field_areas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('page')->unsigned();
-            $table->integer('x')->unsigned();
-            $table->integer('y')->unsigned();
-            $table->integer('w')->unsigned();
-            $table->integer('h')->unsigned();
+            $table->double('x')->unsigned();
+            $table->double('y')->unsigned();
+            $table->double('w')->unsigned();
+            $table->double('h')->unsigned();
             $table->timestamps();
         });
     }

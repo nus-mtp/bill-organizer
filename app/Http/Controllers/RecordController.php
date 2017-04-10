@@ -51,7 +51,6 @@ class RecordController extends Controller
     public function destroy(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
-        // TODO: handle deletion failure
         $record->delete();
 
         return back();
@@ -122,27 +121,18 @@ class RecordController extends Controller
             }
         }
 
-        // Check for existing template (record specific or record_issuer specific)
-        $chosen_template = null;
-        if ($record->template !== null) {
-            $chosen_template = $record->template;
-        } else if ($record->issuer->latest_template() !== null) {
-            $chosen_template = $record->issuer->latest_template();
-
-        }
-
         // Fill with existing field_area values if template exists
-        if ($chosen_template !== null) {
+        if ($record->template !== null) {
             foreach ($field_area_names as $field_area_name) {
                 $area_attr_name = $field_area_name . '_area';
-                $field_area = $chosen_template->$area_attr_name;
+                $field_area = $record->template->$area_attr_name;
 
-                $record_page = $record->pages[$field_area->page];
-                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
-                $field_area->x /= $page_geometry['width'];
-                $field_area->w /= $page_geometry['width'];
-                $field_area->y /= $page_geometry['height'];
-                $field_area->h /= $page_geometry['height'];
+//                $record_page = $record->pages[$field_area->page];
+//                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
+//                $field_area->x /= $page_geometry['width'];
+//                $field_area->w /= $page_geometry['width'];
+//                $field_area->y /= $page_geometry['height'];
+//                $field_area->h /= $page_geometry['height'];
 
                 foreach ($field_area_attrs as $attr) {
                     $field_area_inputs["{$field_area_name}_{$attr}"] = $field_area->$attr;
@@ -158,7 +148,6 @@ class RecordController extends Controller
         );
     }
 
-    // TODO: Should I store the coords as normalized coords in DB?
     // TODO: Warn user if duplicate record
     public function extract_coords(Record $record) {
         $this->authorize('belongs_to_user', $record);
@@ -183,33 +172,27 @@ class RecordController extends Controller
         // Expect from client: issue_date_page, issue_date_x, ...
         $this->validate(request(), $rules);
 
-        // Check if template exists -> compare the fields with existing one
-        $chosen_template = null;
-        if ($record->template !== null) {
-            $chosen_template = $record->template;
-        } else if ($record->issuer->latest_template() !== null) {
-            $chosen_template = $record->issuer->latest_template();
-        }
 
-        $is_match = $chosen_template !== null; // true if all field area matches
-        if ($chosen_template !== null) {
-            $does_field_area_match = true;
+        $is_match = false; // true if all field area matches
+        if ($record->template !== null) {
+            $is_match = true;
+
             foreach ($field_area_names as $field_area_name) {
                 $area_attr_name = $field_area_name . '_area';
-                $field_area = $chosen_template->$area_attr_name;
+                $field_area = $record->template->$area_attr_name;
 
                 // TODO: Remove this cursed ugly, duplicated code
                 // TODO: Move comparing coords to helper
                 $record_page = $record->pages[$field_area->page];
-                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
+                $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
 
                 $page_match = $field_area->page === (int) request("{$field_area_name}_page");
                 // allow +- 1 pixel deviation.
                 // TODO: beautify
-                $x_match = abs($field_area->x - ((double) request("{$field_area_name}_x")) * $page_geometry['width']) < 2;
-                $y_match = abs($field_area->y - ((double) request("{$field_area_name}_y")) * $page_geometry['height']) < 2;
-                $w_match = abs($field_area->w - ((double) request("{$field_area_name}_w")) * $page_geometry['width']) < 2;
-                $h_match = abs($field_area->h - ((double) request("{$field_area_name}_h")) * $page_geometry['height']) < 2;
+                $x_match = abs(($field_area->x - request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
+                $y_match = abs(($field_area->y - request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
+                $w_match = abs(($field_area->w - request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
+                $h_match = abs(($field_area->h - request("{$field_area_name}_h")) * $page_geometry['height']) <= 1;
 
                 $does_field_area_match = $page_match && $x_match && $y_match && $w_match && $h_match;
 
@@ -223,7 +206,7 @@ class RecordController extends Controller
         // $is_match is true only if template exists and matches the request data
         if ($is_match) {
             // if match template, point to that template
-            $final_template = $chosen_template;
+            $final_template = $record->template;
         } else {
             // Otherwise (whether template doens't exist or doesn't match), create a new template with field areas
             $template_data = [];
@@ -231,13 +214,10 @@ class RecordController extends Controller
                 $field_area_data = [];
 
                 $field_area_data['page'] = request("{$field_area_name}_page");
-                $record_page = $record->pages[$field_area_data['page']];
-                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
-
-                $field_area_data['x'] = (int) (request("{$field_area_name}_x") * $page_geometry['width']);
-                $field_area_data['w'] = (int) ceil(request("{$field_area_name}_w") * $page_geometry['width']);
-                $field_area_data['y'] = (int) (request("{$field_area_name}_y") * $page_geometry['height']);
-                $field_area_data['h'] = (int) ceil(request("{$field_area_name}_h") * $page_geometry['height']);
+                $field_area_data['x'] = request("{$field_area_name}_x");
+                $field_area_data['w'] = request("{$field_area_name}_w");
+                $field_area_data['y'] = request("{$field_area_name}_y");
+                $field_area_data['h'] = request("{$field_area_name}_h");
 
                 $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
             }
@@ -264,9 +244,18 @@ class RecordController extends Controller
             $field_area = $final_template->$area_attr_name;
             $crop_input_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area->page . ".jpg");
             $crop_output_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area_name . ".jpg");
+
+            $record_page = $record->pages[$field_area->page];
+            $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
+
+            $actual_x = (int) ($field_area->x * $page_geometry['width']);
+            $actual_y = (int) ($field_area->y * $page_geometry['height']);
+            $actual_w = (int) ceil($field_area->w * $page_geometry['width']);
+            $actual_h = (int) ceil($field_area->h * $page_geometry['height']);
+
             ImageEditor::cropJpeg(
                 $crop_input_filename, $crop_output_filename,
-                $field_area->x, $field_area->y, $field_area->w, $field_area->h
+                $actual_x, $actual_y, $actual_w, $actual_h
             );
             $ocr_results[$field_area_name] = ImageEditor::recognizeTextFromJpeg($crop_output_filename);
         }

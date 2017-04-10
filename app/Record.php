@@ -92,6 +92,10 @@ class Record extends Model
         return $query->whereBetween('issue_date', [$from, $until]);
     }
 
+    public function scopeTemporary($query, $bool) {
+        return $query->where('temporary', $bool);
+    }
+
     public function setPeriodAttribute($value) {
         try {
             $this->attributes['period'] =  Carbon::parse($value);
