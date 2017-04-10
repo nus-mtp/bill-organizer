@@ -23,13 +23,8 @@ class RecordController extends Controller
     public function __construct() {
         $this->middleware('auth');
 
-        // TODO: extract this somewhere else (used in RecordIssuerController too!)
-        // Create an assoc. array of id => type
-        $record_issuer_types = RecordIssuerType::all();
-        foreach ($record_issuer_types as $record_issuer_type) {
-            self::$record_issuer_types[$record_issuer_type->id] = $record_issuer_type->type;
-        }
-
+        // an assoc. array of id => type
+        $record_issuer_types = RecordIssuerType::idToType();
     }
 
     public function show(Record $record) {
