@@ -91,7 +91,7 @@
                 
                 <!--hidden inputs below-->
                 <div>
-                    <form class="ui form" id="coords-form" action="{{ route('extract_coords', $record) }}" method="POST">                        
+                    <form class="ui form" id="coords-form" action="{{ route('store_template', $record) }}" method="POST">
                         {{ csrf_field() }}
                         @foreach($field_area_inputs as $key => $val)
                             <div class="field">

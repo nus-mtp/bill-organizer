@@ -105,6 +105,6 @@ class RecordIssuerController extends Controller
             );
         }
 
-        return redirect()->route('show_extract_coords_page', $saved_record);
+        return redirect()->route('add_template', $saved_record);
     }
 }

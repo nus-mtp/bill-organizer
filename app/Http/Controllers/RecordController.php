@@ -102,7 +102,7 @@ class RecordController extends Controller
     }
 
     // TODO: clean up. You made it work. Now make it right
-    public function show_extract_coords_page(Record $record) {
+    public function add_template(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
         // Determine field_area_inputs based on type first
@@ -127,13 +127,6 @@ class RecordController extends Controller
                 $area_attr_name = $field_area_name . '_area';
                 $field_area = $record->template->$area_attr_name;
 
-//                $record_page = $record->pages[$field_area->page];
-//                $page_geometry = ImageEditor::getImageGeometry(storage_path('app/' . $record_page->path));
-//                $field_area->x /= $page_geometry['width'];
-//                $field_area->w /= $page_geometry['width'];
-//                $field_area->y /= $page_geometry['height'];
-//                $field_area->h /= $page_geometry['height'];
-
                 foreach ($field_area_attrs as $attr) {
                     $field_area_inputs["{$field_area_name}_{$attr}"] = $field_area->$attr;
                 }
@@ -149,7 +142,7 @@ class RecordController extends Controller
     }
 
     // TODO: Warn user if duplicate record
-    public function extract_coords(Record $record) {
+    public function store_template(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
         // Get the coords (and validate)
@@ -187,8 +180,8 @@ class RecordController extends Controller
                 $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
 
                 $page_match = $field_area->page === (int) request("{$field_area_name}_page");
+
                 // allow +- 1 pixel deviation.
-                // TODO: beautify
                 $x_match = abs(($field_area->x - request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
                 $y_match = abs(($field_area->y - request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
                 $w_match = abs(($field_area->w - request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
