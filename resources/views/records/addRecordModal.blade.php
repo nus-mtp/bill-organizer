@@ -8,7 +8,7 @@
             {{--<form method="POST" action="{{ route('records', $record_issuer) }}"--}}
                   {{--class="ui form" enctype="multipart/form-data" id="add-record">--}}
 
-            <form method="POST" action="{{ route('store_temp_record', $record_issuer) }}"
+            <form method="POST" action="{{ route('upload_record_file', $record_issuer) }}"
                       class="ui form" enctype="multipart/form-data" id="add-record">
                 <!-- TODO: customize form based on type -->
                 <!-- TODO: research on semantic UI calendar -->

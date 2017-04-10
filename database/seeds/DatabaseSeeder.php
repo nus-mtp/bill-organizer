@@ -62,11 +62,9 @@ class DatabaseSeeder extends Seeder
                         'amount_area_id' => $amount_area->id,
                         'due_date_area_id' => $due_date_area->id
                     ]);
-                } else {
-                    $template = self::createNewTemplate($record_issuer);
                 }
                 // and a record for each record issuer
-                self::createNewRecord($user, $record_issuer, $template);
+//                self::createNewRecord($user, $record_issuer, $template);
 //                for ($counter = 0; $counter <=20; $counter++){
 //                    $this->createNewRecord($user, $record_issuer);
 //                }

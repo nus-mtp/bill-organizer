@@ -21,8 +21,6 @@ use App\RecordIssuer;
 use App\RecordIssuerType;
 use App\User;
 use App\Template;
-use App\TempRecord;
-use App\TempRecordPage;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Faker\Generator $faker) {
@@ -82,6 +80,7 @@ $factory->defineAs(App\Record::class,RecordIssuerType::BILLORG_TYPE_NAME, functi
     $issue_date = Carbon::createFromTimestamp($faker->unique()->dateTimeBetween($start_date = '- 5 years', $end_date = 'now')->getTimestamp());
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
+        'temporary' => false,
         'issue_date' => $issue_date->toDateString(),
         'due_date' => $due_date->format('Y-m-d'),
         'period' => $issue_date->format('Y-m'),
@@ -113,6 +112,7 @@ $factory->defineAs(App\Record::class,"curr_month_bill", function(Faker\Generator
     $issue_date = $faker->unique()->dateTimeBetween($from,$until);
     $due_date = $faker->dateTimeBetween($issue_date, $issue_date->format('y-m-d H:i:s').' + 14 days');
     return [
+        'temporary' => false,
         'issue_date' => $issue_date->format('Y-m-d'),
         'due_date' => $due_date->format('Y-m-d'),
         'period' => $issue_date->format('Y-m'),
@@ -156,6 +156,7 @@ $factory->define(Record::class, function(Faker\Generator $faker){
     $due_date = $is_bill ? Carbon::now()->addDays(random_int(0, 90))->toDateString() : null;
 
     return [
+        'temporary' => false,
         'issue_date' => $issue_date->toDateString(),
         'due_date' => $due_date,
         'period' => $period,
@@ -211,33 +212,5 @@ $factory->define(Template::class, function(Generator $faker) {
         'amount_area_id' => function() {
             return factory(FieldArea::class)->create()->id;
         }
-    ];
-});
-
-$factory->define(TempRecord::class, function(Generator $faker) {
-    return [
-        'user_id' => $user_id = function() {
-            return factory(User::class)->create()->id;
-        },
-        'record_issuer_id' => $record_issuer_id = function() use ($user_id) {
-            return factory(RecordIssuer::class)->create([
-                'user_id' => $user_id
-            ])->id;
-        },
-        'template_id' => function() use ($record_issuer_id) {
-            return factory(Template::class)->create([
-                'record_issuer_id' => $record_issuer_id
-            ])->id;
-        },
-        'path_to_file' => 'whatever/tmp/file.pdf'
-    ];
-});
-
-$factory->define(TempRecordPage::class, function(Generator $faker) {
-    return [
-        'temp_record_id' => function() {
-            return factory(TempRecord::class)->create()->id;
-        },
-        'path' => 'whatever/tmp/1/1.jpg'
     ];
 });

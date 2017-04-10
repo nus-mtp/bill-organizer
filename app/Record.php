@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class Record extends Model
     ];
 
     public $fillable = ['issue_date', 'due_date', 'period', 'amount', 'path_to_file',
-        'record_issuer_id', 'template_id'];
+        'record_issuer_id', 'template_id', 'temporary'];
 
     protected static function boot() {
         parent::boot();
@@ -36,7 +37,6 @@ class Record extends Model
                 }
 
                 // TODO: paths should be handled by filehandler helper
-                // TODO: TempRecord and Record has different attr name that refers to RecordIssuer
                 $user_id = auth()->id();
                 $record_issuer = $record->issuer;
                 $record_dir = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/{$record->id}/";
@@ -103,14 +103,36 @@ class Record extends Model
     }
 
     public function setPeriodAttribute($value) {
-        $this->attributes['period'] = Carbon::parse($value);
+        try {
+            $this->attributes['period'] =  Carbon::parse($value);
+        } catch (Exception $e) {
+            $this->attributes['period'] = null;
+        }
     }
 
     public function setIssueDateAttribute($value) {
-        $this->attributes['issue_date'] = Carbon::parse($value);
+        try {
+            $this->attributes['issue_date'] = Carbon::parse($value);
+        } catch (Exception $e) {
+            $this->attributes['issue_date'] = null;
+        }
     }
 
     public function setDueDateAttribute($value) {
-        $this->attributes['due_date'] = Carbon::parse($value);
+        try {
+            $this->attributes['due_date'] = Carbon::parse($value);
+        } catch (Exception $e) {
+            $this->attributes['due_date'] = null;
+        }
+    }
+
+    public function setAmountAttribute($value) {
+        // trim $ if any
+        $value = str_replace('$', '', $value);
+        try {
+            $this->attributes['amount'] = $value;
+        } catch (Exception $e) {
+            $this->attributes['amount'] = null;
+        }
     }
 }

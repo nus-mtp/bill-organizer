@@ -11,9 +11,8 @@ use Illuminate\Http\Request;
 use App\Image\ImageEditor;
 use App\RecordIssuerType;
 use App\Record;
+use App\RecordPage;
 use App\RecordIssuer;
-use App\TempRecord;
-use App\TempRecordPage;
 
 class RecordIssuerController extends Controller
 {
@@ -115,10 +114,12 @@ class RecordIssuerController extends Controller
     }
     */
 
+    // TODO: In a transaction?
     /**
      * Handles file upload and direct to the coordinates extraction page
      */
-    public function store_temp_record(RecordIssuer $record_issuer) {
+    public function upload_record_file(RecordIssuer $record_issuer) {
+
         // authorize
         $this->authorize('belongs_to_user', $record_issuer);
 
@@ -129,24 +130,25 @@ class RecordIssuerController extends Controller
 
         // store somewhere
         $user_id = auth()->id();
-        $file_extension = request()->file('record')->extension();
-        $file_name = Carbon::now()->timestamp . ".{$file_extension}";
-        $dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records";
+        // TODO: remove 'users/...' from dir_path
+        $dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
         $path = request()->file('record')
-            ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
+            ->store($dir_path, ['visibility' => 'private']);
 
-        $saved_temp_record = auth()->user()->create_temp_record(
-            new TempRecord([
+        $saved_record = auth()->user()->create_record(
+            new Record([
+                'template_id' => $record_issuer->latest_template() ? $record_issuer->latest_template()->id : null,
+                'temporary' => true,
                 'record_issuer_id' => $record_issuer->id,
                 'path_to_file' => $path
             ])
         );
 
-        // convert pdf to images and store somewhere
-        $temp_images_dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
-            "{$saved_temp_record->id}/img/";
-        if(!Storage::exists($temp_images_dir_path)) {
-            Storage::makeDirectory($temp_images_dir_path, 0777, true, true);
+        // convert pdf to images and store
+        $record_images_dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
+            "{$saved_record->id}/img/";
+        if(!Storage::exists($record_images_dir_path)) {
+            Storage::makeDirectory($record_images_dir_path, 0777, true, true);
         }
 
         // TODO: In dire need of a FileHandler that'll return path relative to storage and full path!!
@@ -155,15 +157,15 @@ class RecordIssuerController extends Controller
             $file_name = "{$i}.jpg";
 
             // need to append 'app/' Is this a bug in Laravel??? Cannot use Storage::url and storage_path just return dir up to storage
-            ImageEditor::jpegFromPdf(storage_path('app/' . $path), $i, storage_path('app/' . $temp_images_dir_path . $file_name));
+            ImageEditor::jpegFromPdf(storage_path('app/' . $path), $i, storage_path('app/' . $record_images_dir_path . $file_name));
 
-            $saved_temp_record->pages()->save(
-                new TempRecordPage([
-                    'path' => $temp_images_dir_path . $file_name
+            $saved_record->pages()->save(
+                new RecordPage([
+                    'path' => $record_images_dir_path . $file_name
                 ])
             );
         }
 
-        return redirect()->route('show_extract_coords_page', $saved_temp_record);
+        return redirect()->route('show_extract_coords_page', $saved_record);
     }
 }
