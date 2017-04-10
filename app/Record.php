@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use App\Helpers\StorageHelper;
 
 class Record extends Model
 {
@@ -32,18 +33,7 @@ class Record extends Model
             DB::transaction(function () use ($record) {
                 $record->pages()->delete();
 
-                if(Storage::exists($record->path_to_file)) {
-                    Storage::delete($record->path_to_file);
-                }
-
-                // TODO: paths should be handled by filehandler helper
-                $user_id = auth()->id();
-                $record_issuer = $record->issuer;
-                $record_dir = "record_issuers/{$record_issuer->id}/records/{$record->id}/";
-
-                if(Storage::exists($record_dir)) {
-                    Storage::deleteDirectory($record_dir);
-                }
+                StorageHelper::deleteRecordFiles($record);
             });
         });
     }

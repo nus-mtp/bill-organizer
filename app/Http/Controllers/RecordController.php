@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateRecordForm;
 use League\Flysystem\Exception;
 
+use App\Helpers\StorageHelper;
 use App\Image\ImageEditor;
 use App\FieldArea;
 use App\Record;
@@ -98,7 +99,6 @@ class RecordController extends Controller
             $file          = $request->file('record_file');
             $extension     = $file->extension();
             $file_name     = "{$record->id}.{$extension}";
-            $user_id = auth()->id();
             $record_issuer = $record->issuer;
             $path_to_store = "record_issuers/{$record_issuer->id}/records";
 
@@ -257,23 +257,15 @@ class RecordController extends Controller
 
         // Extract images by the coordinates and store it in temp dir
         // Interpret the texts using Tesseract, save the value
-        // Delete the whole dir
-        // TODO: copy and pasted from RecordIssuerController -- refactor this but make it work first!
-        $user_id = auth()->id();
-        $record_images_dir_path = "record_issuers/{$record->issuer->id}/records/" .
-            "{$record->id}/img/";
-        $cropped_dir_path = $record_images_dir_path . "cropped/";
-        if(!Storage::exists($cropped_dir_path)) {
-            Storage::makeDirectory($cropped_dir_path, 0777, true, true);
-        }
+        $record_images_dir_path = StorageHelper::createRecordImagesDir($record);
 
         // TODO: Don't do OCR if matches record's template?
         $ocr_results = [];
         foreach ($field_area_names as $field_area_name) {
             $area_attr_name = $field_area_name . '_area';
             $field_area = $final_template->$area_attr_name;
-            $crop_input_filename = storage_path('app/' . $record_images_dir_path . $field_area->page . ".jpg");
-            $crop_output_filename = storage_path('app/' . $cropped_dir_path . $field_area_name . ".jpg");
+            $crop_input_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area->page . ".jpg");
+            $crop_output_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area_name . ".jpg");
             ImageEditor::cropJpeg(
                 $crop_input_filename, $crop_output_filename,
                 $field_area->x, $field_area->y, $field_area->w, $field_area->h

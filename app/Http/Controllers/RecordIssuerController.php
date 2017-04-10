@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+use App\Helpers\StorageHelper;
 use App\Image\ImageEditor;
 use App\RecordIssuerType;
 use App\Record;
@@ -128,12 +129,7 @@ class RecordIssuerController extends Controller
             'record' => 'required'
         ]);
 
-        // store somewhere
-        $user_id = auth()->id();
-        $dir_path = "record_issuers/{$record_issuer->id}/records";
-        $path = request()->file('record')
-            ->store($dir_path, ['visibility' => 'private']);
-
+        $path = StorageHelper::storeUploadedRecordFile(request()->file('record'), $record_issuer);
         $saved_record = auth()->user()->create_record(
             new Record([
                 'template_id' => $record_issuer->latest_template() ? $record_issuer->latest_template()->id : null,
@@ -144,23 +140,20 @@ class RecordIssuerController extends Controller
         );
 
         // convert pdf to images and store
-        $record_images_dir_path = "record_issuers/{$record_issuer->id}/records/" .
-            "{$saved_record->id}/img/";
-        if(!Storage::exists($record_images_dir_path)) {
-            Storage::makeDirectory($record_images_dir_path, 0777, true, true);
-        }
+        $record_images_dir_path = StorageHelper::createRecordImagesDir($saved_record);
 
-        // TODO: In dire need of a FileHandler that'll return path relative to storage and full path!!
-        $num_pages = ImageEditor::getPdfNumPages(storage_path('app/' . $path));
+        $full_path = StorageHelper::getAbsolutePath($path);
+        $num_pages = ImageEditor::getPdfNumPages($full_path);
         for ($i = 0; $i < $num_pages; $i++) {
             $file_name = "{$i}.jpg";
+            $page_path = $record_images_dir_path . $file_name;
 
             // need to append 'app/' Is this a bug in Laravel??? Cannot use Storage::url and storage_path just return dir up to storage
-            ImageEditor::jpegFromPdf(storage_path('app/' . $path), $i, storage_path('app/' . $record_images_dir_path . $file_name));
+            ImageEditor::jpegFromPdf($full_path, $i, StorageHelper::getAbsolutePath($page_path));
 
             $saved_record->pages()->save(
                 new RecordPage([
-                    'path' => $record_images_dir_path . $file_name
+                    'path' => $page_path
                 ])
             );
         }
