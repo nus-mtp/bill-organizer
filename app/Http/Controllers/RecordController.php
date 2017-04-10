@@ -100,7 +100,7 @@ class RecordController extends Controller
             $file_name     = "{$record->id}.{$extension}";
             $user_id = auth()->id();
             $record_issuer = $record->issuer;
-            $path_to_store = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
+            $path_to_store = "record_issuers/{$record_issuer->id}/records";
 
             return $path_of_uploaded_file = $file->storeAs($path_to_store, $file_name, ['visibility'=>'private']);
         }
@@ -260,7 +260,7 @@ class RecordController extends Controller
         // Delete the whole dir
         // TODO: copy and pasted from RecordIssuerController -- refactor this but make it work first!
         $user_id = auth()->id();
-        $record_images_dir_path = "users/{$user_id}/record_issuers/{$record->issuer->id}/records/" .
+        $record_images_dir_path = "record_issuers/{$record->issuer->id}/records/" .
             "{$record->id}/img/";
         $cropped_dir_path = $record_images_dir_path . "cropped/";
         if(!Storage::exists($cropped_dir_path)) {

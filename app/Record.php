@@ -39,7 +39,7 @@ class Record extends Model
                 // TODO: paths should be handled by filehandler helper
                 $user_id = auth()->id();
                 $record_issuer = $record->issuer;
-                $record_dir = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/{$record->id}/";
+                $record_dir = "record_issuers/{$record_issuer->id}/records/{$record->id}/";
 
                 if(Storage::exists($record_dir)) {
                     Storage::deleteDirectory($record_dir);

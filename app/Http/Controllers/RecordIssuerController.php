@@ -130,8 +130,7 @@ class RecordIssuerController extends Controller
 
         // store somewhere
         $user_id = auth()->id();
-        // TODO: remove 'users/...' from dir_path
-        $dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
+        $dir_path = "record_issuers/{$record_issuer->id}/records";
         $path = request()->file('record')
             ->store($dir_path, ['visibility' => 'private']);
 
@@ -145,7 +144,7 @@ class RecordIssuerController extends Controller
         );
 
         // convert pdf to images and store
-        $record_images_dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
+        $record_images_dir_path = "record_issuers/{$record_issuer->id}/records/" .
             "{$saved_record->id}/img/";
         if(!Storage::exists($record_images_dir_path)) {
             Storage::makeDirectory($record_images_dir_path, 0777, true, true);
