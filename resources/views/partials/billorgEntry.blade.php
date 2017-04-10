@@ -10,9 +10,5 @@
                 <i class="trash icon"></i>
             </button>
         </form>
-        <!--// Dummy button, can comment this out if not implemented
-        <button type="submit" class="mini compact ui icon right floated button">
-            <i class="edit icon"></i>
-        </button>-->
     </div>
 </a>

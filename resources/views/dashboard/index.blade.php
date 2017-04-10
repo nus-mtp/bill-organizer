@@ -22,7 +22,8 @@
 
                 <div class="ui four doubling cards" style="width:100%;">
                     @foreach($record_issuers as $record_issuer)
-                    @include('partials.billorgEntry') @endforeach
+                        @include('partials.billorgEntry')
+                    @endforeach
 
                     <div class="add-bill-org card">
                         <div class="content">
