@@ -124,6 +124,9 @@ class Record extends Model
         // trim $ if any
         $value = str_replace('$', '', $value);
         try {
+            if (!is_numeric($value)) {
+                throw new \League\Flysystem\Exception("Amount is not numeric");
+            }
             $this->attributes['amount'] = $value;
         } catch (Exception $e) {
             $this->attributes['amount'] = null;

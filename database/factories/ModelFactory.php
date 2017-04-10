@@ -197,6 +197,7 @@ $factory->define(FieldArea::class, function(Generator $faker) {
 
 $factory->define(Template::class, function(Generator $faker) {
     return [
+        'active' => true,
         'record_issuer_id' => function() {
             return factory(RecordIssuer::class)->create()->id;
         },

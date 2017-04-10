@@ -47,9 +47,9 @@ class RecordIssuer extends Model
     /**
      * Get the latest defined template
      */
-    public function latest_template()
+    public function active_template()
     {
-        return $this->templates()->orderBy('created_at', 'desc')->first();
+        return $this->templates()->where('active', true)->first();
     }
 
     public function create_template(Template $template)

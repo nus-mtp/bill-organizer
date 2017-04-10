@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateRecordForm;
@@ -168,14 +169,16 @@ class RecordController extends Controller
         $is_match = self::matches_template($record, $field_area_names); // true if all field area matches
         // $is_match is true only if template exists and matches the request data
         if (!$is_match) {
-            self::create_new_template($record, $field_area_names);
+            $template = self::create_new_template($record, $field_area_names);
+        } else {
+            $template = $record->template;
         }
 
 
 
         // Interpret the texts using OCR, save the value
-        $ocr_results = self::runOcr($record, $field_area_names);
-        $record->update(array_merge($ocr_results, ['temporary' => false]));
+        $ocr_results = self::runOcr($record, $template, $field_area_names);
+        $record->update($ocr_results);
 
 
 
@@ -205,7 +208,12 @@ class RecordController extends Controller
 
         $this->validate(request(), $rules);
 
-        $record->update(request($field_area_names));
+        DB::transaction(function() use ($record, $field_area_names) {
+            $record->update(array_merge(request($field_area_names), ['temporary' => false]));
+
+            $record->issuer->active_template()->update(['active' => false]);
+            $record->template->update(['active' => true]);
+        });
 
         // TODO: Need a mechanism to show user the temp records when they logged in
 
@@ -258,9 +266,8 @@ class RecordController extends Controller
             $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
         }
 
-        // TODO: Shouldn't just create a template like that from a temporary one (add a new attribute called active instead)
         $created_template = $record->issuer->create_template(
-            new Template($template_data)
+            new Template(array_merge($template_data, ['active' => false]))
         );
 
         // Set record to point to $template
@@ -271,7 +278,7 @@ class RecordController extends Controller
         return $created_template;
     }
 
-    private static function runOcr(Record $record, $field_area_names) {
+    private static function runOcr(Record $record, $template, $field_area_names) {
         $record_images_dir_path = StorageHelper::createRecordImagesDir($record);
 
         $ocr_results = [];

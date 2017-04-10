@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
                     $due_date_area = self::createNewFieldArea(0, 0.374126, 0.815166, 0.122378, 0.0118483);
 
                     $template = Template::create([
+                        'active' => true,
                         'record_issuer_id' => $record_issuer->id,
                         'period_area_id' => $period_area->id,
                         'issue_date_area_id' => $issue_date_area->id,

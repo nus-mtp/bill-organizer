@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Template extends Model
 {
-    protected $fillable = ['issue_date_area_id', 'due_date_area_id', 'period_area_id', 'amount_area_id'];
+    protected $fillable = ['active', 'issue_date_area_id', 'due_date_area_id', 'period_area_id', 'amount_area_id'];
 
     public function record_issuer()
     {

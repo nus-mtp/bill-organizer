@@ -79,7 +79,7 @@ class RecordIssuerController extends Controller
         $saved_record = auth()->user()->create_record(
             // use template from record_issuer immediately if exists
             new Record([
-                'template_id' => $record_issuer->latest_template() ? $record_issuer->latest_template()->id : null,
+                'template_id' => $record_issuer->active_template() ? $record_issuer->active_template()->id : null,
                 'temporary' => true,
                 'record_issuer_id' => $record_issuer->id,
                 'path_to_file' => $path
