@@ -101,7 +101,6 @@ class RecordController extends Controller
         return null;
     }
 
-    // TODO: clean up. You made it work. Now make it right
     public function add_template(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
@@ -147,7 +146,6 @@ class RecordController extends Controller
 
         // Get the coords (and validate)
         // TODO: extract these long lists of validation to a specialized form handler and do typecasting
-        // TODO: creation of many models should be inside a DB transaction to maintain integrity
         $field_area_names = ['issue_date', 'period', 'amount'];
         $field_area_attrs = ['page', 'x', 'y', 'w', 'h'];
         $is_bill = $record->issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
@@ -229,10 +227,10 @@ class RecordController extends Controller
                 $page_match = $field_area->page === (int) request("{$field_area_name}_page");
 
                 // allow +- 1 pixel deviation.
-                $x_match = abs(($field_area->x - request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
-                $y_match = abs(($field_area->y - request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
-                $w_match = abs(($field_area->w - request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
-                $h_match = abs(($field_area->h - request("{$field_area_name}_h")) * $page_geometry['height']) <= 1;
+                $x_match = abs(($field_area->x - (double) request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
+                $y_match = abs(($field_area->y - (double) request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
+                $w_match = abs(($field_area->w - (double) request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
+                $h_match = abs(($field_area->h - (double) request("{$field_area_name}_h")) * $page_geometry['height']) <= 1;
 
                 $does_field_area_match = $page_match && $x_match && $y_match && $w_match && $h_match;
 
