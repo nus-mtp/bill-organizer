@@ -215,7 +215,9 @@ class RecordController extends Controller
         DB::transaction(function() use ($record, $field_area_names) {
             $record->update(array_merge(request($field_area_names), ['temporary' => false]));
 
-            $record->issuer->active_template()->update(['active' => false]);
+            if ($record->issuer->active_template()) {
+                $record->issuer->active_template()->update(['active' => false]);
+            }
             $record->template->update(['active' => true]);
         });
 
