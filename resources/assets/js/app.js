@@ -416,6 +416,7 @@ const onEditPageLoad = function (window) {
 
   $('.ui.positive.ocr.button').click(function (e) {
         // e.preventDefault(); // not sure if need this
+    var isBillSelector = ".bill-image #bill-wrapper > p#is-bill";
     var isBill = Boolean($(isBillSelector).text());
     var hasError = false
     var error = '<ul>'

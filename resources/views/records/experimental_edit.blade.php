@@ -52,10 +52,10 @@
 
             <div class="six wide column">
                 <div class="ui tiny error message" id="errormsg"></div>
-                <div class="ui pointing below label">
-                    Click on an item below, then select the corresponding field in the record 
-                </div>
                     @if(!$edit_value_mode)
+                    <div class="ui pointing below label">
+                        Click on an item below, then select the corresponding field in the record
+                    </div>
                         @if($is_bill)
                         <div class="ui fluid four item compact labeled icon menu">
                             <a class="select item" id="issue" onclick="selAnother('#selidate');">
