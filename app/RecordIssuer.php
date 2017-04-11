@@ -14,8 +14,13 @@ class RecordIssuer extends Model
 
         static::deleting(function($record_issuer) {
             DB::transaction(function () use ($record_issuer) {
-                $record_issuer->records()->delete();
-                $record_issuer->templates()->delete();
+                foreach($record_issuer->records as $record) {
+                    $record->delete();
+                }
+
+                foreach($record_issuer->templates as $template) {
+                    $template->delete();
+                }
             });
         });
     }

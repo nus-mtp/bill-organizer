@@ -70,6 +70,7 @@ class RecordController extends Controller
     }
 
     // TODO: should redirect to record issuer page, not back to the edit page!
+    /*
     public function update(UpdateRecordForm $request, Record $record)
     {
         // TODO: move this authorization policy to UpdateRecordForm instead
@@ -83,9 +84,11 @@ class RecordController extends Controller
         } //call update only if there's changes
         return back();
     }
+    */
 
     // TODO: should delete old file if issue_date updated???
     // TODO: this is buggy -> it assumes that issue_date is present in the request
+    /*
     private function upload_file($request, $record)
     {
         // upload only if user optionally uploaded a file
@@ -101,6 +104,7 @@ class RecordController extends Controller
         }
         return null;
     }
+    */
 
     public function add_template(Record $record) {
         $this->authorize('belongs_to_user', $record);

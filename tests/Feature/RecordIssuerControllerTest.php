@@ -47,7 +47,7 @@ class RecordIssuerControllerTest extends TestCase
             . $this->record_issuer->id);
 
         // should be redirected to login
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/');
     }
 
     public function testShowAsNonOwner()
@@ -85,7 +85,7 @@ class RecordIssuerControllerTest extends TestCase
         $response = $this->post('/dashboard/record_issuers', $record_issuer_data);
 
         // should be redirected to login
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/');
     }
 
     public function testStoreWithOtherUserId()
@@ -134,7 +134,7 @@ class RecordIssuerControllerTest extends TestCase
         $response = $this->delete('/dashboard/record_issuers/' . $this->record_issuer->id);
 
         // should be redirected to login (not Unauthorized because he's not even authenticated)
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/');
     }
 
     public function testDestroyAsAnotherUser()

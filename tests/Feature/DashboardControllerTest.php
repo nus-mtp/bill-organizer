@@ -28,7 +28,7 @@ class DashboardControllerTest extends TestCase
         $response = $this->get('/dashboard');
 
         // should be redirected to login
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/');
     }
 
     public function testAsUser() {
