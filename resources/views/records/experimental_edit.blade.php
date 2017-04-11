@@ -52,6 +52,9 @@
 
             <div class="six wide column">
                 <div class="ui tiny error message" id="errormsg"></div>
+                <div class="ui pointing below label">
+                    Click on an item below, then select the corresponding field in the record 
+                </div>
                     @if(!$edit_value_mode)
                         @if($is_bill)
                         <div class="ui fluid four item compact labeled icon menu">
@@ -75,14 +78,14 @@
                         @if(!$is_bill)
                         <div class="ui fluid three item compact labeled icon menu">
                             <a class="select item" id="issue" onclick="selAnother('#selidate');">
-                                <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
+                                <i class="grey edit icon" id="issuedateicon"></i>                        Issue Date
                             </a>
                             <a class="select item" id="period" onclick="selAnother('#selrperiod');">
-                                <i class="grey edit icon" id="rperiodicon"></i>                        Record<br>Period
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Record Period
                             </a>
-                            <a class="select item" id="duedate" onclick="selAnother('#selddate');">
-                                <i class="grey edit icon" id="duedateicon"></i>
-                                Due<br>Date
+                            <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
+                                <i class="grey edit icon" id="amtdueicon"></i>
+                                Balance
                             </a>
                         </div>
                         @endif
@@ -123,14 +126,19 @@
                                        value="{{$temp_record->period ? $temp_record->period->format('Y-m') : null}}">
                             </div>
                             @if($is_bill)
-                                <div class="field">
+                            <div class="field">
                                     <label>Due Date</label>
                                     <input type="date" name="due_date" placeholder="Due Date" id="due_date"
                                            value="{{$temp_record->due_date ? $temp_record->due_date->toDateString() : null}}">
-                                </div>
+                            </div>
                             @endif
                             <div class="field">
+                                @if($is_bill)
                                 <label>Amount Due</label>
+                                @endif
+                                @if(!$is_bill)
+                                <label>Balance</label>
+                                @endif
                                 <input type="text" name="amount" placeholder="e.g 400" id="amount"
                                        value="{{$temp_record->amount}}">
                             </div>

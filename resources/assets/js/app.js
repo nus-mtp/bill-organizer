@@ -416,6 +416,7 @@ const onEditPageLoad = function (window) {
 
   $('.ui.positive.ocr.button').click(function (e) {
         // e.preventDefault(); // not sure if need this
+    var isBill = Boolean($(isBillSelector).text());
     var hasError = false
     var error = '<ul>'
     if (!$('#issue_date_page').val()) {
@@ -426,14 +427,23 @@ const onEditPageLoad = function (window) {
       error += '<li>Please select the record period'
       hasError = true
     }
-    if (!$('#due_date_page').val()) {
-      error += '<li>Please select the due date'
-      hasError = true
+    if(isBill){
+        if (!$('#due_date_page').val()) {
+            error += '<li>Please select the due date'
+            hasError = true
+        }
+        if (!$('#amount_page').val()) {
+            error += '<li>Please select the amount due'
+            hasError = true
+        }
     }
-    if (!$('#amount_page').val()) {
-      error += '<li>Please select the amount due'
-      hasError = true
+    else{
+        if (!$('#amount_page').val()) {
+            error += '<li>Please select the balance'
+            hasError = true
+        }
     }
+    
     if (hasError) {
       displayError(error)
       return false
