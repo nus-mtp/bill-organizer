@@ -77,13 +77,47 @@
                 <h4>Option 2: using xampp</h4>
                 <p>Follow instructions at <a href="https://www.apachefriends.org/download.html">https://www.apachefriends.org/download.html</a></p>
                 <h4>Additional setup</h4>
-                <p>Enable required extensions by removing the semi-colons php.ini<br>
-                    extension=php_openssl.dll<br>
+                <p>Enable required extensions by removing the semi-colons in php.ini<br>
+                    <code>extension=php_openssl.dll<br>
                     extension=php_curl.dll<br>
-                    extension=php_sockets.dll</p>
+                    extension=php_sockets.dll</code></p>
+                <h3>2. Install dependency managers</h3>
+                <p>Download and install Composer at <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a><br>
+                    Download and install nodejs at <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
+                <h3>3. Install the following dependencies</h3>
+                <h4>Ubuntu 16.04</h4>
+                <p>1. Ghostscript<br>
+                    <code>sudo apt-get install ghostscript libgs-dev</code><br>
+                    2. ImageMagick<br>
+                    Follow the instructions <a href="https://www.imagemagick.org/script/install-source.php">here</a>.<br>
+                    Also, during the configure phase, use the <code>--with-gslib=yes</code> flag. ie: <code>./configure --with-gslib=yes</code><br>
+                    3. PHP Imagick extension <code>sudo apt install php-imagick</code> (for php >=7.0)<br>
+                    4. Tesseract <code>sudo apt-get install tesseract-ocr</code></p>
+                <h4>Windows</h4>
+                <p>herpderp</p>
+                <h3>4. Setup the project</h3>
+                <p>1. clone project from github<br>
+                    <code>git clone git@github.com:nus-mtp/bill-organizer.git</code><br>
+                    2. install dependencies<br>
+                    <code>npm install npm@latest</code><br>
+                    <code>composer install</code><br>
+                    <code>npm install</code><br>
+                    3. start development server<br>
+                    <code>php artisan serve</code><br>
+                    <code>npm run watch</code></p>
+                <h3>5. Accessing Development Database Server</h3>
+                <h4>Via Web portal</h4>
+                <p>1. Visit <a href="http://128.199.82.128/phpmyadmin">http://128.199.82.128/phpmyadmin</a><br>
+                    2. username: <b>developer</b> | password: <b>password</b></p>
+                <h4>Via SQLClient (e.g mysql workbench)</h4>
+                <p>Establish connection from local machine via sqlclient using the following settings<br>
+                    <code>host:128.199.82.128<br>
+                        port:3306<br>
+                        user:developer<br>
+                        password:password</code></p>
             </div>
+            <h1>Common Errors</h1>
             <div class="ui basic segment" id="readme">
-                <h1>Common Errors</h1>
                 {{ content }}
             </div>
             <h1>Support</h1>
