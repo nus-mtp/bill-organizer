@@ -29,11 +29,6 @@ class RecordIssuer extends Model
         return $this->hasMany(Record::class);
     }
 
-    public function temp_records()
-    {
-        return $this->hasMany(TempRecord::class);
-    }
-
     public function issuer_type()
     {
       return $this->belongsTo(RecordIssuerType::class, 'type');
@@ -52,9 +47,9 @@ class RecordIssuer extends Model
     /**
      * Get the latest defined template
      */
-    public function latest_template()
+    public function active_template()
     {
-        return $this->templates()->orderBy('created_at', 'desc')->first();
+        return $this->templates()->where('active', true)->first();
     }
 
     public function create_template(Template $template)

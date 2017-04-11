@@ -66,9 +66,9 @@ class RecordIssuerTest extends TestCase
         $this->assertNotNull($this->record_issuer->templates);
     }
 
-    public function testGetLatestTemplate()
+    public function testGetActiveTemplate()
     {
-        $this->assertNotNull($this->record_issuer->latest_template());
+        $this->assertNotNull($this->record_issuer->active_template());
     }
 
     public function testCanCreateEmptyRecordIssuerClass()

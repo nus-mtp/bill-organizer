@@ -15,6 +15,7 @@ class CreateTemplatesTable extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('active');
             $table->integer('record_issuer_id')->unsigned();
             $table->integer('issue_date_area_id')->unsigned();
             $table->integer('due_date_area_id')->unsigned()->nullable();

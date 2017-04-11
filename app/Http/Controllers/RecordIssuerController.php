@@ -8,23 +8,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+use App\Helpers\StorageHelper;
 use App\Image\ImageEditor;
 use App\RecordIssuerType;
 use App\Record;
+use App\RecordPage;
 use App\RecordIssuer;
-use App\TempRecord;
-use App\TempRecordPage;
 
 class RecordIssuerController extends Controller
 {
     public static $record_issuer_types;
 
     public function __construct() {
-        // Create an assoc. array of id => type
-        $record_issuer_types = RecordIssuerType::all();
-        foreach ($record_issuer_types as $record_issuer_type) {
-            self::$record_issuer_types[$record_issuer_type->id] = $record_issuer_type->type;
-        }
+        // an assoc. array of id => type
+        $record_issuer_types = RecordIssuerType::idToType();
 
         $this->middleware('auth');
     }
@@ -32,7 +29,7 @@ class RecordIssuerController extends Controller
     public function show(RecordIssuer $record_issuer) {
         $this->authorize('belongs_to_user', $record_issuer);
 
-        $records = $record_issuer->records;
+        $records = $record_issuer->records()->temporary(false)->get();
         $type = self::$record_issuer_types[$record_issuer->type]; // $record_issuer type is an ID
         $amount_field_name = $type === 'bank' ? 'Balance' : 'Amount due';
 
@@ -40,12 +37,12 @@ class RecordIssuerController extends Controller
     }
 
     public function store() {
-        // TODO: determine if should add max len constraint?
+        // TODO:
         // Validate the type -- research on Validator
         // $record_issuer_types = RecordIssuerType::pluck('id');
 
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|max:191',
             'type' => 'required'
         ]);
 
@@ -64,106 +61,50 @@ class RecordIssuerController extends Controller
         return back();
     }
 
-
-    // TODO: clean up this mess if possible?
-    /**
-     * Store_record is here because it needs to be validated that the RecordIssuer belongs to the current user
-     */
-    // TODO: Once it's confirmed that we don't need this old method of storing record, delete
-    /*
-    public function store_record(RecordIssuer $record_issuer) {
-        // only if this record_issuer belongs to me can I add a new record. I shouldn't be able to add to other user's record issuer
-        $this->authorize('belongs_to_user', $record_issuer);
-
-        // Date format received: YYYY-MM-DD
-        $this->validate(request(), [
-            'record' => 'required',
-            'issue_date' => 'required',
-            'period' => 'required',
-            'amount' => 'required'
-        ]);
-
-        if (self::$record_issuer_types[$record_issuer->type] === 'billing organization') {
-            $this->validate(request(), [
-                'due_date' => 'required'
-            ]);
-        }
-
-        $user_id = auth()->id();
-
-        $saved_record = auth()->user()->create_record(
-            new Record(
-                request(['issue_date', 'due_date', 'amount', 'period']) + [
-                    'record_issuer_id' => $record_issuer->id
-                ]
-            )
-        );
-
-        // TODO: extract these to FileHandler
-        $file_extension = request()->file('record')->extension();
-        $file_name = "{$saved_record->id}.{$file_extension}";
-        $dir_path = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
-        $path = request()->file('record')
-            ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
-        // research on visibility public vs private -> currently there's not a lot of documentation on this
-
-        $saved_record->update([
-            'path_to_file' => $path
-        ]);
-
-        return back();
-    }
-    */
-
     /**
      * Handles file upload and direct to the coordinates extraction page
      */
-    public function store_temp_record(RecordIssuer $record_issuer) {
+    public function upload_record_file(RecordIssuer $record_issuer) {
+
         // authorize
         $this->authorize('belongs_to_user', $record_issuer);
 
         // validate or redirect
+        // TODO: validate isPDF
         $this->validate(request(), [
             'record' => 'required'
         ]);
 
-        // store somewhere
-        $user_id = auth()->id();
-        $file_extension = request()->file('record')->extension();
-        $file_name = Carbon::now()->timestamp . ".{$file_extension}";
-        $dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records";
-        $path = request()->file('record')
-            ->storeAs($dir_path, $file_name, ['visibility' => 'private']);
-
-        $saved_temp_record = auth()->user()->create_temp_record(
-            new TempRecord([
+        $path = StorageHelper::storeUploadedRecordFile(request()->file('record'), $record_issuer);
+        $saved_record = auth()->user()->create_record(
+            // use template from record_issuer immediately if exists
+            new Record([
+                'template_id' => $record_issuer->active_template() ? $record_issuer->active_template()->id : null,
+                'temporary' => true,
                 'record_issuer_id' => $record_issuer->id,
                 'path_to_file' => $path
             ])
         );
 
-        // convert pdf to images and store somewhere
-        $temp_images_dir_path = "tmp/users/{$user_id}/record_issuers/{$record_issuer->id}/records/" .
-            "{$saved_temp_record->id}/img/";
-        if(!Storage::exists($temp_images_dir_path)) {
-            Storage::makeDirectory($temp_images_dir_path, 0777, true, true);
-        }
+        // convert pdf to images and store
+        $record_images_dir_path = StorageHelper::createRecordImagesDir($saved_record);
 
-        // TODO: In dire need of a FileHandler that'll return path relative to storage and full path!!
-        $num_pages = ImageEditor::getPdfNumPages(storage_path('app/' . $path));
+        $full_path = StorageHelper::getAbsolutePath($path);
+        $num_pages = ImageEditor::getPdfNumPages($full_path);
         for ($i = 0; $i < $num_pages; $i++) {
             $file_name = "{$i}.jpg";
+            $page_path = $record_images_dir_path . $file_name;
 
             // need to append 'app/' Is this a bug in Laravel??? Cannot use Storage::url and storage_path just return dir up to storage
-            ImageEditor::jpegFromPdf(storage_path('app/' . $path), $i, storage_path('app/' . $temp_images_dir_path . $file_name));
+            ImageEditor::jpegFromPdf($full_path, $i, StorageHelper::getAbsolutePath($page_path));
 
-            $saved_temp_record->pages()->save(
-                new TempRecordPage([
-                    'path' => $temp_images_dir_path . $file_name
+            $saved_record->pages()->save(
+                new RecordPage([
+                    'path' => $page_path
                 ])
             );
         }
 
-        return redirect()->route('show_extract_coords_page', $saved_temp_record);
+        return redirect()->route('add_template', $saved_record);
     }
 }

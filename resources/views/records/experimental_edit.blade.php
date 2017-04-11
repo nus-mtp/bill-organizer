@@ -36,8 +36,8 @@
                         {{--<img src="{{url('placeholderbill.jpg')}}" id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">--}}
                         <img id="bill" onmousedown="getCoordinates(event)" onmouseup="getCoordsAgain(event)" onmouseout="coordsFailSafe(event)" onmousemove="getChangingCoords(event)">
                         <p style="display: none;" id="is-bill">{{$is_bill}}</p>
-                        @foreach($temp_record->pages as $page)
-                            <p style="display: none;" class="img-url">{{route('show_temp_record_page', $page->id)}}</p>
+                        @foreach($record->pages as $page)
+                            <p style="display: none;" class="img-url">{{route('show_record_page', $page->id)}}</p>
                         @endforeach
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                 
                 <!--hidden inputs below-->
                 <div>
-                    <form class="ui form" id="coords-form" action="{{ route('extract_coords', $temp_record) }}" method="POST">                        
+                    <form class="ui form" id="coords-form" action="{{ route('store_template', $record) }}" method="POST">
                         {{ csrf_field() }}
                         @foreach($field_area_inputs as $key => $val)
                             <div class="field">
@@ -113,24 +113,24 @@
 
                 @if($edit_value_mode)
                     <div>
-                        <form class="ui form" action="{{ route('confirm_values', $temp_record) }}" method="POST">
+                        <form class="ui form" action="{{ route('confirm_values', $record) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="field">
                                 <label>Issue Date</label>
                                 <input type="date" name="issue_date" placeholder="Issue Date" id="issue_date"
-                                       value="{{$temp_record->issue_date ? $temp_record->issue_date->toDateString() : null}}">
+                                       value="{{$record->issue_date ? $record->issue_date->toDateString() : null}}">
                             </div>
                             <div class="field">
                                 <label>Record Period</label>
                                 <input type="month" name="period" placeholder="Period" id="period"
-                                       value="{{$temp_record->period ? $temp_record->period->format('Y-m') : null}}">
+                                       value="{{$record->period ? $record->period->format('Y-m') : null}}">
                             </div>
                             @if($is_bill)
                             <div class="field">
                                     <label>Due Date</label>
                                     <input type="date" name="due_date" placeholder="Due Date" id="due_date"
-                                           value="{{$temp_record->due_date ? $temp_record->due_date->toDateString() : null}}">
-                            </div>
+                                           value="{{$record->due_date ? $record->due_date->toDateString() : null}}">
+                                </div>
                             @endif
                             <div class="field">
                                 @if($is_bill)
@@ -140,7 +140,7 @@
                                 <label>Balance</label>
                                 @endif
                                 <input type="text" name="amount" placeholder="e.g 400" id="amount"
-                                       value="{{$temp_record->amount}}">
+                                       value="{{$record->amount}}">
                             </div>
                             <div class="actions">
                                 <button class="ui positive button" type="submit">Submit</button>
