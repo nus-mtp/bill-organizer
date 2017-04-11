@@ -278,13 +278,13 @@ class RecordController extends Controller
         return $created_template;
     }
 
-    private static function runOcr(Record $record, $template, $field_area_names) {
+    private static function runOcr(Record $record, Template $template, $field_area_names) {
         $record_images_dir_path = StorageHelper::createRecordImagesDir($record);
 
         $ocr_results = [];
         foreach ($field_area_names as $field_area_name) {
             $area_attr_name = $field_area_name . '_area';
-            $field_area = $record->template->$area_attr_name;
+            $field_area = $template->$area_attr_name;
             $crop_input_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area->page . ".jpg");
             $crop_output_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area_name . ".jpg");
 
