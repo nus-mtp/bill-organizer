@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\RecordIssuerType;
-use App\Record;
 use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateRecordForm;
 use League\Flysystem\Exception;
+
+use App\Helpers\StorageHelper;
+use App\Image\ImageEditor;
+use App\FieldArea;
+use App\Record;
+use App\RecordIssuerType;
+use App\Template;
 
 class RecordController extends Controller
 {
@@ -18,13 +24,8 @@ class RecordController extends Controller
     public function __construct() {
         $this->middleware('auth');
 
-        // TODO: extract this somewhere else (used in RecordIssuerController too!)
-        // Create an assoc. array of id => type
-        $record_issuer_types = RecordIssuerType::all();
-        foreach ($record_issuer_types as $record_issuer_type) {
-            self::$record_issuer_types[$record_issuer_type->id] = $record_issuer_type->type;
-        }
-
+        // an assoc. array of id => type
+        $record_issuer_types = RecordIssuerType::idToType();
     }
 
     public function show(Record $record) {
@@ -51,7 +52,6 @@ class RecordController extends Controller
     public function destroy(Record $record) {
         $this->authorize('belongs_to_user', $record);
 
-        // TODO: handle deletion failure
         $record->delete();
 
         return back();
@@ -94,12 +94,215 @@ class RecordController extends Controller
             $file          = $request->file('record_file');
             $extension     = $file->extension();
             $file_name     = "{$record->id}.{$extension}";
-            $user_id = auth()->id();
             $record_issuer = $record->issuer;
-            $path_to_store = "users/{$user_id}/record_issuers/{$record_issuer->id}/records";
+            $path_to_store = "record_issuers/{$record_issuer->id}/records";
 
             return $path_of_uploaded_file = $file->storeAs($path_to_store, $file_name, ['visibility'=>'private']);
         }
         return null;
+    }
+
+    public function add_template(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
+        // Determine field_area_inputs based on type first
+        $is_bill = $record->issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
+        $field_area_names = ['issue_date', 'period', 'amount'];
+        $field_area_attrs = ['page', 'x', 'y', 'w', 'h'];
+        if ($is_bill) {
+            $field_area_names = array_merge($field_area_names, ['due_date']);
+        }
+
+        // Fill with null by default
+        $field_area_inputs = [];
+        foreach ($field_area_names as $field_area_name) {
+            foreach ($field_area_attrs as $attr) {
+                $field_area_inputs["{$field_area_name}_{$attr}"] = null;
+            }
+        }
+
+        // Fill with existing field_area values if template exists
+        if ($record->template !== null) {
+            foreach ($field_area_names as $field_area_name) {
+                $area_attr_name = $field_area_name . '_area';
+                $field_area = $record->template->$area_attr_name;
+
+                foreach ($field_area_attrs as $attr) {
+                    $field_area_inputs["{$field_area_name}_{$attr}"] = $field_area->$attr;
+                }
+            }
+        }
+
+        $edit_value_mode = false;
+
+        return view(
+            'records.experimental_edit',
+            compact('record', 'is_bill', 'field_area_inputs', 'edit_value_mode')
+        );
+    }
+
+    // TODO: Warn user if duplicate record
+    public function store_template(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
+        // Get the coords (and validate)
+        // TODO: extract these long lists of validation to a specialized form handler and do typecasting
+        $field_area_names = ['issue_date', 'period', 'amount'];
+        $field_area_attrs = ['page', 'x', 'y', 'w', 'h'];
+        $is_bill = $record->issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
+        if ($is_bill) {
+            $field_area_names = array_merge($field_area_names, ['due_date']);
+        }
+
+        $rules = [];
+        foreach ($field_area_names as $field_area_name) {
+            foreach($field_area_attrs as $attr) {
+                $rules["{$field_area_name}_{$attr}"] = 'required';
+            }
+        }
+
+        // Expect from client: issue_date_page, issue_date_x, ...
+        $this->validate(request(), $rules);
+
+
+
+        $is_match = self::matches_template($record, $field_area_names); // true if all field area matches
+        // $is_match is true only if template exists and matches the request data
+        if (!$is_match) {
+            $template = self::create_new_template($record, $field_area_names);
+        } else {
+            $template = $record->template;
+        }
+
+
+
+        // Interpret the texts using OCR, save the value
+        $ocr_results = self::runOcr($record, $template, $field_area_names);
+        $record->update($ocr_results);
+
+
+
+        $field_area_inputs = request()->all();
+        unset($field_area_inputs['_token']);
+        $edit_value_mode = true;
+
+        // Pass back to the same page, with coords and values filled
+        return view(
+            'records.experimental_edit',
+            compact('record', 'is_bill', 'field_area_inputs', 'edit_value_mode')
+        );
+    }
+
+    public function confirm_values(Record $record) {
+        $this->authorize('belongs_to_user', $record);
+
+        $is_bill = $record->issuer->type === RecordIssuerType::BILLORG_TYPE_ID;
+        $field_area_names = ['issue_date', 'period', 'amount'];
+        if ($is_bill) {
+            $field_area_names = array_merge($field_area_names, ['due_date']);
+        }
+
+        foreach ($field_area_names as $field_area_name) {
+            $rules[$field_area_name] = 'required';
+        }
+
+        $this->validate(request(), $rules);
+
+        DB::transaction(function() use ($record, $field_area_names) {
+            $record->update(array_merge(request($field_area_names), ['temporary' => false]));
+
+            $record->issuer->active_template()->update(['active' => false]);
+            $record->template->update(['active' => true]);
+        });
+
+        // TODO: Need a mechanism to show user the temp records when they logged in
+
+        return redirect()->route('show_record_issuer', $record->issuer);
+    }
+
+    private static function matches_template(Record $record, $field_area_names) {
+        $is_match = false; // true if all field area matches
+        if ($record->template !== null) {
+            $is_match = true;
+
+            foreach ($field_area_names as $field_area_name) {
+                $area_attr_name = $field_area_name . '_area';
+                $field_area = $record->template->$area_attr_name;
+
+                $record_page = $record->pages[$field_area->page];
+                $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
+
+                $page_match = $field_area->page === (int) request("{$field_area_name}_page");
+
+                // allow +- 1 pixel deviation.
+                $x_match = abs(($field_area->x - (double) request("{$field_area_name}_x")) * $page_geometry['width']) <= 1;
+                $y_match = abs(($field_area->y - (double) request("{$field_area_name}_y")) * $page_geometry['height']) <= 1;
+                $w_match = abs(($field_area->w - (double) request("{$field_area_name}_w")) * $page_geometry['width']) <= 1;
+                $h_match = abs(($field_area->h - (double) request("{$field_area_name}_h")) * $page_geometry['height']) <= 1;
+
+                $does_field_area_match = $page_match && $x_match && $y_match && $w_match && $h_match;
+
+                if (!$does_field_area_match) {
+                    $is_match = false;
+                    break;
+                }
+            }
+        }
+
+        return $is_match;
+    }
+
+    private static function create_new_template(Record $record, $field_area_names) {
+        $template_data = [];
+        foreach ($field_area_names as $field_area_name) {
+            $field_area_data = [];
+
+            $field_area_data['page'] = request("{$field_area_name}_page");
+            $field_area_data['x'] = request("{$field_area_name}_x");
+            $field_area_data['w'] = request("{$field_area_name}_w");
+            $field_area_data['y'] = request("{$field_area_name}_y");
+            $field_area_data['h'] = request("{$field_area_name}_h");
+
+            $template_data["{$field_area_name}_area_id"] = FieldArea::create($field_area_data)->id;
+        }
+
+        $created_template = $record->issuer->create_template(
+            new Template(array_merge($template_data, ['active' => false]))
+        );
+
+        // Set record to point to $template
+        $record->update([
+            'template_id' => $created_template->id
+        ]);
+
+        return $created_template;
+    }
+
+    private static function runOcr(Record $record, $template, $field_area_names) {
+        $record_images_dir_path = StorageHelper::createRecordImagesDir($record);
+
+        $ocr_results = [];
+        foreach ($field_area_names as $field_area_name) {
+            $area_attr_name = $field_area_name . '_area';
+            $field_area = $record->template->$area_attr_name;
+            $crop_input_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area->page . ".jpg");
+            $crop_output_filename = StorageHelper::getAbsolutePath($record_images_dir_path . $field_area_name . ".jpg");
+
+            $record_page = $record->pages[$field_area->page];
+            $page_geometry = ImageEditor::getImageGeometry(StorageHelper::getAbsolutePath($record_page->path));
+
+            $actual_x = (int) ($field_area->x * $page_geometry['width']);
+            $actual_y = (int) ($field_area->y * $page_geometry['height']);
+            $actual_w = (int) ceil($field_area->w * $page_geometry['width']);
+            $actual_h = (int) ceil($field_area->h * $page_geometry['height']);
+
+            ImageEditor::cropJpeg(
+                $crop_input_filename, $crop_output_filename,
+                $actual_x, $actual_y, $actual_w, $actual_h
+            );
+            $ocr_results[$field_area_name] = ImageEditor::recognizeTextFromJpeg($crop_output_filename);
+        }
+
+        return $ocr_results;
     }
 }

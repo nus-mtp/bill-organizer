@@ -99,13 +99,14 @@ trait TestHelperTrait
     private function makeNonRandomRecordWoFactory(RecordIssuer $orgModel) {
         $user = $orgModel->user;
         $record = new Record();
+        $record->temporary = false;
         $record->issue_date = Carbon::now();
         $record->period = $record->issue_date;
         $record->amount = 300.32;
         $record->path_to_file = "/sroage/com/example/1/file123.pdf";
         $record->user_id = $user->id;
         $record->record_issuer_id = $orgModel->id;
-        // must use factory because the idea is that Record must have a template. TempRecord doesn't have to.
+        // TODO: Should record's template be initialized?
         $record->template_id = factory(\App\Template::class)->create([
             'record_issuer_id' => $orgModel->id
         ])->id;

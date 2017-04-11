@@ -16,6 +16,15 @@ class RecordIssuerType extends Model
         return $query->where('type', $type);
     }
 
+    public static function idToType() {
+        $record_issuer_types = RecordIssuerType::all();
+        $idToType = [];
+        foreach ($record_issuer_types as $record_issuer_type) {
+            $idToType[$record_issuer_type->id] = $record_issuer_type->type;
+        }
+        return $idToType;
+    }
+
     public static function random_type() {
         $record_issuer_types = self::pluck('id')->toArray();
         $rand_index = array_rand($record_issuer_types);
@@ -27,10 +36,8 @@ class RecordIssuerType extends Model
         return static::where('type',$type)->first()->id;
     }
 
-   public function record_issuer()
-  {
-    return $this->hasMany(RecordIssuer::class,'type');
-  }
-
-
+    public function record_issuer()
+    {
+      return $this->hasMany(RecordIssuer::class,'type');
+    }
 }

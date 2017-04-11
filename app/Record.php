@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Exception;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use App\Helpers\StorageHelper;
 
 class Record extends Model
 {
@@ -22,7 +24,7 @@ class Record extends Model
     ];
 
     public $fillable = ['issue_date', 'due_date', 'period', 'amount', 'path_to_file',
-        'record_issuer_id', 'template_id'];
+        'record_issuer_id', 'template_id', 'temporary'];
 
     protected static function boot() {
         parent::boot();
@@ -31,19 +33,7 @@ class Record extends Model
             DB::transaction(function () use ($record) {
                 $record->pages()->delete();
 
-                if(Storage::exists($record->path_to_file)) {
-                    Storage::delete($record->path_to_file);
-                }
-
-                // TODO: paths should be handled by filehandler helper
-                // TODO: TempRecord and Record has different attr name that refers to RecordIssuer
-                $user_id = auth()->id();
-                $record_issuer = $record->issuer;
-                $record_dir = "users/{$user_id}/record_issuers/{$record_issuer->id}/records/{$record->id}/";
-
-                if(Storage::exists($record_dir)) {
-                    Storage::deleteDirectory($record_dir);
-                }
+                StorageHelper::deleteRecordFiles($record);
             });
         });
     }
@@ -102,15 +92,44 @@ class Record extends Model
         return $query->whereBetween('issue_date', [$from, $until]);
     }
 
+    public function scopeTemporary($query, $bool) {
+        return $query->where('temporary', $bool);
+    }
+
     public function setPeriodAttribute($value) {
-        $this->attributes['period'] = Carbon::parse($value);
+        try {
+            $this->attributes['period'] =  Carbon::parse($value);
+        } catch (Exception $e) {
+            $this->attributes['period'] = null;
+        }
     }
 
     public function setIssueDateAttribute($value) {
-        $this->attributes['issue_date'] = Carbon::parse($value);
+        try {
+            $this->attributes['issue_date'] = Carbon::parse($value);
+        } catch (Exception $e) {
+            $this->attributes['issue_date'] = null;
+        }
     }
 
     public function setDueDateAttribute($value) {
-        $this->attributes['due_date'] = Carbon::parse($value);
+        try {
+            $this->attributes['due_date'] = Carbon::parse($value);
+        } catch (Exception $e) {
+            $this->attributes['due_date'] = null;
+        }
+    }
+
+    public function setAmountAttribute($value) {
+        // trim $ if any
+        $value = str_replace('$', '', $value);
+        try {
+            if (!is_numeric($value)) {
+                throw new \League\Flysystem\Exception("Amount is not numeric");
+            }
+            $this->attributes['amount'] = $value;
+        } catch (Exception $e) {
+            $this->attributes['amount'] = null;
+        }
     }
 }
