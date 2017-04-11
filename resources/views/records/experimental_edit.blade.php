@@ -80,9 +80,9 @@
                             <a class="select item" id="period" onclick="selAnother('#selrperiod');">
                                 <i class="grey edit icon" id="rperiodicon"></i>                        Record<br>Period
                             </a>
-                            <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
-                                <i class="grey edit icon" id="amtdueicon"></i>
-                                Amount<br>Due
+                            <a class="select item" id="duedate" onclick="selAnother('#selddate');">
+                                <i class="grey edit icon" id="duedateicon"></i>
+                                Due<br>Date
                             </a>
                         </div>
                         @endif
