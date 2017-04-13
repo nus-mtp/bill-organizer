@@ -49,6 +49,11 @@
 
             <div class="six wide column">
                 <div class="ui tiny error message" id="errormsg"></div>
+                @if($edit_value_mode)
+                    <h1 class="ui header center aligned" style="margin-top: 0;">Confirm values</h1>
+                @else
+                    <h1 class="ui header center aligned" style="margin-top: 0;">Add/edit template</h1>
+                @endif
                     @if(!$edit_value_mode)
                     <div class="ui pointing below label" id="general-template-instruction">
                         @if($is_bill)
@@ -103,10 +108,10 @@
                             </div>
                         @endforeach
                         @if(!$edit_value_mode)
-                            <div class="actions">
-                                <button class="ui positive ocr button" type="submit">Submit</button>
-                                <button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>
-                                <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                            <div class="actions" style="text-align: center;">
+                                <!--<button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>-->
+                                <button class="ui black cancel button left floated" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                                <button class="ui positive ocr button right floated" type="submit">Submit</button>
                             </div>
                         @endif
                     </form>
@@ -170,8 +175,8 @@
                                        value="{{$record->amount}}">
                             </div>
                             <div class="actions">
-                                <button class="ui positive button" type="submit">Submit</button>
-                                <button class="ui black button" type="cancel">Cancel</button>
+                                <button class="ui black button left floated" type="cancel">Cancel</button>
+                                <button class="ui positive button right floated" type="submit">Confirm</button>
                             </div>
                         </form>
                     </div>

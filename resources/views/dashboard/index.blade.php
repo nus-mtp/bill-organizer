@@ -42,7 +42,7 @@
 
     <div class="ui small record-issuer modal">
         <i class="close icon"></i>
-        <div class="header">Add new Organization</div>
+        <div class="header">Add new organization</div>
         <div class="content">
             <div class="ui fluid record-issuer form">
                 <form method="POST" action="{{ url('/dashboard/record_issuers') }}" class="ui form" id="add-record-issuer">
@@ -50,7 +50,7 @@
                     <div class="ui tiny error message"></div>
                     <div class="field">
                         <label for="name">Name <span class="atn">*</span></label>
-                        <input id="name" type="text" name="name" placeholder="Enter organization name">
+                        <input id="name" type="text" name="name" placeholder="Organization name, eg: Singtel">
                     </div>
                     <div class="field">
                         <label for="type">Type</label>
