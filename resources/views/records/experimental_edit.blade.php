@@ -11,20 +11,17 @@
 @section('content')
     <!--CONTENT-->
     <div class="ui container">
-        <div class="ui stackable grid">
-            <div class="sixteen wide column">
-                <div class="ui breadcrumb">
-                    <!-- TODO: Extract breadcrumbs and add links-->
-                    <span class="section">Home</span>
-                    <i class="right angle icon divider"></i>
-                    <span class="section">Dashboard</span>
-                    <i class="right angle icon divider"></i>
-                    <span class="section">[insert billing organisation]</span>
-                    <i class="right angle icon divider"></i>
-                    <span class="active section">Edit Record</span>
-                </div>
-            </div>
 
+        @component('partials.breadcrumbs')
+            @slot('record_issuer')
+                <a href="{{route('show_record_issuer',['record_issuer'=>$record->issuer])}}">{{$record->issuer->name}}</a>
+            @endslot
+            @slot('active_section')
+                <div class="active section">New @if($is_bill) bill @else bank statement @endif</div>
+            @endslot
+        @endcomponent
+
+        <div class="ui stackable grid">
             <div class="ten wide column">
                 <div class="bill-image">
                     <div class="selRect" id="selidate" data-page="0"></div>
