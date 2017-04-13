@@ -50,11 +50,11 @@
             <div class="six wide column">
                 <div class="ui tiny error message" id="errormsg"></div>
                     @if(!$edit_value_mode)
-                    <div class="ui pointing below label">
+                    <div class="ui pointing below label" id="general-template-instruction">
                         @if($is_bill)
-                            Click on an item below, then select the corresponding field in the bill
+                            Click on an item below, then draw a box around the corresponding field in the bill
                         @else
-                            Click on an item below, then select the corresponding field in the bank statement
+                            Click on an item below, then draw a box around the corresponding field in the bank statement
                         @endif
                     </div>
                         @if($is_bill)
@@ -91,7 +91,7 @@
                         </div>
                         @endif
                         <br><br>
-                        @endif
+                    @endif
                 
                 <!--hidden inputs below-->
                 <div>
@@ -111,6 +111,17 @@
                         @endif
                     </form>
                 </div>
+
+                @if(!$edit_value_mode)
+                    <div id="instruction-section" style="display: none;">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div id="template-instruction" class="ui left pointing grey basic label">
+                        </div>
+                    </div>
+                @endif
 
                 @if($edit_value_mode)
                     <div>
