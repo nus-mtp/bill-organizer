@@ -48,7 +48,7 @@ $('.ui.calendar-month').calendar({
 })
 
 function activateLoader(text) {
-    $('.ui.dimmer').removeClass('disabled').addClass('active')
+    $('#spinner.ui.dimmer').removeClass('disabled').addClass('active')
     if (!(text === '' || text === null)) {
         $('.ui.text.loader').text(text)
     }
@@ -129,6 +129,10 @@ const onLandingPageLoad = function () {
           prompt: 'Your password does not match'
         }]
       }
+    },
+    onSuccess: function () {
+      $('.modal').modal('hide')
+      activateLoader()
     }
   })
 
@@ -153,6 +157,10 @@ const onLandingPageLoad = function () {
           prompt: 'Please enter your password'
         }]
       }
+    },
+    onSuccess: function () {
+      $('.modal').modal('hide')
+      activateLoader()
     }
   })
 }
@@ -185,6 +193,7 @@ const onDashboardIndexPageLoad = function (window) {
       confirmButtonText: 'Yes, delete it!'
     }).then(function (e) {
       // console.log($deleteBillorgForm.attr('action'))
+      activateLoader()
       $deleteBillorgForm.submit()
     }, function (dismiss) {
       return
@@ -200,6 +209,10 @@ const onDashboardIndexPageLoad = function (window) {
           prompt: 'Please enter organization name'
         }]
       }
+    },
+    onSuccess: function () {
+      $('.modal').modal('hide')
+      activateLoader()
     }
   })
 }
@@ -268,11 +281,16 @@ const onRecordsPageLoad = function (window) {
           prompt: 'Please enter the amount'
         }]
       }
+    },
+    onSuccess: function () {
+      $('.modal').modal('hide')
+      activateLoader()
     }
   })
 
   $('.logout.button').click((e) => {
     e.preventDefault()
+    activateLoader()
     axios.post('/logout').then(_ => {
       location.reload()
     })
@@ -493,6 +511,43 @@ const onEditPageLoad = function (window) {
       }
     }
   }) */
+
+    $('#record-confirm-values.ui.form').form({
+      fields: {
+          issue_date: {
+              identifier: 'issue_date',
+              rules: [{
+                  type: 'empty',
+                  prompt: 'Please enter the date of issue'
+              }]
+          },
+          period: {
+              identifier: 'period',
+              rules: [{
+                  type: 'empty',
+                  prompt: 'Please enter the record period'
+              }]
+          },
+          due_date: {
+              identifier: 'due_date',
+              rules: [{
+                  type: 'empty',
+                  prompt: 'Please enter the due date'
+              }]
+          },
+          amount: {
+              identifier: 'amount',
+              rules: [{
+                  type: 'empty',
+                  prompt: 'Please enter the amount'
+              }]
+          }
+      },
+      onSuccess: function () {
+        $('.modal').modal('hide')
+        activateLoader()
+      }
+    })
 }
 
 /* ===============================

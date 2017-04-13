@@ -176,7 +176,7 @@
         
         </div>
 
-        <div class="ui disabled dimmer">
+        <div class="ui disabled dimmer" id="spinner">
             <div class="ui large text loader">Loading</div>
         </div>
 

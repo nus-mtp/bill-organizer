@@ -49,7 +49,7 @@
         @stack('module_scripts')
 
 
-        <div class="ui disabled dimmer">
+        <div class="ui disabled inverted dimmer" id="spinner">
             <div class="ui large text loader">Loading</div>
         </div>
     </body>

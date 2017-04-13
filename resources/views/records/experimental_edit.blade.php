@@ -130,7 +130,7 @@
 
                 @if($edit_value_mode)
                     <div>
-                        <form class="ui form" action="{{ route('confirm_values', $record) }}" method="POST">
+                        <form id="record-confirm-values" class="ui form" action="{{ route('confirm_values', $record) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="field">
                                 <label for="issue_date">Issue Date</label>
