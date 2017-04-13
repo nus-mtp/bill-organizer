@@ -29,6 +29,10 @@ Route::get('/edit', function () {
 });
 
 
+Route::get('/there', function() {
+    abort(403);
+});
+
 Auth::routes(); // includes routes for login, register, forget password
 
 // only authenticated user can access this route group

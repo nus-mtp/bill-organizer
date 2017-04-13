@@ -9,7 +9,7 @@
 @endsection
 
 @section('error_instruction')
-  <p>You can go back to the <a href="javascript:history.go(-1)">Previous Page</a> or our <a href="/">Homepage</a>.
+  <p>You can go back to the <a href="javascript:history.go(-1)">previous page</a> or our <a href="/">homepage</a>.
     If you keep encountering this error, please kindly send us an email
     <a href="mailto:hartantoteddy@u.nus.edu?Subject=Owlganizer%20bug" target="_top">here</a> and describe your
     situation.

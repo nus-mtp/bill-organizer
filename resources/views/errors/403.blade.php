@@ -9,7 +9,7 @@
 @endsection
 
 @section('error_instruction')
-  <p>You heard the old guy! You can go back to the <a href="javascript:history.go(-1)">Previous Page</a> or our <a href="/">Homepage</a></p>
+  <p>You heard the old guy! You can go back to the <a href="javascript:history.go(-1)">previous page</a> or our <a href="/">homepage</a></p>
 @endsection
 
 @section('error_image')
