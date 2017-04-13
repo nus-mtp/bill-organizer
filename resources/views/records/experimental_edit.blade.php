@@ -109,9 +109,9 @@
                         @endforeach
                         @if(!$edit_value_mode)
                             <div class="actions" style="text-align: center;">
+                                <button class="ui positive ocr button left floated" type="submit">Submit</button>
                                 <!--<button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>-->
-                                <button class="ui black cancel button left floated" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
-                                <button class="ui positive ocr button right floated" type="submit">Submit</button>
+                                <button class="ui black cancel button right floated" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
                             </div>
                         @endif
                     </form>
@@ -175,8 +175,8 @@
                                        value="{{$record->amount}}">
                             </div>
                             <div class="actions">
-                                <button class="ui black button left floated" type="cancel">Cancel</button>
-                                <button class="ui positive button right floated" type="submit">Confirm</button>
+                                <button class="ui positive button left floated" type="submit">Confirm</button>
+                                <button class="ui black button right floated" type="cancel">Cancel</button>
                             </div>
                         </form>
                     </div>
