@@ -47,10 +47,13 @@ $('.ui.calendar-month').calendar({
   }
 })
 
-function activateLoader(text) {
+function activateLoader(text, indeterminate) {
     $('#spinner.ui.dimmer').removeClass('disabled').addClass('active')
     if (!(text === '' || text === null)) {
         $('.ui.text.loader').text(text)
+    }
+    if (indeterminate) {
+        $('#spinner.ui.dimmer').addClass('indeterminate')
     }
 }
 
@@ -284,7 +287,7 @@ const onRecordsPageLoad = function (window) {
     },
     onSuccess: function () {
       $('.modal').modal('hide')
-      activateLoader()
+      activateLoader('Processing', true)
     }
   })
 
@@ -475,7 +478,7 @@ const onEditPageLoad = function (window) {
       displayError(error)
       return false
     } else {
-        activateLoader('Processing')
+        activateLoader('Processing', true)
     }
   })
 
@@ -545,7 +548,7 @@ const onEditPageLoad = function (window) {
       },
       onSuccess: function () {
         $('.modal').modal('hide')
-        activateLoader()
+        activateLoader('Processing')
       }
     })
 }
