@@ -44,6 +44,23 @@ class ExceptionHandler extends Handler
     }
 
     /**
+     * NOTE: Overriding this because when error 500 occurs, the custom page is not shown
+     * Prepare response containing exception render.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function prepareResponse($request, Exception $e)
+    {
+        if ($this->isHttpException($e)) {
+            return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+        } else {
+            return response()->view('errors.500', [], 500);
+        }
+    }
+
+    /**
      * @param $whoopsExceptionHandler
      */
     protected function returnJsonIfAjaxRequestReceived($whoopsExceptionHandler)

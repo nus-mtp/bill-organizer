@@ -145,7 +145,7 @@
               <h2 class="typed-text"></h2>
             </div>
             <div class="action-btn-container">
-              <button class="ui green register button action-btn">Join Us</button>
+              <button class="ui green register button action-btn">Register now</button>
             </div>
 
         </div>
@@ -176,7 +176,9 @@
         
         </div>
 
-
+        <div class="ui disabled dimmer" id="spinner">
+            <div class="ui large text loader">Loading</div>
+        </div>
 
         @include('layouts.scripts')
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.6/typed.min.js"></script>

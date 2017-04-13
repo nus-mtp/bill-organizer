@@ -4,4 +4,10 @@
         <i class="right angle icon divider"></i>
         {{$active_section}}
     @endif
+    @if (Route::is('add_template'))
+        <i class="right angle icon divider"></i>
+        {{$record_issuer}}
+        <i class="right angle icon divider"></i>
+        {{$active_section}}
+    @endif
 </div>

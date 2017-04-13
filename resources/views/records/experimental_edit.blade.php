@@ -11,20 +11,17 @@
 @section('content')
     <!--CONTENT-->
     <div class="ui container">
-        <div class="ui stackable grid">
-            <div class="sixteen wide column">
-                <div class="ui breadcrumb">
-                    <!-- TODO: Extract breadcrumbs and add links-->
-                    <span class="section">Home</span>
-                    <i class="right angle icon divider"></i>
-                    <span class="section">Dashboard</span>
-                    <i class="right angle icon divider"></i>
-                    <span class="section">[insert billing organisation]</span>
-                    <i class="right angle icon divider"></i>
-                    <span class="active section">Edit Record</span>
-                </div>
-            </div>
 
+        @component('partials.breadcrumbs')
+            @slot('record_issuer')
+                <a href="{{route('show_record_issuer',['record_issuer'=>$record->issuer])}}">{{$record->issuer->name}}</a>
+            @endslot
+            @slot('active_section')
+                <div class="active section">New @if($is_bill) bill @else bank statement @endif</div>
+            @endslot
+        @endcomponent
+
+        <div class="ui stackable grid">
             <div class="ten wide column">
                 <div class="bill-image">
                     <div class="selRect" id="selidate" data-page="0"></div>
@@ -52,9 +49,18 @@
 
             <div class="six wide column">
                 <div class="ui tiny error message" id="errormsg"></div>
+                @if($edit_value_mode)
+                    <h1 class="ui header center aligned" style="margin-top: 0;">Confirm values</h1>
+                @else
+                    <h1 class="ui header center aligned" style="margin-top: 0;">Add/edit template</h1>
+                @endif
                     @if(!$edit_value_mode)
-                    <div class="ui pointing below label">
-                        Click on an item below, then select the corresponding field in the record
+                    <div class="ui pointing below label" id="general-template-instruction">
+                        @if($is_bill)
+                            Click on an item below, then draw a box around the corresponding field in the bill
+                        @else
+                            Click on an item below, then draw a box around the corresponding field in the bank statement
+                        @endif
                     </div>
                         @if($is_bill)
                         <div class="ui fluid four item compact labeled icon menu">
@@ -62,7 +68,7 @@
                                 <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
                             </a>
                             <a class="select item" id="period" onclick="selAnother('#selrperiod');">
-                                <i class="grey edit icon" id="rperiodicon"></i>                        Record<br>Period
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Bill<br>Period
                             </a>
                             <a class="select item" id="duedate" onclick="selAnother('#selddate');">
                                 <i class="grey edit icon" id="duedateicon"></i>
@@ -81,7 +87,7 @@
                                 <i class="grey edit icon" id="issuedateicon"></i>                        Issue Date
                             </a>
                             <a class="select item" id="period" onclick="selAnother('#selrperiod');">
-                                <i class="grey edit icon" id="rperiodicon"></i>                        Record Period
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Bank Statement Period
                             </a>
                             <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
                                 <i class="grey edit icon" id="amtdueicon"></i>
@@ -90,7 +96,7 @@
                         </div>
                         @endif
                         <br><br>
-                        @endif
+                    @endif
                 
                 <!--hidden inputs below-->
                 <div>
@@ -102,49 +108,75 @@
                             </div>
                         @endforeach
                         @if(!$edit_value_mode)
-                            <div class="actions">
-                                <button class="ui positive ocr button" type="submit">Submit</button>
-                                <button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>
-                                <button class="ui black cancel button" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                            <div class="actions" style="text-align: center;">
+                                <button class="ui positive ocr button left floated" type="submit">Submit</button>
+                                <!--<button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>-->
+                                <button class="ui black cancel button right floated" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
                             </div>
                         @endif
                     </form>
                 </div>
 
+                @if(!$edit_value_mode)
+                    <div id="instruction-section" style="display: none;">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div id="template-instruction" class="ui left pointing grey basic label">
+                        </div>
+                    </div>
+                @endif
+
                 @if($edit_value_mode)
                     <div>
-                        <form class="ui form" action="{{ route('confirm_values', $record) }}" method="POST">
+                        <form id="record-confirm-values" class="ui form" action="{{ route('confirm_values', $record) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="field">
-                                <label>Issue Date</label>
-                                <input type="date" name="issue_date" placeholder="Issue Date" id="issue_date"
-                                       value="{{$record->issue_date ? $record->issue_date->toDateString() : null}}">
+                                <label for="issue_date">Issue Date</label>
+                                <div class="ui calendar">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input name="issue_date" type="text" id="issue_date" placeholder="yyyy-mm-dd"
+                                               value="{{$record->issue_date ? $record->issue_date->toDateString() : null}}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="field">
-                                <label>Record Period</label>
-                                <input type="month" name="period" placeholder="Period" id="period"
-                                       value="{{$record->period ? $record->period->format('Y-m') : null}}">
+                                <label for="period">Record Period</label>
+                                <div class="ui calendar-month">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input name="period" type="text" id="period" placeholder="yyyy-mm"
+                                               value="{{$record->period ? $record->period->format('Y-m') : null}}">
+                                    </div>
+                                </div>
                             </div>
                             @if($is_bill)
-                            <div class="field">
-                                    <label>Due Date</label>
-                                    <input type="date" name="due_date" placeholder="Due Date" id="due_date"
-                                           value="{{$record->due_date ? $record->due_date->toDateString() : null}}">
+                                <div class="field">
+                                    <label for="issue_date">Due Date</label>
+                                    <div class="ui calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input name="due_date" type="text" id="due_date" placeholder="yyyy-mm-dd"
+                                                   value="{{$record->due_date ? $record->due_date->toDateString() : null}}">
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                             <div class="field">
                                 @if($is_bill)
-                                <label>Amount Due</label>
+                                    <label>Amount Due</label>
                                 @endif
                                 @if(!$is_bill)
-                                <label>Balance</label>
+                                    <label>Balance</label>
                                 @endif
                                 <input type="text" name="amount" placeholder="e.g 400" id="amount"
                                        value="{{$record->amount}}">
                             </div>
                             <div class="actions">
-                                <button class="ui positive button" type="submit">Submit</button>
-                                <button class="ui black button" type="cancel">Cancel</button>
+                                <button class="ui positive button left floated" type="submit">Confirm</button>
+                                <button class="ui black button right floated" type="cancel">Cancel</button>
                             </div>
                         </form>
                     </div>

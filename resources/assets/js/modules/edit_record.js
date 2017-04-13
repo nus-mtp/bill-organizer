@@ -100,6 +100,22 @@ window.onresize = function (event) {
 function selAnother(id) {
     $('.selRect').removeClass("active");
     $(id).addClass("active");
+
+    var message;
+    if (id === '#selidate') {
+        message = "Draw a box around the date when the bill was issued. Eg: 1 Jan 2001"
+    } else if (id === '#selrperiod') {
+        message = "Draw a box around the period that this bill/bank statement covers. Eg: January 2001"
+    } else if (id === '#selddate') {
+        message = "Draw a box around the due date of the bill. Eg: 10 Jan 2001"
+    } else if (id === '#selamtdue') {
+        message = "Draw a box around the amount due/balance. Eg: $100"
+    }
+
+    if (message !== undefined) {
+        $('#instruction-section').css('display', 'block');
+        $('#template-instruction').text(message);
+    }
 }
 
 function displayError(message) {

@@ -141,7 +141,7 @@
     }
 
     a.header.item {
-      text-align:cetner;
+      text-align:center;
       padding-left:20px;
       font-size: 1.1rem;
     }
@@ -155,4 +155,17 @@
       margin-left:15px;
     }
   }
+}
+
+.ui.breadcrumb {
+  margin-bottom: 1.8em;
+}
+
+#general-template-instruction, #template-instruction {
+  font-size: 0.9em;
+}
+
+#spinner.ui.dimmer {
+  z-index: 1010;
+  position: fixed;
 }

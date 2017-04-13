@@ -9,7 +9,7 @@
         <div class="ui small basic icon buttons">
 
             <a href="{{ route('show_record_file', $record) }}" class="ui button" role="button">
-                <i class="file icon"></i>
+                <i class="unhide icon"></i>
             </a>
 
             <a href="{{ route('download_record_file', $record) }}" class="ui button" role="button">
