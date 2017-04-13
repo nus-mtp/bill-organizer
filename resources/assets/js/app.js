@@ -47,6 +47,13 @@ $('.ui.calendar-month').calendar({
   }
 })
 
+function activateLoader(text) {
+    $('.ui.dimmer').removeClass('disabled').addClass('active')
+    if (!(text === '' || text === null)) {
+        $('.ui.text.loader').text(text)
+    }
+}
+
 /* ====================================
 =            page scripts            =
 ==================================== */
@@ -283,6 +290,7 @@ const onRecordsPageLoad = function (window) {
       cancelButtonColor: '#2ecc71',
       confirmButtonText: 'Yes, delete it!'
     }).then(function (e) {
+      activateLoader()
       console.log($deleteRecordForm.attr('action'))
       $deleteRecordForm.submit()
     }, function (dismiss) {
@@ -448,6 +456,8 @@ const onEditPageLoad = function (window) {
     if (hasError) {
       displayError(error)
       return false
+    } else {
+        activateLoader('Processing')
     }
   })
 

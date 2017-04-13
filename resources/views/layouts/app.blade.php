@@ -32,7 +32,6 @@
     </head>
 
     <body>
-
         <div class="ui basic main segment">
             @include('layouts.nav')
         </div>
@@ -48,5 +47,10 @@
         @include('layouts.scripts')
          <!-- Dump all dynamic scripts into template -->
         @stack('module_scripts')
+
+
+        <div class="ui disabled dimmer">
+            <div class="ui large text loader">Loading</div>
+        </div>
     </body>
 </html>

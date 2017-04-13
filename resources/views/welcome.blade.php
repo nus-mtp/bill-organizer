@@ -176,7 +176,9 @@
         
         </div>
 
-
+        <div class="ui disabled dimmer">
+            <div class="ui large text loader">Loading</div>
+        </div>
 
         @include('layouts.scripts')
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.6/typed.min.js"></script>
