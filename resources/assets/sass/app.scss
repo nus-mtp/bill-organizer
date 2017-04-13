@@ -167,7 +167,5 @@
 
 #spinner.ui.dimmer {
   z-index: 1010;
-  // tried to fix the spinner to be full height to no avail
-  //height: initial;
-  //min-height: 100%;
+  position: fixed;
 }
