@@ -145,7 +145,7 @@
               <h2 class="typed-text"></h2>
             </div>
             <div class="action-btn-container">
-              <button class="ui green register button action-btn">Join Us</button>
+              <button class="ui green register button action-btn">Register now</button>
             </div>
 
         </div>

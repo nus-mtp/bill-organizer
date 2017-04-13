@@ -27,7 +27,11 @@
                             <div class="ui blue icon button">
                                 <i class="add icon"></i>
                             </div>
-                            <a class="ui basic blue label">Add new record</a>
+                            @if($type === 'billing organization')
+                                <a class="ui basic blue label">Add new bill</a>
+                            @else
+                                <a class="ui basic blue label">Add new statement</a>
+                            @endif
                         </div>
                         <h1>{{ $record_issuer->name }}</h1>
                         <table class="ui green celled striped datatable table">

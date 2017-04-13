@@ -54,7 +54,11 @@
                 <div class="ui tiny error message" id="errormsg"></div>
                     @if(!$edit_value_mode)
                     <div class="ui pointing below label">
-                        Click on an item below, then select the corresponding field in the record
+                        @if($is_bill)
+                            Click on an item below, then select the corresponding field in the bill
+                        @else
+                            Click on an item below, then select the corresponding field in the bank statement
+                        @endif
                     </div>
                         @if($is_bill)
                         <div class="ui fluid four item compact labeled icon menu">
@@ -62,7 +66,7 @@
                                 <i class="grey edit icon" id="issuedateicon"></i>                        Issue<br>Date
                             </a>
                             <a class="select item" id="period" onclick="selAnother('#selrperiod');">
-                                <i class="grey edit icon" id="rperiodicon"></i>                        Record<br>Period
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Bill<br>Period
                             </a>
                             <a class="select item" id="duedate" onclick="selAnother('#selddate');">
                                 <i class="grey edit icon" id="duedateicon"></i>
@@ -81,7 +85,7 @@
                                 <i class="grey edit icon" id="issuedateicon"></i>                        Issue Date
                             </a>
                             <a class="select item" id="period" onclick="selAnother('#selrperiod');">
-                                <i class="grey edit icon" id="rperiodicon"></i>                        Record Period
+                                <i class="grey edit icon" id="rperiodicon"></i>                        Bank Statement Period
                             </a>
                             <a class="select item" id="amtdue" onclick="selAnother('#selamtdue');">
                                 <i class="grey edit icon" id="amtdueicon"></i>

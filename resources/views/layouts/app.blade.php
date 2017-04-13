@@ -9,7 +9,7 @@
 
         <title>
         @section('title')
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name', 'Owlganizer') }}
         @show
         </title>
 

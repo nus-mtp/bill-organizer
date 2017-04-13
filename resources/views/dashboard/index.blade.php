@@ -28,7 +28,7 @@
                     <div class="add-bill-org card">
                         <div class="content">
                             <center>
-                                <p>Add New Record Issuer</p>
+                                <p>Add New Organization</p>
                             </center>
                         </div>
                         <button class="fluid blue ui icon add-bill-org button">
@@ -42,7 +42,7 @@
 
     <div class="ui small record-issuer modal">
         <i class="close icon"></i>
-        <div class="header">Add new record issuer</div>
+        <div class="header">Add new Organization</div>
         <div class="content">
             <div class="ui fluid record-issuer form">
                 <form method="POST" action="{{ url('/dashboard/record_issuers') }}" class="ui form" id="add-record-issuer">
@@ -50,7 +50,7 @@
                     <div class="ui tiny error message"></div>
                     <div class="field">
                         <label for="name">Name <span class="atn">*</span></label>
-                        <input id="name" type="text" name="name" placeholder="Enter record issuer name">
+                        <input id="name" type="text" name="name" placeholder="Enter organization name">
                     </div>
                     <div class="field">
                         <label for="type">Type</label>

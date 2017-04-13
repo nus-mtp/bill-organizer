@@ -190,7 +190,7 @@ const onDashboardIndexPageLoad = function (window) {
         identifier: 'name',
         rules: [{
           type: 'empty',
-          prompt: 'Please enter record issuer name'
+          prompt: 'Please enter organization name'
         }]
       }
     }

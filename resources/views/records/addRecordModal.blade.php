@@ -1,6 +1,10 @@
 <div class="ui small add-record modal">
     <i class="close icon"></i>
-    <div class="header">Add new record</div>
+    @if($type === 'billing organization')
+        <div class="header">Add new bill</div>
+    @else
+        <div class="header">Add new bank statement</div>
+    @endif
 
     <!-- modal content -->
     <div class="content">
@@ -15,8 +19,13 @@
                 {{ csrf_field() }}
                 <div class="ui tiny error message"></div>
                 <div class="field">
-                    <label for="record">Upload the record <span class="atn">*</span>
-                    </label>
+                    @if($type === 'billing organization')
+                        <label for="record">Upload the bill <span class="atn">*</span>
+                        </label>
+                    @else
+                        <label for="record">Upload the bank statement <span class="atn">*</span>
+                        </label>
+                    @endif
                     <input type="file" name="record" id="record" accept=".pdf, application/pdf">
                 </div>
 
