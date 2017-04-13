@@ -197,6 +197,7 @@ class RecordController extends Controller
         );
     }
 
+    // TODO: need to validate date format received
     public function confirm_values(Record $record) {
         $this->authorize('belongs_to_user', $record);
 

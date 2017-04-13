@@ -31,7 +31,7 @@ $('.ui.calendar').calendar({
       var day = date.getDate()
       var month = date.getMonth() + 1
       var year = date.getFullYear()
-      return day + '/' + month + '/' + year
+      return year + '-' + month + '-' + day
     }
   }
 })
@@ -40,9 +40,9 @@ $('.ui.calendar-month').calendar({
   formatter: {
     date: function (date, settings) {
       if (!date) return ''
-      var month = settings.text.monthsShort[date.getMonth()]
+      var month = date.getMonth() + 1
       var year = date.getFullYear()
-      return month + '/' + year
+      return year + '-' + month
     }
   }
 })

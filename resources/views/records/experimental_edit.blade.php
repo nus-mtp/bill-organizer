@@ -120,28 +120,43 @@
                         <form class="ui form" action="{{ route('confirm_values', $record) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="field">
-                                <label>Issue Date</label>
-                                <input type="date" name="issue_date" placeholder="Issue Date" id="issue_date"
-                                       value="{{$record->issue_date ? $record->issue_date->toDateString() : null}}">
+                                <label for="issue_date">Issue Date</label>
+                                <div class="ui calendar">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input name="issue_date" type="text" id="issue_date" placeholder="yyyy-mm-dd"
+                                               value="{{$record->issue_date ? $record->issue_date->toDateString() : null}}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="field">
-                                <label>Record Period</label>
-                                <input type="month" name="period" placeholder="Period" id="period"
-                                       value="{{$record->period ? $record->period->format('Y-m') : null}}">
+                                <label for="period">Record Period</label>
+                                <div class="ui calendar-month">
+                                    <div class="ui input left icon">
+                                        <i class="calendar icon"></i>
+                                        <input name="period" type="text" id="period" placeholder="yyyy-mm"
+                                               value="{{$record->period ? $record->period->format('Y-m') : null}}">
+                                    </div>
+                                </div>
                             </div>
                             @if($is_bill)
-                            <div class="field">
-                                    <label>Due Date</label>
-                                    <input type="date" name="due_date" placeholder="Due Date" id="due_date"
-                                           value="{{$record->due_date ? $record->due_date->toDateString() : null}}">
+                                <div class="field">
+                                    <label for="issue_date">Due Date</label>
+                                    <div class="ui calendar">
+                                        <div class="ui input left icon">
+                                            <i class="calendar icon"></i>
+                                            <input name="due_date" type="text" id="due_date" placeholder="yyyy-mm-dd"
+                                                   value="{{$record->due_date ? $record->due_date->toDateString() : null}}">
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                             <div class="field">
                                 @if($is_bill)
-                                <label>Amount Due</label>
+                                    <label>Amount Due</label>
                                 @endif
                                 @if(!$is_bill)
-                                <label>Balance</label>
+                                    <label>Balance</label>
                                 @endif
                                 <input type="text" name="amount" placeholder="e.g 400" id="amount"
                                        value="{{$record->amount}}">
