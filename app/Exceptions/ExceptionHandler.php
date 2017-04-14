@@ -6,6 +6,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler;
+use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -56,6 +57,8 @@ class ExceptionHandler extends Handler
     {
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+        } else if ($e instanceof TokenMismatchException) {
+            return response()->view('errors.403', [], 403);
         } else {
             if (config('app.debug')) {
                 return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
