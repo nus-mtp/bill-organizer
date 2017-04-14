@@ -6,6 +6,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Whoops\Handler\PrettyPageHandler;
@@ -56,7 +57,34 @@ class ExceptionHandler extends Handler
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {
-            return response()->view('errors.500', [], 500);
+            if (config('app.debug')) {
+                return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+            } else {
+                return response()->view('errors.500', [], 500);
+            }
+        }
+    }
+
+    /**
+     * NOTE: Overriding this because we wanna show the error when app.debug is TRUE
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $e)
+    {
+        $status = $e->getStatusCode();
+
+        view()->replaceNamespace('errors', [
+            resource_path('views/errors'),
+            __DIR__.'/views',
+        ]);
+
+        if (view()->exists("errors::{$status}") and !config('app.debug')) {
+            return response()->view("errors::{$status}", ['exception' => $e], $status, $e->getHeaders());
+        } else {
+            return $this->convertExceptionToResponse($e);
         }
     }
 
