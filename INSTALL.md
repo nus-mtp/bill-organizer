@@ -2,6 +2,9 @@
 ## 1. Prepare development server
 ### Option 1: Using vagrant  
 Follow instructions at https://laravel.com/docs/5.4/homestead but use the custom Homestead in [TeddyHartanto/homestead](https://github.com/TeddyHartanto/homestead) instead of the official one. After running `init.sh` or `init.bat`, in homestead folder, copy `./homestead_conf_dir/after.sh` to your homestead config directory (might be `~/.homestead`) and follow the rest of the instructions in the above website.
+
+Jump to **section 4. Setup the project** number 3.
+
 ### Option 2: using xamp  
 Follow instructions at https://www.apachefriends.org/download.html  
 ### Additional setup
@@ -13,7 +16,7 @@ extension=php_curl.dll
 extension=php_sockets.dll
 ```
 
-## 2. Install dependency managers
+## 2. Install dependency managers 
 Download and install Composer at https://getcomposer.org/download/  
 Download and install nodejs at https://nodejs.org/en/download/
 
@@ -41,17 +44,22 @@ Download and install nodejs at https://nodejs.org/en/download/
    Download version 3.02 from [here](https://sourceforge.net/projects/tesseract-ocr-alt/files/). I'm pretty sure you should download `tesseract-ocr-setup-3.02.02.exe`, but not sure if `tesseract-3.02.02-win32-lib-include-dirs.zip` is needed as well. Try it out.
 
 ## 4. Setup the project
-1 clone project from github
+1. clone project from github
 ```bash
 git clone git@github.com:nus-mtp/bill-organizer.git
 ```
-2 install dependencies
+2. install dependencies
 ```bash
 npm install npm@latest
 composer install
 npm install
 ```
-3 start development server
+3. setup .env file
+```
+Follow the format in .env.example
+```
+
+4. start development server
 ```bash
 php artisan serve
 npm run watch
