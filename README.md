@@ -1,8 +1,6 @@
 [![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
-## Database Schema
-![img](http://i.imgur.com/W6u4fgx.png)
 
-------------------------------------------
+Check out our [wiki](https://github.com/nus-mtp/bill-organizer/wiki) for extensive information about the app! Also, visit our website [here](https://nus-mtp.github.io/bill-organizer/)
 
 ### Common problems and solutions:
 
