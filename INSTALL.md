@@ -1,7 +1,7 @@
 # Setup guide
 ## 1. Prepare development server
 ### Option 1: Using vagrant  
-Follow instructions at https://laravel.com/docs/5.4/homestead  
+Follow instructions at https://laravel.com/docs/5.4/homestead but use the custom Homestead in [TeddyHartanto/homestead](https://github.com/TeddyHartanto/homestead) instead of the official one. After running `init.sh` or `init.bat`, in homestead folder, copy `./homestead_conf_dir/after.sh` to your homestead config directory (might be `~/.homestead`) and follow the rest of the instructions in the above website.
 ### Option 2: using xamp  
 Follow instructions at https://www.apachefriends.org/download.html  
 ### Additional setup
