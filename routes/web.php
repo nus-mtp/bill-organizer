@@ -19,14 +19,14 @@
 Route::get('/','HomeController@show' )->middleware('guest');
 
 // remove later
-Route::get('/upload', function () {
-    return view('modules.upload');
-});
+// Route::get('/upload', function () {
+//     return view('modules.upload');
+// });
 
 // remove later and replace with record-specific urls later
-Route::get('/edit', function () {
-    return view('dashboard.editrecord');
-});
+// Route::get('/edit', function () {
+//     return view('dashboard.editrecord');
+// });
 
 
 /**
