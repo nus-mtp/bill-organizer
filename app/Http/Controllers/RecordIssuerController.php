@@ -42,8 +42,8 @@ class RecordIssuerController extends Controller
         // $record_issuer_types = RecordIssuerType::pluck('id');
 
         $this->validate(request(), [
-            'name' => 'required|max:191',
-            'type' => 'required'
+            'name' => 'required|string|max:191',
+            'type' => 'required|integer|min:1|max:2'
         ]);
 
         auth()->user()->create_record_issuer(
@@ -72,7 +72,7 @@ class RecordIssuerController extends Controller
         // validate or redirect
         // TODO: validate isPDF
         $this->validate(request(), [
-            'record' => 'required'
+            'record' => 'required|mimes:pdf'
         ]);
 
         $path = StorageHelper::storeUploadedRecordFile(request()->file('record'), $record_issuer);

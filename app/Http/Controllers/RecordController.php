@@ -161,7 +161,11 @@ class RecordController extends Controller
         $rules = [];
         foreach ($field_area_names as $field_area_name) {
             foreach($field_area_attrs as $attr) {
-                $rules["{$field_area_name}_{$attr}"] = 'required';
+                if ($attr ==='page') {
+                    $rules["{$field_area_name}_{$attr}"] = 'required|integer|min:0';
+                } else {
+                    $rules["{$field_area_name}_{$attr}"] = 'required|numeric|min:0|max:1';
+                }
             }
         }
 
@@ -208,7 +212,11 @@ class RecordController extends Controller
         }
 
         foreach ($field_area_names as $field_area_name) {
-            $rules[$field_area_name] = 'required';
+            if ($field_area_name === 'amount') {
+                $rules[$field_area_name] = 'required|numeric';
+            } else {
+                $rules[$field_area_name] = 'required|date';
+            }
         }
 
         $this->validate(request(), $rules);
