@@ -31,104 +31,102 @@
         <div class="ui inverted secondary top fixed menu">
             <div class="right menu">
                 <!--should not need this part anymore coz got auto-redirect-->
-                @if (Route::has('login'))
-                    @if (Auth::check())
-                        <div class="item">
-                            <a class="ui green button" href="{{ url('/dashboard') }}">Dashboard</a>
-                        </div>
-                    @else
-                        <div class="item">
-                            <button class="ui green register button">Register</button>
-                        </div>
+                @if (Auth::check())
+                    <div class="item">
+                        <a class="ui green button" href="{{ url('/dashboard') }}">Dashboard</a>
+                    </div>
+                @else
+                    <div class="item">
+                        <button class="ui green register button">Register</button>
+                    </div>
 
-                        <div class="item">
-                            <button class="ui inverted green login button">Login</button>
-                        </div>
+                    <div class="item">
+                        <button class="ui inverted green login button">Login</button>
+                    </div>
 
-                        <div class="ui small register modal">
-                          <div class="header">Register</div>
-                          <div class="content">
-                              
-                              <div class="ui tiny register error message hidden">
-                                      <ul>
-                                          @if ($errors->has('name'))
-                                            <li id="regnameerror">{{ $errors->first('name') }}</li>
-                                          @endif
-                                          @if ($errors->has('email'))
-                                            <li id="regemailerror">{{ $errors->first('email') }}</li>
-                                          @endif
-                                      </ul>
-                                  </div>
-                              
-                              <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
-                                {{ csrf_field() }}
-                                  
-                                <div class="inline field">
-                                  <label for="name">Name <span class="atn">*</span></label>
-                                  <input id="name" type="text" name="name" placeholder="Name" style="margin-left: 5.5em;">
-                                </div>
-                                <div class="inline field">
-                                  <label for="email">Email <span class="atn">*</span></label>
-                                  <input id="email" type="text" name="email" placeholder="Email" style="margin-left: 5.7em;">
-                                </div>
-                                <div class="inline field">
-                                  <label for="password">Password <span class="atn">*</span></label>
-                                  <input id="password" type="password" name="password" placeholder="Password" style="margin-left: 3.9em;">
-                                </div>
-                                <div class="inline field">
-                                  <label for="password-confirm">Password Confirm <span class="atn">*</span></label>
-                                  <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
-                                </div>
-                                  <span class="tnc"><span class="atn">*</span> <i>Indicates required field</i><br><br></span>
-                                <div class="actions" style="text-align:right;">
-                                    <button class="ui approve green button" type="submit">Register</button>
-                                    <div class="ui black clear cancel button" data-value="no">Cancel</div>
-                                </div>
-                            </form>
+                    <div class="ui small register modal">
+                      <div class="header">Register</div>
+                      <div class="content">
+
+                          <div class="ui tiny register error message hidden">
+                                  <ul>
+                                      @if ($errors->has('name'))
+                                        <li id="regnameerror">{{ $errors->first('name') }}</li>
+                                      @endif
+                                      @if ($errors->has('email'))
+                                        <li id="regemailerror">{{ $errors->first('email') }}</li>
+                                      @endif
+                                  </ul>
+                              </div>
+
+                          <form class="ui register form" id="register" role="form" method="POST" action="{{ route('register') }}" >
+                            {{ csrf_field() }}
+
+                            <div class="inline field">
+                              <label for="name">Name <span class="atn">*</span></label>
+                              <input id="name" type="text" name="name" placeholder="Name" style="margin-left: 5.5em;">
+                            </div>
+                            <div class="inline field">
+                              <label for="email">Email <span class="atn">*</span></label>
+                              <input id="email" type="text" name="email" placeholder="Email" style="margin-left: 5.7em;">
+                            </div>
+                            <div class="inline field">
+                              <label for="password">Password <span class="atn">*</span></label>
+                              <input id="password" type="password" name="password" placeholder="Password" style="margin-left: 3.9em;">
+                            </div>
+                            <div class="inline field">
+                              <label for="password-confirm">Password Confirm <span class="atn">*</span></label>
+                              <input id="password-confirm" type="password" name="password_confirmation" placeholder="Retype Password">
+                            </div>
+                              <span class="tnc"><span class="atn">*</span> <i>Indicates required field</i><br><br></span>
+                            <div class="actions" style="text-align:right;">
+                                <button class="ui approve green button" type="submit">Register</button>
+                                <div class="ui black clear cancel button" data-value="no">Cancel</div>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+
+                    <div class="ui small login modal">
+                      <div class="header">Login</div>
+                      <div class="content">
+                          <div class="ui tiny login error message hidden">
+                                  <ul>
+                                      @if ($errors->login->has('email'))
+                                        <li id="loginemailerror">{{ $errors->login->first('email') }}</li>
+                                      @endif
+
+                                      @if ($errors->login->has('password'))
+                                        <li id="loginpwerror">{{ $errors->login->first('password') }}</li>
+                                      @endif
+                                  </ul>
+                              </div>
+                        <form class="ui login form" id="login" role="form" method="POST" action="{{ route('login') }}">
+                          {{ csrf_field() }}
+
+                          <div class="inline field">
+                            <label for="email">Email Address <span class="atn">*</span></label>
+                            <input id="email" type="text" name="email">
                           </div>
-                        </div>
-
-                        <div class="ui small login modal">
-                          <div class="header">Login</div>
-                          <div class="content">
-                              <div class="ui tiny login error message hidden">
-                                      <ul>
-                                          @if ($errors->login->has('email'))
-                                            <li id="loginemailerror">{{ $errors->login->first('email') }}</li>
-                                          @endif
-
-                                          @if ($errors->login->has('password'))
-                                            <li id="loginpwerror">{{ $errors->login->first('password') }}</li>
-                                          @endif
-                                      </ul>
-                                  </div>
-                            <form class="ui login form" id="login" role="form" method="POST" action="{{ route('login') }}">
-                              {{ csrf_field() }}
-                                
-                              <div class="inline field">
-                                <label for="email">Email Address <span class="atn">*</span></label>
-                                <input id="email" type="text" name="email">
-                              </div>
-                              <div class="inline field">
-                                  <label for="password">Password <span class="atn">*</span></label>
-                                <input id="login_password" type="password" name="password" style="margin-left: 2.1em;">
-                              </div>
-                              <div class="checkbox">
-                                <label>
-                                  <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                </label>
-                              </div>
-                              <a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}"><tnc>Forgot Your Password?</tnc></a>
-
-                              <div class="actions" style="text-align:right;">
-                                    <button class="ui approve green button" type="submit">Login</button>
-                                    <div class="ui black clear cancel button" data-value="no">Cancel</div>
-                              </div>
-                            </form>
+                          <div class="inline field">
+                              <label for="password">Password <span class="atn">*</span></label>
+                            <input id="login_password" type="password" name="password" style="margin-left: 2.1em;">
                           </div>
-                        </div>
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                            </label>
+                          </div>
+                          {{--<a class="btn btn-link" style="text-align:right;" href="{{ route('password.request') }}">Forgot Your Password?</a>--}}
 
-                    @endif
+                          <div class="actions" style="text-align:right;">
+                                <button class="ui approve green button" type="submit">Login</button>
+                                <div class="ui black clear cancel button" data-value="no">Cancel</div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
                 @endif
             </div>
         </div>

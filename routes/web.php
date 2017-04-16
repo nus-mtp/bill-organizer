@@ -19,17 +19,34 @@
 Route::get('/','HomeController@show' )->middleware('guest');
 
 // remove later
-Route::get('/upload', function () {
-    return view('modules.upload');
-});
+// Route::get('/upload', function () {
+//     return view('modules.upload');
+// });
 
 // remove later and replace with record-specific urls later
-Route::get('/edit', function () {
-    return view('dashboard.editrecord');
-});
+// Route::get('/edit', function () {
+//     return view('dashboard.editrecord');
+// });
 
 
-Auth::routes(); // includes routes for login, register, forget password
+/**
+ * Below is an expansion of Auth::routes(). Since we want to disable a few of the built-in routes, I'll just expand
+ * the routes manually here
+ */
+// Authentication Routes...
+//Route::get('login', 'Auth\LoginController@showLoginForm')
+Route::post('login', 'Auth\LoginController@login')->name('login');;
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// Registration Routes...
+//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register')->name('register');;
+
+// Password Reset Routes...
+//Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+//Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+//Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 // only authenticated user can access this route group
 Route::group(['prefix'=>'dashboard', 'middleware' => 'auth'], function () {

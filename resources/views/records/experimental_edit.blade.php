@@ -111,7 +111,7 @@
                             <div class="actions" style="text-align: center;">
                                 <button class="ui positive ocr button left floated" type="submit">Submit</button>
                                 <!--<button class="ui button" type="reset" onclick="$('form#coords-form').form('clear'); $('.form .message').html(''); resetAllRects();$('.icon', '.select').attr('class', 'grey edit icon');">Reset</button>-->
-                                <button class="ui black cancel button right floated" type="reset" onclick="window.location.href=document.referrer;">Cancel</button>
+                                <button class="ui black cancel button right floated" type="reset" onclick="window.location.href='{{route('show_record_issuer',['record_issuer'=>$record->issuer])}}';">Cancel</button>
                             </div>
                         @endif
                     </form>
@@ -176,7 +176,7 @@
                             </div>
                             <div class="actions">
                                 <button class="ui positive button left floated" type="submit">Confirm</button>
-                                <button class="ui black button right floated" type="cancel">Cancel</button>
+                                <button class="ui black button right floated" type="cancel" onclick="window.location.href='{{route('add_template',['record'=>$record])}}';">Cancel</button>
                             </div>
                         </form>
                     </div>

@@ -23,6 +23,7 @@ mix.copy('semantic/dist/semantic.css', 'resources/assets/sass/semantic.css')
         './resources/assets/js/semantic.js'
     ]).sass('resources/assets/sass/app.scss', 'public/css')
 
+
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.
