@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
+[![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=shield)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
 [![Code Climate](https://codeclimate.com/github/nus-mtp/bill-organizer/badges/gpa.svg)](https://codeclimate.com/github/nus-mtp/bill-organizer)
 [![Test Coverage](https://codeclimate.com/github/nus-mtp/bill-organizer/badges/coverage.svg)](https://codeclimate.com/github/nus-mtp/bill-organizer/coverage)
 
