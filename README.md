@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/nus-mtp/bill-organizer/tree/master)
+[![Code Climate](https://codeclimate.com/github/nus-mtp/bill-organizer/badges/gpa.svg)](https://codeclimate.com/github/nus-mtp/bill-organizer)
 
 Check out our [wiki](https://github.com/nus-mtp/bill-organizer/wiki) for extensive information about the app! Also, visit our website [here](https://nus-mtp.github.io/bill-organizer/)
 
