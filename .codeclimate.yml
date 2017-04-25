@@ -21,3 +21,4 @@ exclude_paths:
 - "semantic/"
 - "vendor/"
 - "resources/assets/js/semantic.js"
+- "resources/assets/sass/semantic.css"
